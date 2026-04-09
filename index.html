@@ -7,28 +7,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
-
-/* ─── RESET & BASE ─────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:        #0c0d11;
-  --surface:   #13141a;
-  --surface2:  #1a1c24;
-  --surface3:  #22242f;
-  --border:    rgba(255,255,255,0.07);
-  --border2:   rgba(255,255,255,0.12);
-  --accent:    #ff6b35;
-  --accent2:   #ff8c5a;
-  --accent-dim:rgba(255,107,53,0.12);
-  --text:      #f0f0f0;
-  --text2:     #9a9aaa;
-  --text3:     #5a5a6e;
-  --green:     #22c55e;
-  --radius:    14px;
-  --sidebar-w: 280px;
-  --font-head: 'Syne', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
+  --bg:         #0c0d11;
+  --surface:    #13141a;
+  --surface2:   #1a1c24;
+  --surface3:   #22242f;
+  --border:     rgba(255,255,255,0.07);
+  --border2:    rgba(255,255,255,0.13);
+  --accent:     #ff6b35;
+  --accent2:    #ff8c5a;
+  --accent-dim: rgba(255,107,53,0.12);
+  --text:       #f0f0f0;
+  --text2:      #9a9aaa;
+  --text3:      #5a5a6e;
+  --green:      #22c55e;
+  --red:        #ef4444;
+  --radius:     14px;
+  --sidebar-w:  280px;
+  --font-head:  'Syne', sans-serif;
+  --font-body:  'DM Sans', sans-serif;
 }
 
 html, body { height: 100%; }
@@ -37,13 +36,271 @@ body {
   font-family: var(--font-body);
   background: var(--bg);
   color: var(--text);
-  display: flex;
-  overflow: hidden;
   font-size: 14px;
   line-height: 1.6;
 }
 
-/* ─── SIDEBAR ───────────────────────────────────────────────── */
+/* ══ AUTH SCREEN ══════════════════════════════════════════════ */
+#auth-screen {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#auth-left {
+  width: 44%;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,107,53,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,107,53,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.auth-glow {
+  position: absolute;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,107,53,0.1) 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+
+.auth-brand { position: relative; z-index: 1; text-align: center; }
+
+.auth-logo {
+  width: 72px; height: 72px;
+  background: var(--accent);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%,100% { box-shadow: 0 0 40px rgba(255,107,53,0.3); }
+  50%      { box-shadow: 0 0 80px rgba(255,107,53,0.55); }
+}
+
+.auth-logo svg { width: 38px; height: 38px; }
+
+.auth-brand-name {
+  font-family: var(--font-head);
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+}
+
+.auth-brand-name em { color: var(--accent); font-style: normal; }
+
+.auth-tagline {
+  font-size: 15px;
+  color: var(--text2);
+  font-weight: 300;
+  max-width: 280px;
+  line-height: 1.75;
+  margin-bottom: 40px;
+}
+
+.auth-features { display: flex; flex-direction: column; gap: 14px; }
+
+.auth-feat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text2);
+  font-size: 13px;
+}
+
+.auth-feat-icon {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(255,107,53,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+#auth-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.auth-card { width: 100%; max-width: 400px; }
+
+.auth-tabs {
+  display: flex;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 28px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 9px;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  color: var(--text2);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.auth-tab.active {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border2);
+}
+
+.auth-form-title { font-family: var(--font-head); font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+.auth-form-sub { font-size: 13px; color: var(--text2); margin-bottom: 26px; font-weight: 300; }
+
+.form-group { margin-bottom: 14px; }
+
+.form-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 6px;
+}
+
+.form-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 11px 14px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255,107,53,0.1);
+}
+
+.form-input::placeholder { color: var(--text3); }
+
+.form-err { font-size: 12px; color: var(--red); margin-top: 6px; display: none; }
+.form-err.show { display: block; }
+.form-ok  { font-size: 12px; color: var(--green); margin-top: 6px; display: none; }
+.form-ok.show  { display: block; }
+
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  background: var(--accent);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-family: var(--font-head);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 6px;
+}
+
+.btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+.btn-primary:active { transform: none; }
+
+.auth-div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0;
+  color: var(--text3);
+  font-size: 12px;
+}
+
+.auth-div::before, .auth-div::after { content:''; flex:1; height:1px; background: var(--border); }
+
+.btn-guest {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  color: var(--text2);
+  font-family: var(--font-body);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-guest:hover { background: var(--surface2); color: var(--text); }
+.btn-guest svg { width: 16px; height: 16px; }
+
+.pw-wrap { position: relative; }
+
+.pw-toggle {
+  position: absolute;
+  right: 12px; top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.pw-toggle svg { width: 15px; height: 15px; }
+
+.strength-bar { height: 3px; background: var(--surface3); border-radius: 3px; margin-top: 7px; overflow: hidden; }
+.strength-fill { height: 100%; border-radius: 3px; transition: width 0.3s, background 0.3s; width: 0; }
+.strength-txt { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+.chk-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text2); cursor: pointer; }
+.chk-row input { accent-color: var(--accent); }
+
+/* ══ APP SCREEN ═══════════════════════════════════════════════ */
+#app-screen {
+  display: none;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* sidebar */
 #sidebar {
   width: var(--sidebar-w);
   flex-shrink: 0;
@@ -52,52 +309,39 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  transition: transform 0.3s ease;
+  position: absolute;
+  left: 0; top: 0;
 }
 
-.sidebar-header {
-  padding: 24px 20px 20px;
-  border-bottom: 1px solid var(--border);
-}
+.sb-header { padding: 20px 18px 16px; border-bottom: 1px solid var(--border); }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
+.logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
 
 .logo-mark {
-  width: 36px; height: 36px;
+  width: 34px; height: 34px;
   background: var(--accent);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
 }
 
-.logo-mark svg { width: 20px; height: 20px; }
+.logo-mark svg { width: 18px; height: 18px; }
 
-.logo-text {
+.logo-txt {
   font-family: var(--font-head);
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
-  letter-spacing: -0.3px;
 }
 
-.logo-text span {
-  color: var(--accent);
-}
+.logo-txt em { color: var(--accent); font-style: normal; }
 
-.new-chat-btn {
+.new-btn {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 10px 16px;
-  border-radius: var(--radius);
+  padding: 9px 14px;
+  border-radius: 10px;
   border: 1px solid var(--border2);
   background: transparent;
   color: var(--text);
@@ -108,92 +352,88 @@ body {
   transition: all 0.2s;
 }
 
-.new-chat-btn:hover {
-  background: var(--surface3);
-  border-color: var(--accent);
-  color: var(--accent);
-}
+.new-btn:hover { background: var(--surface3); border-color: var(--accent); color: var(--accent); }
+.new-btn svg { width: 14px; height: 14px; }
 
-.new-chat-btn svg { width: 15px; height: 15px; }
+.sb-scroll { flex: 1; overflow-y: auto; padding: 10px 8px; }
+.sb-scroll::-webkit-scrollbar { width: 3px; }
+.sb-scroll::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 
-.sidebar-section {
-  padding: 16px 12px 8px;
-  flex: 1;
-  overflow-y: auto;
-}
-
-.sidebar-section::-webkit-scrollbar { width: 3px; }
-.sidebar-section::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
-
-.section-label {
+.sec-label {
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text3);
   padding: 0 8px;
-  margin-bottom: 6px;
+  margin: 10px 0 5px;
 }
 
-.history-item {
+.conv-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 9px 10px;
-  border-radius: 10px;
+  padding: 8px 10px;
+  border-radius: 9px;
   cursor: pointer;
   color: var(--text2);
   font-size: 13px;
   transition: all 0.15s;
   margin-bottom: 2px;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
-.history-item:hover { background: var(--surface2); color: var(--text); }
-.history-item.active { background: var(--accent-dim); color: var(--accent); }
+.conv-item:hover { background: var(--surface2); color: var(--text); }
+.conv-item.active { background: var(--accent-dim); color: var(--accent); }
+.conv-item-icon { width: 14px; height: 14px; flex-shrink: 0; opacity: 0.5; }
+.conv-item-txt { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-.history-item svg { width: 14px; height: 14px; flex-shrink: 0; opacity: 0.6; }
-
-.history-text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  flex: 1;
+.conv-del {
+  width: 22px; height: 22px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  background: transparent;
+  border: none;
+  color: var(--text3);
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
-.sidebar-footer {
-  padding: 16px 12px;
-  border-top: 1px solid var(--border);
-}
+.conv-del:hover { background: rgba(239,68,68,0.15); color: var(--red); }
+.conv-del svg { width: 12px; height: 12px; }
+.conv-item:hover .conv-del { display: flex; }
 
-.model-selector {
+.sb-empty { text-align: center; padding: 20px 10px; color: var(--text3); font-size: 12px; line-height: 1.7; }
+
+.sb-footer { padding: 12px 10px; border-top: 1px solid var(--border); }
+
+.model-sel {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 12px;
+  padding: 9px 12px;
   border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--surface2);
   cursor: pointer;
   transition: all 0.2s;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
-.model-selector:hover { border-color: var(--border2); background: var(--surface3); }
+.model-sel:hover { border-color: var(--border2); background: var(--surface3); }
 
 .model-dot {
-  width: 8px; height: 8px;
+  width: 7px; height: 7px;
   border-radius: 50%;
   background: var(--green);
-  box-shadow: 0 0 6px var(--green);
-  flex-shrink: 0;
+  box-shadow: 0 0 5px var(--green);
 }
 
 .model-info { flex: 1; }
-.model-name { font-size: 13px; font-weight: 500; color: var(--text); }
-.model-sub { font-size: 11px; color: var(--text3); }
-
-.model-selector svg { width: 14px; height: 14px; color: var(--text3); }
+.model-nm { font-size: 12px; font-weight: 500; color: var(--text); }
+.model-ctx { font-size: 10px; color: var(--text3); }
+.model-sel svg { width: 13px; height: 13px; color: var(--text3); }
 
 .user-row {
   display: flex;
@@ -203,61 +443,110 @@ body {
   border-radius: 10px;
   cursor: pointer;
   transition: background 0.15s;
+  position: relative;
 }
 
 .user-row:hover { background: var(--surface2); }
 
-.user-avatar {
+.u-avatar {
   width: 32px; height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #ff6b35, #ff8c5a);
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   font-family: var(--font-head);
   flex-shrink: 0;
+  color: white;
 }
 
-.user-info { flex: 1; }
-.user-name { font-size: 13px; font-weight: 500; }
-.user-plan { font-size: 11px; color: var(--text3); }
+.u-avatar.guest { background: var(--surface3); color: var(--text2); border: 1px solid var(--border2); }
 
-/* ─── MAIN ──────────────────────────────────────────────────── */
+.u-info { flex: 1; overflow: hidden; }
+.u-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.badge {
+  font-size: 10px;
+  padding: 1px 7px;
+  border-radius: 20px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.badge-pro { background: var(--accent-dim); color: var(--accent); }
+.badge-guest { background: var(--surface3); color: var(--text3); border: 1px solid var(--border); }
+
+/* profile dropdown */
+#profile-dd {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0; right: 0;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 300;
+  animation: dd-in 0.15s ease;
+}
+
+@keyframes dd-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+#profile-dd.open { display: block; }
+
+.dd-header { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.dd-uname { font-size: 14px; font-weight: 500; }
+.dd-email { font-size: 12px; color: var(--text3); margin-top: 2px; }
+
+.dd-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.dd-item:hover { background: var(--surface3); color: var(--text); }
+.dd-item svg { width: 14px; height: 14px; }
+.dd-item.danger { color: var(--red); }
+.dd-item.danger:hover { background: rgba(239,68,68,0.08); }
+
+/* ══ MAIN ═════════════════════════════════════════════════════ */
 #main {
-  flex: 1;
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  background: var(--bg);
+  margin-left: var(--sidebar-w);
 }
 
-/* ─── TOPBAR ────────────────────────────────────────────────── */
+/* topbar */
 #topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
-  height: 60px;
+  height: 58px;
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
-  background: rgba(12,13,17,0.8);
+  background: rgba(12,13,17,0.85);
   backdrop-filter: blur(20px);
 }
 
-.topbar-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+.tb-left { display: flex; align-items: center; gap: 12px; }
 
 .conv-title {
   font-family: var(--font-head);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
-  color: var(--text);
 }
 
 .conv-badge {
@@ -270,18 +559,22 @@ body {
   font-weight: 500;
 }
 
-.topbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.guest-pill {
+  font-size: 11px;
+  color: var(--text3);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 3px 11px;
+  border-radius: 20px;
+  display: none;
 }
 
+.tb-actions { display: flex; align-items: center; gap: 5px; }
+
 .icon-btn {
-  width: 36px; height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9px;
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px;
   border: 1px solid var(--border);
   background: transparent;
   color: var(--text2);
@@ -290,29 +583,24 @@ body {
 }
 
 .icon-btn:hover { background: var(--surface2); color: var(--text); border-color: var(--border2); }
-.icon-btn svg { width: 16px; height: 16px; }
+.icon-btn svg { width: 15px; height: 15px; }
 
-/* ─── CHAT AREA ─────────────────────────────────────────────── */
-#chat-wrap {
-  flex: 1;
-  overflow-y: auto;
-  position: relative;
-}
-
+/* chat */
+#chat-wrap { flex: 1; overflow-y: auto; }
 #chat-wrap::-webkit-scrollbar { width: 4px; }
 #chat-wrap::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
 
 #chat {
-  max-width: 780px;
+  max-width: 760px;
   margin: 0 auto;
-  padding: 32px 24px;
+  padding: 28px 24px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   min-height: 100%;
 }
 
-/* ─── EMPTY STATE ───────────────────────────────────────────── */
+/* empty state */
 #empty-state {
   flex: 1;
   display: flex;
@@ -320,56 +608,26 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 40px 0;
-  gap: 16px;
+  padding: 32px 0;
 }
 
 .empty-logo {
-  width: 64px; height: 64px;
+  width: 60px; height: 60px;
   background: var(--accent);
-  border-radius: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 8px;
-  box-shadow: 0 0 40px rgba(255,107,53,0.3);
-  animation: pulse-logo 3s ease-in-out infinite;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+  animation: glow-pulse 3s ease-in-out infinite;
 }
 
-@keyframes pulse-logo {
-  0%, 100% { box-shadow: 0 0 40px rgba(255,107,53,0.3); }
-  50% { box-shadow: 0 0 60px rgba(255,107,53,0.5); }
-}
+.empty-logo svg { width: 30px; height: 30px; }
+.empty-title { font-family: var(--font-head); font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+.empty-sub { font-size: 14px; color: var(--text2); font-weight: 300; max-width: 360px; margin-bottom: 28px; line-height: 1.7; }
 
-.empty-logo svg { width: 32px; height: 32px; }
+.prompts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 520px; }
 
-.empty-title {
-  font-family: var(--font-head);
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-  color: var(--text);
-}
-
-.empty-sub {
-  font-size: 15px;
-  color: var(--text2);
-  max-width: 400px;
-  line-height: 1.6;
-  font-weight: 300;
-}
-
-.prompts-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 16px;
-  width: 100%;
-  max-width: 560px;
-}
-
-.prompt-card {
-  padding: 14px 16px;
+.p-card {
+  padding: 14px 15px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -378,136 +636,74 @@ body {
   transition: all 0.2s;
 }
 
-.prompt-card:hover {
-  background: var(--surface2);
-  border-color: var(--accent);
-  transform: translateY(-2px);
-}
+.p-card:hover { background: var(--surface2); border-color: rgba(255,107,53,0.3); transform: translateY(-2px); }
+.p-card-icon { font-size: 18px; margin-bottom: 8px; display: block; }
+.p-card-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.p-card-sub { font-size: 11px; color: var(--text3); }
 
-.prompt-card-icon {
-  font-size: 20px;
-  margin-bottom: 8px;
-  display: block;
-}
-
-.prompt-card-title {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text);
-  margin-bottom: 3px;
-}
-
-.prompt-card-sub {
-  font-size: 12px;
-  color: var(--text3);
-}
-
-/* ─── MESSAGES ──────────────────────────────────────────────── */
+/* messages */
 .msg-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  animation: msg-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  display: flex; flex-direction: column; gap: 3px;
+  animation: msg-in 0.22s cubic-bezier(0.34,1.56,0.64,1) both;
 }
 
 @keyframes msg-in {
-  from { opacity: 0; transform: translateY(10px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
 }
 
-.msg-row {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-}
-
+.msg-row { display: flex; gap: 12px; align-items: flex-start; }
 .msg-row.user { flex-direction: row-reverse; }
 
-.msg-avatar {
-  width: 34px; height: 34px;
+.msg-av {
+  width: 32px; height: 32px;
   border-radius: 50%;
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   font-size: 12px;
   font-weight: 700;
   font-family: var(--font-head);
   margin-top: 2px;
 }
 
-.msg-avatar.bot {
-  background: var(--accent);
-  color: white;
-}
+.msg-av.bot  { background: var(--accent); color: white; }
+.msg-av.user { background: var(--surface3); color: var(--text2); border: 1px solid var(--border2); }
 
-.msg-avatar.user {
-  background: var(--surface3);
-  color: var(--text2);
-  border: 1px solid var(--border2);
-}
+.msg-content { flex: 1; max-width: calc(100% - 44px); }
+.msg-row.user .msg-content { display: flex; flex-direction: column; align-items: flex-end; }
 
-.msg-content { flex: 1; max-width: calc(100% - 48px); }
-
-.msg-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 5px;
-}
-
+.msg-header { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
 .msg-row.user .msg-header { flex-direction: row-reverse; }
 
-.msg-sender {
-  font-size: 12px;
-  font-weight: 600;
-  font-family: var(--font-head);
-  color: var(--text);
-}
+.msg-sender { font-size: 12px; font-weight: 600; font-family: var(--font-head); }
+.msg-time   { font-size: 11px; color: var(--text3); }
 
-.msg-time {
-  font-size: 11px;
-  color: var(--text3);
-}
-
-.bubble {
-  padding: 12px 16px;
-  border-radius: 4px 16px 16px 16px;
-  font-size: 14px;
-  line-height: 1.65;
-  position: relative;
-}
+.bubble { padding: 11px 15px; font-size: 14px; line-height: 1.65; }
 
 .bubble.bot {
   background: var(--surface);
   border: 1px solid var(--border);
+  border-radius: 4px 14px 14px 14px;
   color: var(--text);
-  border-radius: 4px 16px 16px 16px;
 }
 
 .bubble.user {
   background: var(--accent);
   color: white;
-  border-radius: 16px 4px 16px 16px;
-  font-weight: 400;
+  border-radius: 14px 4px 14px 14px;
 }
 
-.msg-row.user .msg-content { display: flex; flex-direction: column; align-items: flex-end; }
-
 .msg-actions {
-  display: flex;
-  gap: 4px;
-  margin-top: 6px;
+  display: flex; gap: 4px;
+  margin-top: 5px;
   opacity: 0;
   transition: opacity 0.15s;
 }
 
 .msg-group:hover .msg-actions { opacity: 1; }
 
-.msg-action-btn {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+.act-btn {
+  display: flex; align-items: center; gap: 5px;
   padding: 4px 8px;
   border-radius: 6px;
   border: 1px solid var(--border);
@@ -519,19 +715,14 @@ body {
   font-family: var(--font-body);
 }
 
-.msg-action-btn:hover { background: var(--surface2); color: var(--text2); border-color: var(--border2); }
-.msg-action-btn svg { width: 12px; height: 12px; }
+.act-btn:hover { background: var(--surface2); color: var(--text2); border-color: var(--border2); }
+.act-btn svg { width: 12px; height: 12px; }
 
-/* ─── TYPING ────────────────────────────────────────────────── */
-.typing-dots {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  padding: 6px 2px;
-}
+/* typing */
+.typing-dots { display: flex; gap: 5px; align-items: center; padding: 5px 2px; }
 
 .dot {
-  width: 7px; height: 7px;
+  width: 6px; height: 6px;
   border-radius: 50%;
   background: var(--text3);
   animation: typing 1.4s infinite;
@@ -541,56 +732,39 @@ body {
 .dot:nth-child(3) { animation-delay: 0.4s; }
 
 @keyframes typing {
-  0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
-  30% { transform: translateY(-6px); opacity: 1; }
+  0%,60%,100% { transform: translateY(0); opacity: 0.3; }
+  30%          { transform: translateY(-5px); opacity: 1; }
 }
 
-/* ─── DIVIDER ───────────────────────────────────────────────── */
-.day-divider {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--text3);
-  font-size: 11px;
-  margin: 16px 0 8px;
+.day-div {
+  display: flex; align-items: center; gap: 12px;
+  color: var(--text3); font-size: 11px;
+  margin: 12px 0 6px;
 }
 
-.day-divider::before, .day-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
+.day-div::before, .day-div::after { content:''; flex:1; height:1px; background: var(--border); }
 
-/* ─── INPUT ZONE ────────────────────────────────────────────── */
-#input-zone {
-  padding: 16px 24px 20px;
-  flex-shrink: 0;
-  background: var(--bg);
-}
-
-#input-container {
-  max-width: 780px;
-  margin: 0 auto;
-}
+/* input */
+#input-zone { padding: 14px 24px 18px; flex-shrink: 0; }
+#input-wrap-outer { max-width: 760px; margin: 0 auto; }
 
 #input-box {
   background: var(--surface);
   border: 1px solid var(--border2);
-  border-radius: 18px;
+  border-radius: 16px;
   transition: border-color 0.2s, box-shadow 0.2s;
   overflow: hidden;
 }
 
 #input-box:focus-within {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(255,107,53,0.1);
+  box-shadow: 0 0 0 3px rgba(255,107,53,0.08);
 }
 
 #input-top {
   display: flex;
   align-items: flex-end;
-  padding: 12px 14px 10px;
+  padding: 11px 13px 9px;
   gap: 10px;
 }
 
@@ -601,24 +775,22 @@ body {
   outline: none;
   color: var(--text);
   font-family: var(--font-body);
-  font-size: 14.5px;
+  font-size: 14px;
   line-height: 1.6;
   resize: none;
   min-height: 24px;
-  max-height: 160px;
+  max-height: 150px;
 }
 
 #prompt::placeholder { color: var(--text3); }
 
 #send-btn {
-  width: 38px; height: 38px;
-  border-radius: 12px;
+  width: 36px; height: 36px;
+  border-radius: 10px;
   background: var(--accent);
   border: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   transition: all 0.2s;
   margin-bottom: 2px;
@@ -627,80 +799,50 @@ body {
 #send-btn:hover { background: var(--accent2); transform: scale(1.05); }
 #send-btn:active { transform: scale(0.96); }
 #send-btn:disabled { background: var(--surface3); cursor: not-allowed; transform: none; }
-#send-btn svg { width: 17px; height: 17px; }
+#send-btn svg { width: 15px; height: 15px; }
 
 #input-bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 14px 10px;
+  padding: 5px 13px 9px;
   border-top: 1px solid var(--border);
 }
 
-.input-tools {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
+.tools { display: flex; align-items: center; gap: 2px; }
 
 .tool-btn {
-  width: 30px; height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 7px;
-  background: transparent;
-  border: none;
-  color: var(--text3);
-  cursor: pointer;
-  transition: all 0.15s;
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 7px; background: transparent; border: none;
+  color: var(--text3); cursor: pointer; transition: all 0.15s;
 }
 
 .tool-btn:hover { background: var(--surface2); color: var(--text2); }
-.tool-btn svg { width: 15px; height: 15px; }
+.tool-btn svg { width: 14px; height: 14px; }
 
-.input-meta {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
+.input-meta { display: flex; align-items: center; gap: 10px; }
 #char-count { font-size: 11px; color: var(--text3); }
+.kbd { font-size: 10px; color: var(--text3); background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; }
 
-.kbd {
-  font-size: 10px;
-  color: var(--text3);
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  padding: 2px 6px;
-  font-family: var(--font-body);
-}
+.foot-note { text-align: center; font-size: 11px; color: var(--text3); margin-top: 8px; }
+.foot-note a { color: var(--text3); text-decoration: underline; }
 
-.footer-note {
-  text-align: center;
-  font-size: 11px;
-  color: var(--text3);
-  margin-top: 10px;
-}
-
-.footer-note a { color: var(--text3); text-decoration: underline; }
-
-/* ─── MODAL (model selector) ─────────────────────────────────── */
-#model-modal {
+/* ══ MODALS ═══════════════════════════════════════════════════ */
+.m-overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.65);
   backdrop-filter: blur(4px);
-  z-index: 100;
+  z-index: 400;
   align-items: center;
   justify-content: center;
 }
 
-#model-modal.open { display: flex; }
+.m-overlay.open { display: flex; }
 
-.modal-box {
+.m-box {
   background: var(--surface);
   border: 1px solid var(--border2);
   border-radius: 20px;
@@ -711,22 +853,15 @@ body {
 }
 
 @keyframes modal-in {
-  from { opacity: 0; transform: scale(0.95) translateY(10px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+  from { opacity: 0; transform: scale(0.95) translateY(8px); }
+  to   { opacity: 1; transform: none; }
 }
 
-.modal-title {
-  font-family: var(--font-head);
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 16px;
-}
+.m-title { font-family: var(--font-head); font-size: 18px; font-weight: 700; margin-bottom: 16px; }
 
-.model-option {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
+.model-opt {
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 15px;
   border-radius: 12px;
   border: 1px solid var(--border);
   cursor: pointer;
@@ -734,508 +869,845 @@ body {
   transition: all 0.15s;
 }
 
-.model-option:hover { background: var(--surface2); border-color: var(--border2); }
-.model-option.selected { border-color: var(--accent); background: var(--accent-dim); }
+.model-opt:hover { background: var(--surface2); border-color: var(--border2); }
+.model-opt.selected { border-color: var(--accent); background: var(--accent-dim); }
 
-.model-opt-icon {
-  width: 40px; height: 40px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  flex-shrink: 0;
-}
-
+.model-opt-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; background: var(--surface2); }
 .model-opt-info { flex: 1; }
 .model-opt-name { font-size: 14px; font-weight: 600; }
 .model-opt-desc { font-size: 12px; color: var(--text3); margin-top: 2px; }
 
-.model-opt-badge {
-  font-size: 10px;
-  padding: 3px 8px;
-  border-radius: 20px;
-  font-weight: 600;
+.mbadge { font-size: 10px; padding: 3px 8px; border-radius: 20px; font-weight: 600; }
+.mbadge-fast { background: rgba(34,197,94,0.12); color: #22c55e; }
+.mbadge-pro  { background: var(--accent-dim); color: var(--accent); }
+.mbadge-new  { background: rgba(99,102,241,0.12); color: #818cf8; }
+
+.m-close-btn {
+  width: 100%; margin-top: 8px;
+  padding: 10px; background: transparent;
+  border: 1px solid var(--border); border-radius: 10px;
+  color: var(--text2); font-family: var(--font-body); font-size: 13px;
+  cursor: pointer; transition: all 0.15s;
 }
 
-.badge-fast { background: rgba(34,197,94,0.12); color: #22c55e; }
-.badge-pro { background: var(--accent-dim); color: var(--accent); }
-.badge-new { background: rgba(99,102,241,0.12); color: #818cf8; }
+.m-close-btn:hover { background: var(--surface2); }
 
-.modal-close-btn {
-  width: 100%;
-  margin-top: 8px;
-  padding: 10px;
-  background: transparent;
-  border: 1px solid var(--border);
+/* toast */
+#toast {
+  position: fixed;
+  bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(70px);
+  background: var(--surface2);
+  border: 1px solid var(--border2);
   border-radius: 10px;
-  color: var(--text2);
-  font-family: var(--font-body);
+  padding: 10px 20px;
   font-size: 13px;
-  cursor: pointer;
-  transition: all 0.15s;
+  color: var(--text);
+  z-index: 999;
+  transition: transform 0.3s ease;
+  pointer-events: none;
 }
 
-.modal-close-btn:hover { background: var(--surface2); }
+#toast.show { transform: translateX(-50%) translateY(0); }
 
-/* ─── RESPONSIVE ────────────────────────────────────────────── */
-@media (max-width: 700px) {
-  #sidebar { display: none; }
-  .prompts-grid { grid-template-columns: 1fr; }
-}
-
-/* ─── SCROLLBAR GLOBAL ──────────────────────────────────────── */
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
-
-/* ─── SELECTION ─────────────────────────────────────────────── */
 ::selection { background: rgba(255,107,53,0.25); }
 
+@media (max-width: 680px) {
+  #auth-left { display: none; }
+  #sidebar { display: none; }
+  #main { margin-left: 0; }
+  .prompts-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 
-<!-- ─── SIDEBAR ─────────────────────────────────────── -->
-<aside id="sidebar">
-  <div class="sidebar-header">
-    <div class="logo">
-      <div class="logo-mark">
+<!-- ════════════════════════
+     AUTH SCREEN
+════════════════════════ -->
+<div id="auth-screen">
+
+  <div id="auth-left">
+    <div class="auth-grid"></div>
+    <div class="auth-glow"></div>
+    <div class="auth-brand">
+      <div class="auth-logo">
         <svg viewBox="0 0 24 24" fill="none"><path d="M3 5h4v4H3V5zm0 10h4v4H3v-4zm14-10h4v4h-4V5zm0 10h4v4h-4v-4zm-7-10h4v4h-4V5zm0 10h4v4h-4v-4z" fill="white"/></svg>
       </div>
-      <span class="logo-text">Mis<span>tral</span></span>
-    </div>
-    <button class="new-chat-btn" onclick="clearChat()">
-      <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      Nouvelle conversation
-    </button>
-  </div>
-
-  <div class="sidebar-section">
-    <p class="section-label">Aujourd'hui</p>
-    <div class="history-item active">
-      <svg viewBox="0 0 16 16" fill="none"><path d="M2 8a6 6 0 1112 0A6 6 0 012 8z" stroke="currentColor" stroke-width="1.2"/><path d="M8 5v3l2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-      <span class="history-text">Conversation actuelle</span>
-    </div>
-
-    <p class="section-label" style="margin-top:16px">Cette semaine</p>
-    <div class="history-item" onclick="loadDemo('Explique les réseaux de neurones')">
-      <svg viewBox="0 0 16 16" fill="none"><path d="M13 4H3a1 1 0 00-1 1v7a1 1 0 001 1h10a1 1 0 001-1V5a1 1 0 00-1-1z" stroke="currentColor" stroke-width="1.2"/><path d="M5 7h6M5 10h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-      <span class="history-text">Réseaux de neurones</span>
-    </div>
-    <div class="history-item" onclick="loadDemo('Écris un email professionnel')">
-      <svg viewBox="0 0 16 16" fill="none"><path d="M13 4H3a1 1 0 00-1 1v7a1 1 0 001 1h10a1 1 0 001-1V5a1 1 0 00-1-1z" stroke="currentColor" stroke-width="1.2"/><path d="M5 7h6M5 10h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-      <span class="history-text">Email professionnel</span>
-    </div>
-    <div class="history-item" onclick="loadDemo('Analyse ce code Python')">
-      <svg viewBox="0 0 16 16" fill="none"><path d="M13 4H3a1 1 0 00-1 1v7a1 1 0 001 1h10a1 1 0 001-1V5a1 1 0 00-1-1z" stroke="currentColor" stroke-width="1.2"/><path d="M5 7h6M5 10h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-      <span class="history-text">Analyse de code Python</span>
-    </div>
-
-    <p class="section-label" style="margin-top:16px">Ce mois</p>
-    <div class="history-item">
-      <svg viewBox="0 0 16 16" fill="none"><path d="M13 4H3a1 1 0 00-1 1v7a1 1 0 001 1h10a1 1 0 001-1V5a1 1 0 00-1-1z" stroke="currentColor" stroke-width="1.2"/><path d="M5 7h6M5 10h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-      <span class="history-text">Stratégie marketing Q4</span>
-    </div>
-    <div class="history-item">
-      <svg viewBox="0 0 16 16" fill="none"><path d="M13 4H3a1 1 0 00-1 1v7a1 1 0 001 1h10a1 1 0 001-1V5a1 1 0 00-1-1z" stroke="currentColor" stroke-width="1.2"/><path d="M5 7h6M5 10h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-      <span class="history-text">Plan d'apprentissage Rust</span>
-    </div>
-  </div>
-
-  <div class="sidebar-footer">
-    <div class="model-selector" onclick="document.getElementById('model-modal').classList.add('open')">
-      <div class="model-dot"></div>
-      <div class="model-info">
-        <div class="model-name" id="active-model-name">Mistral Large 2</div>
-        <div class="model-sub">128k contexte</div>
-      </div>
-      <svg viewBox="0 0 16 16" fill="none"><path d="M5 7l3-3 3 3M5 10l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-    </div>
-    <div class="user-row">
-      <div class="user-avatar">V</div>
-      <div class="user-info">
-        <div class="user-name">Votre compte</div>
-        <div class="user-plan">Plan Pro</div>
-      </div>
-    </div>
-  </div>
-</aside>
-
-<!-- ─── MAIN ─────────────────────────────────────────── -->
-<main id="main">
-
-  <!-- topbar -->
-  <div id="topbar">
-    <div class="topbar-left">
-      <span class="conv-title" id="conv-title">Nouvelle conversation</span>
-      <span class="conv-badge" id="active-model-badge">mistral-large-2</span>
-    </div>
-    <div class="topbar-actions">
-      <button class="icon-btn" title="Partager" onclick="alert('Partage en cours...')">
-        <svg viewBox="0 0 16 16" fill="none"><circle cx="12" cy="3" r="1.5" stroke="currentColor" stroke-width="1.2"/><circle cx="4" cy="8" r="1.5" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="13" r="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M5.5 7.5l5-3M5.5 8.5l5 3" stroke="currentColor" stroke-width="1.2"/></svg>
-      </button>
-      <button class="icon-btn" title="Télécharger" onclick="downloadChat()">
-        <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v8M5 8l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-      </button>
-      <button class="icon-btn" title="Réinitialiser" onclick="clearChat()">
-        <svg viewBox="0 0 16 16" fill="none"><path d="M2 8a6 6 0 0110.4-4.1L14 2M14 2v4h-4M14 8a6 6 0 01-10.4 4.1L2 14M2 14v-4h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- chat -->
-  <div id="chat-wrap">
-    <div id="chat">
-      <div id="empty-state">
-        <div class="empty-logo">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M3 5h4v4H3V5zm0 10h4v4H3v-4zm14-10h4v4h-4V5zm0 10h4v4h-4v-4zm-7-10h4v4h-4V5zm0 10h4v4h-4v-4z" fill="white"/></svg>
-        </div>
-        <h1 class="empty-title">Bonjour, comment puis-je vous aider ?</h1>
-        <p class="empty-sub">Je suis Mistral, votre assistant IA. Posez-moi n'importe quelle question, je suis là pour vous.</p>
-        <div class="prompts-grid">
-          <div class="prompt-card" onclick="fillPrompt('Explique-moi le machine learning de façon simple et illustrée')">
-            <span class="prompt-card-icon">🧠</span>
-            <div class="prompt-card-title">Expliquer un concept</div>
-            <div class="prompt-card-sub">Machine learning, physique quantique...</div>
-          </div>
-          <div class="prompt-card" onclick="fillPrompt('Aide-moi à écrire un email professionnel pour relancer un client')">
-            <span class="prompt-card-icon">✍️</span>
-            <div class="prompt-card-title">Rédiger un email</div>
-            <div class="prompt-card-sub">Professionnel, persuasif, structuré</div>
-          </div>
-          <div class="prompt-card" onclick="fillPrompt('Écris du code Python pour analyser un fichier CSV et afficher des stats')">
-            <span class="prompt-card-icon">💻</span>
-            <div class="prompt-card-title">Générer du code</div>
-            <div class="prompt-card-sub">Python, JavaScript, SQL...</div>
-          </div>
-          <div class="prompt-card" onclick="fillPrompt('Donne-moi 5 idées créatives pour le nom de ma startup dans le domaine de la santé')">
-            <span class="prompt-card-icon">💡</span>
-            <div class="prompt-card-title">Brainstormer des idées</div>
-            <div class="prompt-card-sub">Noms, stratégies, concepts...</div>
-          </div>
-        </div>
+      <div class="auth-brand-name">Mis<em>tral</em></div>
+      <div class="auth-tagline">L'intelligence artificielle qui vous comprend vraiment. Rapide, précise, toujours disponible.</div>
+      <div class="auth-features">
+        <div class="auth-feat"><div class="auth-feat-icon">💬</div><span>Conversations sauvegardées et accessibles partout</span></div>
+        <div class="auth-feat"><div class="auth-feat-icon">🔒</div><span>Vos données restent privées et sécurisées</span></div>
+        <div class="auth-feat"><div class="auth-feat-icon">⚡</div><span>Modèles de pointe, réponses instantanées</span></div>
+        <div class="auth-feat"><div class="auth-feat-icon">🗂️</div><span>Historique complet de toutes vos sessions</span></div>
       </div>
     </div>
   </div>
 
-  <!-- input -->
-  <div id="input-zone">
-    <div id="input-container">
-      <div id="input-box">
-        <div id="input-top">
-          <textarea id="prompt" rows="1" placeholder="Posez votre question à Mistral..."></textarea>
-          <button id="send-btn" onclick="sendMessage()">
-            <svg viewBox="0 0 16 16" fill="none"><path d="M14 8L2 2l3 6-3 6 12-6z" fill="white"/></svg>
-          </button>
+  <div id="auth-right">
+    <div class="auth-card">
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Connexion</button>
+        <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Créer un compte</button>
+      </div>
+
+      <!-- LOGIN -->
+      <div id="login-form">
+        <div class="auth-form-title">Bon retour 👋</div>
+        <div class="auth-form-sub">Connectez-vous pour retrouver vos conversations.</div>
+
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" id="login-email" type="email" placeholder="vous@exemple.com" autocomplete="email">
         </div>
-        <div id="input-bottom">
-          <div class="input-tools">
-            <button class="tool-btn" title="Joindre un fichier">
-              <svg viewBox="0 0 16 16" fill="none"><path d="M13 8.5V12a3 3 0 01-3 3H6a3 3 0 01-3-3V5a3 3 0 013-3h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M10 1h5v5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M15 1L9 7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-            </button>
-            <button class="tool-btn" title="Recherche web">
-              <svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M12 12l2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-            </button>
-            <button class="tool-btn" title="Mode code">
-              <svg viewBox="0 0 16 16" fill="none"><path d="M5 5l-3 3 3 3M11 5l3 3-3 3M9 3l-2 10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+        <div class="form-group">
+          <label class="form-label">Mot de passe</label>
+          <div class="pw-wrap">
+            <input class="form-input" id="login-pw" type="password" placeholder="••••••••" style="padding-right:40px">
+            <button class="pw-toggle" type="button" onclick="togglePw('login-pw')">
+              <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M1.5 8C3 4.5 5.2 3 8 3s5 1.5 6.5 5c-1.5 3.5-3.7 5-6.5 5s-5-1.5-6.5-5z" stroke="currentColor" stroke-width="1.2"/></svg>
             </button>
           </div>
-          <div class="input-meta">
-            <span id="char-count">0 / 4096</span>
-            <span class="kbd">↵ Envoyer</span>
+        </div>
+
+        <div class="form-err" id="login-err"></div>
+        <button class="btn-primary" onclick="doLogin()">Se connecter</button>
+        <div class="auth-div">ou</div>
+        <button class="btn-guest" onclick="doGuest()">
+          <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.5" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 13.5c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Continuer en tant qu'invité
+        </button>
+      </div>
+
+      <!-- REGISTER -->
+      <div id="register-form" style="display:none">
+        <div class="auth-form-title">Créer un compte</div>
+        <div class="auth-form-sub">Gratuit. Vos chats sauvegardés à vie.</div>
+
+        <div class="form-group">
+          <label class="form-label">Prénom</label>
+          <input class="form-input" id="reg-name" type="text" placeholder="Marie" autocomplete="given-name">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" id="reg-email" type="email" placeholder="vous@exemple.com" autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Mot de passe</label>
+          <div class="pw-wrap">
+            <input class="form-input" id="reg-pw" type="password" placeholder="••••••••" style="padding-right:40px" oninput="checkStrength(this.value)">
+            <button class="pw-toggle" type="button" onclick="togglePw('reg-pw')">
+              <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M1.5 8C3 4.5 5.2 3 8 3s5 1.5 6.5 5c-1.5 3.5-3.7 5-6.5 5s-5-1.5-6.5-5z" stroke="currentColor" stroke-width="1.2"/></svg>
+            </button>
+          </div>
+          <div class="strength-bar"><div class="strength-fill" id="str-fill"></div></div>
+          <div class="strength-txt" id="str-txt"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Confirmer le mot de passe</label>
+          <input class="form-input" id="reg-confirm" type="password" placeholder="••••••••">
+        </div>
+
+        <div class="form-group">
+          <label class="chk-row">
+            <input type="checkbox" id="reg-terms">
+            J'accepte les <span style="color:var(--accent);margin-left:4px">conditions d'utilisation</span>
+          </label>
+        </div>
+
+        <div class="form-err" id="reg-err"></div>
+        <div class="form-ok"  id="reg-ok"></div>
+
+        <button class="btn-primary" onclick="doRegister()">Créer mon compte</button>
+        <div class="auth-div">ou</div>
+        <button class="btn-guest" onclick="doGuest()">
+          <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.5" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 13.5c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Continuer en tant qu'invité
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════
+     APP SCREEN
+════════════════════════ -->
+<div id="app-screen">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div class="sb-header">
+      <div class="logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 5h4v4H3V5zm0 10h4v4H3v-4zm14-10h4v4h-4V5zm0 10h4v4h-4v-4zm-7-10h4v4h-4V5zm0 10h4v4h-4v-4z" fill="white"/></svg>
+        </div>
+        <span class="logo-txt">Mis<em>tral</em></span>
+      </div>
+      <button class="new-btn" onclick="newConversation()">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Nouvelle conversation
+      </button>
+    </div>
+
+    <div class="sb-scroll" id="convs-list">
+      <div class="sb-empty" id="convs-empty">Aucune conversation pour l'instant.<br>Commencez à chatter !</div>
+    </div>
+
+    <div class="sb-footer">
+      <div class="model-sel" onclick="document.getElementById('model-modal').classList.add('open')">
+        <div class="model-dot"></div>
+        <div class="model-info">
+          <div class="model-nm" id="model-nm">Mistral Large 2</div>
+          <div class="model-ctx" id="model-ctx">128k contexte</div>
+        </div>
+        <svg viewBox="0 0 16 16" fill="none"><path d="M5 7l3-3 3 3M5 10l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </div>
+
+      <div class="user-row" onclick="toggleDd()">
+        <div class="u-avatar" id="u-av">?</div>
+        <div class="u-info">
+          <div class="u-name" id="u-nm">...</div>
+          <span class="badge badge-guest" id="u-badge">Invité</span>
+        </div>
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="color:var(--text3);flex-shrink:0"><path d="M5 7l3-3 3 3M5 10l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+
+        <div id="profile-dd">
+          <div class="dd-header">
+            <div class="dd-uname" id="dd-name">...</div>
+            <div class="dd-email" id="dd-email"></div>
+          </div>
+          <div class="dd-item" onclick="stop(event);showToast('Fonctionnalité bientôt disponible !')">
+            <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            Mon profil
+          </div>
+          <div class="dd-item" onclick="stop(event);exportAll()">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v8M5 8l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            Exporter toutes mes conversations
+          </div>
+          <div class="dd-item danger" onclick="stop(event);doLogout()">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M10 3h3a1 1 0 011 1v8a1 1 0 01-1 1h-3M7 11l3-3-3-3M10 8H2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            <span id="logout-lbl">Se déconnecter</span>
           </div>
         </div>
       </div>
-      <p class="footer-note">Mistral peut faire des erreurs. Vérifiez les informations importantes. <a href="#">Politique de confidentialité</a></p>
     </div>
-  </div>
-</main>
+  </aside>
 
-<!-- ─── MODEL MODAL ──────────────────────────────────── -->
-<div id="model-modal" onclick="if(event.target===this)this.classList.remove('open')">
-  <div class="modal-box">
-    <p class="modal-title">Choisir un modèle</p>
+  <!-- MAIN -->
+  <main id="main">
+    <div id="topbar">
+      <div class="tb-left">
+        <span class="conv-title" id="conv-title">Nouvelle conversation</span>
+        <span class="conv-badge" id="model-badge">mistral-large-2</span>
+        <span class="guest-pill" id="guest-pill">Mode invité</span>
+      </div>
+      <div class="tb-actions">
+        <button class="icon-btn" title="Télécharger la conversation" onclick="downloadChat()">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v8M5 8l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <button class="icon-btn" title="Nouvelle conversation" onclick="newConversation()">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
 
-    <div class="model-option selected" onclick="selectModel('mistral-large-2','Mistral Large 2','128k contexte',this)">
-      <div class="model-opt-icon" style="background:#1a1c24;">🔥</div>
+    <div id="chat-wrap">
+      <div id="chat">
+        <div id="empty-state">
+          <div class="empty-logo">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M3 5h4v4H3V5zm0 10h4v4H3v-4zm14-10h4v4h-4V5zm0 10h4v4h-4v-4zm-7-10h4v4h-4V5zm0 10h4v4h-4v-4z" fill="white"/></svg>
+          </div>
+          <div class="empty-title" id="empty-title">Bonjour !</div>
+          <div class="empty-sub" id="empty-sub">Je suis Mistral. Comment puis-je vous aider aujourd'hui ?</div>
+          <div class="prompts-grid">
+            <div class="p-card" onclick="fillPrompt('Explique-moi le machine learning de façon simple')">
+              <span class="p-card-icon">🧠</span>
+              <div class="p-card-title">Expliquer un concept</div>
+              <div class="p-card-sub">IA, science, histoire...</div>
+            </div>
+            <div class="p-card" onclick="fillPrompt('Aide-moi à rédiger un email professionnel')">
+              <span class="p-card-icon">✍️</span>
+              <div class="p-card-title">Rédiger un texte</div>
+              <div class="p-card-sub">Email, article, résumé...</div>
+            </div>
+            <div class="p-card" onclick="fillPrompt('Génère du code Python pour analyser un fichier CSV')">
+              <span class="p-card-icon">💻</span>
+              <div class="p-card-title">Générer du code</div>
+              <div class="p-card-sub">Python, JS, SQL...</div>
+            </div>
+            <div class="p-card" onclick="fillPrompt('Donne-moi 5 idées créatives pour ma startup')">
+              <span class="p-card-icon">💡</span>
+              <div class="p-card-title">Brainstormer</div>
+              <div class="p-card-sub">Idées, stratégie, noms...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="input-zone">
+      <div id="input-wrap-outer">
+        <div id="input-box">
+          <div id="input-top">
+            <textarea id="prompt" rows="1" placeholder="Posez votre question à Mistral..."></textarea>
+            <button id="send-btn" onclick="sendMessage()">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M14 8L2 2l3 6-3 6 12-6z" fill="white"/></svg>
+            </button>
+          </div>
+          <div id="input-bottom">
+            <div class="tools">
+              <button class="tool-btn" title="Joindre un fichier">
+                <svg viewBox="0 0 16 16" fill="none"><path d="M13 8.5V12a3 3 0 01-3 3H6a3 3 0 01-3-3V5a3 3 0 013-3h3M10 1h5v5M15 1L9 7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              </button>
+              <button class="tool-btn" title="Recherche web">
+                <svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M12 12l2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              </button>
+              <button class="tool-btn" title="Mode code">
+                <svg viewBox="0 0 16 16" fill="none"><path d="M5 5l-3 3 3 3M11 5l3 3-3 3M9 3l-2 10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+            <div class="input-meta">
+              <span id="char-count">0 / 4096</span>
+              <span class="kbd">↵ Envoyer</span>
+            </div>
+          </div>
+        </div>
+        <p class="foot-note">Mistral peut faire des erreurs. Vérifiez les informations importantes.</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- MODEL MODAL -->
+<div class="m-overlay" id="model-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="m-box">
+    <p class="m-title">Choisir un modèle</p>
+    <div class="model-opt selected" onclick="selectModel('mistral-large-2','Mistral Large 2','128k contexte',this)">
+      <div class="model-opt-icon">🔥</div>
       <div class="model-opt-info">
         <div class="model-opt-name">Mistral Large 2</div>
         <div class="model-opt-desc">Le plus puissant — raisonnement avancé, code, analyse</div>
       </div>
-      <span class="model-opt-badge badge-pro">PRO</span>
+      <span class="mbadge mbadge-pro">PRO</span>
     </div>
-
-    <div class="model-option" onclick="selectModel('mistral-small','Mistral Small','32k contexte',this)">
-      <div class="model-opt-icon" style="background:#1a1c24;">⚡</div>
+    <div class="model-opt" onclick="selectModel('mistral-small','Mistral Small','32k contexte',this)">
+      <div class="model-opt-icon">⚡</div>
       <div class="model-opt-info">
         <div class="model-opt-name">Mistral Small</div>
-        <div class="model-opt-desc">Rapide et efficace pour les tâches quotidiennes</div>
+        <div class="model-opt-desc">Rapide et efficace pour les tâches du quotidien</div>
       </div>
-      <span class="model-opt-badge badge-fast">RAPIDE</span>
+      <span class="mbadge mbadge-fast">RAPIDE</span>
     </div>
-
-    <div class="model-option" onclick="selectModel('codestral','Codestral','80k contexte',this)">
-      <div class="model-opt-icon" style="background:#1a1c24;">💻</div>
+    <div class="model-opt" onclick="selectModel('codestral','Codestral','80k contexte',this)">
+      <div class="model-opt-icon">💻</div>
       <div class="model-opt-info">
         <div class="model-opt-name">Codestral</div>
         <div class="model-opt-desc">Spécialisé pour la génération et l'analyse de code</div>
       </div>
-      <span class="model-opt-badge badge-new">NOUVEAU</span>
+      <span class="mbadge mbadge-new">NOUVEAU</span>
     </div>
-
-    <button class="modal-close-btn" onclick="document.getElementById('model-modal').classList.remove('open')">Fermer</button>
+    <button class="m-close-btn" onclick="document.getElementById('model-modal').classList.remove('open')">Fermer</button>
   </div>
 </div>
 
+<div id="toast"></div>
+
 <script>
-const API_URL = "https://remedies-completion-perceived-conscious.trycloudflare.com/v1/chat/completions";
+/* ═══ CONFIG ══════════════════════════════════════════════════ */
+const API_URL = "https://singer-exceed-stations-comp.trycloudflare.com/v1/chat/completions";
+const S_USERS   = "mist_users_v1";
+const S_SESSION = "mist_sess_v1";
 
-let messages = [];
-try { const s = localStorage.getItem("mistral_v3"); if(s) messages = JSON.parse(s); } catch(e){}
+/* ═══ STATE ════════════════════════════════════════════════════ */
+let currentUser  = null;
+let isGuest      = false;
+let currentConvId = null;
+let messages     = [];
+let msgCount     = 0;
 
-const chatEl = document.getElementById("chat");
-const emptyEl = document.getElementById("empty-state");
-const promptEl = document.getElementById("prompt");
-const sendBtn = document.getElementById("send-btn");
-const charCountEl = document.getElementById("char-count");
-const convTitle = document.getElementById("conv-title");
+/* ═══ STORAGE ══════════════════════════════════════════════════ */
+const ls = {
+  get: k => { try { return JSON.parse(localStorage.getItem(k)); } catch(e) { return null; } },
+  set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} },
+  del: k => { try { localStorage.removeItem(k); } catch(e) {} }
+};
 
-let msgCount = 0;
+function getUsers()  { return ls.get(S_USERS) || {}; }
+function convKey()   { return `mist_convs_${currentUser.id}`; }
+function getUserConvs() { return isGuest ? [] : (ls.get(convKey()) || []); }
+function saveUserConvs(c) { if (!isGuest) ls.set(convKey(), c); }
 
-function save() {
-  try { localStorage.setItem("mistral_v3", JSON.stringify(messages)); } catch(e){}
+/* ═══ AUTH — TAB ════════════════════════════════════════════════ */
+function switchTab(t) {
+  document.getElementById("login-form").style.display    = t === "login" ? "block" : "none";
+  document.getElementById("register-form").style.display = t === "register" ? "block" : "none";
+  document.getElementById("tab-login").classList.toggle("active", t === "login");
+  document.getElementById("tab-register").classList.toggle("active", t !== "login");
 }
 
-function timeNow() {
-  return new Date().toLocaleTimeString("fr-FR", { hour:"2-digit", minute:"2-digit" });
+/* ═══ AUTH — REGISTER ══════════════════════════════════════════ */
+function doRegister() {
+  const name   = v("reg-name"), email = v("reg-email").toLowerCase();
+  const pw     = v("reg-pw"),   conf  = v("reg-confirm");
+  const terms  = document.getElementById("reg-terms").checked;
+  const errEl  = document.getElementById("reg-err");
+  const okEl   = document.getElementById("reg-ok");
+
+  errEl.classList.remove("show");
+  okEl.classList.remove("show");
+
+  if (!name)  return showFieldErr(errEl, "Veuillez entrer votre prénom.");
+  if (!email.includes("@")) return showFieldErr(errEl, "Email invalide.");
+  if (pw.length < 6)  return showFieldErr(errEl, "Mot de passe trop court (6 car. minimum).");
+  if (pw !== conf)    return showFieldErr(errEl, "Les mots de passe ne correspondent pas.");
+  if (!terms)         return showFieldErr(errEl, "Veuillez accepter les conditions.");
+
+  const users = getUsers();
+  if (Object.values(users).find(u => u.email === email))
+    return showFieldErr(errEl, "Un compte existe déjà avec cet email.");
+
+  const id = "u_" + Date.now();
+  users[id] = { id, name, email, pw: btoa(pw), created: Date.now() };
+  ls.set(S_USERS, users);
+
+  okEl.textContent = "Compte créé avec succès ! Connexion...";
+  okEl.classList.add("show");
+  setTimeout(() => loginUser(users[id]), 900);
 }
 
+/* ═══ AUTH — LOGIN ══════════════════════════════════════════════ */
+function doLogin() {
+  const email = v("login-email").toLowerCase();
+  const pw    = v("login-pw");
+  const errEl = document.getElementById("login-err");
+  errEl.classList.remove("show");
+
+  if (!email || !pw) return showFieldErr(errEl, "Veuillez remplir tous les champs.");
+
+  const users = getUsers();
+  const user  = Object.values(users).find(u => u.email === email);
+
+  if (!user || user.pw !== btoa(pw))
+    return showFieldErr(errEl, "Email ou mot de passe incorrect.");
+
+  loginUser(user);
+}
+
+function loginUser(user) {
+  ls.set(S_SESSION, { userId: user.id });
+  startApp(user, false);
+}
+
+/* ═══ AUTH — GUEST ══════════════════════════════════════════════ */
+function doGuest() {
+  ls.set(S_SESSION, { userId: "guest" });
+  startApp({ id: "guest", name: "Invité", email: "" }, true);
+}
+
+/* ═══ AUTH — LOGOUT ═════════════════════════════════════════════ */
+function doLogout() {
+  ls.del(S_SESSION);
+  currentUser = null;
+  messages = []; msgCount = 0; currentConvId = null;
+  document.getElementById("app-screen").style.display  = "none";
+  document.getElementById("auth-screen").style.display = "flex";
+  document.getElementById("profile-dd").classList.remove("open");
+  document.getElementById("login-email").value = "";
+  document.getElementById("login-pw").value    = "";
+  document.getElementById("login-err").classList.remove("show");
+}
+
+/* ═══ START APP ═════════════════════════════════════════════════ */
+function startApp(user, guest) {
+  currentUser = user;
+  isGuest     = guest;
+
+  document.getElementById("auth-screen").style.display = "none";
+  document.getElementById("app-screen").style.display  = "flex";
+
+  const initial = user.name.charAt(0).toUpperCase();
+  const avEl    = document.getElementById("u-av");
+  avEl.textContent  = initial;
+  avEl.className    = "u-avatar" + (guest ? " guest" : "");
+
+  document.getElementById("u-nm").textContent      = user.name;
+  document.getElementById("dd-name").textContent   = user.name;
+  document.getElementById("dd-email").textContent  = user.email || "Mode invité";
+
+  const badge = document.getElementById("u-badge");
+  badge.textContent = guest ? "Invité" : "Pro";
+  badge.className   = "badge " + (guest ? "badge-guest" : "badge-pro");
+
+  document.getElementById("logout-lbl").textContent = guest ? "Quitter le mode invité" : "Se déconnecter";
+  document.getElementById("guest-pill").style.display = guest ? "inline-flex" : "none";
+
+  document.getElementById("empty-title").textContent = guest ? "Bonjour !" : `Bonjour ${user.name} 👋`;
+  document.getElementById("empty-sub").textContent   = guest
+    ? "Mode invité — vos conversations ne seront pas sauvegardées. Créez un compte pour les conserver !"
+    : "Toutes vos conversations sont sauvegardées automatiquement.";
+
+  refreshSidebar();
+  newConversation();
+}
+
+/* ═══ CONVERSATIONS ═════════════════════════════════════════════ */
+function newConversation() {
+  if (messages.length && !isGuest && currentConvId) persistConv();
+
+  currentConvId = "c_" + Date.now();
+  messages = []; msgCount = 0;
+
+  const chatEl  = document.getElementById("chat");
+  const emptyEl = document.getElementById("empty-state");
+  chatEl.innerHTML = "";
+  chatEl.appendChild(emptyEl);
+  emptyEl.style.display = "flex";
+
+  document.getElementById("conv-title").textContent = "Nouvelle conversation";
+  refreshSidebar();
+}
+
+function persistConv() {
+  if (isGuest || !messages.length) return;
+  const convs = getUserConvs();
+  const title  = messages[0].content.slice(0, 48) + (messages[0].content.length > 48 ? "…" : "");
+  const idx    = convs.findIndex(c => c.id === currentConvId);
+  const conv   = { id: currentConvId, title, messages, ts: Date.now() };
+  if (idx >= 0) convs[idx] = conv;
+  else convs.unshift(conv);
+  saveUserConvs(convs);
+  refreshSidebar();
+}
+
+function refreshSidebar() {
+  const list  = document.getElementById("convs-list");
+  const empty = document.getElementById("convs-empty");
+
+  Array.from(list.querySelectorAll(".conv-item, .sec-label")).forEach(e => e.remove());
+
+  if (isGuest) {
+    empty.style.display = "block";
+    empty.innerHTML = "Mode invité — les chats ne sont pas sauvegardés.<br><span style='color:var(--accent);cursor:pointer' onclick='doLogout()'>Créer un compte</span> pour les conserver.";
+    return;
+  }
+
+  const convs = getUserConvs();
+  if (!convs.length) { empty.style.display = "block"; return; }
+  empty.style.display = "none";
+
+  const now  = new Date(); now.setHours(0,0,0,0);
+  const yest = new Date(now); yest.setDate(now.getDate()-1);
+  const week = new Date(now); week.setDate(now.getDate()-7);
+
+  let lastGrp = null;
+
+  convs.forEach(conv => {
+    const d = new Date(conv.ts); d.setHours(0,0,0,0);
+    const grp = d >= now ? "Aujourd'hui" : d >= yest ? "Hier" : d >= week ? "Cette semaine" : "Plus ancien";
+
+    if (grp !== lastGrp) {
+      const lbl = document.createElement("div");
+      lbl.className = "sec-label"; lbl.textContent = grp;
+      list.appendChild(lbl);
+      lastGrp = grp;
+    }
+
+    const item = document.createElement("div");
+    item.className = "conv-item" + (conv.id === currentConvId ? " active" : "");
+    item.dataset.id = conv.id;
+    item.innerHTML = `
+      <svg class="conv-item-icon" viewBox="0 0 16 16" fill="none"><path d="M13 3H3a1 1 0 00-1 1v7a1 1 0 001 1h3l2 2 2-2h3a1 1 0 001-1V4a1 1 0 00-1-1z" stroke="currentColor" stroke-width="1.2"/></svg>
+      <span class="conv-item-txt">${esc(conv.title)}</span>
+      <button class="conv-del" onclick="delConv('${conv.id}',event)">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 4h10M6 4V3h4v1M5 4l1 9h4l1-9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </button>
+    `;
+    item.addEventListener("click", () => loadConv(conv.id));
+    list.appendChild(item);
+  });
+}
+
+function loadConv(id) {
+  if (messages.length && !isGuest && currentConvId) persistConv();
+  const convs = getUserConvs();
+  const conv  = convs.find(c => c.id === id);
+  if (!conv) return;
+
+  currentConvId = id;
+  messages = conv.messages;
+  msgCount = 0;
+
+  const chatEl  = document.getElementById("chat");
+  const emptyEl = document.getElementById("empty-state");
+  chatEl.innerHTML = "";
+  chatEl.appendChild(emptyEl);
+  emptyEl.style.display = "none";
+
+  addDivider("Conversation chargée");
+  conv.messages.forEach(m => renderMsg(m.role === "user" ? "user" : "bot", m.content));
+  document.getElementById("conv-title").textContent = conv.title;
+  document.querySelectorAll(".conv-item").forEach(el => el.classList.toggle("active", el.dataset.id === id));
+}
+
+function delConv(id, e) {
+  e.stopPropagation();
+  saveUserConvs(getUserConvs().filter(c => c.id !== id));
+  if (currentConvId === id) newConversation();
+  else refreshSidebar();
+  showToast("Conversation supprimée");
+}
+
+/* ═══ MESSAGES UI ═══════════════════════════════════════════════ */
 function hideEmpty() {
-  if (emptyEl) emptyEl.style.display = "none";
+  document.getElementById("empty-state").style.display = "none";
 }
 
-function addDivider() {
+function addDivider(txt) {
   const d = document.createElement("div");
-  d.className = "day-divider";
-  d.textContent = "Aujourd'hui";
-  chatEl.appendChild(d);
+  d.className = "day-div"; d.textContent = txt || "Aujourd'hui";
+  document.getElementById("chat").appendChild(d);
 }
 
-function createMessage(role, content, typing=false) {
+function renderMsg(role, content, typing = false) {
+  const chatEl  = document.getElementById("chat");
+  const chatWrap = document.getElementById("chat-wrap");
   hideEmpty();
-  if (msgCount === 0) addDivider();
+  if (msgCount === 0) addDivider("Aujourd'hui");
   msgCount++;
 
-  const group = document.createElement("div");
-  group.className = "msg-group";
+  const initial = currentUser ? currentUser.name.charAt(0).toUpperCase() : "?";
 
-  const row = document.createElement("div");
-  row.className = "msg-row " + role;
+  const group = document.createElement("div"); group.className = "msg-group";
+  const row   = document.createElement("div"); row.className   = "msg-row " + role;
+  const av    = document.createElement("div"); av.className    = "msg-av " + (role === "user" ? "user" : "bot");
+  av.textContent = role === "user" ? initial : "M";
 
-  const avatar = document.createElement("div");
-  avatar.className = "msg-avatar " + (role === "user" ? "user" : "bot");
-  avatar.textContent = role === "user" ? "V" : "M";
+  const contentWrap = document.createElement("div"); contentWrap.className = "msg-content";
 
-  const content_wrap = document.createElement("div");
-  content_wrap.className = "msg-content";
-
-  const header = document.createElement("div");
-  header.className = "msg-header";
-
-  const sender = document.createElement("span");
-  sender.className = "msg-sender";
-  sender.textContent = role === "user" ? "Vous" : "Mistral";
-
-  const time = document.createElement("span");
-  time.className = "msg-time";
-  time.textContent = timeNow();
-
-  header.appendChild(sender);
-  header.appendChild(time);
+  const header = document.createElement("div"); header.className = "msg-header";
+  const sender = document.createElement("span"); sender.className = "msg-sender";
+  sender.textContent = role === "user" ? (currentUser ? currentUser.name : "Vous") : "Mistral";
+  const time = document.createElement("span"); time.className = "msg-time";
+  time.textContent = new Date().toLocaleTimeString("fr-FR", { hour:"2-digit", minute:"2-digit" });
+  header.appendChild(sender); header.appendChild(time);
 
   const bubble = document.createElement("div");
   bubble.className = "bubble " + (role === "user" ? "user" : "bot");
 
   if (typing) {
-    const dots = document.createElement("div");
-    dots.className = "typing-dots";
-    dots.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
-    bubble.appendChild(dots);
+    bubble.innerHTML = '<div class="typing-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
   } else {
     bubble.textContent = content;
   }
 
-  content_wrap.appendChild(header);
-  content_wrap.appendChild(bubble);
+  contentWrap.appendChild(header);
+  contentWrap.appendChild(bubble);
 
-  if (role === "bot" && !typing) {
-    const actions = document.createElement("div");
-    actions.className = "msg-actions";
-    actions.innerHTML = `
-      <button class="msg-action-btn" onclick="copyText(this)" data-text="${content.replace(/"/g,'&quot;')}">
-        <svg viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-        Copier
-      </button>
-      <button class="msg-action-btn">
-        <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8l5-5 5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-        Régénérer
-      </button>
-    `;
-    content_wrap.appendChild(actions);
-  }
+  if (role === "user") { row.appendChild(contentWrap); row.appendChild(av); }
+  else                 { row.appendChild(av); row.appendChild(contentWrap); }
 
-  row.appendChild(avatar);
-  row.appendChild(content_wrap);
   group.appendChild(row);
   chatEl.appendChild(group);
+  chatWrap.scrollTop = chatWrap.scrollHeight;
 
-  const wrap = document.getElementById("chat-wrap");
-  wrap.scrollTop = wrap.scrollHeight;
-
-  return bubble;
+  return { bubble, contentWrap, group };
 }
 
-function copyText(btn) {
-  const text = btn.getAttribute("data-text");
-  navigator.clipboard.writeText(text).then(() => {
-    btn.textContent = "Copié !";
-    setTimeout(() => btn.innerHTML = `<svg viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Copier`, 1500);
-  });
+function addActions(contentWrap, text) {
+  const wrap = document.createElement("div");
+  wrap.className = "msg-actions";
+  wrap.dataset.txt = text;
+
+  const copyBtn = document.createElement("button");
+  copyBtn.className = "act-btn";
+  copyBtn.innerHTML = `<svg viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Copier`;
+  copyBtn.onclick = () => {
+    navigator.clipboard.writeText(text).then(() => {
+      copyBtn.textContent = "Copié !";
+      setTimeout(() => {
+        copyBtn.innerHTML = `<svg viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Copier`;
+      }, 1500);
+    });
+  };
+
+  wrap.appendChild(copyBtn);
+  contentWrap.appendChild(wrap);
 }
 
-function fillPrompt(text) {
-  promptEl.value = text;
-  promptEl.focus();
-  autoResize();
-  updateCount();
-}
-
-function loadDemo(text) {
-  clearChat();
-  setTimeout(() => fillPrompt(text), 100);
-}
-
-function autoResize() {
-  promptEl.style.height = "auto";
-  promptEl.style.height = Math.min(promptEl.scrollHeight, 160) + "px";
-}
-
-function updateCount() {
-  const n = promptEl.value.length;
-  charCountEl.textContent = n + " / 4096";
-  charCountEl.style.color = n > 3800 ? "#ef4444" : "var(--text3)";
-}
-
-promptEl.addEventListener("input", () => { autoResize(); updateCount(); });
-promptEl.addEventListener("keydown", e => {
-  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-});
-
+/* ═══ SEND MESSAGE ══════════════════════════════════════════════ */
 async function sendMessage() {
+  const promptEl = document.getElementById("prompt");
+  const sendBtn  = document.getElementById("send-btn");
   const text = promptEl.value.trim();
   if (!text || sendBtn.disabled) return;
 
-  if (messages.length === 0) {
-    convTitle.textContent = text.length > 40 ? text.slice(0,40)+"…" : text;
-  }
+  if (messages.length === 0)
+    document.getElementById("conv-title").textContent = text.length > 45 ? text.slice(0,45)+"…" : text;
 
-  createMessage("user", text);
-  messages.push({ role:"user", content:text });
-  save();
+  renderMsg("user", text);
+  messages.push({ role:"user", content: text });
 
   promptEl.value = "";
   autoResize();
   updateCount();
   sendBtn.disabled = true;
 
-  const typingBubble = createMessage("bot", "", true);
+  const { bubble, contentWrap } = renderMsg("bot", "", true);
 
   try {
     const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type":"application/json" },
-      body: JSON.stringify({ messages, temperature:0.7 })
+      body: JSON.stringify({ messages, temperature: 0.7 })
     });
-    const data = await res.json();
+    const data  = await res.json();
     const reply = data.choices[0].message.content;
 
-    typingBubble.innerHTML = "";
-    typingBubble.classList.remove("typing");
+    bubble.innerHTML = "";
 
     let i = 0;
     function type() {
       if (i < reply.length) {
-        typingBubble.textContent += reply.charAt(i++);
-        document.getElementById("chat-wrap").scrollTop = document.getElementById("chat-wrap").scrollHeight;
+        bubble.textContent += reply.charAt(i++);
+        document.getElementById("chat-wrap").scrollTop = 999999;
         setTimeout(type, 10);
       } else {
-        // add actions after typing done
-        const parent = typingBubble.parentElement;
-        const actions = document.createElement("div");
-        actions.className = "msg-actions";
-        actions.style.opacity = "0";
-        actions.innerHTML = `
-          <button class="msg-action-btn" onclick="navigator.clipboard.writeText(\`${reply.replace(/`/g,'\\`')}\`).then(()=>{this.textContent='Copié !';setTimeout(()=>this.textContent='Copier',1500)})">
-            <svg viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-            Copier
-          </button>
-        `;
-        parent.appendChild(actions);
+        addActions(contentWrap, reply);
+        messages.push({ role:"assistant", content: reply });
+        if (!isGuest) persistConv();
       }
     }
     type();
 
-    messages.push({ role:"assistant", content:reply });
-    save();
-
   } catch(err) {
-    typingBubble.innerHTML = "";
-    typingBubble.textContent = "⚠️ Impossible de joindre le serveur. Vérifiez votre URL API.";
-    typingBubble.style.color = "#ef4444";
+    bubble.innerHTML = "";
+    bubble.textContent = "⚠️ Impossible de joindre le serveur. Vérifiez l'URL API.";
+    bubble.style.color = "var(--red)";
   }
 
   sendBtn.disabled = false;
   promptEl.focus();
 }
 
-function clearChat() {
-  messages = [];
-  save();
-  msgCount = 0;
-  chatEl.innerHTML = "";
-  chatEl.appendChild(emptyEl);
-  emptyEl.style.display = "flex";
-  convTitle.textContent = "Nouvelle conversation";
+/* ═══ UI HELPERS ════════════════════════════════════════════════ */
+function v(id) { return document.getElementById(id).value.trim(); }
+function esc(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function stop(e) { e.stopPropagation(); }
+
+function fillPrompt(text) {
+  const p = document.getElementById("prompt");
+  p.value = text; p.focus();
+  autoResize(); updateCount();
+}
+
+function autoResize() {
+  const p = document.getElementById("prompt");
+  p.style.height = "auto";
+  p.style.height = Math.min(p.scrollHeight, 150) + "px";
+}
+
+function updateCount() {
+  const n  = document.getElementById("prompt").value.length;
+  const el = document.getElementById("char-count");
+  el.textContent = n + " / 4096";
+  el.style.color = n > 3800 ? "var(--red)" : "var(--text3)";
+}
+
+function togglePw(id) {
+  const el = document.getElementById(id);
+  el.type = el.type === "password" ? "text" : "password";
+}
+
+function checkStrength(pw) {
+  let s = 0;
+  if (pw.length >= 6) s++;
+  if (pw.length >= 10) s++;
+  if (/[A-Z]/.test(pw)) s++;
+  if (/[0-9]/.test(pw)) s++;
+  if (/[^A-Za-z0-9]/.test(pw)) s++;
+  const lvl = [
+    ["0%","",""],
+    ["20%","#ef4444","Très faible"],
+    ["40%","#f97316","Faible"],
+    ["60%","#eab308","Moyen"],
+    ["80%","#22c55e","Fort"],
+    ["100%","#16a34a","Très fort"]
+  ][Math.min(s, 5)];
+  const fill = document.getElementById("str-fill");
+  const txt  = document.getElementById("str-txt");
+  fill.style.width = lvl[0]; fill.style.background = lvl[1];
+  txt.textContent = lvl[2]; txt.style.color = lvl[1];
+}
+
+function showFieldErr(el, msg) { el.textContent = msg; el.classList.add("show"); }
+
+function toggleDd() { document.getElementById("profile-dd").classList.toggle("open"); }
+document.addEventListener("click", e => {
+  if (!e.target.closest(".user-row")) document.getElementById("profile-dd").classList.remove("open");
+});
+
+function selectModel(id, name, ctx, el) {
+  document.querySelectorAll(".model-opt").forEach(o => o.classList.remove("selected"));
+  el.classList.add("selected");
+  document.getElementById("model-nm").textContent     = name;
+  document.getElementById("model-ctx").textContent    = ctx;
+  document.getElementById("model-badge").textContent  = id;
+  document.getElementById("model-modal").classList.remove("open");
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2500);
 }
 
 function downloadChat() {
-  const txt = messages.map(m => `[${m.role === "user" ? "Vous" : "Mistral"}]\n${m.content}\n`).join("\n---\n\n");
+  if (!messages.length) { showToast("Aucun message à exporter."); return; }
+  const txt = messages.map(m =>
+    `[${m.role === "user" ? (currentUser?.name || "Vous") : "Mistral"}]\n${m.content}`
+  ).join("\n\n──────────────\n\n");
   const a = document.createElement("a");
-  a.href = "data:text/plain;charset=utf-8," + encodeURIComponent(txt || "Aucun message.");
+  a.href = "data:text/plain;charset=utf-8," + encodeURIComponent(txt);
   a.download = "conversation-mistral.txt";
   a.click();
 }
 
-function selectModel(id, name, ctx, el) {
-  document.querySelectorAll(".model-option").forEach(o => o.classList.remove("selected"));
-  el.classList.add("selected");
-  document.getElementById("active-model-name").textContent = name;
-  document.getElementById("active-model-badge").textContent = id;
-  document.querySelector(".model-sub").textContent = ctx;
-  document.getElementById("model-modal").classList.remove("open");
+function exportAll() {
+  const convs = getUserConvs();
+  if (!convs.length) { showToast("Aucune conversation sauvegardée."); return; }
+  const all = convs.map(c =>
+    `══════ ${c.title} ══════\n\n` +
+    c.messages.map(m => `[${m.role === "user" ? currentUser.name : "Mistral"}]\n${m.content}`).join("\n\n──────\n\n")
+  ).join("\n\n\n");
+  const a = document.createElement("a");
+  a.href = "data:text/plain;charset=utf-8," + encodeURIComponent(all);
+  a.download = "mistral-toutes-conversations.txt";
+  a.click();
 }
 
-// restore history
-if (messages.length > 0) {
-  hideEmpty();
-  addDivider();
-  msgCount = 1;
-  convTitle.textContent = messages[0].content.slice(0,40) + (messages[0].content.length > 40 ? "…" : "");
-  messages.forEach(m => {
-    createMessage(m.role === "user" ? "user" : "bot", m.content);
-  });
-}
+/* ═══ INPUT EVENTS ══════════════════════════════════════════════ */
+document.getElementById("prompt").addEventListener("input", () => { autoResize(); updateCount(); });
+document.getElementById("prompt").addEventListener("keydown", e => {
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+/* ═══ INIT — restore session ════════════════════════════════════ */
+(function init() {
+  const session = ls.get(S_SESSION);
+  if (!session) return;
+  if (session.userId === "guest") { doGuest(); return; }
+  const user = getUsers()[session.userId];
+  if (user) startApp(user, false);
+})();
 </script>
 </body>
 </html>
