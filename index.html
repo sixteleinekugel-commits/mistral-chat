@@ -1392,32 +1392,6 @@ const LANG_VOICE_HINTS = {
   "en": { lang:"en-GB", hints:["Google UK English","Daniel","Kate","Google UK"] },
 };
 
-// Pick the best voice for a given language code
-function pickVoice(langCode) {
-  const voices = synthesis ? synthesis.getVoices() : [];
-  if (!voices.length) return null;
-
-  // Find the primary language (first 2 chars)
-  const primary = langCode.slice(0,2).toLowerCase();
-  const entry   = LANG_VOICE_HINTS[primary];
-
-  if (entry) {
-    // Try named hints first
-    for (const hint of entry.hints) {
-      const v = voices.find(v => v.name.toLowerCase().includes(hint.toLowerCase()));
-      if (v) return v;
-    }
-    // Fall back to any voice matching the lang prefix
-    const v = voices.find(v => v.lang.toLowerCase().startsWith(primary));
-    if (v) return v;
-  }
-
-  // Default: best English
-  return voices.find(v => v.name.includes("Google UK") || v.name.includes("Daniel") || v.name.includes("Samantha"))
-      || voices.find(v => v.lang.startsWith("en"))
-      || voices[0];
-}
-
 // Simple language detection based on common words
 function detectLanguageFromText(text) {
   const t = text.toLowerCase();
@@ -1648,6 +1622,8 @@ function toggleVoiceMic() {
     stopListening();
     setVoiceState("idle");
   } else {
+    // MUST unlock TTS synchronously here — this is the user gesture
+    unlockTTS();
     startListening(async text => {
       document.getElementById("vo-live-text").textContent = "";
       setVoiceState("thinking");
@@ -1688,63 +1664,138 @@ async function sendVoiceMessage(text) {
   }
 }
 
+/* iOS/Android require speechSynthesis to be triggered within a user gesture.
+   After await fetch() we are outside that gesture stack — iOS silently blocks.
+   Fix: unlock audio context once at mic-tap time, then queue real speech. */
+let ttsUnlocked = false;
+
+function unlockTTS() {
+  if (ttsUnlocked || !synthesis) return;
+  // Speak a silent 1ms utterance to open the audio channel inside the gesture
+  const silent = new SpeechSynthesisUtterance(" ");
+  silent.volume = 0;
+  silent.rate   = 10;
+  silent.lang   = "en-US";
+  synthesis.speak(silent);
+  ttsUnlocked = true;
+}
+
+function pickBestVoice(bcp47) {
+  if (!synthesis) return null;
+  const voices = synthesis.getVoices();
+  if (!voices.length) return null;
+
+  const primary = bcp47.slice(0, 2).toLowerCase();
+
+  // Score each voice: higher = better
+  function score(v) {
+    const n  = v.name.toLowerCase();
+    const vl = v.lang.toLowerCase();
+    let s = 0;
+
+    // Must match the target language
+    if (!vl.startsWith(primary)) return -1;
+
+    // Prefer premium / neural voices
+    if (n.includes("google")) s += 10;
+    if (n.includes("wavenet") || n.includes("neural") || n.includes("premium")) s += 8;
+    if (n.includes("natural")) s += 5;
+
+    // Prefer exact locale match (fr-FR > fr-CA for French, etc.)
+    if (vl === bcp47.toLowerCase()) s += 4;
+
+    // Known high-quality names per language
+    const GOOD_NAMES = {
+      fr: ["thomas","amelie","marie","juliette","nicolas"],
+      es: ["monica","paulina","jorge","juan","rosa"],
+      de: ["anna","markus","yannick","petra"],
+      it: ["alice","luca","federica","paola"],
+      pt: ["joana","luciana","catarina","daniel"],
+      ar: ["maged","tarik"],
+      zh: ["tingting","meijia","lili"],
+      ja: ["kyoko","otoya","hattori"],
+      ko: ["seoyeon","yuna"],
+      ru: ["milena","yuri","katya"],
+      nl: ["xander","ellen","fiona"],
+      pl: ["zosia","krzysztof"],
+      tr: ["yelda","cem"],
+      sv: ["alva","klara"],
+      en: ["daniel","kate","serena","moira","samantha"],
+    };
+
+    const good = GOOD_NAMES[primary] || [];
+    if (good.some(g => n.includes(g))) s += 6;
+
+    // Penalise clearly robotic / compact voices
+    if (n.includes("compact") || n.includes("espeaks") || n.includes("espeak")) s -= 10;
+
+    return s;
+  }
+
+  const sorted = voices.map(v => ({ v, s: score(v) })).filter(x => x.s >= 0).sort((a,b) => b.s - a.s);
+  return sorted.length ? sorted[0].v : voices.find(v => v.lang.toLowerCase().startsWith(primary)) || null;
+}
+
 function speakText(text, langCode) {
   if (!synthesis) { setVoiceState("idle"); return; }
   synthesis.cancel();
 
-  // Clean markdown
+  const lang2 = langCode || detectedLang || "en-US";
+
+  // Clean markdown for cleaner speech
   const clean = text
     .replace(/\*\*(.+?)\*\*/gs, "$1")
     .replace(/\*(.+?)\*/gs, "$1")
     .replace(/`{1,3}[\s\S]*?`{1,3}/g, "")
     .replace(/#{1,6}\s/g, "")
+    .replace(/\[.*?\]\(.*?\)/g, "")
     .replace(/\n{2,}/g, ". ")
     .replace(/\n/g, " ")
+    .replace(/\s{2,}/g, " ")
     .trim();
 
-  // Split into sentences to avoid Chrome 15s TTS cutoff bug
-  const sentences = clean.match(/[^.!?]+[.!?]+(?:\s|$)|[^.!?]+$/g) || [clean];
-  const lang2 = langCode || detectedLang || "en-US";
+  if (!clean) { setVoiceState("idle"); return; }
 
-  // Pick voice once, reuse for all sentences
-  const allVoices = synthesis.getVoices();
-  const selectedVoice = allVoices.length ? pickVoice(lang2) : null;
+  // Split into sentences (handles French «!», «?» too)
+  const sentences = clean.match(/[^.!?…]+[.!?…]+(?:\s|$)|[^.!?…]+$/g) || [clean];
 
-  let idx = 0;
+  function doSpeak(voice) {
+    let idx = 0;
+    setVoiceState("speaking");
 
-  function speakNext() {
-    if (idx >= sentences.length) {
-      setVoiceState("idle");
-      document.getElementById("vo-live-text").textContent = "";
-      return;
+    function next() {
+      if (idx >= sentences.length) {
+        setVoiceState("idle");
+        document.getElementById("vo-live-text").textContent = "";
+        return;
+      }
+      const chunk = sentences[idx].trim();
+      idx++;
+      if (!chunk) { next(); return; }
+
+      const utt = new SpeechSynthesisUtterance(chunk);
+      utt.lang  = lang2;
+      utt.rate  = 1.0;
+      utt.pitch = 1.0;
+      if (voice) utt.voice = voice;
+
+      utt.onend   = next;
+      utt.onerror = next;
+      synthesis.speak(utt);
     }
 
-    const chunk = sentences[idx].trim();
-    idx++; // increment BEFORE async speak to avoid double-call
-    if (!chunk) { speakNext(); return; }
-
-    const utt  = new SpeechSynthesisUtterance(chunk);
-    utt.lang   = lang2;
-    utt.rate   = 1.05;
-    utt.pitch  = 1.0;
-    if (selectedVoice) utt.voice = selectedVoice;
-
-    if (idx === 1) utt.onstart = () => setVoiceState("speaking");
-    utt.onend  = speakNext;
-    utt.onerror = speakNext;
-
-    synthesis.speak(utt);
+    next();
   }
 
-  // Chrome: voices may not be ready on first call
-  if (!allVoices.length) {
-    synthesis.addEventListener("voiceschanged", () => {
-      const v = pickVoice(lang2);
-      // re-assign now that voices are loaded
-      speakNext();
-    }, { once: true });
+  // Voices available immediately?
+  const voices = synthesis.getVoices();
+  if (voices.length) {
+    doSpeak(pickBestVoice(lang2));
   } else {
-    speakNext();
+    // Wait for voices to load (Chrome async)
+    synthesis.addEventListener("voiceschanged", () => {
+      doSpeak(pickBestVoice(lang2));
+    }, { once: true });
   }
 }
 
@@ -2091,13 +2142,13 @@ function addActions(wrap, text) {
       speakBtn.innerHTML = listenIcon;
       return;
     }
+    unlockTTS();
     speakBtn.innerHTML = stopIcon;
-    // Detect language from the text itself for inline listen
     const lang = detectLanguageFromText(text);
     const entry = LANG_VOICE_HINTS[lang];
     speakText(text, entry ? entry.lang : "en-US");
     const check = setInterval(() => {
-      if (!synthesis.speaking) { speakBtn.innerHTML = listenIcon; clearInterval(check); }
+      if (!synthesis || !synthesis.speaking) { speakBtn.innerHTML = listenIcon; clearInterval(check); }
     }, 300);
   };
 
