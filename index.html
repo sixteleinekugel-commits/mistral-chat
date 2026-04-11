@@ -1661,8 +1661,11 @@ async function sendVoiceMessage(text) {
   if (messages.length === 0)
     document.getElementById("conv-title").textContent = text.length > 45 ? text.slice(0,45)+"…" : text;
 
-  // Push to conversation history (for context) but DON'T render in chat
+  // Also add to main chat
+  renderMsg("user", text);
   messages.push({ role:"user", content: text });
+
+  const { bubble, wrap } = renderMsg("bot", "", true);
 
   try {
     const res  = await fetch(API_URL, {
@@ -1673,18 +1676,20 @@ async function sendVoiceMessage(text) {
     const data = await res.json();
     const reply = data.choices[0].message.content;
 
+    bubble.innerHTML = "";
+    bubble.textContent = reply;
+    addActions(wrap, reply);
     messages.push({ role:"assistant", content: reply });
     if (!isGuest) persistConv();
 
-    // Show in voice UI only
     addVoiceMessage("bot", reply);
-
-    // Speak immediately — sentence by sentence as they arrive
     speakText(reply, detectedLang);
 
   } catch {
+    bubble.innerHTML = "";
+    bubble.textContent = "⚠️ Could not reach the server.";
+    bubble.style.color = "var(--red)";
     setVoiceState("idle");
-    addVoiceMessage("bot", "⚠️ Could not reach the server.");
   }
 }
 
@@ -1692,7 +1697,7 @@ function speakText(text, langCode) {
   if (!synthesis) { setVoiceState("idle"); return; }
   synthesis.cancel();
 
-  // Clean markdown
+  // Clean markdown for cleaner speech
   const clean = text
     .replace(/\*\*(.+?)\*\*/gs, "$1")
     .replace(/\*(.+?)\*/gs, "$1")
@@ -1702,47 +1707,38 @@ function speakText(text, langCode) {
     .replace(/\n/g, " ")
     .trim();
 
-  // Split into sentences to avoid Chrome 15s TTS cutoff bug
-  const sentences = clean.match(/[^.!?]+[.!?]+(?:\s|$)|[^.!?]+$/g) || [clean];
-  const lang2 = langCode || detectedLang || "en-US";
-
-  // Pick voice once, reuse for all sentences
-  const allVoices = synthesis.getVoices();
-  const selectedVoice = allVoices.length ? pickVoice(lang2) : null;
-
+  // Split long text into chunks to avoid Chrome 15s TTS cutoff bug
+  const sentences = clean.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [clean];
   let idx = 0;
 
-  function speakNext() {
-    if (idx >= sentences.length) {
-      setVoiceState("idle");
-      document.getElementById("vo-live-text").textContent = "";
-      return;
+  const speakNext = () => {
+    if (idx >= sentences.length) { setVoiceState("idle"); document.getElementById("vo-live-text").textContent = ""; return; }
+
+    const utt  = new SpeechSynthesisUtterance(sentences[idx].trim());
+    const lang2 = langCode || detectedLang || "en-US";
+
+    utt.lang  = lang2;
+    utt.rate  = 1.05;   // slightly faster = more natural
+    utt.pitch = 1.0;
+
+    // Wait for voices to be available
+    const allVoices = synthesis.getVoices();
+    if (allVoices.length) {
+      const voice = pickVoice(lang2);
+      if (voice) utt.voice = voice;
     }
 
-    const chunk = sentences[idx].trim();
-    idx++; // increment BEFORE async speak to avoid double-call
-    if (!chunk) { speakNext(); return; }
-
-    const utt  = new SpeechSynthesisUtterance(chunk);
-    utt.lang   = lang2;
-    utt.rate   = 1.05;
-    utt.pitch  = 1.0;
-    if (selectedVoice) utt.voice = selectedVoice;
-
-    if (idx === 1) utt.onstart = () => setVoiceState("speaking");
-    utt.onend  = speakNext;
-    utt.onerror = speakNext;
+    utt.onstart = () => { if (idx === 0) setVoiceState("speaking"); };
+    utt.onend   = () => { idx++; speakNext(); };
+    utt.onerror = () => { idx++; speakNext(); };
 
     synthesis.speak(utt);
-  }
+    idx++;
+  };
 
-  // Chrome: voices may not be ready on first call
-  if (!allVoices.length) {
-    synthesis.addEventListener("voiceschanged", () => {
-      const v = pickVoice(lang2);
-      // re-assign now that voices are loaded
-      speakNext();
-    }, { once: true });
+  // Chrome quirk: getVoices may be async on first load
+  if (synthesis.getVoices().length === 0) {
+    synthesis.addEventListener("voiceschanged", speakNext, { once: true });
   } else {
     speakNext();
   }
