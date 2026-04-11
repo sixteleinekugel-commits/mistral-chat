@@ -628,135 +628,225 @@ body {
 .foot-note { text-align: center; font-size: 11px; color: var(--text3); margin-top: 8px; }
 .foot-note a { color: var(--text3); text-decoration: underline; }
 
-/* ══ VOICE MODE OVERLAY ═══════════════════════════════════════ */
+/* ══ VOICE MODE — FULLSCREEN ══════════════════════════════════ */
 #voice-overlay {
   display: none;
   position: fixed; inset: 0;
-  background: rgba(12,13,17,0.97);
+  background: #08090d;
   z-index: 600;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 32px;
+  animation: vo-fadein 0.3s ease;
 }
 #voice-overlay.open { display: flex; }
 
-.voice-orb-wrap {
+@keyframes vo-fadein { from { opacity:0; } to { opacity:1; } }
+
+/* topbar */
+.vo-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px 0;
+  flex-shrink: 0;
+}
+
+.vo-brand {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-head); font-size: 16px; font-weight: 700;
+}
+
+.vo-brand-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green); box-shadow: 0 0 8px var(--green);
+}
+
+.vo-lang-badge {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.05em;
+  padding: 2px 8px; border-radius: 20px;
+  background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--text2); font-family: var(--font-body);
+  text-transform: uppercase;
+}
+
+.vo-close-btn {
+  width: 36px; height: 36px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text2); transition: all 0.15s;
+}
+.vo-close-btn:hover { background: var(--surface3); color: var(--text); }
+.vo-close-btn svg { width: 16px; height: 16px; }
+
+/* conversation history */
+.vo-history {
+  flex: 1; overflow-y: auto; padding: 20px 24px;
+  display: flex; flex-direction: column; gap: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+.vo-history::-webkit-scrollbar { width: 3px; }
+.vo-history::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
+
+.vo-msg {
+  display: flex; gap: 10px; align-items: flex-end;
+  animation: msg-in 0.25s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.vo-msg.user { flex-direction: row-reverse; }
+
+.vo-msg-av {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; font-family: var(--font-head);
+}
+.vo-msg-av.bot  { background: var(--accent); color: white; }
+.vo-msg-av.user { background: var(--surface3); color: var(--text2); border: 1px solid var(--border2); }
+
+.vo-bubble {
+  max-width: 75%;
+  padding: 10px 14px;
+  font-size: 14px; line-height: 1.6; word-break: break-word;
+}
+.vo-bubble.bot  { background: var(--surface); border: 1px solid var(--border); border-radius: 4px 14px 14px 14px; color: var(--text); }
+.vo-bubble.user { background: var(--accent); color: white; border-radius: 14px 4px 14px 14px; }
+
+/* empty history hint */
+.vo-empty-hint {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  color: var(--text3); font-size: 13px; text-align: center; line-height: 1.7;
+}
+
+/* center orb + wave area */
+.vo-center {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 16px; padding: 10px 24px; flex-shrink: 0;
+}
+
+.vo-orb-wrap {
   position: relative;
   display: flex; align-items: center; justify-content: center;
 }
 
-/* animated rings */
-.voice-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid var(--accent);
-  opacity: 0;
+/* rings */
+.vo-ring {
+  position: absolute; border-radius: 50%; opacity: 0;
+  border: 1.5px solid var(--accent);
+  pointer-events: none;
 }
-.voice-ring.r1 { width: 140px; height: 140px; animation: ring-expand 2s ease-out infinite; }
-.voice-ring.r2 { width: 180px; height: 180px; animation: ring-expand 2s ease-out 0.4s infinite; }
-.voice-ring.r3 { width: 220px; height: 220px; animation: ring-expand 2s ease-out 0.8s infinite; }
+.vo-r1 { width: 120px; height: 120px; }
+.vo-r2 { width: 155px; height: 155px; }
+.vo-r3 { width: 190px; height: 190px; }
 
-@keyframes ring-expand {
-  0%   { transform: scale(0.8); opacity: 0.6; }
-  100% { transform: scale(1.3); opacity: 0; }
+@keyframes vo-ring-expand {
+  0%   { transform: scale(0.85); opacity: 0.55; }
+  100% { transform: scale(1.25); opacity: 0; }
 }
 
-/* orb stops animating when idle */
-#voice-overlay.idle .voice-ring { animation: none; opacity: 0; }
-#voice-overlay.speaking .voice-ring { animation-play-state: running; }
-#voice-overlay.listening .voice-ring.r1 { border-color: var(--red); animation: ring-expand 1.2s ease-out infinite; }
-#voice-overlay.listening .voice-ring.r2 { border-color: var(--red); animation: ring-expand 1.2s ease-out 0.25s infinite; }
-#voice-overlay.listening .voice-ring.r3 { border-color: var(--red); animation: ring-expand 1.2s ease-out 0.5s infinite; }
-
-.voice-orb {
-  width: 110px; height: 110px;
-  border-radius: 50%;
+/* orb states */
+.vo-orb {
+  width: 96px; height: 96px; border-radius: 50%;
   background: var(--accent);
   display: flex; align-items: center; justify-content: center;
   position: relative; z-index: 1;
-  box-shadow: 0 0 60px rgba(255,107,53,0.4);
   transition: background 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 40px rgba(255,107,53,0.25);
 }
+.vo-orb svg { width: 38px; height: 38px; }
 
-#voice-overlay.listening .voice-orb {
+/* idle */
+#voice-overlay.idle .vo-orb { box-shadow: 0 0 30px rgba(255,107,53,0.2); }
+#voice-overlay.idle .vo-ring { animation: none; opacity: 0; }
+
+/* listening */
+#voice-overlay.listening .vo-orb {
   background: var(--red);
-  box-shadow: 0 0 60px rgba(239,68,68,0.5);
+  box-shadow: 0 0 60px rgba(239,68,68,0.45);
+  animation: vo-orb-breathe 1s ease-in-out infinite alternate;
+}
+#voice-overlay.listening .vo-ring { border-color: var(--red); }
+#voice-overlay.listening .vo-r1 { animation: vo-ring-expand 1.2s ease-out infinite; }
+#voice-overlay.listening .vo-r2 { animation: vo-ring-expand 1.2s ease-out 0.28s infinite; }
+#voice-overlay.listening .vo-r3 { animation: vo-ring-expand 1.2s ease-out 0.56s infinite; }
+
+/* thinking */
+#voice-overlay.thinking .vo-orb {
+  box-shadow: 0 0 30px rgba(255,107,53,0.2);
+  animation: vo-orb-spin-glow 1.8s ease-in-out infinite alternate;
+}
+#voice-overlay.thinking .vo-ring { animation: none; opacity: 0; }
+
+/* speaking */
+#voice-overlay.speaking .vo-orb {
+  box-shadow: 0 0 70px rgba(255,107,53,0.55);
+  animation: vo-orb-breathe 0.65s ease-in-out infinite alternate;
+}
+#voice-overlay.speaking .vo-r1 { animation: vo-ring-expand 1.8s ease-out infinite; }
+#voice-overlay.speaking .vo-r2 { animation: vo-ring-expand 1.8s ease-out 0.4s infinite; }
+#voice-overlay.speaking .vo-r3 { animation: vo-ring-expand 1.8s ease-out 0.8s infinite; }
+
+@keyframes vo-orb-breathe {
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
+@keyframes vo-orb-spin-glow {
+  from { box-shadow: 0 0 20px rgba(255,107,53,0.2); }
+  to   { box-shadow: 0 0 50px rgba(255,107,53,0.5); }
 }
 
-#voice-overlay.speaking .voice-orb {
-  animation: orb-pulse 0.8s ease-in-out infinite alternate;
+/* waveform */
+.vo-wave {
+  display: flex; align-items: center; gap: 3px; height: 28px;
+  opacity: 0; transition: opacity 0.3s;
 }
+#voice-overlay.listening .vo-wave,
+#voice-overlay.speaking  .vo-wave { opacity: 1; }
+.wave-bar { width: 3px; border-radius: 3px; background: var(--accent); transition: height 0.08s ease; }
+#voice-overlay.listening .wave-bar { background: var(--red); }
 
-@keyframes orb-pulse {
-  from { box-shadow: 0 0 40px rgba(255,107,53,0.3); transform: scale(1); }
-  to   { box-shadow: 0 0 80px rgba(255,107,53,0.7); transform: scale(1.04); }
-}
-
-.voice-orb svg { width: 44px; height: 44px; }
-
-.voice-status {
+/* status & live text */
+.vo-status {
   font-family: var(--font-head);
-  font-size: 18px; font-weight: 600;
-  color: var(--text);
-  min-height: 28px;
-  text-align: center;
+  font-size: 16px; font-weight: 600; color: var(--text);
+  text-align: center; min-height: 24px;
+}
+.vo-live-text {
+  font-size: 14px; color: var(--text2); font-weight: 300;
+  text-align: center; max-width: 440px; line-height: 1.6;
+  min-height: 20px; padding: 0 20px;
+  font-style: italic; transition: opacity 0.2s;
 }
 
-.voice-transcript {
-  font-size: 15px; color: var(--text2); font-weight: 300;
-  max-width: 480px; text-align: center; line-height: 1.65;
-  min-height: 48px; padding: 0 24px;
-  transition: opacity 0.2s;
-}
-
-.voice-actions {
-  display: flex; align-items: center; gap: 16px; margin-top: 8px;
-}
-
-.voice-action-btn {
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  background: transparent; border: none; cursor: pointer; color: var(--text2);
-  transition: color 0.15s; font-family: var(--font-body);
-}
-.voice-action-btn:hover { color: var(--text); }
-
-.voice-action-circle {
-  width: 56px; height: 56px; border-radius: 50%;
+/* controls */
+.vo-controls {
   display: flex; align-items: center; justify-content: center;
-  border: 1px solid var(--border2); background: var(--surface);
+  gap: 20px;
+  padding: 16px 24px calc(24px + var(--safe-bottom));
+  flex-shrink: 0;
+}
+
+.vo-ctrl-btn {
+  border: none; cursor: pointer; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
   transition: all 0.2s;
 }
-.voice-action-btn:hover .voice-action-circle { background: var(--surface2); border-color: var(--border2); }
 
-.voice-action-circle svg { width: 22px; height: 22px; }
-
-.voice-action-label { font-size: 11px; color: var(--text3); }
-
-/* mic button in voice overlay - big red pulsing when recording */
-#voice-mic-btn .voice-action-circle {
-  width: 72px; height: 72px;
-  background: var(--accent); border-color: transparent;
+.vo-ctrl-secondary {
+  width: 54px; height: 54px;
+  background: var(--surface2); color: var(--text2);
+  border: 1px solid var(--border2);
 }
-#voice-mic-btn:hover .voice-action-circle { background: var(--accent2); }
-#voice-mic-btn .voice-action-circle svg { width: 28px; height: 28px; color: white; }
+.vo-ctrl-secondary:hover { background: var(--surface3); color: var(--text); }
+.vo-ctrl-secondary svg { width: 20px; height: 20px; }
 
-#voice-overlay.listening #voice-mic-btn .voice-action-circle {
+.vo-ctrl-main {
+  width: 74px; height: 74px;
+  background: var(--accent);
+  box-shadow: 0 4px 24px rgba(255,107,53,0.4);
+}
+.vo-ctrl-main:hover { background: var(--accent2); transform: scale(1.04); }
+.vo-ctrl-main:active { transform: scale(0.97); }
+.vo-ctrl-main svg { width: 30px; height: 30px; }
+
+#voice-overlay.listening .vo-ctrl-main {
   background: var(--red);
-  animation: orb-pulse-red 0.8s ease-in-out infinite alternate;
-}
-@keyframes orb-pulse-red {
-  from { box-shadow: 0 0 0px rgba(239,68,68,0.3); }
-  to   { box-shadow: 0 0 30px rgba(239,68,68,0.7); }
-}
-
-/* waveform bars (decorative, animated by JS) */
-.voice-wave {
-  display: flex; align-items: center; gap: 3px; height: 32px;
-}
-.wave-bar {
-  width: 3px; border-radius: 3px; background: var(--accent);
-  transition: height 0.1s ease;
+  box-shadow: 0 4px 24px rgba(239,68,68,0.4);
+  animation: vo-orb-breathe 0.9s ease-in-out infinite alternate;
 }
 
 /* ══ MODALS ═══════════════════════════════════════════════════ */
@@ -834,10 +924,15 @@ body {
   .msg-content { max-width: calc(100% - 38px); }
   #char-count { display: none; }
   .m-box { border-radius: 16px; }
-  .voice-orb { width: 90px; height: 90px; }
-  .voice-ring.r1 { width: 120px; height: 120px; }
-  .voice-ring.r2 { width: 155px; height: 155px; }
-  .voice-ring.r3 { width: 190px; height: 190px; }
+  .vo-orb { width: 80px; height: 80px; }
+  .vo-r1 { width: 104px; height: 104px; }
+  .vo-r2 { width: 134px; height: 134px; }
+  .vo-r3 { width: 164px; height: 164px; }
+  .vo-history { padding: 14px 16px; }
+  .vo-topbar { padding: 16px 16px 0; }
+  .vo-controls { padding: 12px 16px calc(16px + var(--safe-bottom)); gap: 16px; }
+  .vo-ctrl-main { width: 66px; height: 66px; }
+  .vo-ctrl-secondary { width: 48px; height: 48px; }
 }
 
 @media (max-width: 400px) {
@@ -1121,58 +1216,67 @@ body {
 </div>
 
 <!-- ════════════════════════════════════
-     VOICE MODE OVERLAY
+     VOICE MODE — FULLSCREEN
 ════════════════════════════════════ -->
-<div id="voice-overlay" class="idle">
-  <div class="voice-orb-wrap">
-    <div class="voice-ring r1"></div>
-    <div class="voice-ring r2"></div>
-    <div class="voice-ring r3"></div>
-    <div class="voice-orb" id="voice-orb">
-      <!-- mic icon by default -->
-      <svg id="voice-orb-icon" width="44" height="44" viewBox="0 0 24 24" fill="none">
-        <rect x="8" y="2" width="8" height="13" rx="4" fill="white"/>
-        <path d="M4 11a8 8 0 0016 0" stroke="white" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-        <path d="M12 19v3" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-      </svg>
+<div id="voice-overlay">
+
+  <!-- Top bar -->
+  <div class="vo-topbar">
+    <div class="vo-brand">
+      <div class="vo-brand-dot"></div>
+      <span>JARVIS AI</span>
+      <span class="vo-lang-badge" id="vo-lang-badge">Auto</span>
     </div>
+    <button class="vo-close-btn" onclick="closeVoiceMode()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
   </div>
 
-  <!-- waveform -->
-  <div class="voice-wave" id="voice-wave"></div>
+  <!-- Conversation history (scrollable) -->
+  <div class="vo-history" id="vo-history"></div>
 
-  <div class="voice-status" id="voice-status">Tap the mic to speak</div>
-  <div class="voice-transcript" id="voice-transcript"></div>
-
-  <div class="voice-actions">
-    <!-- Stop speaking -->
-    <button class="voice-action-btn" onclick="stopSpeaking()" title="Stop playback">
-      <div class="voice-action-circle">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" stroke="none"/></svg>
-      </div>
-      <span class="voice-action-label">Stop</span>
-    </button>
-
-    <!-- Main mic button -->
-    <button class="voice-action-btn" id="voice-mic-btn" onclick="toggleVoiceMic()" title="Hold to speak">
-      <div class="voice-action-circle">
-        <svg viewBox="0 0 24 24" fill="none">
+  <!-- Center orb area -->
+  <div class="vo-center">
+    <div class="vo-orb-wrap">
+      <div class="vo-ring vo-r1"></div>
+      <div class="vo-ring vo-r2"></div>
+      <div class="vo-ring vo-r3"></div>
+      <div class="vo-orb" id="vo-orb">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
           <rect x="8" y="2" width="8" height="13" rx="4" fill="white"/>
           <path d="M4 11a8 8 0 0016 0" stroke="white" stroke-width="1.8" stroke-linecap="round" fill="none"/>
           <path d="M12 19v3" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
         </svg>
       </div>
-      <span class="voice-action-label" id="voice-mic-label">Speak</span>
+    </div>
+
+    <!-- Live waveform -->
+    <div class="vo-wave" id="vo-wave"></div>
+
+    <!-- Status & transcript -->
+    <div class="vo-status" id="vo-status">Tap the mic to start</div>
+    <div class="vo-live-text" id="vo-live-text"></div>
+  </div>
+
+  <!-- Bottom controls -->
+  <div class="vo-controls">
+    <button class="vo-ctrl-btn vo-ctrl-secondary" onclick="stopSpeaking()" title="Stop">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg>
     </button>
 
-    <!-- Close voice mode -->
-    <button class="voice-action-btn" onclick="closeVoiceMode()" title="Exit voice mode">
-      <div class="voice-action-circle">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-      </div>
-      <span class="voice-action-label">Close</span>
+    <button class="vo-ctrl-btn vo-ctrl-main" id="vo-mic-btn" onclick="toggleVoiceMic()">
+      <svg id="vo-mic-icon" viewBox="0 0 24 24" fill="none">
+        <rect x="8" y="2" width="8" height="13" rx="4" fill="white"/>
+        <path d="M4 11a8 8 0 0016 0" stroke="white" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <path d="M12 19v3" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <button class="vo-ctrl-btn vo-ctrl-secondary" onclick="voiceModeNewChat()" title="New chat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
     </button>
   </div>
+
 </div>
 
 <!-- MODEL MODAL -->
@@ -1255,6 +1359,9 @@ function closeSidebar() {
 /* ═══════════════════════════════════════════
    VOICE MODE
 ═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   VOICE MODE — MULTILINGUAL
+═══════════════════════════════════════════ */
 let recognition       = null;
 let synthesis         = window.speechSynthesis;
 let voiceActive       = false;
@@ -1263,71 +1370,176 @@ let isSpeaking        = false;
 let waveInterval      = null;
 let inlineMicActive   = false;
 let inlineRecognition = null;
+let voiceMessages     = []; // separate history for voice conversation
+let detectedLang      = "en-US"; // will be updated on detection
+
+// Language detection map: BCP-47 → best voice name hints
+const LANG_VOICE_HINTS = {
+  "fr": { lang:"fr-FR", hints:["Google français","Thomas","Amelie","Marie","Google French"] },
+  "es": { lang:"es-ES", hints:["Google español","Monica","Paulina","Google Spanish"] },
+  "de": { lang:"de-DE", hints:["Google Deutsch","Anna","Markus","Google German"] },
+  "it": { lang:"it-IT", hints:["Google italiano","Alice","Luca","Google Italian"] },
+  "pt": { lang:"pt-PT", hints:["Google português","Joana","Luciana","Google Portuguese"] },
+  "ar": { lang:"ar-SA", hints:["Google Arabic","Maged","Tarik"] },
+  "zh": { lang:"zh-CN", hints:["Google 普通话","Tingting","Meijia","Google Chinese"] },
+  "ja": { lang:"ja-JP", hints:["Google 日本語","Kyoko","Otoya","Google Japanese"] },
+  "ko": { lang:"ko-KR", hints:["Google 한국어","Yuna","Seoyeon","Google Korean"] },
+  "ru": { lang:"ru-RU", hints:["Google русский","Milena","Yuri","Google Russian"] },
+  "nl": { lang:"nl-NL", hints:["Google Nederlands","Xander","Ellen","Google Dutch"] },
+  "pl": { lang:"pl-PL", hints:["Google polski","Zosia","Krzysztof"] },
+  "tr": { lang:"tr-TR", hints:["Google Türkçe","Yelda","Cem"] },
+  "sv": { lang:"sv-SE", hints:["Google svenska","Alva","Google Swedish"] },
+  "en": { lang:"en-GB", hints:["Google UK English","Daniel","Kate","Google UK"] },
+};
+
+// Pick the best voice for a given language code
+function pickVoice(langCode) {
+  const voices = synthesis ? synthesis.getVoices() : [];
+  if (!voices.length) return null;
+
+  // Find the primary language (first 2 chars)
+  const primary = langCode.slice(0,2).toLowerCase();
+  const entry   = LANG_VOICE_HINTS[primary];
+
+  if (entry) {
+    // Try named hints first
+    for (const hint of entry.hints) {
+      const v = voices.find(v => v.name.toLowerCase().includes(hint.toLowerCase()));
+      if (v) return v;
+    }
+    // Fall back to any voice matching the lang prefix
+    const v = voices.find(v => v.lang.toLowerCase().startsWith(primary));
+    if (v) return v;
+  }
+
+  // Default: best English
+  return voices.find(v => v.name.includes("Google UK") || v.name.includes("Daniel") || v.name.includes("Samantha"))
+      || voices.find(v => v.lang.startsWith("en"))
+      || voices[0];
+}
+
+// Simple language detection based on common words
+function detectLanguageFromText(text) {
+  const t = text.toLowerCase();
+  const checks = [
+    { lang:"fr", words:["je","tu","il","nous","vous","ils","le","la","les","de","du","un","une","et","est","pas","que","qui","pour","dans","avec","sur","au","aux","mais","donc","car","bonjour","merci","oui","non"] },
+    { lang:"es", words:["yo","tú","él","nosotros","los","las","del","una","que","por","con","para","está","hola","gracias","sí","pero","porque","como","cuando","donde","este","esta"] },
+    { lang:"de", words:["ich","du","er","wir","sie","der","die","das","ist","nicht","und","zu","in","ein","eine","mit","auf","für","haben","sein","danke","bitte","ja","nein","hallo"] },
+    { lang:"it", words:["io","tu","lui","noi","loro","il","lo","la","di","da","un","una","che","con","per","non","sono","grazie","ciao","buongiorno","sì","si","ma","come","quando"] },
+    { lang:"pt", words:["eu","tu","ele","nós","eles","o","a","de","um","uma","que","com","para","não","está","obrigado","olá","sim","mas","como","quando","por"] },
+    { lang:"ar", words:["أنا","أنت","هو","نحن","هم","في","من","على","إلى","عن","مع","هل","لا","نعم","شكرا","مرحبا"] },
+    { lang:"zh", words:["的","了","在","是","我","你","他","们","这","那","有","不","人","说","到","会","来","就","去","上","为","和","中"] },
+    { lang:"ja", words:["の","に","は","を","が","で","と","て","だ","です","ます","こと","それ","これ","あの","から"] },
+    { lang:"ko", words:["이","그","저","의","을","를","이","가","은","는","하다","있다","없다","합니다","감사"] },
+    { lang:"ru", words:["я","ты","он","мы","вы","они","и","в","не","на","с","как","это","что","для","по","из","от"] },
+    { lang:"nl", words:["ik","jij","hij","wij","ze","de","het","een","en","is","niet","met","voor","van","op","aan","ook","maar","dat","bij"] },
+    { lang:"pl", words:["ja","ty","on","ona","my","wy","oni","i","w","nie","na","z","do","to","jest","jak","dla","ze","po","ale"] },
+    { lang:"tr", words:["ben","sen","o","biz","siz","onlar","ve","bir","bu","da","de","için","ile","gibi","var","yok","evet","hayır","merhaba","teşekkür"] },
+    { lang:"sv", words:["jag","du","han","hon","vi","de","och","är","inte","på","av","för","med","till","att","det","som","en","ett"] },
+  ];
+
+  let best = null; let bestScore = 0;
+  for (const { lang, words } of checks) {
+    let score = 0;
+    for (const w of words) { if (t.includes(" "+w+" ") || t.startsWith(w+" ") || t.endsWith(" "+w)) score++; }
+    if (score > bestScore) { bestScore = score; best = lang; }
+  }
+
+  return bestScore >= 2 ? best : "en";
+}
 
 // Build waveform bars
-const waveEl = document.getElementById("voice-wave");
-const BAR_COUNT = 20;
-for (let i = 0; i < BAR_COUNT; i++) {
+const voWaveEl = document.getElementById("vo-wave");
+for (let i = 0; i < 22; i++) {
   const b = document.createElement("div");
-  b.className = "wave-bar";
-  b.style.height = "4px";
-  waveEl.appendChild(b);
+  b.className = "wave-bar"; b.style.height = "4px";
+  voWaveEl.appendChild(b);
 }
 
 function animateWave(active) {
   clearInterval(waveInterval);
-  const bars = waveEl.querySelectorAll(".wave-bar");
-  if (!active) {
-    bars.forEach(b => b.style.height = "4px");
-    return;
-  }
+  const bars = voWaveEl.querySelectorAll(".wave-bar");
+  if (!active) { bars.forEach(b => b.style.height = "4px"); return; }
   waveInterval = setInterval(() => {
     bars.forEach(b => {
-      const h = isSpeaking
-        ? Math.random() * 22 + 4
-        : Math.random() * 14 + 4;
+      const h = isSpeaking ? Math.random()*20+4 : Math.random()*12+4;
       b.style.height = h + "px";
-      b.style.background = isListening ? "var(--red)" : "var(--accent)";
     });
-  }, 80);
+  }, 70);
 }
 
 function setVoiceState(state) {
-  // state: 'idle' | 'listening' | 'thinking' | 'speaking'
-  const overlay = document.getElementById("voice-overlay");
-  const statusEl = document.getElementById("voice-status");
-  const labelEl  = document.getElementById("voice-mic-label");
+  const overlay  = document.getElementById("voice-overlay");
+  const statusEl = document.getElementById("vo-status");
 
-  overlay.className = state;
+  // Remove all state classes then add new one
+  overlay.classList.remove("idle","listening","thinking","speaking");
+  overlay.classList.add(state);
 
   if (state === "idle") {
     statusEl.textContent = "Tap the mic to speak";
-    labelEl.textContent  = "Speak";
     isListening = false; isSpeaking = false;
     animateWave(false);
   } else if (state === "listening") {
-    statusEl.textContent = "Listening...";
-    labelEl.textContent  = "Stop";
+    statusEl.textContent = "Listening…";
     isListening = true; isSpeaking = false;
     animateWave(true);
   } else if (state === "thinking") {
-    statusEl.textContent = "Thinking...";
-    labelEl.textContent  = "Speak";
+    statusEl.textContent = "Thinking…";
     isListening = false; isSpeaking = false;
     animateWave(false);
   } else if (state === "speaking") {
-    statusEl.textContent = "Speaking...";
-    labelEl.textContent  = "Speak";
+    statusEl.textContent = "Speaking…";
     isListening = false; isSpeaking = true;
     animateWave(true);
   }
 }
 
+function addVoiceMessage(role, text) {
+  const hist = document.getElementById("vo-history");
+
+  // Remove empty hint if present
+  const hint = hist.querySelector(".vo-empty-hint");
+  if (hint) hint.remove();
+
+  voiceMessages.push({ role, text });
+
+  const initial = currentUser ? currentUser.name.charAt(0).toUpperCase() : "?";
+
+  const row = document.createElement("div");
+  row.className = "vo-msg " + role;
+
+  const av = document.createElement("div");
+  av.className = "vo-msg-av " + (role === "user" ? "user" : "bot");
+  av.textContent = role === "user" ? initial : "J";
+
+  const bub = document.createElement("div");
+  bub.className = "vo-bubble " + (role === "user" ? "user" : "bot");
+  bub.textContent = text;
+
+  if (role === "user") { row.appendChild(bub); row.appendChild(av); }
+  else                 { row.appendChild(av);  row.appendChild(bub); }
+
+  hist.appendChild(row);
+  hist.scrollTop = hist.scrollHeight;
+}
+
 function openVoiceMode() {
   voiceActive = true;
-  document.getElementById("voice-overlay").classList.add("open");
+  const overlay = document.getElementById("voice-overlay");
+  overlay.classList.add("open");
+  overlay.classList.remove("idle","listening","thinking","speaking");
+  overlay.classList.add("idle");
+
+  // Show empty hint if no messages
+  const hist = document.getElementById("vo-history");
+  if (!hist.querySelector(".vo-msg")) {
+    hist.innerHTML = `<div class="vo-empty-hint">Your voice conversation will appear here.<br>Speak in any language — JARVIS will understand and reply.</div>`;
+  }
+
   setVoiceState("idle");
-  document.getElementById("voice-transcript").textContent = "";
+  document.getElementById("vo-live-text").textContent = "";
+  document.getElementById("vo-lang-badge").textContent = "Auto";
 }
 
 function closeVoiceMode() {
@@ -1338,67 +1550,92 @@ function closeVoiceMode() {
   setVoiceState("idle");
 }
 
-function stopSpeaking() {
-  if (synthesis && synthesis.speaking) synthesis.cancel();
-  if (isSpeaking) setVoiceState("idle");
+function voiceModeNewChat() {
+  stopListening(); stopSpeaking();
+  voiceMessages = [];
+  const hist = document.getElementById("vo-history");
+  hist.innerHTML = `<div class="vo-empty-hint">New voice conversation started.<br>Speak in any language — JARVIS will understand and reply.</div>`;
+  document.getElementById("vo-live-text").textContent = "";
+  document.getElementById("vo-lang-badge").textContent = "Auto";
+  detectedLang = "en-US";
+  setVoiceState("idle");
 }
 
-/* ---- Speech Recognition ---- */
-function buildRecognition() {
+function stopSpeaking() {
+  if (synthesis && synthesis.speaking) synthesis.cancel();
+  isSpeaking = false;
+}
+
+/* ---- Speech Recognition — multilingual ---- */
+function buildRecognition(lang) {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) return null;
   const r = new SR();
-  r.lang = "en-US";
+  r.lang = lang || ""; // empty string = browser auto-detect language
   r.interimResults = true;
   r.maxAlternatives = 1;
+  // continuous = false so it stops after a pause and triggers onend
   return r;
 }
 
 function startListening(onFinal) {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) {
-    showToast("Speech recognition not supported on this browser.");
-    return;
-  }
+  if (!SR) { showToast("Speech recognition not supported on this browser."); return; }
 
   if (recognition) { try { recognition.abort(); } catch {} }
 
-  recognition = buildRecognition();
+  // Use empty lang so browser auto-detects the spoken language
+  recognition = buildRecognition("");
   let finalTranscript = "";
+  let interimTranscript = "";
 
   recognition.onstart = () => {
     setVoiceState("listening");
-    document.getElementById("voice-transcript").textContent = "";
+    document.getElementById("vo-live-text").textContent = "";
   };
 
   recognition.onresult = e => {
-    let interim = "";
+    finalTranscript = ""; interimTranscript = "";
     for (let i = e.resultIndex; i < e.results.length; i++) {
       const t = e.results[i][0].transcript;
       if (e.results[i].isFinal) finalTranscript += t;
-      else interim += t;
+      else interimTranscript += t;
     }
-    document.getElementById("voice-transcript").textContent = finalTranscript || interim;
+    document.getElementById("vo-live-text").textContent = finalTranscript || interimTranscript;
+
+    // Try to detect language from interim for badge update
+    const candidate = finalTranscript || interimTranscript;
+    if (candidate.length > 8) {
+      const lang = detectLanguageFromText(candidate);
+      const entry = LANG_VOICE_HINTS[lang];
+      if (entry) {
+        detectedLang = entry.lang;
+        document.getElementById("vo-lang-badge").textContent = lang.toUpperCase();
+      } else {
+        detectedLang = "en-US";
+        document.getElementById("vo-lang-badge").textContent = "EN";
+      }
+    }
   };
 
   recognition.onend = () => {
     isListening = false;
-    if (finalTranscript.trim()) {
-      onFinal(finalTranscript.trim());
+    const text = (finalTranscript || interimTranscript).trim();
+    if (text) {
+      onFinal(text);
     } else {
       setVoiceState("idle");
+      document.getElementById("vo-live-text").textContent = "";
     }
   };
 
   recognition.onerror = e => {
     isListening = false;
-    if (e.error !== "aborted" && e.error !== "no-speech") {
-      showToast("Mic error: " + e.error);
-    }
+    if (e.error !== "aborted" && e.error !== "no-speech") showToast("Mic error: " + e.error);
     setVoiceState("idle");
   };
 
-  try { recognition.start(); } catch {}
+  try { recognition.start(); } catch(err) { showToast("Could not start microphone: " + err.message); }
 }
 
 function stopListening() {
@@ -1412,18 +1649,19 @@ function toggleVoiceMic() {
     setVoiceState("idle");
   } else {
     startListening(async text => {
-      document.getElementById("voice-transcript").textContent = text;
+      document.getElementById("vo-live-text").textContent = "";
       setVoiceState("thinking");
+      addVoiceMessage("user", text);
       await sendVoiceMessage(text);
     });
   }
 }
 
 async function sendVoiceMessage(text) {
-  // Add to chat like a normal message
   if (messages.length === 0)
     document.getElementById("conv-title").textContent = text.length > 45 ? text.slice(0,45)+"…" : text;
 
+  // Also add to main chat
   renderMsg("user", text);
   messages.push({ role:"user", content: text });
 
@@ -1431,23 +1669,21 @@ async function sendVoiceMessage(text) {
 
   try {
     const res  = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type":"application/json" },
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
       body: JSON.stringify({ messages, temperature: 0.7 })
     });
     const data = await res.json();
     const reply = data.choices[0].message.content;
 
     bubble.innerHTML = "";
-
-    // Display in chat (no typewriter in voice mode — instant)
     bubble.textContent = reply;
     addActions(wrap, reply);
     messages.push({ role:"assistant", content: reply });
     if (!isGuest) persistConv();
 
-    // Speak the reply
-    speakText(reply);
+    addVoiceMessage("bot", reply);
+    speakText(reply, detectedLang);
 
   } catch {
     bubble.innerHTML = "";
@@ -1457,39 +1693,55 @@ async function sendVoiceMessage(text) {
   }
 }
 
-function speakText(text) {
+function speakText(text, langCode) {
   if (!synthesis) { setVoiceState("idle"); return; }
   synthesis.cancel();
 
-  // Clean text: remove markdown-like symbols for cleaner speech
+  // Clean markdown for cleaner speech
   const clean = text
-    .replace(/\*\*(.+?)\*\*/g, "$1")
-    .replace(/\*(.+?)\*/g, "$1")
-    .replace(/`(.+?)`/g, "$1")
+    .replace(/\*\*(.+?)\*\*/gs, "$1")
+    .replace(/\*(.+?)\*/gs, "$1")
+    .replace(/`{1,3}[\s\S]*?`{1,3}/g, "")
     .replace(/#{1,6}\s/g, "")
-    .replace(/\n+/g, ". ");
+    .replace(/\n{2,}/g, ". ")
+    .replace(/\n/g, " ")
+    .trim();
 
-  const utt = new SpeechSynthesisUtterance(clean);
-  utt.lang  = "en-US";
-  utt.rate  = 1.0;
-  utt.pitch = 1.0;
+  // Split long text into chunks to avoid Chrome 15s TTS cutoff bug
+  const sentences = clean.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [clean];
+  let idx = 0;
 
-  // Pick a good voice if available
-  const voices = synthesis.getVoices();
-  const preferred = voices.find(v =>
-    v.lang.startsWith("en") && (v.name.includes("Google") || v.name.includes("Daniel") || v.name.includes("Samantha"))
-  ) || voices.find(v => v.lang.startsWith("en"));
+  const speakNext = () => {
+    if (idx >= sentences.length) { setVoiceState("idle"); document.getElementById("vo-live-text").textContent = ""; return; }
 
-  if (preferred) utt.voice = preferred;
+    const utt  = new SpeechSynthesisUtterance(sentences[idx].trim());
+    const lang2 = langCode || detectedLang || "en-US";
 
-  utt.onstart = () => setVoiceState("speaking");
-  utt.onend   = () => {
-    setVoiceState("idle");
-    document.getElementById("voice-transcript").textContent = "";
+    utt.lang  = lang2;
+    utt.rate  = 1.05;   // slightly faster = more natural
+    utt.pitch = 1.0;
+
+    // Wait for voices to be available
+    const allVoices = synthesis.getVoices();
+    if (allVoices.length) {
+      const voice = pickVoice(lang2);
+      if (voice) utt.voice = voice;
+    }
+
+    utt.onstart = () => { if (idx === 0) setVoiceState("speaking"); };
+    utt.onend   = () => { idx++; speakNext(); };
+    utt.onerror = () => { idx++; speakNext(); };
+
+    synthesis.speak(utt);
+    idx++;
   };
-  utt.onerror = () => setVoiceState("idle");
 
-  synthesis.speak(utt);
+  // Chrome quirk: getVoices may be async on first load
+  if (synthesis.getVoices().length === 0) {
+    synthesis.addEventListener("voiceschanged", speakNext, { once: true });
+  } else {
+    speakNext();
+  }
 }
 
 /* ---- Inline mic in input bar ---- */
@@ -1509,7 +1761,7 @@ function toggleInlineMic() {
   inlineMicActive = true;
   btn.classList.add("listening");
   inlineRecognition = new SR();
-  inlineRecognition.lang = "en-US";
+  inlineRecognition.lang = ""; // auto-detect
   inlineRecognition.interimResults = true;
 
   inlineRecognition.onresult = e => {
@@ -1533,8 +1785,7 @@ function toggleInlineMic() {
     inlineMicActive = false;
     btn.classList.remove("listening");
     inlineRecognition = null;
-    if (e.error !== "aborted" && e.error !== "no-speech")
-      showToast("Mic error: " + e.error);
+    if (e.error !== "aborted" && e.error !== "no-speech") showToast("Mic error: " + e.error);
   };
 
   try { inlineRecognition.start(); } catch {}
@@ -1645,10 +1896,12 @@ function startApp(user, guest) {
     ? "Guest mode — conversations won't be saved. Create an account to keep your history!"
     : "All your conversations are automatically saved.";
 
-  // Load available voices for TTS
+  // Preload TTS voices (async on Chrome)
   if (synthesis) {
     synthesis.getVoices();
-    synthesis.addEventListener("voiceschanged", () => synthesis.getVoices(), { once: true });
+    if (synthesis.getVoices().length === 0) {
+      synthesis.addEventListener("voiceschanged", () => synthesis.getVoices(), { once: true });
+    }
   }
 
   refreshSidebar();
@@ -1825,16 +2078,23 @@ function addActions(wrap, text) {
   // Read aloud button
   const speakBtn = document.createElement("button");
   speakBtn.className = "act-btn";
-  speakBtn.innerHTML = `<svg viewBox="0 0 16 16" fill="none"><path d="M3 6H1v4h2l4 3V3L3 6z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M11 5a4 4 0 010 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Listen`;
+  const listenIcon = `<svg viewBox="0 0 16 16" fill="none"><path d="M3 6H1v4h2l4 3V3L3 6z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M11 5a4 4 0 010 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Listen`;
+  const stopIcon   = `<svg viewBox="0 0 16 16" fill="none"><rect x="4" y="4" width="3" height="8" rx="1" fill="currentColor"/><rect x="9" y="4" width="3" height="8" rx="1" fill="currentColor"/></svg> Stop`;
+  speakBtn.innerHTML = listenIcon;
   speakBtn.onclick = () => {
-    if (synthesis && synthesis.speaking) { synthesis.cancel(); speakBtn.innerHTML = `<svg viewBox="0 0 16 16" fill="none"><path d="M3 6H1v4h2l4 3V3L3 6z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M11 5a4 4 0 010 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Listen`; return; }
-    speakBtn.innerHTML = `<svg viewBox="0 0 16 16" fill="none"><rect x="4" y="4" width="3" height="8" rx="1" fill="currentColor"/><rect x="9" y="4" width="3" height="8" rx="1" fill="currentColor"/></svg> Stop`;
-    speakText(text);
-    if (synthesis) {
-      const check = setInterval(() => {
-        if (!synthesis.speaking) { speakBtn.innerHTML = `<svg viewBox="0 0 16 16" fill="none"><path d="M3 6H1v4h2l4 3V3L3 6z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M11 5a4 4 0 010 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Listen`; clearInterval(check); }
-      }, 300);
+    if (synthesis && synthesis.speaking) {
+      synthesis.cancel();
+      speakBtn.innerHTML = listenIcon;
+      return;
     }
+    speakBtn.innerHTML = stopIcon;
+    // Detect language from the text itself for inline listen
+    const lang = detectLanguageFromText(text);
+    const entry = LANG_VOICE_HINTS[lang];
+    speakText(text, entry ? entry.lang : "en-US");
+    const check = setInterval(() => {
+      if (!synthesis.speaking) { speakBtn.innerHTML = listenIcon; clearInterval(check); }
+    }, 300);
   };
 
   actions.appendChild(copyBtn);
