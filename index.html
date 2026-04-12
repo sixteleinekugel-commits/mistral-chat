@@ -901,7 +901,190 @@ body {
 }
 #toast.show { transform: translateX(-50%) translateY(0); }
 
-/* ══ RESPONSIVE ═══════════════════════════════════════════════ */
+/* ══ MEMORY MODAL ═════════════════════════════════════════════ */
+#memory-modal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);
+  z-index: 600; align-items: center; justify-content: center; padding: 20px;
+}
+#memory-modal.open { display: flex; }
+
+.mem-box {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  width: 520px; max-width: 100%; max-height: 88dvh;
+  display: flex; flex-direction: column;
+  animation: modal-in 0.22s ease;
+  overflow: hidden;
+}
+
+.mem-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 22px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.mem-head-left { display: flex; align-items: center; gap: 12px; }
+
+.mem-brain-icon {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: var(--accent-dim); border: 1px solid rgba(255,107,53,0.2);
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+
+.mem-head-title { font-family: var(--font-head); font-size: 16px; font-weight: 700; }
+.mem-head-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+.mem-close {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--surface2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text2); transition: all 0.15s;
+  flex-shrink: 0;
+}
+.mem-close:hover { background: var(--surface3); color: var(--text); }
+.mem-close svg { width: 14px; height: 14px; }
+
+.mem-body { flex: 1; overflow-y: auto; padding: 18px 22px; }
+.mem-body::-webkit-scrollbar { width: 3px; }
+.mem-body::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+.mem-section { margin-bottom: 20px; }
+.mem-section-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--text3);
+  margin-bottom: 8px;
+}
+
+.mem-field {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px; color: var(--text2); line-height: 1.6;
+  min-height: 38px;
+  transition: border-color 0.15s;
+}
+
+.mem-field:empty::before { content: "Not yet learned…"; color: var(--text3); font-style: italic; }
+
+.mem-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+
+.mem-tag {
+  font-size: 12px; padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid rgba(255,107,53,0.2);
+}
+
+.mem-tag.neutral {
+  background: var(--surface2); color: var(--text2);
+  border-color: var(--border2);
+}
+
+.mem-empty-state {
+  text-align: center; padding: 32px 20px;
+  color: var(--text3); font-size: 13px; line-height: 1.8;
+}
+
+.mem-empty-icon { font-size: 32px; margin-bottom: 12px; }
+
+.mem-footer {
+  padding: 14px 22px;
+  border-top: 1px solid var(--border);
+  display: flex; gap: 10px; flex-shrink: 0;
+}
+
+.mem-btn {
+  flex: 1; padding: 10px;
+  border-radius: 10px; border: 1px solid var(--border2);
+  background: transparent; color: var(--text2);
+  font-family: var(--font-body); font-size: 13px; cursor: pointer;
+  transition: all 0.15s;
+}
+.mem-btn:hover { background: var(--surface2); color: var(--text); }
+.mem-btn.primary { background: var(--accent); border-color: transparent; color: white; font-weight: 600; }
+.mem-btn.primary:hover { background: var(--accent2); }
+.mem-btn.danger { color: var(--red); border-color: rgba(239,68,68,0.2); }
+.mem-btn.danger:hover { background: rgba(239,68,68,0.08); }
+
+/* Memory indicator in sidebar */
+.mem-indicator {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,107,53,0.15);
+  background: var(--accent-dim);
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.mem-indicator:hover { border-color: rgba(255,107,53,0.3); background: rgba(255,107,53,0.15); }
+.mem-indicator-dot { font-size: 14px; flex-shrink: 0; }
+.mem-indicator-info { flex: 1; }
+.mem-indicator-title { font-size: 12px; font-weight: 600; color: var(--accent); }
+.mem-indicator-sub { font-size: 10px; color: var(--text3); margin-top: 1px; }
+.mem-indicator-badge {
+  font-size: 10px; font-weight: 600;
+  background: var(--accent); color: white;
+  padding: 2px 7px; border-radius: 20px; flex-shrink: 0;
+}
+
+/* Memory processing toast */
+.mem-processing {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--text3);
+}
+.mem-spin {
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 2px solid var(--border2); border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite; flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ══ WEB SEARCH MODE ══════════════════════════════════════════ */
+.search-toggle-btn {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 11px; border-radius: 20px;
+  border: 1px solid var(--border2); background: transparent;
+  color: var(--text2); font-family: var(--font-body);
+  font-size: 12px; font-weight: 500; cursor: pointer;
+  transition: all 0.2s; flex-shrink: 0;
+}
+.search-toggle-btn svg { width: 13px; height: 13px; }
+.search-toggle-btn:hover { background: var(--surface2); color: var(--text); }
+.search-toggle-btn.active {
+  background: rgba(59,130,246,0.12);
+  border-color: rgba(59,130,246,0.3);
+  color: #60a5fa;
+}
+.search-indicator {
+  display: none; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--text3); padding: 4px 0 0;
+}
+.search-indicator.show { display: flex; }
+.search-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: #60a5fa;
+  animation: s-pulse 1.2s ease-in-out infinite;
+}
+@keyframes s-pulse {
+  0%,100% { opacity:0.4; transform:scale(1); }
+  50% { opacity:1; transform:scale(1.4); }
+}
+.search-src {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; color: #60a5fa;
+  background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.15);
+  padding: 2px 8px; border-radius: 20px; margin: 4px 4px 0 0;
+  cursor: default;
+}
+.search-src svg { width: 10px; height: 10px; }
+
 @media (max-width: 768px) {
   #auth-screen { flex-direction: column; overflow-y: auto; height: auto; min-height: 100dvh; }
   #auth-left { display: none; }
@@ -1080,6 +1263,16 @@ body {
     </div>
 
     <div class="sb-footer">
+      <!-- Memory indicator — shown when profile exists -->
+      <div class="mem-indicator" id="mem-indicator" style="display:none" onclick="openMemoryModal(); closeSidebar();">
+        <div class="mem-indicator-dot">🧠</div>
+        <div class="mem-indicator-info">
+          <div class="mem-indicator-title">JARVIS knows you</div>
+          <div class="mem-indicator-sub" id="mem-indicator-sub">Building your profile…</div>
+        </div>
+        <div class="mem-indicator-badge" id="mem-indicator-badge">0</div>
+      </div>
+
       <div class="model-sel" onclick="document.getElementById('model-modal').classList.add('open'); closeSidebar();">
         <div class="model-dot"></div>
         <div class="model-info">
@@ -1102,9 +1295,9 @@ body {
             <div class="dd-uname" id="dd-name">...</div>
             <div class="dd-email" id="dd-email"></div>
           </div>
-          <div class="dd-item" onclick="stop(event);showToast('Feature coming soon!')">
-            <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-            My profile
+          <div class="dd-item" onclick="stop(event);openMemoryModal();document.getElementById('profile-dd').classList.remove('open');">
+            <svg viewBox="0 0 16 16" fill="none"><path d="M8 2a4 4 0 014 4c0 1.5-.8 2.8-2 3.5V11H6V9.5A4 4 0 014 6a4 4 0 014-4z" stroke="currentColor" stroke-width="1.2"/><path d="M6 13h4M6.5 11.5h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            JARVIS Memory
           </div>
           <div class="dd-item" onclick="stop(event);exportAll()">
             <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v8M5 8l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
@@ -1192,8 +1385,9 @@ body {
               <button class="tool-btn" title="Attach file">
                 <svg viewBox="0 0 16 16" fill="none"><path d="M13 8.5V12a3 3 0 01-3 3H6a3 3 0 01-3-3V5a3 3 0 013-3h3M10 1h5v5M15 1L9 7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
               </button>
-              <button class="tool-btn" title="Web search">
-                <svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M12 12l2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              <button id="search-btn" class="search-toggle-btn" onclick="toggleSearchMode()" title="Web search mode">
+                <svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l2.5 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M5 7h4M7 5v4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+                Search
               </button>
               <button class="tool-btn" title="Code mode">
                 <svg viewBox="0 0 16 16" fill="none"><path d="M5 5l-3 3 3 3M11 5l3 3-3 3M9 3l-2 10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1210,6 +1404,10 @@ body {
           </div>
         </div>
         <p class="foot-note">JARVIS AI can make mistakes. Always verify important information.</p>
+        <div class="search-indicator" id="search-indicator">
+          <div class="search-dot"></div>
+          <span id="search-indicator-text">Searching the web…</span>
+        </div>
       </div>
     </div>
   </main>
@@ -1277,6 +1475,36 @@ body {
     </button>
   </div>
 
+</div>
+
+<!-- MEMORY MODAL -->
+<div id="memory-modal" onclick="if(event.target===this)closeMemoryModal()">
+  <div class="mem-box">
+    <div class="mem-head">
+      <div class="mem-head-left">
+        <div class="mem-brain-icon">🧠</div>
+        <div>
+          <div class="mem-head-title">JARVIS Memory</div>
+          <div class="mem-head-sub">What JARVIS knows about you</div>
+        </div>
+      </div>
+      <button class="mem-close" onclick="closeMemoryModal()">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 4L4 12M4 4l8 8"/></svg>
+      </button>
+    </div>
+
+    <div class="mem-body" id="mem-body">
+      <div class="mem-empty-state">
+        <div class="mem-empty-icon">🧠</div>
+        <div>No memory yet.<br>Start a conversation and JARVIS will<br>start learning about you automatically.</div>
+      </div>
+    </div>
+
+    <div class="mem-footer">
+      <button class="mem-btn danger" onclick="clearMemory()">Clear memory</button>
+      <button class="mem-btn" onclick="closeMemoryModal()">Close</button>
+    </div>
+  </div>
 </div>
 
 <!-- MODEL MODAL -->
@@ -1637,7 +1865,7 @@ async function sendVoiceMessage(text) {
   messages.push({ role:"user", content: text });
 
   try {
-    const res  = await fetch(API_URL, {
+    const res  = await (window._jarvisFetch || fetch)(API_URL, {
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body: JSON.stringify({ messages, temperature: 0.7 })
@@ -2006,6 +2234,9 @@ function doLogout() {
   ls.del(S_SESSION);
   currentUser = null; messages = []; msgCount = 0; currentConvId = null;
   closeVoiceMode();
+  closeMemoryModal();
+  const ind = document.getElementById("mem-indicator");
+  if (ind) ind.style.display = "none";
   document.getElementById("app-screen").style.display  = "none";
   document.getElementById("auth-screen").style.display = "flex";
   document.getElementById("profile-dd").classList.remove("open");
@@ -2053,6 +2284,7 @@ function startApp(user, guest) {
     }
   }
 
+  updateMemoryIndicator();
   refreshSidebar();
   newConversation();
 }
@@ -2270,9 +2502,23 @@ async function sendMessage() {
   const { bubble, wrap } = renderMsg("bot", "", true);
 
   try {
-    const res  = await fetch(API_URL, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ messages, temperature:0.7 }) });
-    const data = await res.json();
-    const reply = data.choices[0].message.content;
+    let reply, sources = [];
+
+    if (webSearchMode) {
+      // Web search path via Anthropic API
+      const result = await sendWithWebSearch(messages);
+      reply   = result.text;
+      sources = result.sources || [];
+    } else {
+      // Normal path via Jarvis backend (with memory injection)
+      const res  = await (window._jarvisFetch || fetch)(API_URL, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({ messages, temperature:0.7 })
+      });
+      const data = await res.json();
+      reply = data.choices[0].message.content;
+    }
 
     bubble.innerHTML = "";
     let i = 0;
@@ -2282,12 +2528,14 @@ async function sendMessage() {
         document.getElementById("chat-wrap").scrollTop = 999999;
         setTimeout(type, 10);
       } else {
+        if (sources.length) renderSources(wrap, sources);
         addActions(wrap, reply);
         messages.push({ role:"assistant", content: reply });
         if (!isGuest) persistConv();
       }
     }
     type();
+
   } catch {
     bubble.innerHTML = "";
     bubble.textContent = "⚠️ Could not reach the server. Check the API URL.";
@@ -2381,9 +2629,396 @@ function exportAll() {
   a.download = "jarvis-all-conversations.txt"; a.click();
 }
 
-/* ═══════════════════════════════════════════
-   INPUT EVENTS
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════
+   JARVIS MEMORY SYSTEM
+   — Extracts user profile from conversations via API
+   — Injects profile as system context in every new conversation
+   — Displays profile in modal
+═══════════════════════════════════════════════════════════ */
+
+const S_MEMORY = "jarvis_memory_v1";
+
+function memKey() { return `${S_MEMORY}_${currentUser?.id || "guest"}`; }
+
+function getMemory() { return ls.get(memKey()) || null; }
+
+function saveMemory(mem) { ls.set(memKey(), mem); }
+
+// Build system prompt from memory profile
+function buildSystemPrompt() {
+  const mem = getMemory();
+
+  let base = `You are JARVIS, an advanced AI assistant. Be concise, direct, and genuinely helpful. Adapt your tone to the user's style.`;
+
+  if (!mem || isGuest) return base;
+
+  const parts = [];
+
+  if (mem.name)              parts.push(`The user's name is ${mem.name}.`);
+  if (mem.languages?.length) parts.push(`They communicate in: ${mem.languages.join(", ")}.`);
+  if (mem.style)             parts.push(`Their communication style: ${mem.style}.`);
+  if (mem.projects?.length)  parts.push(`Their current projects: ${mem.projects.join(", ")}.`);
+  if (mem.interests?.length) parts.push(`Their interests: ${mem.interests.join(", ")}.`);
+  if (mem.goals?.length)     parts.push(`Their stated goals: ${mem.goals.join(", ")}.`);
+  if (mem.openTopics?.length) parts.push(`Topics to follow up on: ${mem.openTopics.join(", ")}.`);
+  if (mem.preferences)       parts.push(`Preferences: ${mem.preferences}.`);
+  if (mem.lastMood)          parts.push(`Recent mood: ${mem.lastMood}.`);
+
+  if (parts.length) {
+    base += `\n\nWhat you know about this user:\n${parts.join(" ")}`;
+    base += `\n\nUse this knowledge naturally — don't repeat it back robotically. Reference it only when relevant. Occasionally follow up on open topics if it fits the conversation.`;
+  }
+
+  return base;
+}
+
+// Inject system prompt into the messages array for the API call
+// Extract memory from a completed conversation using the AI
+async function extractMemoryFromConversation(convMessages) {
+  if (isGuest || convMessages.length < 2) return;
+
+  const existing = getMemory();
+  const existingStr = existing ? JSON.stringify(existing) : "none yet";
+
+  const summary = convMessages
+    .slice(0, 20) // max 20 messages for analysis
+    .map(m => `${m.role === "user" ? "User" : "JARVIS"}: ${m.content.slice(0, 300)}`)
+    .join("\n");
+
+  const extractPrompt = `You are a memory extraction system. Analyze this conversation and extract information about the user.
+
+Existing memory profile: ${existingStr}
+
+Conversation:
+${summary}
+
+Return ONLY a valid JSON object (no markdown, no explanation) with these fields (omit fields you cannot determine):
+{
+  "name": "string or null",
+  "languages": ["array of languages used"],
+  "style": "brief description of communication style",
+  "projects": ["current projects or work"],
+  "interests": ["topics they seem interested in"],
+  "goals": ["explicit goals or ambitions mentioned"],
+  "openTopics": ["unresolved questions or topics to follow up on"],
+  "preferences": "any stated preferences (response format, detail level, etc.)",
+  "lastMood": "inferred mood from this conversation",
+  "conversationCount": ${(existing?.conversationCount || 0) + 1}
+}
+
+Merge with existing data — don't lose previous information, only add or update. Be concise. Max 3 items per array.`;
+
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messages: [{ role: "user", content: extractPrompt }],
+        temperature: 0.1
+      })
+    });
+
+    const data = await res.json();
+    const raw  = data.choices[0].message.content.trim();
+
+    // Extract JSON from response
+    const jsonMatch = raw.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) return;
+
+    const extracted = JSON.parse(jsonMatch[0]);
+    extracted.lastUpdated = Date.now();
+
+    saveMemory(extracted);
+    updateMemoryIndicator();
+
+  } catch (e) {
+    // Silent fail — memory is non-critical
+  }
+}
+
+// Update sidebar indicator
+function updateMemoryIndicator() {
+  const mem = getMemory();
+  const ind = document.getElementById("mem-indicator");
+  const sub = document.getElementById("mem-indicator-sub");
+  const badge = document.getElementById("mem-indicator-badge");
+
+  if (!mem || isGuest) {
+    if (ind) ind.style.display = "none";
+    return;
+  }
+
+  if (ind) ind.style.display = "flex";
+
+  // Count known facts
+  let facts = 0;
+  if (mem.name)              facts++;
+  if (mem.languages?.length) facts += mem.languages.length;
+  if (mem.projects?.length)  facts += mem.projects.length;
+  if (mem.interests?.length) facts += mem.interests.length;
+  if (mem.goals?.length)     facts += mem.goals.length;
+  if (mem.openTopics?.length) facts += mem.openTopics.length;
+
+  if (badge) badge.textContent = facts;
+
+  const convCount = mem.conversationCount || 1;
+  if (sub) sub.textContent = `${convCount} conversation${convCount > 1 ? "s" : ""} analyzed`;
+}
+
+// Open memory modal
+function openMemoryModal() {
+  const mem = getMemory();
+  const body = document.getElementById("mem-body");
+  document.getElementById("memory-modal").classList.add("open");
+
+  if (!mem || isGuest) {
+    body.innerHTML = `<div class="mem-empty-state">
+      <div class="mem-empty-icon">🧠</div>
+      <div>${isGuest ? "Sign in to enable JARVIS Memory." : "No memory yet.<br>Start a conversation — JARVIS will learn about you automatically."}</div>
+    </div>`;
+    return;
+  }
+
+  let html = "";
+
+  if (mem.name) {
+    html += `<div class="mem-section">
+      <div class="mem-section-label">Name</div>
+      <div class="mem-field">${esc(mem.name)}</div>
+    </div>`;
+  }
+
+  if (mem.languages?.length) {
+    html += `<div class="mem-section">
+      <div class="mem-section-label">Languages</div>
+      <div class="mem-tags">${mem.languages.map(l => `<span class="mem-tag">${esc(l)}</span>`).join("")}</div>
+    </div>`;
+  }
+
+  if (mem.style) {
+    html += `<div class="mem-section">
+      <div class="mem-section-label">Communication style</div>
+      <div class="mem-field">${esc(mem.style)}</div>
+    </div>`;
+  }
+
+  if (mem.projects?.length) {
+    html += `<div class="mem-section">
+      <div class="mem-section-label">Projects</div>
+      <div class="mem-tags">${mem.projects.map(p => `<span class="mem-tag">${esc(p)}</span>`).join("")}</div>
+    </div>`;
+  }
+
+  if (mem.interests?.length) {
+    html += `<div class="mem-section">
+      <div class="mem-section-label">Interests</div>
+      <div class="mem-tags">${mem.interests.map(i => `<span class="mem-tag neutral">${esc(i)}</span>`).join("")}</div>
+    </div>`;
+  }
+
+  if (mem.goals?.length) {
+    html += `<div class="mem-section">
+      <div class="mem-section-label">Goals</div>
+      <div class="mem-tags">${mem.goals.map(g => `<span class="mem-tag">${esc(g)}</span>`).join("")}</div>
+    </div>`;
+  }
+
+  if (mem.openTopics?.length) {
+    html += `<div class="mem-section">
+      <div class="mem-section-label">Topics to follow up</div>
+      <div class="mem-tags">${mem.openTopics.map(t => `<span class="mem-tag neutral">${esc(t)}</span>`).join("")}</div>
+    </div>`;
+  }
+
+  if (mem.preferences) {
+    html += `<div class="mem-section">
+      <div class="mem-section-label">Preferences</div>
+      <div class="mem-field">${esc(mem.preferences)}</div>
+    </div>`;
+  }
+
+  if (mem.lastMood) {
+    html += `<div class="mem-section">
+      <div class="mem-section-label">Last detected mood</div>
+      <div class="mem-field">${esc(mem.lastMood)}</div>
+    </div>`;
+  }
+
+  if (mem.lastUpdated) {
+    const d = new Date(mem.lastUpdated);
+    html += `<div style="font-size:11px;color:var(--text3);text-align:center;margin-top:8px">
+      Last updated ${d.toLocaleDateString()} at ${d.toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}
+    </div>`;
+  }
+
+  body.innerHTML = html || `<div class="mem-empty-state"><div class="mem-empty-icon">🧠</div><div>Memory is being built…</div></div>`;
+}
+
+function closeMemoryModal() {
+  document.getElementById("memory-modal").classList.remove("open");
+}
+
+function clearMemory() {
+  if (!confirm("Clear all of JARVIS's memory about you? This cannot be undone.")) return;
+  ls.del(memKey());
+  updateMemoryIndicator();
+  closeMemoryModal();
+  showToast("Memory cleared.");
+}
+
+/* ─── Hook memory into conversation flow ─── */
+
+// Override persistConv to also trigger memory extraction
+const _originalPersistConv = persistConv;
+function persistConv() {
+  _originalPersistConv();
+  // Extract memory in background after saving (non-blocking)
+  if (!isGuest && messages.length >= 4) {
+    setTimeout(() => extractMemoryFromConversation(messages), 800);
+  }
+}
+
+// Override sendMessage to inject system context
+/* ═══════════════════════════════════════════════════════════
+   FIX: Memory context injection
+   Instead of adding a "system" role (unsupported by Jarvis backend),
+   we prepend memory context to the FIRST user message as a prefix.
+   This is fully compatible with any backend.
+═══════════════════════════════════════════════════════════ */
+function injectMemoryContext(msgs) {
+  if (isGuest || !msgs.length) return msgs;
+  const mem = getMemory();
+  if (!mem) return msgs;
+
+  const system = buildSystemPrompt();
+  // Only inject if the first message doesn't already have the prefix
+  if (msgs[0]?.content?.startsWith("[JARVIS CONTEXT]")) return msgs;
+
+  const patched = [...msgs];
+  patched[0] = {
+    ...patched[0],
+    content: `[JARVIS CONTEXT - ignore this header, just use the info]\n${system}\n[END CONTEXT]\n\n${patched[0].content}`
+  };
+  return patched;
+}
+
+// Wrap fetch to inject memory silently
+function fetchWithMemory(url, options) {
+  if (url === API_URL && options?.body) {
+    try {
+      const body = JSON.parse(options.body);
+      if (body.messages?.length) {
+        body.messages = injectMemoryContext(body.messages);
+        options = { ...options, body: JSON.stringify(body) };
+      }
+    } catch(e) {}
+  }
+  return fetch(url, options);
+}
+
+window._jarvisFetch = fetchWithMemory;
+
+/* ═══════════════════════════════════════════════════════════
+   WEB SEARCH MODE
+   Uses Anthropic API with built-in web_search tool.
+   Falls back to regular backend if Anthropic unavailable.
+═══════════════════════════════════════════════════════════ */
+const ANTHROPIC_URL  = "https://api.anthropic.com/v1/messages";
+const ANTHROPIC_MODEL = "claude-sonnet-4-20250514";
+let   webSearchMode  = false;
+
+function toggleSearchMode() {
+  webSearchMode = !webSearchMode;
+  const btn = document.getElementById("search-btn");
+  if (btn) btn.classList.toggle("active", webSearchMode);
+  showToast(webSearchMode ? "🔍 Web search ON" : "Web search OFF");
+}
+
+async function sendWithWebSearch(userMessages) {
+  const ind  = document.getElementById("search-indicator");
+  const indTxt = document.getElementById("search-indicator-text");
+
+  if (ind) { ind.classList.add("show"); if (indTxt) indTxt.textContent = "Searching the web…"; }
+
+  // Inject memory context as a system message (Anthropic supports it natively)
+  const systemPrompt = buildSystemPrompt();
+
+  const apiMessages = userMessages.map(m => ({
+    role:    m.role === "assistant" ? "assistant" : "user",
+    content: m.content
+  }));
+
+  try {
+    const res = await fetch(ANTHROPIC_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type":            "application/json",
+        "x-api-key":               "",   // handled by Claude.ai proxy
+        "anthropic-version":       "2023-06-01",
+        "anthropic-dangerous-direct-browser-access": "true"
+      },
+      body: JSON.stringify({
+        model:      ANTHROPIC_MODEL,
+        max_tokens: 1024,
+        system:     systemPrompt,
+        messages:   apiMessages,
+        tools: [{
+          type: "web_search_20250305",
+          name: "web_search"
+        }]
+      })
+    });
+
+    if (!res.ok) throw new Error("Anthropic " + res.status);
+
+    const data = await res.json();
+    if (ind) ind.classList.remove("show");
+
+    // Collect text and web search results from content blocks
+    let replyText = "";
+    const sources = [];
+
+    for (const block of (data.content || [])) {
+      if (block.type === "text") {
+        replyText += block.text;
+      } else if (block.type === "tool_result") {
+        // Extract URLs from search results
+        try {
+          const results = JSON.parse(block.content || "[]");
+          if (Array.isArray(results)) {
+            results.slice(0, 3).forEach(r => {
+              if (r.url && r.title) sources.push({ url: r.url, title: r.title });
+            });
+          }
+        } catch {}
+      }
+    }
+
+    return { text: replyText || "No response.", sources };
+
+  } catch(e) {
+    if (ind) ind.classList.remove("show");
+    throw e;
+  }
+}
+
+// Render source pills under a bot bubble
+function renderSources(wrap, sources) {
+  if (!sources?.length) return;
+  const row = document.createElement("div");
+  row.style.cssText = "display:flex;flex-wrap:wrap;margin-top:6px;gap:4px;";
+  sources.forEach(s => {
+    const pill = document.createElement("span");
+    pill.className = "search-src";
+    pill.title = s.url;
+    pill.onclick = () => window.open(s.url, "_blank");
+    pill.innerHTML = `<svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l2.5 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> ${esc(s.title.slice(0, 35))}${s.title.length > 35 ? "…" : ""}`;
+    row.appendChild(pill);
+  });
+  wrap.appendChild(row);
+}
+
+
 document.getElementById("prompt").addEventListener("input", () => { autoResize(); updateCount(); });
 document.getElementById("prompt").addEventListener("keydown", e => {
   if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
