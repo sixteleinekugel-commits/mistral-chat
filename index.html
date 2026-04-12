@@ -1694,109 +1694,45 @@ function unlockTTS() {
   ttsUnlocked = true;
 }
 
-function pickBestVoice(bcp47) {
-  if (!synthesis) return null;
-  const voices = synthesis.getVoices();
-  if (!voices.length) return null;
-
-  const primary = (bcp47 || "en").slice(0, 2).toLowerCase();
-
-  function score(v) {
-    const n  = v.name.toLowerCase();
-    const vl = v.lang.toLowerCase();
-
-    // Must match primary language
-    if (!vl.startsWith(primary)) return -1;
-
-    let s = 0;
-
-    // Top-tier: Google Neural/Wavenet
-    if (n.includes("google")) s += 20;
-    if (n.includes("wavenet")) s += 15;
-    if (n.includes("neural") || n.includes("premium") || n.includes("enhanced")) s += 12;
-    if (n.includes("natural")) s += 8;
-
-    // Exact locale match bonus
-    if (vl === bcp47.toLowerCase()) s += 5;
-
-    // Best native voices by language (covers iOS/macOS/Windows/Android)
-    const NATIVES = {
-      fr: ["thomas","amelie","marie","juliette","nicolas","mathieu","léa","lea","french"],
-      es: ["monica","paulina","jorge","juan","rosa","carmen","spanish"],
-      de: ["anna","markus","yannick","petra","hans","helge","german"],
-      it: ["alice","luca","federica","paola","italian"],
-      pt: ["joana","luciana","catarina","daniel","portuguese"],
-      ar: ["maged","tarik","zuzana","arabic"],
-      zh: ["tingting","meijia","lili","chinese"],
-      ja: ["kyoko","otoya","hattori","japanese"],
-      ko: ["seoyeon","yuna","korean"],
-      ru: ["milena","yuri","katya","russian"],
-      nl: ["xander","ellen","fiona","dutch"],
-      pl: ["zosia","krzysztof","polish"],
-      tr: ["yelda","cem","turkish"],
-      sv: ["alva","klara","swedish"],
-      en: ["daniel","kate","serena","moira","samantha","karen","victoria","rishi"],
-    };
-
-    const native = NATIVES[primary] || [];
-    if (native.some(g => n.includes(g))) s += 10;
-
-    // Penalise robotic/compact
-    if (n.includes("compact")) s -= 15;
-    if (n.includes("espeak") || n.includes("espeaks") || n.includes("mbrola")) s -= 20;
-
-    // Prefer local voices (not remote) — more reliable on mobile
-    if (v.localService) s += 3;
-
-    return s;
-  }
-
-  const candidates = voices
-    .map(v => ({ v, s: score(v) }))
-    .filter(x => x.s >= 0)
-    .sort((a, b) => b.s - a.s);
-
-  if (candidates.length) return candidates[0].v;
-
-  // Last resort: any voice matching the language
-  return voices.find(v => v.lang.toLowerCase().startsWith(primary)) || null;
-}
-
 /* ════════════════════════════════════════════════════════
-   TTS ENGINE
-   Primary:  Google Translate TTS (same voice as Google Chrome desktop)
-             — works on ALL devices, no API key, natural accent
-   Fallback: Web Speech API (when Google TTS fetch fails)
+   TTS ENGINE — StreamElements (natural Google-quality voices,
+   no API key, no CORS, works on ALL devices)
+   Fallback: Web Speech API
 ════════════════════════════════════════════════════════ */
 
-// Map 2-letter lang code → Google TTS lang tag
-const GTTS_LANG = {
-  fr:"fr","fr-FR":"fr","fr-CA":"fr",
-  en:"en","en-US":"en","en-GB":"en",
-  es:"es","es-ES":"es","es-MX":"es",
-  de:"de","de-DE":"de",
-  it:"it","it-IT":"it",
-  pt:"pt","pt-PT":"pt","pt-BR":"pt",
-  ar:"ar","ar-SA":"ar",
-  zh:"zh-CN","zh-CN":"zh-CN","zh-TW":"zh-TW",
-  ja:"ja","ja-JP":"ja",
-  ko:"ko","ko-KR":"ko",
-  ru:"ru","ru-RU":"ru",
-  nl:"nl","nl-NL":"nl",
-  pl:"pl","pl-PL":"pl",
-  tr:"tr","tr-TR":"tr",
-  sv:"sv","sv-SE":"sv",
+// StreamElements voice map — best natural voice per language
+const SE_VOICES = {
+  fr: "Mathieu",       // French male, very natural
+  en: "Brian",         // English British, natural
+  es: "Enrique",       // Spanish natural
+  de: "Hans",          // German natural
+  it: "Giorgio",       // Italian natural
+  pt: "Cristiano",     // Portuguese natural
+  ru: "Maxim",         // Russian natural
+  nl: "Ruben",         // Dutch natural
+  pl: "Jacek",         // Polish natural
+  tr: "Filiz",         // Turkish natural
+  sv: "Astrid",        // Swedish natural
+  ar: "Zeina",         // Arabic natural
+  zh: "Zhiyu",         // Chinese natural
+  ja: "Takumi",        // Japanese natural
+  ko: "Seoyeon",       // Korean natural
 };
 
-function gttsLang(bcp47) {
-  if (!bcp47) return "fr";
-  return GTTS_LANG[bcp47] || GTTS_LANG[bcp47.slice(0,2)] || "fr";
+function seVoice(bcp47) {
+  const primary = (bcp47 || "fr").slice(0, 2).toLowerCase();
+  return SE_VOICES[primary] || "Brian";
 }
 
-// Split text into chunks ≤ 200 chars (Google TTS URL limit)
-function splitChunks(text, maxLen = 190) {
-  // First clean markdown
-  const clean = text
+function seUrl(text, bcp47) {
+  const voice = seVoice(bcp47);
+  const q = encodeURIComponent(text);
+  return `https://api.streamelements.com/kappa/v2/speech?voice=${voice}&text=${q}`;
+}
+
+// Clean markdown from text before speaking
+function cleanForSpeech(text) {
+  return text
     .replace(/\*\*(.+?)\*\*/gs, "$1")
     .replace(/\*(.+?)\*/gs, "$1")
     .replace(/`{1,3}[\s\S]*?`{1,3}/g, "")
@@ -1806,7 +1742,11 @@ function splitChunks(text, maxLen = 190) {
     .replace(/\n/g, " ")
     .replace(/\s{2,}/g, " ")
     .trim();
+}
 
+// Split into chunks ≤ 200 chars for TTS URL limit
+function splitChunks(text, maxLen = 180) {
+  const clean = cleanForSpeech(text);
   if (!clean) return [];
 
   const sentences = clean.match(/[^.!?…;]+[.!?…;]+(?:\s|$)|[^.!?…;]+$/g) || [clean];
@@ -1820,7 +1760,6 @@ function splitChunks(text, maxLen = 190) {
       buf = (buf + " " + t).trim();
     } else {
       if (buf) chunks.push(buf);
-      // If single sentence too long, break at commas
       if (t.length > maxLen) {
         const parts = t.match(/[^,]+,?/g) || [t];
         let tmp = "";
@@ -1828,8 +1767,7 @@ function splitChunks(text, maxLen = 190) {
           if ((tmp + p).length <= maxLen) { tmp += p; }
           else { if (tmp) chunks.push(tmp.trim()); tmp = p; }
         }
-        if (tmp) buf = tmp.trim();
-        else buf = "";
+        if (tmp) buf = tmp.trim(); else buf = "";
       } else {
         buf = t;
       }
@@ -1839,20 +1777,12 @@ function splitChunks(text, maxLen = 190) {
   return chunks;
 }
 
-// Build Google TTS URL for a chunk
-function gttsUrl(chunk, lang) {
-  const l = gttsLang(lang);
-  const q = encodeURIComponent(chunk);
-  return `https://translate.google.com/translate_tts?ie=UTF-8&q=${q}&tl=${l}&client=tw-ob&ttsspeed=0.9`;
-}
-
-// Current audio element for voice mode
+// Current audio element
 let currentAudio = null;
 let voiceAborted = false;
 
 async function speakText(text, langCode, onDone) {
-  // Stop any ongoing speech
-  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  if (currentAudio) { currentAudio.pause(); currentAudio.src = ""; currentAudio = null; }
   if (synthesis && synthesis.speaking) synthesis.cancel();
   voiceAborted = false;
 
@@ -1861,11 +1791,10 @@ async function speakText(text, langCode, onDone) {
 
   setVoiceState("speaking");
 
-  // Try Google TTS first (best quality, works on all devices)
-  const success = await playGoogleTTS(chunks, langCode);
+  const ok = await playStreamElements(chunks, langCode);
 
-  if (!success && !voiceAborted) {
-    // Fallback to Web Speech API
+  if (!ok && !voiceAborted) {
+    // Fallback: Web Speech API
     playWebSpeech(chunks, langCode, onDone);
   } else {
     setVoiceState("idle");
@@ -1874,11 +1803,11 @@ async function speakText(text, langCode, onDone) {
   }
 }
 
-async function playGoogleTTS(chunks, lang) {
+async function playStreamElements(chunks, langCode) {
   for (let i = 0; i < chunks.length; i++) {
     if (voiceAborted) return true;
 
-    const url = gttsUrl(chunks[i], lang);
+    const url = seUrl(chunks[i], langCode);
 
     const ok = await new Promise(resolve => {
       if (voiceAborted) { resolve(true); return; }
@@ -1886,27 +1815,16 @@ async function playGoogleTTS(chunks, lang) {
       const audio = new Audio();
       currentAudio = audio;
 
-      // Use audio element directly — no fetch, no CORS issue on mobile
-      audio.crossOrigin = "anonymous";
-      audio.playbackRate = 1.0;
-
-      let loaded = false;
+      // Timeout: 5s max per chunk
+      const timeout = setTimeout(() => resolve(false), 5000);
 
       audio.oncanplaythrough = () => {
-        if (loaded) return;
-        loaded = true;
+        clearTimeout(timeout);
         audio.play().catch(() => resolve(false));
       };
 
-      audio.onended  = () => resolve(true);
-      audio.onerror  = () => resolve(false);
-
-      // Timeout: if audio doesn't load in 4s → fallback
-      const timeout = setTimeout(() => {
-        if (!loaded) resolve(false);
-      }, 4000);
-
       audio.onended = () => { clearTimeout(timeout); resolve(true); };
+      audio.onerror = () => { clearTimeout(timeout); resolve(false); };
 
       audio.src = url;
       audio.load();
@@ -1919,9 +1837,7 @@ async function playGoogleTTS(chunks, lang) {
 
 function playWebSpeech(chunks, langCode, onDone) {
   if (!synthesis) { setVoiceState("idle"); if (onDone) onDone(); return; }
-
-  const voices = synthesis.getVoices();
-  const voice  = pickBestVoice(langCode);
+  const voice = pickBestVoice(langCode);
   let idx = 0;
 
   function next() {
@@ -1931,19 +1847,19 @@ function playWebSpeech(chunks, langCode, onDone) {
       if (onDone) onDone();
       return;
     }
-    const chunk = chunks[idx++];
-    const utt   = new SpeechSynthesisUtterance(chunk);
-    utt.lang    = langCode || "fr-FR";
-    utt.rate    = 0.95;
-    utt.pitch   = 1.0;
+    const utt = new SpeechSynthesisUtterance(chunks[idx++]);
+    utt.lang  = langCode || "fr-FR";
+    utt.rate  = 0.95;
+    utt.pitch = 1.0;
     if (voice) utt.voice = voice;
-    utt.onend   = next;
+    utt.onend = next;
     utt.onerror = next;
     synthesis.speak(utt);
   }
 
-  if (voices.length) { next(); }
-  else { synthesis.addEventListener("voiceschanged", next, { once: true }); }
+  const voices = synthesis.getVoices();
+  if (voices.length) next();
+  else synthesis.addEventListener("voiceschanged", next, { once: true });
 }
 
 function pickBestVoice(bcp47) {
@@ -1952,27 +1868,26 @@ function pickBestVoice(bcp47) {
   if (!voices.length) return null;
   const primary = (bcp47 || "fr").slice(0, 2).toLowerCase();
 
-  function score(v) {
+  const scored = voices.map(v => {
     const n = v.name.toLowerCase();
     const l = v.lang.toLowerCase();
-    if (!l.startsWith(primary)) return -1;
+    if (!l.startsWith(primary)) return { v, s: -1 };
     let s = 0;
     if (n.includes("google")) s += 20;
     if (n.includes("wavenet") || n.includes("neural") || n.includes("premium")) s += 15;
     if (n.includes("natural") || n.includes("enhanced")) s += 8;
-    if (l === (bcp47 || "").toLowerCase()) s += 5;
+    if (l === (bcp47||"").toLowerCase()) s += 5;
     if (v.localService) s += 2;
     if (n.includes("compact") || n.includes("espeak") || n.includes("mbrola")) s -= 20;
-    return s;
-  }
+    return { v, s };
+  }).filter(x => x.s >= 0).sort((a, b) => b.s - a.s);
 
-  const best = voices.map(v => ({ v, s: score(v) })).filter(x => x.s >= 0).sort((a,b) => b.s - a.s);
-  return best.length ? best[0].v : voices.find(v => v.lang.toLowerCase().startsWith(primary)) || null;
+  return scored.length ? scored[0].v : voices.find(v => v.lang.toLowerCase().startsWith(primary)) || null;
 }
 
 function stopSpeaking() {
   voiceAborted = true;
-  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  if (currentAudio) { currentAudio.pause(); currentAudio.src = ""; currentAudio = null; }
   if (synthesis && synthesis.speaking) synthesis.cancel();
   isSpeaking = false;
   setVoiceState("idle");
