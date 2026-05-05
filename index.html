@@ -664,6 +664,7 @@ const API_URL="https://jarvis-backend-utkp.onrender.com/chat";
 const IMG_URL="https://jarvis-backend-utkp.onrender.com/image";
 const ANALYZE_URL="https://jarvis-backend-utkp.onrender.com/analyze";
 const SEARCH_URL="https://jarvis-backend-utkp.onrender.com/search";
+const VIDEO_URL = "https://jarvis-backend-utkp.onrender.com/video"; 
 const S_USERS="nova_users_v2";
 const S_SESSION="nova_sess_v2";
 
@@ -1246,6 +1247,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeVoiceMode()});
 let tsx=0;
 document.addEventListener("touchstart",e=>{tsx=e.touches[0].clientX},{passive:true});
 document.addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-tsx;if(dx<-60&&document.getElementById("sidebar").classList.contains("open"))closeSidebar()},{passive:true});
+
 // ✅ NOUVELLE FONCTION: Générer une vidéo avec Pollinations
 async function generateVideo() {
   const promptEl = document.getElementById("prompt");
@@ -1302,28 +1304,59 @@ async function generateVideo() {
   }
 }
 
-// ✅ NOUVELLE FONCTION: Ajouter des actions à la vidéo (télécharger)
-function addVideoActions(wrap, videoSrc) {
-  const actions = document.createElement("div");
-  actions.className = "msg-actions";
+  async function generateVideo() {
+    const promptEl = document.getElementById("prompt");
+    const prompt = promptEl.value.trim();
 
-  const downloadBtn = document.createElement("button");
-  downloadBtn.className = "act-btn";
-  downloadBtn.innerHTML = `
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2">
-      <path d="M8 3v8M5 8l3 3 3-3M3 13h10" stroke-linecap="round"/>
-    </svg> Download
-  `;
-  downloadBtn.onclick = () => {
-    const a = document.createElement("a");
-    a.href = videoSrc;
-    a.download = `nova-video-${Date.now()}.mp4`;
-    a.click();
-  };
+    if (!prompt) {
+      showToast("Please enter a prompt for the video.");
+      return;
+    }
 
-  actions.appendChild(downloadBtn);
-  wrap.appendChild(actions);
-}
+    renderMsg("user", prompt);
+    messages.push({ role: "user", content: prompt });
+
+    const { bubble, wrap } = renderMsg("bot", "", true);
+
+    try {
+      const response = await fetch(VIDEO_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.error) {
+        bubble.innerHTML = "";
+        bubble.textContent = "⚠️ " + data.error;
+        bubble.style.color = "var(--red)";
+        return;
+      }
+
+      bubble.innerHTML = `
+        <video controls style="max-width: 100%; border-radius: 11px; margin-top: 7px; border: 1px solid var(--border2);">
+          <source src="${data.video}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      `;
+
+      addVideoActions(wrap, data.video);
+
+      messages.push({ role: "assistant", content: `[Video generated: ${prompt}]` });
+      if (!isGuest) persistConv();
+
+    } catch (err) {
+      console.error("Video generation error:", err);
+      bubble.innerHTML = "";
+      bubble.textContent = "⚠️ Could not generate video. Please try again.";
+      bubble.style.color = "var(--red)";
+    }
+  }
 (function init(){
   const sess=ls.get(S_SESSION);if(!sess)return;
   if(sess.userId==="guest"){doGuest();return}
