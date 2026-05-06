@@ -497,16 +497,29 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
         <button class="btn-guest" onclick="doGuest()"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.5" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 13.5c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Continue as Guest</button>
         <div class="auth-bottom-note">No account? <a onclick="switchTab('register')">Create one free</a> · <a onclick="doGuest()">Continue as guest</a></div>
       </div>
-      <div id="register-form" style="display:none">
+<div id="register-form" style="display:none">
         <div class="auth-form-title">Create an account</div>
         <div class="auth-form-sub">Free. Your chats saved forever.</div>
         <div class="form-group"><label class="form-label">First Name</label><input class="form-input" id="reg-name" type="text" placeholder="Alex" autocomplete="given-name"></div>
         <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="reg-email" type="email" placeholder="you@example.com" autocomplete="email"></div>
-        <div class="form-group"><label class="form-label">Password</label><div class="pw-wrap"><input class="form-input" id="reg-pw" type="password" placeholder="••••••••" autocomplete="new-password" style="padding-right:40px" oninput="checkStrength(this.value)"><button class="pw-toggle" type="button" onclick="togglePw('reg-pw')"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M1.5 8C3 4.5 5.2 3 8 3s5 1.5 6.5 5c-1.5 3.5-3.7 5-6.5 5s-5-1.5-6.5-5z" stroke="currentColor" stroke-width="1.2"/></svg></button></div><div class="strength-bar"><div class="strength-fill" id="str-fill"></div></div><div class="strength-txt" id="str-txt"></div></div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="pw-wrap"><input class="form-input" id="reg-pw" type="password" placeholder="••••••••" autocomplete="new-password" style="padding-right:40px" oninput="checkStrength(this.value)"><button class="pw-toggle" type="button" onclick="togglePw('reg-pw')"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M1.5 8C3 4.5 5.2 3 8 3s5 1.5 6.5 5c-1.5 3.5-3.7 5-6.5 5s-5-1.5-6.5-5z" stroke="currentColor" stroke-width="1.2"/></svg></button></div>
+          <div class="strength-bar"><div class="strength-fill" id="str-fill"></div></div>
+          <div class="strength-txt" id="str-txt"></div>
+        </div>
         <div class="form-group"><label class="form-label">Confirm Password</label><input class="form-input" id="reg-confirm" type="password" placeholder="••••••••" autocomplete="new-password"></div>
         <div class="form-group"><label class="chk-row"><input type="checkbox" id="reg-terms"> I agree to the <span style="color:var(--accent);margin-left:4px">Terms of Service</span></label></div>
-        <div class="form-err" id="reg-err"></div><div class="form-ok" id="reg-ok"></div>
-        <button class="btn-primary" onclick="doRegister()">Create my account</button>
+        <div class="form-err" id="reg-err"></div>
+        <div class="form-ok" id="reg-ok"></div>
+        <div id="reg-pending" style="display:none;text-align:center;padding:18px 0">
+          <div style="font-size:36px;margin-bottom:12px">📬</div>
+          <div style="font-family:var(--fh);font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">Check your inbox!</div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:16px">We sent a confirmation link to<br><strong id="reg-email-display" style="color:var(--accent)"></strong></div>
+          <div style="font-size:12px;color:var(--text3)">Click the link to activate your account.<br>The link expires in 24 hours.</div>
+          <button style="margin-top:18px;background:none;border:none;color:var(--accent);font-size:13px;cursor:pointer;text-decoration:underline" onclick="resendConfirmation()">Resend email</button>
+        </div>
+        <button class="btn-primary" id="reg-submit-btn" onclick="doRegister()">Create my account</button>
         <div class="auth-divider">or</div>
         <button class="btn-guest" onclick="doGuest()"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.5" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 13.5c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Continue as Guest</button>
         <div class="auth-bottom-note">Already have an account? <a onclick="switchTab('login')">Sign in</a></div>
@@ -582,44 +595,27 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
       </div>
     </div>
 
-<div id="input-zone">
-  <div id="input-wrap-outer">
-    <div class="photo-preview-zone" id="photo-preview-zone"></div>
-    <div id="input-box">
-      <div id="input-top">
-        <textarea id="prompt" rows="1" placeholder="Talk to Nova AI 618... or type 'image' to generate one!"></textarea>
-        <button id="send-btn" onclick="sendMessage()"><svg viewBox="0 0 16 16" fill="none"><path d="M14 8L2 2l3 6-3 6 12-6z" fill="white"/></svg></button>
-      </div>
-      <div id="input-bottom">
-        <div class="tools">
-          <!-- Bouton pour uploader une photo -->
-          <button class="tool-btn" id="photo-tool-btn" title="Upload a photo to analyze" onclick="document.getElementById('photo-input').click()">
-            <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="2.4" stroke="currentColor" stroke-width="1.2"/><circle cx="12.5" cy="5" r=".9" fill="currentColor"/></svg>
-          </button>
-
-          <!-- Bouton pour le mode recherche -->
-          <button class="tool-btn" id="search-tool-btn" title="Toggle web search mode" onclick="toggleSearch()">
-            <svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-          </button>
-
-          <!-- ✅ NOUVEAU: Bouton pour générer une vidéo -->
-          <button class="tool-btn" title="Generate a video" onclick="generateVideo()">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2">
-              <rect x="2" y="2" width="12" height="10" rx="2"/>
-              <path d="M2 6l12 4-12 4V2z"/>
-            </svg>
-          </button>
-
-          <!-- Bouton pour le micro -->
-          <button id="mic-btn" title="Voice input" onclick="toggleInlineMic()">
-            <svg viewBox="0 0 16 16" fill="none"><rect x="5" y="1" width="6" height="9" rx="3" stroke="currentColor" stroke-width="1.3"/><path d="M2 8a6 6 0 0012 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M8 14v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-          </button>
+    <div id="input-zone">
+      <div id="input-wrap-outer">
+        <div class="photo-preview-zone" id="photo-preview-zone"></div>
+        <div id="input-box">
+          <div id="input-top">
+            <textarea id="prompt" rows="1" placeholder="Talk to Nova AI 618... or type 'image' to generate one!"></textarea>
+            <button id="send-btn" onclick="sendMessage()"><svg viewBox="0 0 16 16" fill="none"><path d="M14 8L2 2l3 6-3 6 12-6z" fill="white"/></svg></button>
+          </div>
+          <div id="input-bottom">
+            <div class="tools">
+              <button class="tool-btn" id="photo-tool-btn" title="Upload a photo to analyze" onclick="document.getElementById('photo-input').click()"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="2.4" stroke="currentColor" stroke-width="1.2"/><circle cx="12.5" cy="5" r=".9" fill="currentColor"/></svg></button>
+              <button class="tool-btn" id="search-tool-btn" title="Toggle web search mode" onclick="toggleSearch()"><svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+              <button id="mic-btn" title="Voice input" onclick="toggleInlineMic()"><svg viewBox="0 0 16 16" fill="none"><rect x="5" y="1" width="6" height="9" rx="3" stroke="currentColor" stroke-width="1.3"/><path d="M2 8a6 6 0 0012 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M8 14v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+            </div>
+            <div class="input-meta"><span id="char-count">0 / 4096</span><span class="kbd">↵ Send</span></div>
+          </div>
         </div>
-        <div class="input-meta"><span id="char-count">0 / 4096</span><span class="kbd">↵ Send</span></div>
+        <p class="foot-note">Nova AI 618 can make mistakes. · <a onclick="document.getElementById('auth-screen').style.display='flex';document.getElementById('app-screen').style.display='none';switchTab('login')">Sign in</a> · <a onclick="document.getElementById('auth-screen').style.display='flex';document.getElementById('app-screen').style.display='none';switchTab('register')">Create account</a></p>
       </div>
     </div>
-    <p class="foot-note">Nova AI 618 can make mistakes. · <a onclick="document.getElementById('auth-screen').style.display='flex';document.getElementById('app-screen').style.display='none';switchTab('login')">Sign in</a> · <a onclick="document.getElementById('auth-screen').style.display='flex';document.getElementById('app-screen').style.display='none';switchTab('register')">Create account</a></p>
-  </div>
+  </main>
 </div>
 
 <!-- ══ VOICE ══════════════════════════════════════════════════ -->
@@ -664,7 +660,6 @@ const API_URL="https://jarvis-backend-utkp.onrender.com/chat";
 const IMG_URL="https://jarvis-backend-utkp.onrender.com/image";
 const ANALYZE_URL="https://jarvis-backend-utkp.onrender.com/analyze";
 const SEARCH_URL="https://jarvis-backend-utkp.onrender.com/search";
-const VIDEO_URL = "https://jarvis-backend-utkp.onrender.com/video"; 
 const S_USERS="nova_users_v2";
 const S_SESSION="nova_sess_v2";
 
@@ -1248,36 +1243,96 @@ let tsx=0;
 document.addEventListener("touchstart",e=>{tsx=e.touches[0].clientX},{passive:true});
 document.addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-tsx;if(dx<-60&&document.getElementById("sidebar").classList.contains("open"))closeSidebar()},{passive:true});
 
-// ✅ Fonction addVideoActions
-  function addVideoActions(wrap, videoSrc) {
-    const actions = document.createElement("div");
-    actions.className = "msg-actions";
+let lastRegEmail="",lastRegName="";
 
-    const downloadBtn = document.createElement("button");
-    downloadBtn.className = "act-btn";
-    downloadBtn.innerHTML = `
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2">
-        <path d="M8 3v8M5 8l3 3 3-3M3 13h10" stroke-linecap="round"/>
-      </svg> Download
-    `;
-    downloadBtn.onclick = () => {
-      const a = document.createElement("a");
-      a.href = videoSrc;
-      a.download = `nova-video-${Date.now()}.mp4`;
-      a.click();
-      showToast("Video downloaded!");
-    };
+function doRegister(){
+  const name=vi("reg-name"),email=vi("reg-email").toLowerCase(),pw=vi("reg-pw"),conf=vi("reg-confirm");
+  const terms=document.getElementById("reg-terms").checked;
+  const eEl=document.getElementById("reg-err"),oEl=document.getElementById("reg-ok");
+  eEl.classList.remove("show");oEl.classList.remove("show");
+  if(!name)return showErr(eEl,"Please enter your first name.");
+  if(!email.includes("@"))return showErr(eEl,"Invalid email address.");
+  if(pw.length<6)return showErr(eEl,"Password must be at least 6 characters.");
+  if(pw!==conf)return showErr(eEl,"Passwords do not match.");
+  if(!terms)return showErr(eEl,"Please accept the Terms of Service.");
+  const users=getUsers();
+  if(Object.values(users).find(u=>u.email===email))return showErr(eEl,"An account with this email already exists.");
+  const id="u_"+Date.now();
+  users[id]={id,name,email,pw:btoa(pw),created:Date.now(),verified:false};
+  ls.set(S_USERS,users);
+  const btn=document.getElementById("reg-submit-btn");
+  btn.disabled=true;btn.textContent="Sending email...";
+  lastRegEmail=email;lastRegName=name;
+  fetch("https://jarvis-backend-utkp.onrender.com/send-confirmation",{
+    method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({email,name})
+  })
+  .then(r=>r.json())
+  .then(d=>{
+    if(d.success){
+      document.getElementById("reg-email-display").textContent=email;
+      document.getElementById("reg-pending").style.display="block";
+      btn.style.display="none";
+      document.querySelectorAll("#register-form .auth-divider, #register-form .btn-guest").forEach(el=>el.style.display="none");
+    }else{
+      btn.disabled=false;btn.textContent="Create my account";
+      showErr(eEl,"Could not send confirmation email: "+(d.error||"unknown error"));
+    }
+  })
+  .catch(()=>{
+    btn.disabled=false;btn.textContent="Create my account";
+    showErr(eEl,"Email service unavailable. Try again later.");
+  });
+}
 
-    actions.appendChild(downloadBtn);
-    wrap.appendChild(actions);
+function resendConfirmation(){
+  if(!lastRegEmail||!lastRegName)return;
+  showToast("Sending confirmation email...");
+  fetch("https://jarvis-backend-utkp.onrender.com/send-confirmation",{
+    method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({email:lastRegEmail,name:lastRegName})
+  })
+  .then(r=>r.json())
+  .then(d=>{if(d.success)showToast("✅ Email resent! Check your inbox.");else showToast("❌ Could not resend: "+(d.error||"unknown error"));})
+  .catch(()=>showToast("❌ Email service unavailable."));
+}
+
+document.getElementById("prompt").addEventListener("input",()=>{autoResize();updateCount()});
+document.getElementById("prompt").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage()}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeVoiceMode()});
+let tsx=0;
+document.addEventListener("touchstart",e=>{tsx=e.touches[0].clientX},{passive:true});
+document.addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-tsx;if(dx<-60&&document.getElementById("sidebar").classList.contains("open"))closeSidebar()},{passive:true});
+
+(function init(){
+  const params=new URLSearchParams(window.location.search);
+  const confirmToken=params.get("confirm");
+  if(confirmToken){
+    fetch(`https://jarvis-backend-utkp.onrender.com/verify-email?token=${confirmToken}`)
+    .then(r=>r.json())
+    .then(d=>{
+      if(d.success){
+        const users=getUsers();
+        const user=Object.values(users).find(u=>u.email===d.email);
+        if(user){user.verified=true;ls.set(S_USERS,users);}
+        window.history.replaceState({},"",window.location.pathname);
+        switchTab("login");
+        const banner=document.createElement("div");
+        banner.style.cssText="text-align:center;padding:12px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);border-radius:10px;color:#22c55e;font-size:13px;margin-bottom:14px";
+        banner.innerHTML="✅ Email confirmed! You can now sign in.";
+        document.getElementById("login-form").prepend(banner);
+        if(d.email)document.getElementById("login-email").value=d.email;
+      }else{
+        window.history.replaceState({},"",window.location.pathname);
+        showToast("❌ "+(d.error||"Invalid confirmation link"));
+      }
+    })
+    .catch(()=>{window.history.replaceState({},"",window.location.pathname);showToast("❌ Could not verify email. Try again.");});
   }
-
-  // ✅ Une seule occurrence de (function init(){...})()
-  (function init(){
-    const sess=ls.get(S_SESSION);if(!sess)return;
-    if(sess.userId==="guest"){doGuest();return}
-    const user=getUsers()[sess.userId];if(user)startApp(user,false);
-  })();
+  const sess=ls.get(S_SESSION);if(!sess)return;
+  if(sess.userId==="guest"){doGuest();return}
+  const user=getUsers()[sess.userId];if(user)startApp(user,false)
+})();
 </script>
 </body>
 </html>
