@@ -1166,154 +1166,48 @@ async function sendMessage(){
   if(messages.length===0)document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"…":text;
 
   // ── WEB SEARCH ──────────────────────────────────────────
- // ── WEB SEARCH MODE ──────────────────────────────────────────
-if(searchModeActive){
-  renderMsg("user", text);
-  const chatEl = document.getElementById("chat");
-  const cw = document.getElementById("chat-wrap");
-  hideEmpty();
-  if(msgCount === 0) addDivider("Today");
-  msgCount++;
-  const group = document.createElement("div");
-  group.className = "msg-group";
-  const row = document.createElement("div");
-  row.className = "msg-row bot";
-  const av = document.createElement("div");
-  av.className = "msg-av bot";
-  av.innerHTML = bhAv(28);
-  const wrap = document.createElement("div");
-  wrap.className = "msg-content";
-  const hdr = document.createElement("div");
-  hdr.className = "msg-header";
-  const sender = document.createElement("span");
-  sender.className = "msg-sender";
-  sender.textContent = "Nova AI 618";
-  const time2 = document.createElement("span");
-  time2.className = "msg-time";
-  time2.textContent = new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
-  hdr.appendChild(sender);
-  hdr.appendChild(time2);
-  const bubble = document.createElement("div");
-  bubble.className = "bubble bot";
-  bubble.innerHTML = '<div class="img-loading"><div class="img-spinner"></div>🌐 Searching the web...</div>';
-  wrap.appendChild(hdr);
-  wrap.appendChild(bubble);
-  row.appendChild(av);
-  row.appendChild(wrap);
-  group.appendChild(row);
-  chatEl.appendChild(group);
-  cw.scrollTop = cw.scrollHeight;
-
-  try {
-    // ✅ Appel à /search
-    const sr = await fetch(SEARCH_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query: text })
-    });
-
-    const sd = await sr.json();
-
-    // ✅ Vérifie si sd.error existe
-    if (sd.error) {
-      bubble.innerHTML = "";
-      bubble.textContent = "⚠️ Search error: " + sd.error;
-      bubble.style.color = "var(--red)";
-      sendBtn.disabled = false;
-      promptEl.focus();
-      return;
-    }
-
-    // ✅ Vérifie que sd.context et sd.sources existent
-    if (!sd.context || !sd.sources) {
-      bubble.innerHTML = "";
-      bubble.textContent = "⚠️ Invalid search response. Please try again.";
-      bubble.style.color = "var(--red)";
-      sendBtn.disabled = false;
-      promptEl.focus();
-      return;
-    }
-
-    // ✅ Construit le contexte pour l'AI
-    const webCtx = `You have access to real-time web search results. Use them to answer accurately.
-
-Web search results for "${text}":
-
-${sd.context}
-
-Answer the user's question: ${text}`;
-
-    // ✅ Ajoute le contexte aux messages
-    const searchMsgs = [...messages, { role: "user", content: webCtx }];
-
-    // ✅ Appel à /chat avec le contexte
-    const r = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: searchMsgs, model: currentModel, temperature: 0.3 })
-    });
-
-    const d = await r.json();
-
-    // ✅ Gère la limite de tokens
-    if (d.rate_limited) {
-      bubble.innerHTML = "";
-      bubble.innerHTML = `<div style="display:flex;align-items:center;gap:9px;color:var(--orange);font-size:13px;padding:4px 0"><span style="font-size:18px">⚠️</span><div><strong>Daily limit reached for ${currentModel}.</strong><br><span style="color:var(--text2);font-size:12px">Switch to another model to continue.</span></div></div>`;
-      setTimeout(() => showRateLimitModal(), 300);
-      sendBtn.disabled = false;
-      return;
-    }
-
-    // ✅ Affiche la réponse
-    const reply = d.choices[0].message.content;
-    bubble.innerHTML = "";
-
-    // ✅ Badge "Web search"
-    const badge = document.createElement("div");
-    badge.className = "search-badge";
-    badge.innerHTML = `<svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Web search`;
-    bubble.appendChild(badge);
-
-    // ✅ Contenu de la réponse
-    const content = document.createElement("div");
-    content.innerHTML = formatMsg(reply);
-    bubble.appendChild(content);
-
-    // ✅ Sources (si elles existent)
-    if (sd.sources && sd.sources.length > 0) {
-      const sw = document.createElement("div");
-      sw.className = "sources-wrap";
-      sd.sources.slice(0, 5).forEach(s => {
-        const chip = document.createElement("a");
-        chip.className = "source-chip";
-        chip.href = s.url;
-        chip.target = "_blank";
-        chip.rel = "noopener noreferrer";
-        chip.innerHTML = `<svg viewBox="0 0 16 16" fill="none"><path d="M10 3h3v3M13 3l-6 6M6 4H3v9h9v-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>${esc(s.title.length > 35 ? s.title.slice(0, 35) + "…" : s.title)}`;
-        sw.appendChild(chip);
-      });
-      bubble.appendChild(sw);
-    }
-
-    // ✅ Ajoute les actions (copier, écouter)
-    addActions(wrap, reply);
-
-    // ✅ Sauvegarde la conversation
-    messages.push({ role: "user", content: text });
-    messages.push({ role: "assistant", content: reply });
-    if (!isGuest) persistConv();
-
-  } catch (err) {
-    bubble.innerHTML = "";
-    bubble.textContent = "⚠️ Search error: " + err.message;
-    bubble.style.color = "var(--red)";
+  if(searchModeActive){
+    renderMsg("user",text);
+    const chatEl=document.getElementById("chat"),cw=document.getElementById("chat-wrap");
+    hideEmpty();if(msgCount===0)addDivider("Today");msgCount++;
+    const group=document.createElement("div");group.className="msg-group";
+    const row=document.createElement("div");row.className="msg-row bot";
+    const av=document.createElement("div");av.className="msg-av bot";av.innerHTML=bhAv(28);
+    const wrap=document.createElement("div");wrap.className="msg-content";
+    const hdr=document.createElement("div");hdr.className="msg-header";
+    const sender=document.createElement("span");sender.className="msg-sender";sender.textContent="Nova AI 618";
+    const time2=document.createElement("span");time2.className="msg-time";time2.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
+    hdr.appendChild(sender);hdr.appendChild(time2);
+    const bubble=document.createElement("div");bubble.className="bubble bot";
+    bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>🌐 Searching the web...</div>';
+    wrap.appendChild(hdr);wrap.appendChild(bubble);row.appendChild(av);row.appendChild(wrap);group.appendChild(row);chatEl.appendChild(group);cw.scrollTop=cw.scrollHeight;
+    try{
+      const sr=await fetch(SEARCH_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:text})});
+      const sd=await sr.json();
+      if(sd.error)throw new Error(sd.error);
+      const webCtx=`You have access to real-time web search results. Use them to answer accurately.\n\nWeb search results for "${text}":\n\n${sd.context}\n\nAnswer the user's question: ${text}`;
+      const searchMsgs=[...messages,{role:"user",content:webCtx}];
+      const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:searchMsgs,model:currentModel,temperature:.3})});
+      const d=await r.json();
+      if(d.rate_limited){bubble.innerHTML="";bubble.textContent="⚠️ Daily limit reached. Please switch model.";bubble.style.color="var(--orange)";showRateLimitModal();sendBtn.disabled=false;return;}
+      const reply=d.choices[0].message.content;
+      bubble.innerHTML="";
+      const badge=document.createElement("div");badge.className="search-badge";badge.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Web search`;
+      bubble.appendChild(badge);
+      const content=document.createElement("div");content.innerHTML=formatMsg(reply);bubble.appendChild(content);
+      if(sd.sources&&sd.sources.length){
+        const sw=document.createElement("div");sw.className="sources-wrap";
+        sd.sources.slice(0,5).forEach(s=>{const chip=document.createElement("a");chip.className="source-chip";chip.href=s.url;chip.target="_blank";chip.rel="noopener noreferrer";chip.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><path d="M10 3h3v3M13 3l-6 6M6 4H3v9h9v-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>${esc(s.title.length>35?s.title.slice(0,35)+"…":s.title)}`;sw.appendChild(chip);});
+        bubble.appendChild(sw);
+      }
+      addActions(wrap,reply);
+      messages.push({role:"user",content:text});messages.push({role:"assistant",content:reply});
+      if(!isGuest)persistConv();
+    }catch(err){bubble.innerHTML="";bubble.textContent="⚠️ Search error: "+err.message;bubble.style.color="var(--red)";}
+    sendBtn.disabled=false;promptEl.focus();document.getElementById("chat-wrap").scrollTop=999999;
+    return;
   }
 
-  sendBtn.disabled = false;
-  promptEl.focus();
-  document.getElementById("chat-wrap").scrollTop = 999999;
-  return;
-}
   // ── NORMAL CHAT ─────────────────────────────────────────
   renderMsg("user",text);messages.push({role:"user",content:text});
   const{bubble,wrap}=renderMsg("bot","",true);
