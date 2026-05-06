@@ -11,19 +11,14 @@
 <link rel="canonical" href="https://sixteleinekugel-commits.github.io/novaAI-chat/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Nova AI 618 — Free Intelligent AI Assistant">
-<meta property="og:description" content="Chat with Nova AI 618 — generate images, analyze photos, voice mode. Free and instant. No download needed.">
+<meta property="og:description" content="Chat with Nova AI 618 — generate images, analyze photos, voice mode. Free and instant.">
 <meta property="og:url" content="https://sixteleinekugel-commits.github.io/novaAI-chat/">
 <meta property="og:site_name" content="Nova AI 618">
 <meta property="og:image" content="https://sixteleinekugel-commits.github.io/novaAI-chat/nova-ai-618-preview.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Nova AI 618 — Free Intelligent AI Assistant">
-<meta name="twitter:description" content="Chat, generate images, analyze photos. Free AI — no download needed.">
 <meta name="twitter:image" content="https://sixteleinekugel-commits.github.io/novaAI-chat/nova-ai-618-preview.png">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Nova AI 618","url":"https://sixteleinekugel-commits.github.io/novaAI-chat/","description":"Nova AI 618 is a free intelligent AI assistant.","applicationCategory":"AIApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"Nova AI 618"}}
-</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Nova AI 618","url":"https://sixteleinekugel-commits.github.io/novaAI-chat/","description":"Nova AI 618 is a free intelligent AI assistant.","applicationCategory":"AIApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23000'/><ellipse cx='50' cy='50' rx='46' ry='10' fill='none' stroke='%23ff8c00' stroke-width='3.5' transform='rotate(-18 50 50)'/><circle cx='50' cy='50' r='20' fill='%23000'/><circle cx='50' cy='50' r='21' fill='none' stroke='%237c6aff' stroke-width='1.5'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
@@ -81,6 +76,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .btn-primary{width:100%;padding:13px;background:var(--accent);border:none;border-radius:10px;color:#fff;font-family:var(--fh);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;margin-top:5px}
 .btn-primary:hover{background:var(--accent2)}
 .btn-primary:active{transform:scale(.98)}
+.btn-primary:disabled{background:var(--surface3);cursor:not-allowed;color:var(--text3)}
 .auth-divider{display:flex;align-items:center;gap:12px;margin:15px 0;color:var(--text3);font-size:12px}
 .auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
 .btn-guest{width:100%;padding:11px;background:transparent;border:1px solid var(--border2);border-radius:10px;color:var(--text2);font-family:var(--fb);font-size:13.5px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
@@ -128,6 +124,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .model-sel{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);cursor:pointer;transition:all .2s;margin-bottom:7px}
 .model-sel:hover{border-color:var(--border2);background:var(--surface3)}
 .model-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);flex-shrink:0}
+.model-dot.orange{background:var(--orange);box-shadow:0 0 5px var(--orange)}
 .model-info{flex:1;overflow:hidden}
 .model-nm{font-size:12px;font-weight:500;color:var(--text)}
 .model-ctx{font-size:10px;color:var(--text3)}
@@ -170,6 +167,13 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .voice-btn{display:flex;align-items:center;gap:6px;padding:5px 11px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--text2);font-family:var(--fb);font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;flex-shrink:0}
 .voice-btn:hover{background:var(--surface2);color:var(--text)}
 .voice-btn svg{width:13px;height:13px}
+
+/* ── SEARCH BANNER ────────────────────────────────────────── */
+#search-banner{display:none;align-items:center;gap:8px;padding:6px 16px;background:var(--search-dim);border-bottom:1px solid rgba(14,165,233,0.2);font-size:12px;color:var(--search);flex-shrink:0}
+#search-banner.show{display:flex}
+#search-banner svg{width:13px;height:13px;flex-shrink:0}
+#search-banner button{margin-left:auto;background:none;border:none;color:var(--search);cursor:pointer;font-size:11px;opacity:.7;padding:2px 6px;border-radius:4px}
+#search-banner button:hover{opacity:1;background:rgba(14,165,233,0.15)}
 
 /* ── CHAT ─────────────────────────────────────────────────── */
 #chat-wrap{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
@@ -302,13 +306,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .foot-note{text-align:center;font-size:10.5px;color:var(--text3);margin-top:7px}
 .foot-note a{color:var(--accent);text-decoration:underline;cursor:pointer}
 
-/* ── SEARCH BANNER ────────────────────────────────────────── */
-#search-banner{display:none;align-items:center;gap:8px;padding:6px 16px;background:var(--search-dim);border-bottom:1px solid rgba(14,165,233,0.2);font-size:12px;color:var(--search);flex-shrink:0}
-#search-banner.show{display:flex}
-#search-banner svg{width:13px;height:13px;flex-shrink:0}
-#search-banner button{margin-left:auto;background:none;border:none;color:var(--search);cursor:pointer;font-size:11px;opacity:.7;padding:2px 6px;border-radius:4px}
-#search-banner button:hover{opacity:1;background:rgba(14,165,233,0.15)}
-
 /* ── VOICE MODE ───────────────────────────────────────────── */
 #voice-overlay{display:none;position:fixed;inset:0;background:linear-gradient(135deg,#02030f 0%,#060418 50%,#040210 100%);z-index:600;flex-direction:column;animation:vo-in .35s ease}
 #voice-overlay.open{display:flex}
@@ -328,8 +325,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .vo-av{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;font-family:var(--fh);overflow:hidden}
 .vo-av.bot{background:#000}
 .vo-av.user{background:rgba(124,106,255,0.25);color:var(--accent2);border:1px solid rgba(124,106,255,0.3)}
-.vo-bub{max-width:74%;padding:10px 14px;font-size:13.5px;line-height:1.65;word-break:break-word;border-radius:3px 14px 14px 14px}
-.vo-bub.bot{background:rgba(255,255,255,0.055);border:1px solid rgba(255,255,255,0.08);color:var(--text)}
+.vo-bub{max-width:74%;padding:10px 14px;font-size:13.5px;line-height:1.65;word-break:break-word}
+.vo-bub.bot{background:rgba(255,255,255,0.055);border:1px solid rgba(255,255,255,0.08);color:var(--text);border-radius:3px 14px 14px 14px}
 .vo-bub.user{background:rgba(124,106,255,0.25);color:#d4caff;border:1px solid rgba(124,106,255,0.3);border-radius:14px 3px 14px 14px}
 .vo-hint{flex:1;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:13px;text-align:center;line-height:1.8}
 .vo-center{display:flex;flex-direction:column;align-items:center;gap:18px;padding:12px 22px;flex-shrink:0}
@@ -346,26 +343,26 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 #voice-overlay.listening .vo-r1{animation:ring-out 1.1s ease-out infinite}
 #voice-overlay.listening .vo-r2{animation:ring-out 1.1s ease-out .26s infinite}
 #voice-overlay.listening .vo-r3{animation:ring-out 1.1s ease-out .52s infinite}
-#voice-overlay.thinking .vo-orb{animation:orb-think 2s ease-in-out infinite;box-shadow:0 0 40px rgba(255,140,0,.3),inset 0 0 30px rgba(255,140,0,.05)}
+#voice-overlay.thinking .vo-orb{animation:orb-think 2s ease-in-out infinite;box-shadow:0 0 40px rgba(255,140,0,.3)}
 #voice-overlay.thinking .vo-ring{animation:none;opacity:0}
-#voice-overlay.speaking .vo-orb{box-shadow:0 0 80px rgba(124,106,255,.6),0 0 40px rgba(255,140,0,.2),inset 0 0 30px rgba(124,106,255,.08);animation:orb-breathe .55s ease-in-out infinite alternate}
+#voice-overlay.speaking .vo-orb{box-shadow:0 0 80px rgba(124,106,255,.6),0 0 40px rgba(255,140,0,.2);animation:orb-breathe .55s ease-in-out infinite alternate}
 #voice-overlay.speaking .vo-r1{animation:ring-out 1.6s ease-out infinite}
 #voice-overlay.speaking .vo-r2{animation:ring-out 1.6s ease-out .36s infinite}
 #voice-overlay.speaking .vo-r3{animation:ring-out 1.6s ease-out .72s infinite}
 @keyframes orb-breathe{from{transform:scale(1)}to{transform:scale(1.07)}}
-@keyframes orb-think{0%,100%{transform:scale(1) rotate(0deg)}25%{transform:scale(1.03) rotate(1deg)}75%{transform:scale(0.97) rotate(-1deg)}}
+@keyframes orb-think{0%,100%{transform:scale(1) rotate(0deg)}25%{transform:scale(1.03) rotate(1deg)}75%{transform:scale(.97) rotate(-1deg)}}
 .vo-wave{display:flex;align-items:center;gap:3px;height:30px;opacity:0;transition:opacity .3s}
 #voice-overlay.listening .vo-wave,#voice-overlay.speaking .vo-wave{opacity:1}
 .wave-bar{width:3px;border-radius:3px;background:var(--accent);transition:height .07s ease}
 #voice-overlay.listening .wave-bar{background:var(--red)}
-.vo-status{font-family:var(--fh);font-size:15px;font-weight:700;color:var(--text);text-align:center;min-height:22px;letter-spacing:.01em}
+.vo-status{font-family:var(--fh);font-size:15px;font-weight:700;color:var(--text);text-align:center;min-height:22px}
 .vo-live{font-size:13px;color:rgba(255,255,255,0.45);font-weight:300;text-align:center;max-width:420px;line-height:1.6;min-height:18px;padding:0 18px;font-style:italic}
 .vo-controls{display:flex;align-items:center;justify-content:center;gap:20px;padding:16px 22px calc(24px + var(--sb));flex-shrink:0}
 .vo-btn{border:none;cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .25s}
 .vo-sec{width:54px;height:54px;background:rgba(255,255,255,0.06);color:var(--text2);border:1px solid rgba(255,255,255,0.1)}
 .vo-sec:hover{background:rgba(255,255,255,0.12);color:var(--text);transform:scale(1.05)}
 .vo-sec svg{width:20px;height:20px}
-.vo-main{width:74px;height:74px;background:linear-gradient(135deg,var(--accent),#5b4cd1);box-shadow:0 6px 28px rgba(124,106,255,.45),0 2px 8px rgba(0,0,0,.4)}
+.vo-main{width:74px;height:74px;background:linear-gradient(135deg,var(--accent),#5b4cd1);box-shadow:0 6px 28px rgba(124,106,255,.45)}
 .vo-main:hover{transform:scale(1.06);box-shadow:0 8px 36px rgba(124,106,255,.55)}
 .vo-main:active{transform:scale(.96)}
 .vo-main svg{width:30px;height:30px}
@@ -376,7 +373,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .m-overlay.open{display:flex}
 .m-box{background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:20px;width:400px;max-width:100%;animation:modal-in .2s ease;max-height:90dvh;overflow-y:auto}
 @keyframes modal-in{from{opacity:0;transform:scale(.95) translateY(7px)}to{opacity:1;transform:none}}
-.m-title{font-family:var(--fh);font-size:17px;font-weight:700;margin-bottom:14px}
+.m-title{font-family:var(--fh);font-size:17px;font-weight:700;margin-bottom:6px}
+.m-sub{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.6}
 .model-opt{display:flex;align-items:center;gap:11px;padding:12px 13px;border-radius:11px;border:1px solid var(--border);cursor:pointer;margin-bottom:7px;transition:all .15s}
 .model-opt:hover{background:var(--surface2);border-color:var(--border2)}
 .model-opt.selected{border-color:var(--accent);background:var(--accent-dim)}
@@ -390,6 +388,12 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .mbadge-new{background:rgba(99,102,241,.12);color:#818cf8}
 .m-close{width:100%;margin-top:7px;padding:10px;background:transparent;border:1px solid var(--border);border-radius:9px;color:var(--text2);font-family:var(--fb);font-size:13px;cursor:pointer;transition:all .15s}
 .m-close:hover{background:var(--surface2)}
+
+/* ── RATE LIMIT MODAL ─────────────────────────────────────── */
+#rate-limit-modal .m-box{border-color:rgba(255,140,0,0.3)}
+.rate-limit-icon{font-size:36px;text-align:center;margin-bottom:12px}
+.rate-limit-warning{background:rgba(255,140,0,0.08);border:1px solid rgba(255,140,0,0.2);border-radius:10px;padding:11px 14px;font-size:12.5px;color:rgba(255,140,0,0.9);margin-bottom:16px;line-height:1.6}
+
 #toast{position:fixed;bottom:calc(18px + var(--sb));left:50%;transform:translateX(-50%) translateY(70px);background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:9px 18px;font-size:13px;color:var(--text);z-index:999;transition:transform .3s ease;pointer-events:none;white-space:nowrap}
 #toast.show{transform:translateX(-50%) translateY(0)}
 #photo-input{display:none}
@@ -431,6 +435,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
   <p>Nova AI 618 is a free AI assistant. Sign in or continue as guest. Chat, generate images, analyze photos, voice mode. Free forever.</p>
 </div>
 
+<!-- BLACK HOLE SVG -->
 <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
 <defs>
   <radialGradient id="bh-space" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#000410"/><stop offset="100%" stop-color="#000000"/></radialGradient>
@@ -468,10 +473,10 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
       <div class="auth-tagline">Next-generation artificial intelligence. Fast, precise, always available.</div>
       <div class="auth-features">
         <div class="auth-feat"><div class="auth-feat-icon">💬</div><span>Conversations saved and accessible anywhere</span></div>
-        <div class="auth-feat"><div class="auth-feat-icon">🔒</div><span>Your data stays private and secure</span></div>
         <div class="auth-feat"><div class="auth-feat-icon">🌐</div><span>Web search mode — real-time information</span></div>
         <div class="auth-feat"><div class="auth-feat-icon">🎙️</div><span>Natural voice mode — speak and listen</span></div>
         <div class="auth-feat"><div class="auth-feat-icon">🎨</div><span>Image generation & photo analysis</span></div>
+        <div class="auth-feat"><div class="auth-feat-icon">⚡</div><span>GPT-OSS 120B — powerful & free</span></div>
       </div>
     </div>
   </div>
@@ -486,6 +491,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
         <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
         <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Create Account</button>
       </div>
+      <!-- LOGIN -->
       <div id="login-form">
         <div class="auth-form-title">Welcome back 👋</div>
         <div class="auth-form-sub">Sign in to access your conversations.</div>
@@ -497,7 +503,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
         <button class="btn-guest" onclick="doGuest()"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.5" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 13.5c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Continue as Guest</button>
         <div class="auth-bottom-note">No account? <a onclick="switchTab('register')">Create one free</a> · <a onclick="doGuest()">Continue as guest</a></div>
       </div>
-<div id="register-form" style="display:none">
+      <!-- REGISTER -->
+      <div id="register-form" style="display:none">
         <div class="auth-form-title">Create an account</div>
         <div class="auth-form-sub">Free. Your chats saved forever.</div>
         <div class="form-group"><label class="form-label">First Name</label><input class="form-input" id="reg-name" type="text" placeholder="Alex" autocomplete="given-name"></div>
@@ -539,8 +546,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
     <div class="sb-scroll" id="convs-list"><div class="sb-empty" id="convs-empty">No conversations yet.<br>Start chatting!</div></div>
     <div class="sb-footer">
       <div class="model-sel" onclick="document.getElementById('model-modal').classList.add('open');closeSidebar();">
-        <div class="model-dot"></div>
-        <div class="model-info"><div class="model-nm" id="model-nm">Llama 3.3 70B</div><div class="model-ctx" id="model-ctx">128k context</div></div>
+        <div class="model-dot" id="model-dot"></div>
+        <div class="model-info"><div class="model-nm" id="model-nm">GPT-OSS 120B</div><div class="model-ctx" id="model-ctx">via Groq · Free</div></div>
         <svg viewBox="0 0 16 16" fill="none"><path d="M5 7l3-3 3 3M5 10l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
       </div>
       <div class="user-row" onclick="toggleDd()">
@@ -562,7 +569,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
       <div class="tb-left">
         <button class="hamburger" onclick="openSidebar()"><svg viewBox="0 0 18 18" fill="none"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
         <span class="conv-title" id="conv-title">New conversation</span>
-        <span class="conv-badge" id="model-badge">llama-3.3-70b</span>
+        <span class="conv-badge" id="model-badge">gpt-oss-120b</span>
         <span class="guest-pill" id="guest-pill">Guest mode</span>
       </div>
       <div class="tb-actions">
@@ -572,10 +579,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
       </div>
     </div>
 
-    <!-- Search banner -->
     <div id="search-banner">
       <svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-      <span>Web search mode active — Nova will search the internet for up-to-date information</span>
+      <span>Web search mode active — Nova will search the internet for real-time info</span>
       <button onclick="toggleSearch()">Disable</button>
     </div>
 
@@ -584,7 +590,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
         <div id="empty-state">
           <div class="empty-logo"><svg width="72" height="72" viewBox="0 0 100 100"><use href="#bh-icon"/></svg></div>
           <div class="empty-title" id="empty-title">Hello! How can I help?</div>
-          <div class="empty-sub" id="empty-sub">I am Nova AI 618 — ask me anything, generate images, or upload a photo to analyze!</div>
+          <div class="empty-sub" id="empty-sub">I am Nova AI 618 — powered by GPT-OSS 120B. Ask me anything, generate images, or search the web!</div>
           <div class="prompts-grid">
             <div class="p-card" onclick="fillPrompt('Explain how black holes work')"><span class="p-card-icon">🧠</span><div class="p-card-title">Explain a concept</div><div class="p-card-sub">Science, AI, history...</div></div>
             <div class="p-card" onclick="fillPrompt('Help me write a professional email')"><span class="p-card-icon">✍️</span><div class="p-card-title">Write something</div><div class="p-card-sub">Email, article, summary...</div></div>
@@ -605,14 +611,14 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
           </div>
           <div id="input-bottom">
             <div class="tools">
-              <button class="tool-btn" id="photo-tool-btn" title="Upload a photo to analyze" onclick="document.getElementById('photo-input').click()"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="2.4" stroke="currentColor" stroke-width="1.2"/><circle cx="12.5" cy="5" r=".9" fill="currentColor"/></svg></button>
-              <button class="tool-btn" id="search-tool-btn" title="Toggle web search mode" onclick="toggleSearch()"><svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+              <button class="tool-btn" id="photo-tool-btn" title="Upload a photo" onclick="document.getElementById('photo-input').click()"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="2.4" stroke="currentColor" stroke-width="1.2"/><circle cx="12.5" cy="5" r=".9" fill="currentColor"/></svg></button>
+              <button class="tool-btn" id="search-tool-btn" title="Toggle web search" onclick="toggleSearch()"><svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
               <button id="mic-btn" title="Voice input" onclick="toggleInlineMic()"><svg viewBox="0 0 16 16" fill="none"><rect x="5" y="1" width="6" height="9" rx="3" stroke="currentColor" stroke-width="1.3"/><path d="M2 8a6 6 0 0012 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M8 14v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
             </div>
             <div class="input-meta"><span id="char-count">0 / 4096</span><span class="kbd">↵ Send</span></div>
           </div>
         </div>
-        <p class="foot-note">Nova AI 618 can make mistakes. · <a onclick="document.getElementById('auth-screen').style.display='flex';document.getElementById('app-screen').style.display='none';switchTab('login')">Sign in</a> · <a onclick="document.getElementById('auth-screen').style.display='flex';document.getElementById('app-screen').style.display='none';switchTab('register')">Create account</a></p>
+        <p class="foot-note">Nova AI 618 · <a onclick="document.getElementById('auth-screen').style.display='flex';document.getElementById('app-screen').style.display='none';switchTab('login')">Sign in</a> · <a onclick="document.getElementById('auth-screen').style.display='flex';document.getElementById('app-screen').style.display='none';switchTab('register')">Create account</a></p>
       </div>
     </div>
   </main>
@@ -635,20 +641,35 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
     <div class="vo-live" id="vo-live"></div>
   </div>
   <div class="vo-controls">
-    <button class="vo-btn vo-sec" onclick="stopSpeaking()" title="Stop"><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg></button>
+    <button class="vo-btn vo-sec" onclick="stopSpeaking()"><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg></button>
     <button class="vo-btn vo-main" onclick="toggleVoiceMic()"><svg viewBox="0 0 24 24" fill="none"><rect x="8" y="2" width="8" height="13" rx="4" fill="white"/><path d="M4 11a8 8 0 0016 0" stroke="white" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M12 19v3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-    <button class="vo-btn vo-sec" onclick="voiceModeNewChat()" title="New chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+    <button class="vo-btn vo-sec" onclick="voiceModeNewChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
   </div>
 </div>
 
-<!-- ══ MODEL MODAL ════════════════════════════════════════════ -->
+<!-- ══ MODEL MODAL (sidebar) ══════════════════════════════════ -->
 <div class="m-overlay" id="model-modal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="m-box">
     <p class="m-title">Choose a model</p>
-    <div class="model-opt selected" onclick="selectModel('llama-3.3-70b-versatile','Llama 3.3 70B','128k context',this)"><div class="model-opt-icon">🔥</div><div class="model-opt-info"><div class="model-opt-name">Llama 3.3 70B</div><div class="model-opt-desc">Most powerful — reasoning, code, analysis</div></div><span class="mbadge mbadge-pro">PRO</span></div>
-    <div class="model-opt" onclick="selectModel('llama-3.1-8b-instant','Llama 3.1 8B','128k context',this)"><div class="model-opt-icon">⚡</div><div class="model-opt-info"><div class="model-opt-name">Llama 3.1 8B</div><div class="model-opt-desc">Fast and efficient for everyday tasks</div></div><span class="mbadge mbadge-fast">FAST</span></div>
-    <div class="model-opt" onclick="selectModel('mixtral-8x7b-32768','Mixtral 8x7B','32k context',this)"><div class="model-opt-icon">💻</div><div class="model-opt-info"><div class="model-opt-name">Mixtral 8x7B</div><div class="model-opt-desc">Great for code and technical tasks</div></div><span class="mbadge mbadge-new">ALT</span></div>
+    <div class="model-opt selected" id="opt-gpt" onclick="selectModel('openai/gpt-oss-120b','GPT-OSS 120B','via Groq · Free',this)"><div class="model-opt-icon">🚀</div><div class="model-opt-info"><div class="model-opt-name">GPT-OSS 120B</div><div class="model-opt-desc">Default — most powerful, free via Groq</div></div><span class="mbadge mbadge-pro">DEFAULT</span></div>
+    <div class="model-opt" id="opt-70b" onclick="selectModel('llama-3.3-70b-versatile','Llama 3.3 70B','128k context',this)"><div class="model-opt-icon">🔥</div><div class="model-opt-info"><div class="model-opt-name">Llama 3.3 70B</div><div class="model-opt-desc">Powerful — reasoning, code, analysis</div></div><span class="mbadge mbadge-pro">PRO</span></div>
+    <div class="model-opt" id="opt-8b" onclick="selectModel('llama-3.1-8b-instant','Llama 3.1 8B','128k context',this)"><div class="model-opt-icon">⚡</div><div class="model-opt-info"><div class="model-opt-name">Llama 3.1 8B</div><div class="model-opt-desc">Fast and efficient for everyday tasks</div></div><span class="mbadge mbadge-fast">FAST</span></div>
     <button class="m-close" onclick="document.getElementById('model-modal').classList.remove('open')">Close</button>
+  </div>
+</div>
+
+<!-- ══ RATE LIMIT MODAL ════════════════════════════════════════ -->
+<div class="m-overlay" id="rate-limit-modal">
+  <div class="m-box">
+    <div class="rate-limit-icon">⚠️</div>
+    <p class="m-title">Daily limit reached</p>
+    <div class="rate-limit-warning">
+      The <strong>GPT-OSS 120B</strong> model has reached its daily limit (200K tokens/day on Groq free tier). Switch to another model to continue chatting.
+    </div>
+    <p class="m-sub">Choose a model to continue:</p>
+    <div class="model-opt" onclick="switchToModel('llama-3.3-70b-versatile','Llama 3.3 70B','128k context')"><div class="model-opt-icon">🔥</div><div class="model-opt-info"><div class="model-opt-name">Llama 3.3 70B</div><div class="model-opt-desc">Powerful model — reasoning, code, analysis</div></div><span class="mbadge mbadge-pro">1K req/day</span></div>
+    <div class="model-opt" onclick="switchToModel('llama-3.1-8b-instant','Llama 3.1 8B','128k context')"><div class="model-opt-icon">⚡</div><div class="model-opt-info"><div class="model-opt-name">Llama 3.1 8B</div><div class="model-opt-desc">Fast and efficient — 14.4K req/day</div></div><span class="mbadge mbadge-fast">14.4K req/day</span></div>
+    <button class="m-close" onclick="document.getElementById('rate-limit-modal').classList.remove('open')">Cancel</button>
   </div>
 </div>
 
@@ -663,7 +684,10 @@ const SEARCH_URL="https://jarvis-backend-utkp.onrender.com/search";
 const S_USERS="nova_users_v2";
 const S_SESSION="nova_sess_v2";
 
-let currentUser=null,isGuest=false,currentConvId=null,messages=[],msgCount=0,selectedModel="llama-3.3-70b-versatile",pendingPhoto=null,searchModeActive=false;
+let currentUser=null,isGuest=false,currentConvId=null,messages=[],msgCount=0;
+let currentModel="openai/gpt-oss-120b";
+let pendingPhoto=null,searchModeActive=false;
+let lastRegEmail="",lastRegName="";
 
 const ls={get:k=>{try{return JSON.parse(localStorage.getItem(k))}catch{return null}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}},del:k=>{try{localStorage.removeItem(k)}catch{}}};
 const getUsers=()=>ls.get(S_USERS)||{};
@@ -673,6 +697,42 @@ const saveConvs=c=>{if(!isGuest)ls.set(convKey(),c)};
 
 const IMAGE_KW=["image ","image:","image a ","image an ","image of ","generate image","generate a image","generate an image","create image","create a image","create an image","draw ","draw me","make an image","make a picture","generate a picture","create a picture","generate art","create art","paint ","render ","visualize ","show me an image","produce an image","design an image","make art","picture of","photo of","illustration of","generate a photo","create a photo"];
 function isImageReq(t){const s=t.toLowerCase().trim();if(s==="image"||s.startsWith("image ")||s.startsWith("image:"))return true;return IMAGE_KW.some(k=>s.includes(k))}
+
+// ── MODEL SWITCH ───────────────────────────────────────────
+function selectModel(id,name,ctx,el){
+  document.querySelectorAll("#model-modal .model-opt").forEach(o=>o.classList.remove("selected"));
+  el.classList.add("selected");
+  currentModel=id;
+  updateModelUI(name,ctx);
+  document.getElementById("model-modal").classList.remove("open");
+  showToast("Model: "+name);
+}
+
+function switchToModel(id,name,ctx){
+  currentModel=id;
+  updateModelUI(name,ctx);
+  // Update sidebar modal selection
+  document.querySelectorAll("#model-modal .model-opt").forEach(o=>o.classList.remove("selected"));
+  const map={"openai/gpt-oss-120b":"opt-gpt","llama-3.3-70b-versatile":"opt-70b","llama-3.1-8b-instant":"opt-8b"};
+  const el=document.getElementById(map[id]);
+  if(el)el.classList.add("selected");
+  document.getElementById("rate-limit-modal").classList.remove("open");
+  showToast("✅ Switched to "+name);
+}
+
+function updateModelUI(name,ctx){
+  document.getElementById("model-nm").textContent=name;
+  document.getElementById("model-ctx").textContent=ctx;
+  document.getElementById("model-badge").textContent=name.toLowerCase().replace(/\s+/g,"-");
+  const dot=document.getElementById("model-dot");
+  if(currentModel==="openai/gpt-oss-120b"){dot.className="model-dot";}
+  else if(currentModel==="llama-3.1-8b-instant"){dot.className="model-dot orange";}
+  else{dot.className="model-dot";}
+}
+
+function showRateLimitModal(){
+  document.getElementById("rate-limit-modal").classList.add("open");
+}
 
 // ── WEB SEARCH ─────────────────────────────────────────────
 function toggleSearch(){
@@ -687,7 +747,7 @@ function toggleSearch(){
     banner.classList.add("show");
     prompt.placeholder="Ask anything — Nova will search the web for real-time info...";
     showToast("🌐 Web search enabled");
-  } else {
+  }else{
     btn.classList.remove("active-search");
     box.classList.remove("search-active");
     banner.classList.remove("show");
@@ -728,37 +788,25 @@ function bhAv(size=28){return`<svg width="${size}" height="${size}" viewBox="0 0
 function openSidebar(){document.getElementById("sidebar").classList.add("open");document.getElementById("sidebar-overlay").classList.add("open");document.body.style.overflow="hidden"}
 function closeSidebar(){document.getElementById("sidebar").classList.remove("open");document.getElementById("sidebar-overlay").classList.remove("open");document.body.style.overflow=""}
 
-// ── VOICE ENGINE (amélioré) ─────────────────────────────────
+// ── VOICE ENGINE ───────────────────────────────────────────
 const synth=window.speechSynthesis;
 let curAudio=null,voiceAborted=false,ttsUnlocked=false,voiceVoices=[];
 const LANG_MAP={"fr":{l:"fr-FR"},"es":{l:"es-ES"},"de":{l:"de-DE"},"it":{l:"it-IT"},"pt":{l:"pt-PT"},"ar":{l:"ar-SA"},"zh":{l:"zh-CN"},"ja":{l:"ja-JP"},"ko":{l:"ko-KR"},"ru":{l:"ru-RU"},"en":{l:"en-US"}};
 
 function detectLang(text){const t=text.toLowerCase();const checks=[{l:"en",w:["the","is","are","have","what","how","hello","thank","please","this","that","with","for","and","but"]},{l:"fr",w:["je","tu","il","nous","les","de","du","et","est","pas","que","bonjour","merci","mais","avec"]},{l:"es",w:["yo","hola","gracias","por","para","está","que","como","muy","también"]},{l:"de",w:["ich","du","er","wir","die","das","ist","danke","bitte","nicht","auch"]},{l:"it",w:["io","ciao","grazie","per","che","come","sono","anche","non"]},{l:"pt",w:["eu","obrigado","para","está","como","não","muito","também"]}];let best=null,bs=0;for(const{l,w}of checks){let s=0;for(const ww of w)if(t.includes(" "+ww+" ")||t.startsWith(ww+" ")||t.endsWith(" "+ww))s++;if(s>bs){bs=s;best=l;}}return bs>=2?best:"en"}
 
-function loadVoices(){voiceVoices=synth?synth.getVoices():[];return voiceVoices}
-
 function getBestVoice(bcp47){
-  const voices=voiceVoices.length?voiceVoices:loadVoices();
+  const voices=voiceVoices.length?voiceVoices:(synth?synth.getVoices():[]);
   if(!voices.length)return null;
   const p=(bcp47||"en").slice(0,2).toLowerCase();
-  // Score each voice — prioritize natural/enhanced voices
   const scored=voices.map(v=>{
     const n=v.name.toLowerCase(),l=v.lang.toLowerCase();
     if(!l.startsWith(p))return{v,s:-1};
     let s=0;
-    // Exact locale match bonus
     if(l===bcp47.toLowerCase())s+=50;
-    // High-quality voice names
-    if(n.includes("enhanced"))s+=100;
-    if(n.includes("premium"))s+=90;
-    if(n.includes("neural"))s+=85;
-    if(n.includes("natural"))s+=80;
-    if(n.includes("siri"))s+=70;
-    if(n.includes("google"))s+=65;
-    if(n.includes("microsoft"))s+=60;
-    // Avoid compact/low quality
+    if(n.includes("enhanced"))s+=100;if(n.includes("premium"))s+=90;if(n.includes("neural"))s+=85;
+    if(n.includes("natural"))s+=80;if(n.includes("siri"))s+=70;if(n.includes("google"))s+=65;
     if(n.includes("compact"))s-=60;
-    if(n.includes("mono"))s-=30;
     return{v,s};
   }).filter(x=>x.s>=0).sort((a,b)=>b.s-a.s);
   return scored.length?scored[0].v:null;
@@ -767,38 +815,18 @@ function getBestVoice(bcp47){
 function unlockTTS(){if(ttsUnlocked||!synth)return;const s=new SpeechSynthesisUtterance(" ");s.volume=0;s.rate=10;synth.speak(s);ttsUnlocked=true}
 
 function cleanSpeech(t){
-  return t
-    .replace(/\*\*(.+?)\*\*/gs,"$1")
-    .replace(/\*(.+?)\*/gs,"$1")
-    .replace(/`{1,3}[\s\S]*?`{1,3}/g," code block ")
-    .replace(/#{1,6}\s/g,"")
-    .replace(/\[(.+?)\]\(.+?\)/g,"$1")
-    .replace(/https?:\/\/\S+/g,"")
-    .replace(/\n{2,}/g,". ")
-    .replace(/\n/g," ")
-    .replace(/\s{2,}/g," ")
-    .replace(/\. \./g,".")
-    .trim();
+  return t.replace(/\*\*(.+?)\*\*/gs,"$1").replace(/\*(.+?)\*/gs,"$1")
+    .replace(/`{1,3}[\s\S]*?`{1,3}/g," ").replace(/#{1,6}\s/g,"")
+    .replace(/\[(.+?)\]\(.+?\)/g,"$1").replace(/https?:\/\/\S+/g,"")
+    .replace(/\n{2,}/g,". ").replace(/\n/g," ").replace(/\s{2,}/g," ").trim();
 }
 
 function splitChunks(text,max=200){
-  const clean=cleanSpeech(text);
-  if(!clean)return[];
+  const clean=cleanSpeech(text);if(!clean)return[];
   const sentences=clean.match(/[^.!?…;:]+[.!?…;:]+(?:\s|$)|[^.!?…;:]+$/g)||[clean];
-  const chunks=[];
-  let buf="";
-  for(const s of sentences){
-    const trimmed=s.trim();
-    if(!trimmed)continue;
-    if((buf+" "+trimmed).trim().length<=max){
-      buf=(buf+" "+trimmed).trim();
-    } else {
-      if(buf)chunks.push(buf);
-      buf=trimmed;
-    }
-  }
-  if(buf)chunks.push(buf);
-  return chunks;
+  const chunks=[];let buf="";
+  for(const s of sentences){const trimmed=s.trim();if(!trimmed)continue;if((buf+" "+trimmed).trim().length<=max){buf=(buf+" "+trimmed).trim();}else{if(buf)chunks.push(buf);buf=trimmed;}}
+  if(buf)chunks.push(buf);return chunks;
 }
 
 async function speakText(text,lc,cb){
@@ -807,9 +835,8 @@ async function speakText(text,lc,cb){
   voiceAborted=false;
   const chunks=splitChunks(text);
   if(!chunks.length){setVoiceState("idle");if(cb)cb();return}
-  const bcp=lc||"en-US";
   setVoiceState("speaking");
-  await speakChunks(chunks,bcp,getBestVoice(bcp),cb);
+  await speakChunks(chunks,lc||"en-US",getBestVoice(lc||"en-US"),cb);
 }
 
 function speakChunks(chunks,bcp,voice,cb){
@@ -817,67 +844,37 @@ function speakChunks(chunks,bcp,voice,cb){
     if(!synth||voiceAborted){setVoiceState("idle");if(cb)cb();resolve();return}
     let i=0;
     function next(){
-      if(voiceAborted||i>=chunks.length){
-        setVoiceState("idle");
-        const lv=document.getElementById("vo-live");
-        if(lv)lv.textContent="";
-        if(cb)cb();
-        resolve();
-        return;
-      }
+      if(voiceAborted||i>=chunks.length){setVoiceState("idle");const lv=document.getElementById("vo-live");if(lv)lv.textContent="";if(cb)cb();resolve();return;}
       const chunk=chunks[i++];
       const u=new SpeechSynthesisUtterance(chunk);
-      u.lang=bcp;
-      // Natural speech params
-      u.rate=0.95;
-      u.pitch=1.0;
-      u.volume=1;
+      u.lang=bcp;u.rate=0.95;u.pitch=1.0;u.volume=1;
       if(voice)u.voice=voice;
-      // Show current text being spoken
       const lv=document.getElementById("vo-live");
       if(lv)lv.textContent=chunk.length>80?chunk.slice(0,80)+"...":chunk;
       u.onend=next;
       u.onerror=e=>{if(e.error!=="canceled"&&e.error!=="interrupted")next()};
       synth.speak(u);
     }
-    // Ensure voices loaded before speaking
     if(synth.getVoices().length>0){next();}
     else{synth.addEventListener("voiceschanged",()=>{voiceVoices=synth.getVoices();next()},{once:true});}
   });
 }
 
-function stopSpeaking(){
-  voiceAborted=true;
-  if(curAudio){curAudio.pause();curAudio.src="";curAudio=null}
-  if(synth&&synth.speaking)synth.cancel();
-  isSpeaking=false;
-  setVoiceState("idle");
-}
+function stopSpeaking(){voiceAborted=true;if(curAudio){curAudio.pause();curAudio.src="";curAudio=null}if(synth&&synth.speaking)synth.cancel();isSpeaking=false;setVoiceState("idle")}
 
-// ── WAVE ───────────────────────────────────────────────────
 let recognition=null,voiceActive=false,isListening=false,isSpeaking=false,waveInterval=null,inlineMicActive=false,inlineRec=null,detLang="en-US";
 const waveEl=document.getElementById("vo-wave");
 for(let i=0;i<28;i++){const b=document.createElement("div");b.className="wave-bar";b.style.height="4px";waveEl.appendChild(b)}
 
 function animWave(on){
-  clearInterval(waveInterval);
-  const bars=waveEl.querySelectorAll(".wave-bar");
+  clearInterval(waveInterval);const bars=waveEl.querySelectorAll(".wave-bar");
   if(!on){bars.forEach(b=>{b.style.height="4px";b.style.opacity="0.5"});return}
-  waveInterval=setInterval(()=>{
-    bars.forEach((b,i)=>{
-      const h=isSpeaking
-        ?Math.sin(Date.now()/300+i*0.4)*10+Math.random()*14+6
-        :Math.random()*10+4;
-      b.style.height=h+"px";
-      b.style.opacity=isSpeaking?"1":"0.8";
-    });
-  },60);
+  waveInterval=setInterval(()=>{bars.forEach((b,i)=>{const h=isSpeaking?Math.sin(Date.now()/300+i*0.4)*10+Math.random()*14+6:Math.random()*10+4;b.style.height=h+"px";b.style.opacity=isSpeaking?"1":"0.8";});},60);
 }
 
 function setVoiceState(s){
   const ov=document.getElementById("voice-overlay"),st=document.getElementById("vo-status");
-  ov.classList.remove("idle","listening","thinking","speaking");
-  ov.classList.add(s);
+  ov.classList.remove("idle","listening","thinking","speaking");ov.classList.add(s);
   if(s==="idle"){st.textContent="Tap the mic to speak";isListening=false;isSpeaking=false;animWave(false)}
   else if(s==="listening"){st.textContent="Listening…";isListening=true;isSpeaking=false;animWave(true)}
   else if(s==="thinking"){st.textContent="Thinking…";isListening=false;isSpeaking=false;animWave(false)}
@@ -885,31 +882,24 @@ function setVoiceState(s){
 }
 
 function addVoMsg(role,text){
-  const h=document.getElementById("vo-hist");
-  h.querySelector(".vo-hint")?.remove();
+  const h=document.getElementById("vo-hist");h.querySelector(".vo-hint")?.remove();
   const init=currentUser?currentUser.name.charAt(0).toUpperCase():"?";
   const row=document.createElement("div");row.className="vo-msg "+role;
   const av=document.createElement("div");av.className="vo-av "+(role==="user"?"user":"bot");
   if(role==="bot")av.innerHTML=bhAv(26);else av.textContent=init;
-  const bub=document.createElement("div");bub.className="vo-bub "+(role==="user"?"user":"bot");
-  bub.textContent=text;
+  const bub=document.createElement("div");bub.className="vo-bub "+(role==="user"?"user":"bot");bub.textContent=text;
   if(role==="user"){row.appendChild(bub);row.appendChild(av)}else{row.appendChild(av);row.appendChild(bub)}
   h.appendChild(row);h.scrollTop=h.scrollHeight;
 }
 
 function openVoiceMode(){
   voiceActive=true;
-  // Pre-load voices
   if(synth){voiceVoices=synth.getVoices();if(!voiceVoices.length)synth.addEventListener("voiceschanged",()=>{voiceVoices=synth.getVoices()},{once:true});}
   const ov=document.getElementById("voice-overlay");
-  ov.classList.add("open");
-  ov.classList.remove("idle","listening","thinking","speaking");
-  ov.classList.add("idle");
+  ov.classList.add("open");ov.classList.remove("idle","listening","thinking","speaking");ov.classList.add("idle");
   const h=document.getElementById("vo-hist");
   if(!h.querySelector(".vo-msg"))h.innerHTML='<div class="vo-hint">Your voice conversation will appear here.<br>Speak naturally in any language.</div>';
-  setVoiceState("idle");
-  document.getElementById("vo-live").textContent="";
-  document.getElementById("vo-lang").textContent="Auto";
+  setVoiceState("idle");document.getElementById("vo-live").textContent="";document.getElementById("vo-lang").textContent="Auto";
 }
 function closeVoiceMode(){voiceActive=false;stopListening();stopSpeaking();document.getElementById("voice-overlay").classList.remove("open");setVoiceState("idle")}
 function voiceModeNewChat(){stopListening();stopSpeaking();document.getElementById("vo-hist").innerHTML='<div class="vo-hint">New voice conversation started.</div>';document.getElementById("vo-live").textContent="";document.getElementById("vo-lang").textContent="Auto";detLang="en-US";setVoiceState("idle")}
@@ -918,29 +908,17 @@ function startListening(onFinal){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SR){showToast("Speech recognition not supported.");return}
   if(recognition){try{recognition.abort()}catch{}}
-  recognition=new SR();
-  recognition.lang="";
-  recognition.interimResults=true;
-  recognition.maxAlternatives=3;
-  recognition.continuous=false;
+  recognition=new SR();recognition.lang="";recognition.interimResults=true;recognition.maxAlternatives=3;
   let fT="",iT="",lastInterim="";
   recognition.onstart=()=>{setVoiceState("listening");document.getElementById("vo-live").textContent=""};
   recognition.onresult=e=>{
     fT="";iT="";
-    for(let i=e.resultIndex;i<e.results.length;i++){
-      const alt=e.results[i][0].transcript;
-      if(e.results[i].isFinal)fT+=alt;else iT+=alt;
-    }
+    for(let i=e.resultIndex;i<e.results.length;i++){const alt=e.results[i][0].transcript;if(e.results[i].isFinal)fT+=alt;else iT+=alt;}
     const current=fT||iT;
     if(current!==lastInterim){lastInterim=current;document.getElementById("vo-live").textContent=current;}
     if(current.length>8){const lang=detectLang(current);const en=LANG_MAP[lang];if(en){detLang=en.l;document.getElementById("vo-lang").textContent=lang.toUpperCase();}}
   };
-  recognition.onend=()=>{
-    isListening=false;
-    const t=(fT||iT).trim();
-    if(t)onFinal(t);
-    else{setVoiceState("idle");document.getElementById("vo-live").textContent="";}
-  };
+  recognition.onend=()=>{isListening=false;const t=(fT||iT).trim();if(t)onFinal(t);else{setVoiceState("idle");document.getElementById("vo-live").textContent="";}};
   recognition.onerror=e=>{isListening=false;if(e.error!=="aborted"&&e.error!=="no-speech")showToast("Mic error: "+e.error);setVoiceState("idle")};
   try{recognition.start()}catch(err){showToast("Could not start mic: "+err.message)}
 }
@@ -953,19 +931,16 @@ async function sendVoiceMsg(text){
   if(messages.length===0)document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"…":text;
   messages.push({role:"user",content:text});
   try{
-    const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages,temperature:.7})});
+    const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages,model:currentModel,temperature:.7})});
     const d=await r.json();
+    if(d.rate_limited){setVoiceState("idle");addVoMsg("bot","⚠️ Daily limit reached. Please switch to another model.");showRateLimitModal();return;}
     const reply=d.choices[0].message.content;
     messages.push({role:"assistant",content:reply});
     if(!isGuest)persistConv();
     addVoMsg("bot",reply);
     const rl=detectLang(reply);const re=LANG_MAP[rl];const rb=re?re.l:(detLang||"en-US");
     speakText(reply,rb,()=>{
-      if(voiceActive&&!voiceAborted)setTimeout(()=>{
-        if(voiceActive&&!voiceAborted&&!isListening){
-          startListening(async st=>{document.getElementById("vo-live").textContent="";setVoiceState("thinking");addVoMsg("user",st);await sendVoiceMsg(st)});
-        }
-      },600);
+      if(voiceActive&&!voiceAborted)setTimeout(()=>{if(voiceActive&&!voiceAborted&&!isListening)startListening(async st=>{document.getElementById("vo-live").textContent="";setVoiceState("thinking");addVoMsg("user",st);await sendVoiceMsg(st)});},600);
     });
   }catch{setVoiceState("idle");addVoMsg("bot","⚠️ Could not reach the server.")}
 }
@@ -976,7 +951,7 @@ function toggleInlineMic(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SR){showToast("Speech recognition not supported.");return}
   inlineMicActive=true;btn.classList.add("listening");
-  inlineRec=new SR();inlineRec.lang="";inlineRec.interimResults=true;inlineRec.maxAlternatives=1;
+  inlineRec=new SR();inlineRec.lang="";inlineRec.interimResults=true;
   inlineRec.onresult=e=>{let i="",f="";for(let j=e.resultIndex;j<e.results.length;j++){const t=e.results[j][0].transcript;if(e.results[j].isFinal)f+=t;else i+=t}document.getElementById("prompt").value=f||i;autoResize();updateCount()};
   inlineRec.onend=()=>{inlineMicActive=false;btn.classList.remove("listening");inlineRec=null};
   inlineRec.onerror=e=>{inlineMicActive=false;btn.classList.remove("listening");inlineRec=null;if(e.error!=="aborted"&&e.error!=="no-speech")showToast("Mic error: "+e.error)};
@@ -990,11 +965,57 @@ function clearPhoto(){pendingPhoto=null;renderPhotoPreview()}
 
 // ── AUTH ───────────────────────────────────────────────────
 function switchTab(t){document.getElementById("login-form").style.display=t==="login"?"block":"none";document.getElementById("register-form").style.display=t==="register"?"block":"none";document.getElementById("tab-login").classList.toggle("active",t==="login");document.getElementById("tab-register").classList.toggle("active",t!=="login")}
-function doRegister(){const name=vi("reg-name"),email=vi("reg-email").toLowerCase(),pw=vi("reg-pw"),conf=vi("reg-confirm");const terms=document.getElementById("reg-terms").checked;const eEl=document.getElementById("reg-err"),oEl=document.getElementById("reg-ok");eEl.classList.remove("show");oEl.classList.remove("show");if(!name)return showErr(eEl,"Please enter your first name.");if(!email.includes("@"))return showErr(eEl,"Invalid email address.");if(pw.length<6)return showErr(eEl,"Password must be at least 6 characters.");if(pw!==conf)return showErr(eEl,"Passwords do not match.");if(!terms)return showErr(eEl,"Please accept the Terms of Service.");const users=getUsers();if(Object.values(users).find(u=>u.email===email))return showErr(eEl,"An account with this email already exists.");const id="u_"+Date.now();users[id]={id,name,email,pw:btoa(pw),created:Date.now()};ls.set(S_USERS,users);oEl.textContent="Account created! Signing you in...";oEl.classList.add("show");setTimeout(()=>loginUser(users[id]),900)}
+
+function doRegister(){
+  const name=vi("reg-name"),email=vi("reg-email").toLowerCase(),pw=vi("reg-pw"),conf=vi("reg-confirm");
+  const terms=document.getElementById("reg-terms").checked;
+  const eEl=document.getElementById("reg-err"),oEl=document.getElementById("reg-ok");
+  eEl.classList.remove("show");oEl.classList.remove("show");
+  if(!name)return showErr(eEl,"Please enter your first name.");
+  if(!email.includes("@"))return showErr(eEl,"Invalid email address.");
+  if(pw.length<6)return showErr(eEl,"Password must be at least 6 characters.");
+  if(pw!==conf)return showErr(eEl,"Passwords do not match.");
+  if(!terms)return showErr(eEl,"Please accept the Terms of Service.");
+  const users=getUsers();
+  if(Object.values(users).find(u=>u.email===email))return showErr(eEl,"An account with this email already exists.");
+  const id="u_"+Date.now();
+  users[id]={id,name,email,pw:btoa(pw),created:Date.now(),verified:false};
+  ls.set(S_USERS,users);
+  const btn=document.getElementById("reg-submit-btn");
+  btn.disabled=true;btn.textContent="Sending email...";
+  lastRegEmail=email;lastRegName=name;
+  fetch("https://jarvis-backend-utkp.onrender.com/send-confirmation",{
+    method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({email,name})
+  })
+  .then(r=>r.json())
+  .then(d=>{
+    if(d.success){
+      document.getElementById("reg-email-display").textContent=email;
+      document.getElementById("reg-pending").style.display="block";
+      btn.style.display="none";
+      document.querySelectorAll("#register-form .auth-divider,#register-form .btn-guest").forEach(el=>el.style.display="none");
+    }else{
+      btn.disabled=false;btn.textContent="Create my account";
+      showErr(eEl,"Could not send confirmation email: "+(d.error||"unknown error"));
+    }
+  })
+  .catch(()=>{btn.disabled=false;btn.textContent="Create my account";showErr(eEl,"Email service unavailable. Try again later.");});
+}
+
+function resendConfirmation(){
+  if(!lastRegEmail||!lastRegName)return;
+  showToast("Sending confirmation email...");
+  fetch("https://jarvis-backend-utkp.onrender.com/send-confirmation",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:lastRegEmail,name:lastRegName})})
+  .then(r=>r.json()).then(d=>{if(d.success)showToast("✅ Email resent!");else showToast("❌ Could not resend: "+(d.error||"unknown error"));})
+  .catch(()=>showToast("❌ Email service unavailable."));
+}
+
 function doLogin(){const email=vi("login-email").toLowerCase(),pw=vi("login-pw");const eEl=document.getElementById("login-err");eEl.classList.remove("show");if(!email||!pw)return showErr(eEl,"Please fill in all fields.");const user=Object.values(getUsers()).find(u=>u.email===email);if(!user||user.pw!==btoa(pw))return showErr(eEl,"Incorrect email or password.");loginUser(user)}
 function loginUser(user){ls.set(S_SESSION,{userId:user.id});startApp(user,false)}
 function doGuest(){ls.set(S_SESSION,{userId:"guest"});startApp({id:"guest",name:"Guest",email:""},true)}
 function doLogout(){ls.del(S_SESSION);currentUser=null;messages=[];msgCount=0;currentConvId=null;closeVoiceMode();document.getElementById("app-screen").style.display="none";document.getElementById("auth-screen").style.display="flex";document.getElementById("profile-dd").classList.remove("open");closeSidebar();document.getElementById("login-email").value="";document.getElementById("login-pw").value="";document.getElementById("login-err").classList.remove("show")}
+
 function startApp(user,guest){
   currentUser=user;isGuest=guest;
   document.getElementById("auth-screen").style.display="none";
@@ -1056,12 +1077,7 @@ function addActions(wrap,text){
   const liIcon=`<svg viewBox="0 0 16 16" fill="none"><path d="M3 6H1v4h2l4 3V3L3 6z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M11 5a4 4 0 010 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Listen`;
   const stIcon=`<svg viewBox="0 0 16 16" fill="none"><rect x="4" y="4" width="3" height="8" rx="1" fill="currentColor"/><rect x="9" y="4" width="3" height="8" rx="1" fill="currentColor"/></svg> Stop`;
   spkBtn.innerHTML=liIcon;
-  spkBtn.onclick=()=>{
-    if(synth&&synth.speaking){synth.cancel();spkBtn.innerHTML=liIcon;return}
-    unlockTTS();spkBtn.innerHTML=stIcon;
-    const dl=detectLang(text);const en=LANG_MAP[dl];
-    speakText(text,en?en.l:"en-US",()=>{spkBtn.innerHTML=liIcon});
-  };
+  spkBtn.onclick=()=>{if(synth&&synth.speaking){synth.cancel();spkBtn.innerHTML=liIcon;return}unlockTTS();spkBtn.innerHTML=stIcon;const dl=detectLang(text);const en=LANG_MAP[dl];speakText(text,en?en.l:"en-US",()=>{spkBtn.innerHTML=liIcon})};
   actions.appendChild(copyBtn);actions.appendChild(spkBtn);wrap.appendChild(actions);
 }
 
@@ -1129,11 +1145,9 @@ async function analyzePhoto(photoDataUrl,question){
     const r=await fetch(ANALYZE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({image:photoDataUrl,question:question||"Analyze this image in detail. Describe what you see, key elements, colors, context, and anything relevant."})});
     const d=await r.json();
     const reply=d.choices[0].message.content;
-    bubble.innerHTML=formatMsg(reply);
-    addActions(wrap,reply);
+    bubble.innerHTML=formatMsg(reply);addActions(wrap,reply);
     if(messages.length===0)document.getElementById("conv-title").textContent=displayQ.length>45?displayQ.slice(0,45)+"…":displayQ;
-    messages.push({role:"user",content:displayQ});
-    messages.push({role:"assistant",content:reply});
+    messages.push({role:"user",content:displayQ});messages.push({role:"assistant",content:reply});
     if(!isGuest)persistConv();
   }catch{bubble.innerHTML="";bubble.textContent="⚠️ Could not analyze the photo.";bubble.style.color="var(--red)"}
   cw.scrollTop=999999;
@@ -1151,7 +1165,7 @@ async function sendMessage(){
   if(isImageReq(text)){await generateImage(text);sendBtn.disabled=false;return}
   if(messages.length===0)document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"…":text;
 
-  // ── WEB SEARCH MODE ──────────────────────────────────────
+  // ── WEB SEARCH ──────────────────────────────────────────
   if(searchModeActive){
     renderMsg("user",text);
     const chatEl=document.getElementById("chat"),cw=document.getElementById("chat-wrap");
@@ -1162,8 +1176,8 @@ async function sendMessage(){
     const wrap=document.createElement("div");wrap.className="msg-content";
     const hdr=document.createElement("div");hdr.className="msg-header";
     const sender=document.createElement("span");sender.className="msg-sender";sender.textContent="Nova AI 618";
-    const time=document.createElement("span");time.className="msg-time";time.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
-    hdr.appendChild(sender);hdr.appendChild(time);
+    const time2=document.createElement("span");time2.className="msg-time";time2.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
+    hdr.appendChild(sender);hdr.appendChild(time2);
     const bubble=document.createElement("div");bubble.className="bubble bot";
     bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>🌐 Searching the web...</div>';
     wrap.appendChild(hdr);wrap.appendChild(bubble);row.appendChild(av);row.appendChild(wrap);group.appendChild(row);chatEl.appendChild(group);cw.scrollTop=cw.scrollHeight;
@@ -1171,46 +1185,43 @@ async function sendMessage(){
       const sr=await fetch(SEARCH_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:text})});
       const sd=await sr.json();
       if(sd.error)throw new Error(sd.error);
-      // Build context for AI
-      const webCtx=`You have access to real-time web search results. Use them to answer accurately and cite sources when relevant.\n\nWeb search results for "${text}":\n\n${sd.context}\n\nAnswer the user's question based on these results: ${text}`;
+      const webCtx=`You have access to real-time web search results. Use them to answer accurately.\n\nWeb search results for "${text}":\n\n${sd.context}\n\nAnswer the user's question: ${text}`;
       const searchMsgs=[...messages,{role:"user",content:webCtx}];
-      const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:searchMsgs,temperature:.3})});
+      const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:searchMsgs,model:currentModel,temperature:.3})});
       const d=await r.json();
+      if(d.rate_limited){bubble.innerHTML="";bubble.textContent="⚠️ Daily limit reached. Please switch model.";bubble.style.color="var(--orange)";showRateLimitModal();sendBtn.disabled=false;return;}
       const reply=d.choices[0].message.content;
-      // Render reply
       bubble.innerHTML="";
-      // Search badge
       const badge=document.createElement("div");badge.className="search-badge";badge.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Web search`;
       bubble.appendChild(badge);
       const content=document.createElement("div");content.innerHTML=formatMsg(reply);bubble.appendChild(content);
-      // Sources chips
       if(sd.sources&&sd.sources.length){
         const sw=document.createElement("div");sw.className="sources-wrap";
-        sd.sources.slice(0,5).forEach(s=>{
-          const chip=document.createElement("a");chip.className="source-chip";chip.href=s.url;chip.target="_blank";chip.rel="noopener noreferrer";
-          chip.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><path d="M10 3h3v3M13 3l-6 6M6 4H3v9h9v-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>${esc(s.title.length>35?s.title.slice(0,35)+"…":s.title)}`;
-          sw.appendChild(chip);
-        });
+        sd.sources.slice(0,5).forEach(s=>{const chip=document.createElement("a");chip.className="source-chip";chip.href=s.url;chip.target="_blank";chip.rel="noopener noreferrer";chip.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><path d="M10 3h3v3M13 3l-6 6M6 4H3v9h9v-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>${esc(s.title.length>35?s.title.slice(0,35)+"…":s.title)}`;sw.appendChild(chip);});
         bubble.appendChild(sw);
       }
       addActions(wrap,reply);
-      messages.push({role:"user",content:text});
-      messages.push({role:"assistant",content:reply});
+      messages.push({role:"user",content:text});messages.push({role:"assistant",content:reply});
       if(!isGuest)persistConv();
-    }catch(err){
-      bubble.innerHTML="";bubble.textContent="⚠️ Search error: "+err.message;bubble.style.color="var(--red)";
-    }
-    sendBtn.disabled=false;promptEl.focus();
-    document.getElementById("chat-wrap").scrollTop=999999;
+    }catch(err){bubble.innerHTML="";bubble.textContent="⚠️ Search error: "+err.message;bubble.style.color="var(--red)";}
+    sendBtn.disabled=false;promptEl.focus();document.getElementById("chat-wrap").scrollTop=999999;
     return;
   }
 
-  // ── NORMAL CHAT ───────────────────────────────────────────
+  // ── NORMAL CHAT ─────────────────────────────────────────
   renderMsg("user",text);messages.push({role:"user",content:text});
   const{bubble,wrap}=renderMsg("bot","",true);
   try{
-    const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages,temperature:.7})});
-    const d=await r.json();const reply=d.choices[0].message.content;
+    const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages,model:currentModel,temperature:.7})});
+    const d=await r.json();
+    // Rate limit hit → show modal
+    if(d.rate_limited){
+      bubble.innerHTML="";
+      bubble.innerHTML=`<div style="display:flex;align-items:center;gap:9px;color:var(--orange);font-size:13px;padding:4px 0"><span style="font-size:18px">⚠️</span><div><strong>Daily limit reached for GPT-OSS 120B.</strong><br><span style="color:var(--text2);font-size:12px">Switch to another model to continue.</span></div></div>`;
+      setTimeout(()=>showRateLimitModal(),300);
+      sendBtn.disabled=false;return;
+    }
+    const reply=d.choices[0].message.content;
     bubble.innerHTML="";
     let i=0;const step=Math.max(1,Math.ceil(reply.length/300));
     function type(){if(i<reply.length){i=Math.min(i+step,reply.length);bubble.innerHTML=formatMsg(reply.slice(0,i));document.getElementById("chat-wrap").scrollTop=999999;if(i<reply.length)setTimeout(type,12);else done()}else done()}
@@ -1231,71 +1242,9 @@ function checkStrength(pw){let s=0;if(pw.length>=6)s++;if(pw.length>=10)s++;if(/
 function showErr(el,msg){el.textContent=msg;el.classList.add("show")}
 function toggleDd(){document.getElementById("profile-dd").classList.toggle("open")}
 document.addEventListener("click",e=>{if(!e.target.closest(".user-row"))document.getElementById("profile-dd").classList.remove("open")});
-function selectModel(id,name,ctx,el){document.querySelectorAll(".model-opt").forEach(o=>o.classList.remove("selected"));el.classList.add("selected");selectedModel=id;document.getElementById("model-nm").textContent=name;document.getElementById("model-ctx").textContent=ctx;document.getElementById("model-badge").textContent=id;document.getElementById("model-modal").classList.remove("open")}
 function showToast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2500)}
 function downloadChat(){if(!messages.length){showToast("No messages to export.");return}const txt=messages.map(m=>`[${m.role==="user"?(currentUser?.name||"You"):"Nova AI 618"}]\n${m.content}`).join("\n\n──────────────\n\n");const a=document.createElement("a");a.href="data:text/plain;charset=utf-8,"+encodeURIComponent(txt);a.download="conversation-nova-618.txt";a.click()}
 function exportAll(){const convs=getUserConvs();if(!convs.length){showToast("No saved conversations.");return}const all=convs.map(c=>`══════ ${c.title} ══════\n\n`+c.messages.map(m=>`[${m.role==="user"?currentUser.name:"Nova AI 618"}]\n${m.content}`).join("\n\n──────\n\n")).join("\n\n\n");const a=document.createElement("a");a.href="data:text/plain;charset=utf-8,"+encodeURIComponent(all);a.download="nova-618-all-conversations.txt";a.click()}
-
-document.getElementById("prompt").addEventListener("input",()=>{autoResize();updateCount()});
-document.getElementById("prompt").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage()}});
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeVoiceMode()});
-let tsx=0;
-document.addEventListener("touchstart",e=>{tsx=e.touches[0].clientX},{passive:true});
-document.addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-tsx;if(dx<-60&&document.getElementById("sidebar").classList.contains("open"))closeSidebar()},{passive:true});
-
-let lastRegEmail="",lastRegName="";
-
-function doRegister(){
-  const name=vi("reg-name"),email=vi("reg-email").toLowerCase(),pw=vi("reg-pw"),conf=vi("reg-confirm");
-  const terms=document.getElementById("reg-terms").checked;
-  const eEl=document.getElementById("reg-err"),oEl=document.getElementById("reg-ok");
-  eEl.classList.remove("show");oEl.classList.remove("show");
-  if(!name)return showErr(eEl,"Please enter your first name.");
-  if(!email.includes("@"))return showErr(eEl,"Invalid email address.");
-  if(pw.length<6)return showErr(eEl,"Password must be at least 6 characters.");
-  if(pw!==conf)return showErr(eEl,"Passwords do not match.");
-  if(!terms)return showErr(eEl,"Please accept the Terms of Service.");
-  const users=getUsers();
-  if(Object.values(users).find(u=>u.email===email))return showErr(eEl,"An account with this email already exists.");
-  const id="u_"+Date.now();
-  users[id]={id,name,email,pw:btoa(pw),created:Date.now(),verified:false};
-  ls.set(S_USERS,users);
-  const btn=document.getElementById("reg-submit-btn");
-  btn.disabled=true;btn.textContent="Sending email...";
-  lastRegEmail=email;lastRegName=name;
-  fetch("https://jarvis-backend-utkp.onrender.com/send-confirmation",{
-    method:"POST",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({email,name})
-  })
-  .then(r=>r.json())
-  .then(d=>{
-    if(d.success){
-      document.getElementById("reg-email-display").textContent=email;
-      document.getElementById("reg-pending").style.display="block";
-      btn.style.display="none";
-      document.querySelectorAll("#register-form .auth-divider, #register-form .btn-guest").forEach(el=>el.style.display="none");
-    }else{
-      btn.disabled=false;btn.textContent="Create my account";
-      showErr(eEl,"Could not send confirmation email: "+(d.error||"unknown error"));
-    }
-  })
-  .catch(()=>{
-    btn.disabled=false;btn.textContent="Create my account";
-    showErr(eEl,"Email service unavailable. Try again later.");
-  });
-}
-
-function resendConfirmation(){
-  if(!lastRegEmail||!lastRegName)return;
-  showToast("Sending confirmation email...");
-  fetch("https://jarvis-backend-utkp.onrender.com/send-confirmation",{
-    method:"POST",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({email:lastRegEmail,name:lastRegName})
-  })
-  .then(r=>r.json())
-  .then(d=>{if(d.success)showToast("✅ Email resent! Check your inbox.");else showToast("❌ Could not resend: "+(d.error||"unknown error"));})
-  .catch(()=>showToast("❌ Email service unavailable."));
-}
 
 document.getElementById("prompt").addEventListener("input",()=>{autoResize();updateCount()});
 document.getElementById("prompt").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage()}});
@@ -1312,8 +1261,7 @@ document.addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-ts
     .then(r=>r.json())
     .then(d=>{
       if(d.success){
-        const users=getUsers();
-        const user=Object.values(users).find(u=>u.email===d.email);
+        const users=getUsers();const user=Object.values(users).find(u=>u.email===d.email);
         if(user){user.verified=true;ls.set(S_USERS,users);}
         window.history.replaceState({},"",window.location.pathname);
         switchTab("login");
@@ -1327,11 +1275,11 @@ document.addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-ts
         showToast("❌ "+(d.error||"Invalid confirmation link"));
       }
     })
-    .catch(()=>{window.history.replaceState({},"",window.location.pathname);showToast("❌ Could not verify email. Try again.");});
+    .catch(()=>{window.history.replaceState({},"",window.location.pathname);showToast("❌ Could not verify email.");});
   }
   const sess=ls.get(S_SESSION);if(!sess)return;
   if(sess.userId==="guest"){doGuest();return}
-  const user=getUsers()[sess.userId];if(user)startApp(user,false)
+  const user=getUsers()[sess.userId];if(user)startApp(user,false);
 })();
 </script>
 </body>
