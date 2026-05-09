@@ -455,30 +455,87 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 <!-- BLACK HOLE SVG SYMBOL -->
 <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
 <defs>
-  <radialGradient id="bh-space" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#000410"/><stop offset="100%" stop-color="#000"/></radialGradient>
-  <radialGradient id="bh-lensing" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#7c6aff" stop-opacity="0"/><stop offset="55%" stop-color="#7c6aff" stop-opacity=".18"/><stop offset="75%" stop-color="#a08aff" stop-opacity=".35"/><stop offset="90%" stop-color="#7c6aff" stop-opacity=".15"/><stop offset="100%" stop-color="#7c6aff" stop-opacity="0"/></radialGradient>
-  <linearGradient id="bh-disk-top" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ff4500" stop-opacity="0"/><stop offset="12%" stop-color="#ff6a00" stop-opacity=".6"/><stop offset="28%" stop-color="#ffaa00" stop-opacity=".95"/><stop offset="42%" stop-color="#fff" stop-opacity="1"/><stop offset="50%" stop-color="#fff8e8" stop-opacity="1"/><stop offset="62%" stop-color="#ffcc44" stop-opacity=".95"/><stop offset="78%" stop-color="#ff8800" stop-opacity=".7"/><stop offset="90%" stop-color="#ff4500" stop-opacity=".4"/><stop offset="100%" stop-color="#ff2200" stop-opacity="0"/></linearGradient>
-  <linearGradient id="bh-disk-bot" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ff3000" stop-opacity="0"/><stop offset="20%" stop-color="#ff5500" stop-opacity=".3"/><stop offset="45%" stop-color="#ff8800" stop-opacity=".5"/><stop offset="55%" stop-color="#ffaa44" stop-opacity=".45"/><stop offset="80%" stop-color="#ff5500" stop-opacity=".25"/><stop offset="100%" stop-color="#ff3000" stop-opacity="0"/></linearGradient>
-  <linearGradient id="bh-photon" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#fff" stop-opacity=".9"/><stop offset="35%" stop-color="#a08aff" stop-opacity=".7"/><stop offset="65%" stop-color="#ff8c00" stop-opacity=".6"/><stop offset="100%" stop-color="#fff" stop-opacity=".8"/></linearGradient>
-  <filter id="bh-glow-f"><feGaussianBlur stdDeviation="1.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <filter id="bh-soft"><feGaussianBlur stdDeviation=".8"/></filter>
-  <filter id="bh-disk-glow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <clipPath id="bh-top"><rect x="0" y="0" width="100" height="50"/></clipPath>
-  <clipPath id="bh-bot"><rect x="0" y="50" width="100" height="50"/></clipPath>
+  <radialGradient id="bh-void" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#000000"/>
+    <stop offset="60%" stop-color="#050010"/>
+    <stop offset="100%" stop-color="#0a0520"/>
+  </radialGradient>
+  <radialGradient id="bh-glow-outer" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#7c3aed" stop-opacity="0"/>
+    <stop offset="40%" stop-color="#7c3aed" stop-opacity="0.15"/>
+    <stop offset="70%" stop-color="#a855f7" stop-opacity="0.35"/>
+    <stop offset="85%" stop-color="#c084fc" stop-opacity="0.45"/>
+    <stop offset="100%" stop-color="#7c3aed" stop-opacity="0.1"/>
+  </radialGradient>
+  <radialGradient id="bh-bg" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#0d0720"/>
+    <stop offset="100%" stop-color="#000000"/>
+  </radialGradient>
+  <!-- Accretion ring gradient - matches purple/pink image -->
+  <linearGradient id="bh-ring-main" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#581c87" stop-opacity="0.1"/>
+    <stop offset="15%" stop-color="#7c3aed" stop-opacity="0.7"/>
+    <stop offset="30%" stop-color="#a855f7" stop-opacity="1"/>
+    <stop offset="45%" stop-color="#f0abfc" stop-opacity="1"/>
+    <stop offset="55%" stop-color="#fdf4ff" stop-opacity="1"/>
+    <stop offset="65%" stop-color="#e879f9" stop-opacity="0.95"/>
+    <stop offset="80%" stop-color="#c084fc" stop-opacity="0.8"/>
+    <stop offset="90%" stop-color="#7c3aed" stop-opacity="0.5"/>
+    <stop offset="100%" stop-color="#581c87" stop-opacity="0.1"/>
+  </linearGradient>
+  <linearGradient id="bh-ring-secondary" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#3b0764" stop-opacity="0"/>
+    <stop offset="25%" stop-color="#7c3aed" stop-opacity="0.4"/>
+    <stop offset="50%" stop-color="#c084fc" stop-opacity="0.6"/>
+    <stop offset="75%" stop-color="#a855f7" stop-opacity="0.4"/>
+    <stop offset="100%" stop-color="#3b0764" stop-opacity="0"/>
+  </linearGradient>
+  <filter id="bh-blur-soft"><feGaussianBlur stdDeviation="0.8"/></filter>
+  <filter id="bh-blur-ring"><feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="bh-glow-f"><feGaussianBlur stdDeviation="1.0" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <clipPath id="bh-top-half"><rect x="0" y="0" width="100" height="50"/></clipPath>
+  <clipPath id="bh-bot-half"><rect x="0" y="50" width="100" height="50"/></clipPath>
+  <clipPath id="bh-circle-clip"><circle cx="50" cy="50" r="49"/></clipPath>
 </defs>
 <symbol id="bh-icon" viewBox="0 0 100 100">
-  <circle cx="50" cy="50" r="50" fill="url(#bh-space)"/>
-  <circle cx="8" cy="14" r=".35" fill="white" opacity=".7"/><circle cx="88" cy="19" r=".28" fill="white" opacity=".55"/><circle cx="94" cy="68" r=".32" fill="white" opacity=".65"/><circle cx="6" cy="80" r=".25" fill="white" opacity=".45"/><circle cx="42" cy="6" r=".3" fill="white" opacity=".6"/><circle cx="72" cy="92" r=".35" fill="white" opacity=".5"/>
-  <circle cx="50" cy="50" r="36" fill="url(#bh-lensing)"/>
-  <g clip-path="url(#bh-bot)"><ellipse cx="50" cy="50" rx="46" ry="10" fill="none" stroke="url(#bh-disk-bot)" stroke-width="3" transform="rotate(-18 50 50)" filter="url(#bh-soft)" opacity=".55"/><ellipse cx="50" cy="50" rx="38" ry="7.5" fill="none" stroke="url(#bh-disk-bot)" stroke-width="2" transform="rotate(-18 50 50)" filter="url(#bh-soft)" opacity=".35"/></g>
-  <circle cx="50" cy="50" r="22" fill="#000"/>
-  <g clip-path="url(#bh-top)"><ellipse cx="50" cy="50" rx="46" ry="10" fill="none" stroke="url(#bh-disk-top)" stroke-width="4.5" transform="rotate(-18 50 50)" filter="url(#bh-disk-glow)"/><ellipse cx="50" cy="50" rx="38" ry="7" fill="none" stroke="url(#bh-disk-top)" stroke-width="2.5" transform="rotate(-18 50 50)" filter="url(#bh-soft)" opacity=".7"/><ellipse cx="50" cy="50" rx="29" ry="4.5" fill="none" stroke="#ffcc66" stroke-width="1.5" transform="rotate(-18 50 50)" opacity=".4"/></g>
-  <circle cx="50" cy="50" r="20" fill="#000"/>
-  <circle cx="50" cy="50" r="21" fill="none" stroke="url(#bh-photon)" stroke-width="1.2" opacity=".95" filter="url(#bh-glow-f)"/>
-  <circle cx="50" cy="50" r="20.4" fill="none" stroke="#7c6aff" stroke-width=".6" opacity=".8"/>
-  <circle cx="50" cy="50" r="19.6" fill="none" stroke="#ff8c00" stroke-width=".4" opacity=".5"/>
+  <!-- Background -->
+  <circle cx="50" cy="50" r="50" fill="url(#bh-bg)"/>
+  <!-- Stars -->
+  <circle cx="10" cy="12" r="0.3" fill="white" opacity="0.6"/>
+  <circle cx="85" cy="18" r="0.25" fill="white" opacity="0.5"/>
+  <circle cx="92" cy="72" r="0.3" fill="white" opacity="0.6"/>
+  <circle cx="7" cy="82" r="0.22" fill="white" opacity="0.45"/>
+  <circle cx="40" cy="5" r="0.28" fill="white" opacity="0.55"/>
+  <circle cx="75" cy="91" r="0.3" fill="white" opacity="0.5"/>
+  <circle cx="18" cy="55" r="0.2" fill="white" opacity="0.4"/>
+  <circle cx="88" cy="40" r="0.25" fill="white" opacity="0.5"/>
+  <circle cx="60" cy="8" r="0.2" fill="white" opacity="0.45"/>
+  <circle cx="25" cy="88" r="0.25" fill="white" opacity="0.4"/>
+  <!-- Outer glow nebula -->
+  <circle cx="50" cy="50" r="48" fill="url(#bh-glow-outer)" opacity="0.7"/>
+  <!-- Bottom half of accretion disk (behind black hole) -->
+  <g clip-path="url(#bh-bot-half)">
+    <ellipse cx="50" cy="50" rx="44" ry="9" fill="none" stroke="url(#bh-ring-secondary)" stroke-width="2.5" transform="rotate(-15 50 50)" filter="url(#bh-blur-soft)" opacity="0.5"/>
+    <ellipse cx="50" cy="50" rx="36" ry="7" fill="none" stroke="url(#bh-ring-secondary)" stroke-width="1.8" transform="rotate(-15 50 50)" filter="url(#bh-blur-soft)" opacity="0.35"/>
+  </g>
+  <!-- Black hole event horizon -->
+  <circle cx="50" cy="50" r="23" fill="url(#bh-void)"/>
+  <!-- Top half of accretion disk (in front of black hole) -->
+  <g clip-path="url(#bh-top-half)">
+    <ellipse cx="50" cy="50" rx="44" ry="9" fill="none" stroke="url(#bh-ring-main)" stroke-width="5" transform="rotate(-15 50 50)" filter="url(#bh-blur-ring)"/>
+    <ellipse cx="50" cy="50" rx="44" ry="9" fill="none" stroke="url(#bh-ring-main)" stroke-width="2" transform="rotate(-15 50 50)" opacity="0.9"/>
+    <ellipse cx="50" cy="50" rx="36" ry="7" fill="none" stroke="url(#bh-ring-secondary)" stroke-width="2.5" transform="rotate(-15 50 50)" filter="url(#bh-blur-soft)" opacity="0.7"/>
+  </g>
+  <!-- Inner black core (re-draw on top to mask bottom ring) -->
+  <circle cx="50" cy="50" r="21" fill="#000000"/>
+  <!-- Photon sphere (thin glowing ring) -->
+  <circle cx="50" cy="50" r="22" fill="none" stroke="#e879f9" stroke-width="0.8" opacity="0.85" filter="url(#bh-glow-f)"/>
+  <circle cx="50" cy="50" r="22.8" fill="none" stroke="#a855f7" stroke-width="0.5" opacity="0.6"/>
+  <!-- Lensing glow around event horizon -->
+  <circle cx="50" cy="50" r="23" fill="none" stroke="#c084fc" stroke-width="1.5" opacity="0.25" filter="url(#bh-blur-soft)"/>
 </symbol>
 </svg>
+
 
 <!-- ══ AUTH ════════════════════════════════════════════════ -->
 <div id="auth-screen">
@@ -740,6 +797,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 <div id="toast"></div>
 
 <script>
+
 // ── CONSTANTS ──────────────────────────────────────────────
 const BACKEND = "https://jarvis-backend-utkp.onrender.com";
 const API_URL = BACKEND + "/chat";
@@ -924,72 +982,62 @@ function doRegister() {
   const terms=document.getElementById("reg-terms").checked;
   const eEl=document.getElementById("reg-err"), oEl=document.getElementById("reg-ok");
   eEl.classList.remove("show"); oEl.classList.remove("show");
-  if (!name) return showErr(eEl,"Please enter your first name.");
-  if (!email.includes("@")) return showErr(eEl,"Invalid email address.");
-  if (pw.length < 6) return showErr(eEl,"Password must be at least 6 characters.");
-  if (pw !== conf) return showErr(eEl,"Passwords do not match.");
-  if (!terms) return showErr(eEl,"Please accept the Terms of Service.");
-  const users = getUsers();
-  if (Object.values(users).find(u => u.email===email)) return showErr(eEl,"An account with this email already exists.");
+  if(!name)return showErr(eEl,"Please enter your first name.");
+  if(!email.includes("@"))return showErr(eEl,"Invalid email address.");
+  if(pw.length<6)return showErr(eEl,"Password must be at least 6 characters.");
+  if(pw!==conf)return showErr(eEl,"Passwords do not match.");
+  if(!terms)return showErr(eEl,"Please accept the Terms of Service.");
+  const users=getUsers();
+  if(Object.values(users).find(u=>u.email===email))return showErr(eEl,"An account with this email already exists.");
 
-  const id = "u_"+Date.now();
-  users[id] = {id, name, email, pw: btoa(pw), created: Date.now(), verified: false};
-  ls.set(S_USERS, users);
+  // Create account immediately in localStorage
+  const id="u_"+Date.now();
+  users[id]={id,name,email,pw:btoa(pw),created:Date.now(),verified:false};
+  ls.set(S_USERS,users);
 
-  const btn = document.getElementById("reg-submit-btn");
-  btn.disabled = true; btn.textContent = "Creating account...";
-  lastRegEmail = email; lastRegName = name;
+  const btn=document.getElementById("reg-submit-btn");
+  btn.disabled=true; btn.textContent="Creating account...";
+  lastRegEmail=email; lastRegName=name;
 
-  fetch(BACKEND+"/send-confirmation", {
-    method:"POST", headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({email, name})
+  // Helper: sign in directly without waiting for email
+  function signInDirectly(msg){
+    const updatedUsers=getUsers();
+    const user=Object.values(updatedUsers).find(u=>u.email===email);
+    if(user){user.verified=true;ls.set(S_USERS,updatedUsers);}
+    oEl.textContent=msg||"Account created! Signing you in...";
+    oEl.classList.add("show");
+    btn.style.display="none";
+    document.getElementById("reg-divider").style.display="none";
+    document.getElementById("reg-guest-btn").style.display="none";
+    setTimeout(()=>{
+      const finalUser=Object.values(getUsers()).find(u=>u.email===email);
+      if(finalUser)loginUser(finalUser);
+    },900);
+  }
+
+  // Try sending confirmation email — but ALWAYS sign in regardless
+  fetch(BACKEND+"/send-confirmation",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({email,name})
   })
-  .then(r => r.json())
-  .then(d => {
-    if (d.success) {
-      if (d.auto_confirmed) {
-        // No email service — log in directly
-        const updatedUsers = getUsers();
-        const user = Object.values(updatedUsers).find(u => u.email===email);
-        if (user) { user.verified=true; ls.set(S_USERS, updatedUsers); }
-        oEl.textContent = "Account created! Signing you in...";
-        oEl.classList.add("show");
-        setTimeout(() => {
-          const finalUser = Object.values(getUsers()).find(u => u.email===email);
-          if (finalUser) loginUser(finalUser);
-        }, 800);
-      } else {
-        // Email sent — show pending state
-        document.getElementById("reg-email-display").textContent = email;
-        document.getElementById("reg-pending").style.display = "block";
-        btn.style.display = "none";
-        document.getElementById("reg-divider").style.display = "none";
-        document.getElementById("reg-guest-btn").style.display = "none";
-      }
+  .then(r=>r.json())
+  .then(d=>{
+    if(d.success && !d.auto_confirmed && !d.email_error){
+      // Email sent successfully — show "check inbox" state
+      document.getElementById("reg-email-display").textContent=email;
+      document.getElementById("reg-pending").style.display="block";
+      btn.style.display="none";
+      document.getElementById("reg-divider").style.display="none";
+      document.getElementById("reg-guest-btn").style.display="none";
     } else {
-      // Email failed → auto-connect anyway, don't block user
-      const updatedUsers = getUsers();
-      const user = Object.values(updatedUsers).find(u => u.email===email);
-      if (user) { user.verified=true; ls.set(S_USERS, updatedUsers); }
-      oEl.textContent = "Account created! Signing you in...";
-      oEl.classList.add("show");
-      setTimeout(() => {
-        const finalUser = Object.values(getUsers()).find(u => u.email===email);
-        if (finalUser) loginUser(finalUser);
-      }, 800);
+      // auto_confirmed, email_error, or any other case — sign in directly
+      signInDirectly("Account created! Signing you in...");
     }
   })
-  .catch(() => {
-    // Network error → auto-connect
-    const updatedUsers = getUsers();
-    const user = Object.values(updatedUsers).find(u => u.email===email);
-    if (user) { user.verified=true; ls.set(S_USERS, updatedUsers); }
-    oEl.textContent = "Account created! Signing you in...";
-    oEl.classList.add("show");
-    setTimeout(() => {
-      const finalUser = Object.values(getUsers()).find(u => u.email===email);
-      if (finalUser) loginUser(finalUser);
-    }, 800);
+  .catch(()=>{
+    // Network error — sign in directly
+    signInDirectly("Account created! Signing you in...");
   });
 }
 
@@ -1315,17 +1363,28 @@ async function sendMessage() {
 }
 
 // ══════════════════════════════════════════════════════════
-// VOICE ENGINE — Ultra-fluid, all platforms
+// VOICE ENGINE — Ultra-fluid iOS/Android/Desktop
+// Uses utterance queue with iOS-specific fixes
 // ══════════════════════════════════════════════════════════
 const synth = window.speechSynthesis;
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-const isAndroid = /Android/i.test(navigator.userAgent);
+const UA = navigator.userAgent;
+const isIOS = /iPad|iPhone|iPod/.test(UA) && !window.MSStream;
+const isAndroid = /Android/i.test(UA);
+const isSafari = /^((?!chrome|android).)*safari/i.test(UA);
 const isMobile = isIOS || isAndroid;
 
-let voiceVoices = [], ttsUnlocked = false, voiceAborted = false;
+let voiceVoices = [];
+let ttsUnlocked = false;
+let voiceAborted = false;
 let iosSynthKeepAlive = null;
-let recognition = null, voiceActive = false, isListening = false, isSpeaking = false;
-let waveInterval = null, inlineMicActive = false, inlineRec = null, detLang = "en-US";
+let recognition = null;
+let voiceActive = false;
+let isListening = false;
+let isSpeaking = false;
+let waveInterval = null;
+let inlineMicActive = false;
+let inlineRec = null;
+let detLang = "en-US";
 
 const LANG_MAP = {
   "fr":{l:"fr-FR"},"es":{l:"es-ES"},"de":{l:"de-DE"},"it":{l:"it-IT"},
@@ -1336,281 +1395,327 @@ const LANG_MAP = {
 function detectLang(text) {
   const t = text.toLowerCase();
   const checks = [
-    {l:"fr",w:["je","tu","il","nous","les","de","du","et","est","pas","que","bonjour","merci","mais","avec","très","bien","pour","dans"]},
-    {l:"es",w:["yo","hola","gracias","por","para","está","que","como","muy","también","cuando","tiene"]},
-    {l:"de",w:["ich","du","er","wir","die","das","ist","danke","bitte","nicht","auch","haben","eine"]},
-    {l:"it",w:["io","ciao","grazie","per","che","come","sono","anche","non","una","questo"]},
-    {l:"pt",w:["eu","obrigado","para","está","como","não","muito","também","uma","isso"]},
-    {l:"en",w:["the","is","are","have","what","how","hello","thank","please","this","that","with","for","and","but","you"]}
+    {l:"fr",w:["je","tu","il","nous","les","de","du","et","est","pas","que","bonjour","merci","mais","avec","très","bien","pour","dans","une"]},
+    {l:"es",w:["yo","hola","gracias","por","para","está","que","como","muy","también","cuando","tiene","una"]},
+    {l:"de",w:["ich","du","er","wir","die","das","ist","danke","bitte","nicht","auch","haben","eine","und"]},
+    {l:"it",w:["io","ciao","grazie","per","che","come","sono","anche","non","una","questo","della"]},
+    {l:"pt",w:["eu","obrigado","para","está","como","não","muito","também","uma","isso","pelo"]},
+    {l:"en",w:["the","is","are","have","what","how","hello","thank","please","this","that","with","for","and","but","you","your"]}
   ];
   let best=null,bs=0;
-  for(const{l,w}of checks){let s=0;for(const ww of w)if(t.includes(" "+ww+" ")||t.startsWith(ww+" ")||t.endsWith(" "+ww))s++;if(s>bs){bs=s;best=l;}}
+  for(const{l,w}of checks){
+    let s=0;
+    for(const ww of w)if(t.includes(" "+ww+" ")||t.startsWith(ww+" ")||t.endsWith(" "+ww)||t===ww)s++;
+    if(s>bs){bs=s;best=l;}
+  }
   return bs>=1?best:"en";
 }
 
-function loadVoices() {
+function loadVoices(){
   if(!synth)return[];
-  voiceVoices = synth.getVoices();
+  voiceVoices=synth.getVoices();
   return voiceVoices;
 }
 
-function getBestVoice(bcp47) {
-  const voices = voiceVoices.length ? voiceVoices : loadVoices();
-  if(!voices.length)return null;
-  const lang = (bcp47||"en-US").slice(0,2).toLowerCase();
-  const scored = voices.map(v => {
+// iOS: must call getVoices() repeatedly until loaded
+function ensureVoices(){
+  return new Promise(resolve=>{
+    const v=synth.getVoices();
+    if(v&&v.length>0){voiceVoices=v;resolve(v);return;}
+    let attempts=0;
+    const poll=setInterval(()=>{
+      const vv=synth.getVoices();
+      if(vv&&vv.length>0){voiceVoices=vv;clearInterval(poll);resolve(vv);}
+      if(++attempts>30)clearInterval(poll);
+    },100);
+    synth.addEventListener("voiceschanged",()=>{voiceVoices=synth.getVoices();resolve(voiceVoices);},{once:true});
+  });
+}
+
+function getBestVoice(bcp47){
+  const voices=voiceVoices.length?voiceVoices:synth.getVoices();
+  if(!voices||!voices.length)return null;
+  const lang=(bcp47||"en-US").slice(0,2).toLowerCase();
+  const scored=voices.map(v=>{
     const n=v.name.toLowerCase(),l=v.lang.toLowerCase();
     if(!l.startsWith(lang))return{v,s:-1};
     let s=0;
     if(l===bcp47.toLowerCase())s+=60;
-    if(n.includes("enhanced"))s+=100;
-    if(n.includes("premium"))s+=95;
+    // iOS quality markers
+    if(n.includes("enhanced"))s+=110;
+    if(n.includes("premium"))s+=105;
+    if(n.includes("siri"))s+=100;
+    // Cross-platform quality
     if(n.includes("neural"))s+=90;
-    if(n.includes("siri"))s+=85;
-    if(n.includes("google"))s+=70;
-    if(n.includes("microsoft"))s+=68;
-    if(n.includes("natural"))s+=75;
-    if(n.includes("compact"))s-=70;
-    if(n.includes("mono"))s-=50;
-    if(v.localService)s+=10;
+    if(n.includes("natural"))s+=85;
+    if(n.includes("google"))s+=75;
+    if(n.includes("microsoft"))s+=70;
+    if(n.includes("samantha"))s+=95; // iOS English default, good quality
+    if(n.includes("karen"))s+=90;    // iOS English AU
+    if(n.includes("daniel"))s+=90;   // iOS English UK
+    // Penalize low quality
+    if(n.includes("compact"))s-=80;
+    if(n.includes("mono"))s-=60;
+    if(v.localService)s+=5;
     return{v,s};
   }).filter(x=>x.s>=0).sort((a,b)=>b.s-a.s);
   return scored.length?scored[0].v:null;
 }
 
-function unlockTTS() {
+// CRITICAL: Must be called on user gesture (tap/click)
+function unlockTTS(){
   if(ttsUnlocked||!synth)return;
-  try {
-    const u=new SpeechSynthesisUtterance("");
-    u.volume=0;u.rate=10;u.lang="en-US";
+  try{
+    const u=new SpeechSynthesisUtterance(" ");
+    u.volume=0;u.rate=16;u.lang="en-US";
     synth.speak(u);
-  } catch{}
+  }catch(e){}
   ttsUnlocked=true;
 }
 
-function startIOSKeepAlive() {
+// iOS fix: synth freezes after ~15s unless paused/resumed
+function startIOSSynthKeepAlive(){
+  stopIOSSynthKeepAlive();
   if(!isMobile)return;
-  stopIOSKeepAlive();
-  iosSynthKeepAlive = setInterval(()=>{
-    if(synth&&synth.speaking){
+  iosSynthKeepAlive=setInterval(()=>{
+    if(synth&&synth.speaking&&!synth.paused){
       synth.pause();
-      synth.resume();
+      setTimeout(()=>{if(synth&&synth.paused)synth.resume();},30);
     }
-  }, 8000);
+  },7000);
 }
-function stopIOSKeepAlive() {
+function stopIOSSynthKeepAlive(){
   if(iosSynthKeepAlive){clearInterval(iosSynthKeepAlive);iosSynthKeepAlive=null;}
 }
 
-function cleanForSpeech(t) {
-  return t
+function cleanForSpeech(text){
+  return text
+    .replace(/```[\s\S]*?```/g," ")
+    .replace(/`[^`]+`/g," ")
     .replace(/\*\*(.+?)\*\*/gs,"$1")
     .replace(/\*(.+?)\*/gs,"$1")
-    .replace(/`{1,3}[\s\S]*?`{1,3}/g,", ")
     .replace(/#{1,6}\s+/g,"")
     .replace(/\[(.+?)\]\(.+?\)/g,"$1")
     .replace(/https?:\/\/\S+/g,"")
     .replace(/[-*•]\s+/g,"")
     .replace(/\n{2,}/g,". ")
     .replace(/\n/g," ")
-    .replace(/[*_~`#]/g,"")
+    .replace(/[*_~`#>]/g,"")
     .replace(/\s{2,}/g," ")
     .replace(/\.\s*\./g,".")
     .trim();
 }
 
-function splitIntoChunks(text) {
-  const clean = cleanForSpeech(text);
+// Split into chunks optimised for natural speech
+function splitIntoChunks(text){
+  const clean=cleanForSpeech(text);
   if(!clean)return[];
-  // Shorter chunks on mobile for smoothness
-  const maxLen = isMobile ? 110 : 200;
-  // Split on sentence boundaries
-  const raw = clean.match(/[^.!?…;:]+[.!?…;:]+(?:\s|$)|[^.!?…;:]+$/g) || [clean];
-  const chunks = [];
-  let buf = "";
-  for(const s of raw){
-    const trimmed = s.trim();
-    if(!trimmed)continue;
-    if((buf+(buf?" ":"")+trimmed).length <= maxLen){
-      buf = (buf+(buf?" ":"")+trimmed);
-    } else {
+  // iOS needs very short chunks to avoid freezing mid-utterance
+  const maxLen=isIOS?90:isMobile?100:180;
+  // Natural sentence boundaries
+  const sentences=clean.match(/[^.!?\u2026;:]+[.!?\u2026;:]+(?:\s|$)|[^.!?\u2026;:]+$/g)||[clean];
+  const chunks=[];
+  let buf="";
+  for(const s of sentences){
+    const tr=s.trim();if(!tr)continue;
+    const candidate=(buf?(buf+" "+tr):tr);
+    if(candidate.length<=maxLen){
+      buf=candidate;
+    }else{
       if(buf)chunks.push(buf);
-      // Split long sentences by words
-      if(trimmed.length > maxLen){
-        const words = trimmed.split(" ");
-        let sub = "";
-        for(const w of words){
-          if((sub+(sub?" ":"")+w).length<=maxLen)sub=(sub+(sub?" ":"")+w);
-          else{if(sub)chunks.push(sub);sub=w;}
+      if(tr.length>maxLen){
+        // Break on comma/clause boundaries first
+        const parts=tr.split(/,\s*/);
+        let sub="";
+        for(const p of parts){
+          const c=(sub?(sub+", "+p):p);
+          if(c.length<=maxLen){sub=c;}
+          else{if(sub)chunks.push(sub);sub=p;}
         }
-        buf = sub;
-      } else {
-        buf = trimmed;
-      }
+        buf=sub||"";
+      }else{buf=tr;}
     }
   }
   if(buf)chunks.push(buf);
-  return chunks;
+  return chunks.filter(c=>c.trim().length>0);
 }
 
-async function speakText(text, bcp, cb) {
-  // Cancel any current speech
-  voiceAborted = false;
-  if(synth&&synth.speaking)synth.cancel();
-  await new Promise(r=>setTimeout(r, isMobile?200:50));
-  if(voiceAborted){if(cb)cb();return;}
-
-  const chunks = splitIntoChunks(text);
-  if(!chunks.length){setVoiceState("idle");if(cb)cb();return;}
-
-  const langCode = bcp || "en-US";
-  const voice = getBestVoice(langCode);
+// ── MAIN SPEAK FUNCTION ────────────────────────────────────
+async function speakText(text, bcp, onDone){
+  voiceAborted=false;
+  // Cancel any ongoing speech
+  if(synth.speaking||synth.pending){
+    synth.cancel();
+    await new Promise(r=>setTimeout(r, isIOS?250:80));
+  }
+  if(voiceAborted){if(onDone)onDone();return;}
+  await ensureVoices();
+  const chunks=splitIntoChunks(text);
+  if(!chunks.length){setVoiceState("idle");if(onDone)onDone();return;}
+  const langCode=bcp||"en-US";
+  const voice=getBestVoice(langCode);
   setVoiceState("speaking");
-  startIOSKeepAlive();
-  await _speakChunks(chunks, langCode, voice);
-  stopIOSKeepAlive();
-  if(!voiceAborted){setVoiceState("idle");const lv=document.getElementById("vo-live");if(lv)lv.textContent="";}
-  if(cb)cb();
+  startIOSSynthKeepAlive();
+  await speakQueue(chunks,langCode,voice);
+  stopIOSSynthKeepAlive();
+  if(!voiceAborted){
+    setVoiceState("idle");
+    const lv=document.getElementById("vo-live");
+    if(lv)lv.textContent="";
+  }
+  if(onDone)onDone();
 }
 
-function _speakChunks(chunks, bcp, voice) {
-  return new Promise(resolve => {
+// Queue-based utterance player — one utterance at a time
+function speakQueue(chunks,langCode,voice){
+  return new Promise(resolve=>{
     if(!synth||voiceAborted){resolve();return;}
-    let i = 0;
-    function next() {
-      if(voiceAborted||i>=chunks.length){resolve();return;}
-      const chunk = chunks[i++];
-      const u = new SpeechSynthesisUtterance(chunk);
-      u.lang = bcp;
-      u.rate = isMobile ? 0.88 : 0.93;
-      u.pitch = isMobile ? 1.06 : 1.0;
-      u.volume = 1.0;
-      if(voice) u.voice = voice;
-      const lv = document.getElementById("vo-live");
-      if(lv) lv.textContent = chunk.length>90 ? chunk.slice(0,90)+"..." : chunk;
-      let done = false;
-      const onDone = () => {
-        if(done)return;
-        done = true;
-        setTimeout(next, isMobile?60:20);
+    let idx=0;
+    function next(){
+      if(voiceAborted||idx>=chunks.length){resolve();return;}
+      const chunk=chunks[idx++];
+      const u=new SpeechSynthesisUtterance(chunk);
+      u.lang=langCode;
+      // Rate tuning: iOS sounds better slightly slower with higher pitch
+      if(isIOS){u.rate=0.86;u.pitch=1.08;u.volume=1;}
+      else if(isAndroid){u.rate=0.90;u.pitch=1.02;u.volume=1;}
+      else{u.rate=0.92;u.pitch=1.0;u.volume=1;}
+      if(voice)u.voice=voice;
+      // Show current chunk
+      const lv=document.getElementById("vo-live");
+      if(lv){const preview=chunk.length>85?chunk.slice(0,85)+"…":chunk;lv.textContent=preview;}
+      let settled=false;
+      const settle=(delay)=>{
+        if(settled)return;settled=true;
+        // Brief pause between chunks for natural cadence
+        setTimeout(next,delay);
       };
-      u.onend = onDone;
-      u.onerror = e => {
-        if(done)return;
-        done = true;
-        if(e.error!=="canceled"&&e.error!=="interrupted")console.warn("TTS error:",e.error);
-        setTimeout(next, 100);
+      u.onend=()=>settle(isIOS?80:30);
+      u.onerror=e=>{
+        if(e.error==="canceled"||e.error==="interrupted"){settle(50);return;}
+        console.warn("TTS error:",e.error,"chunk:",chunk.slice(0,40));
+        settle(100);
       };
-      try { synth.speak(u); } catch(err) { console.warn("Speak err:",err); setTimeout(next,100); }
+      try{synth.speak(u);}
+      catch(err){console.warn("Speak failed:",err);settle(120);}
     }
-    // Wait for voices
-    const v = synth.getVoices();
-    if(v.length>0){voiceVoices=v;next();}
-    else{synth.addEventListener("voiceschanged",()=>{voiceVoices=synth.getVoices();next()},{once:true});}
+    next();
   });
 }
 
-function stopSpeaking() {
-  voiceAborted = true;
-  stopIOSKeepAlive();
-  if(synth&&synth.speaking)synth.cancel();
-  isSpeaking = false;
+function stopSpeaking(){
+  voiceAborted=true;
+  stopIOSSynthKeepAlive();
+  if(synth){try{synth.cancel();}catch{}}
+  isSpeaking=false;
   setVoiceState("idle");
-  const lv=document.getElementById("vo-live");if(lv)lv.textContent="";
+  const lv=document.getElementById("vo-live");
+  if(lv)lv.textContent="";
 }
 
-// Wave bars
-const waveEl = document.getElementById("vo-wave");
+// ── WAVE ANIMATION ─────────────────────────────────────────
+const waveEl=document.getElementById("vo-wave");
 for(let i=0;i<28;i++){const b=document.createElement("div");b.className="wave-bar";b.style.height="4px";waveEl.appendChild(b)}
 
-function animWave(on) {
+function animWave(on){
   clearInterval(waveInterval);
-  const bars = waveEl.querySelectorAll(".wave-bar");
-  if(!on){bars.forEach(b=>{b.style.height="4px";b.style.opacity=".4"});return}
-  waveInterval = setInterval(()=>{
+  const bars=waveEl.querySelectorAll(".wave-bar");
+  if(!on){bars.forEach(b=>{b.style.height="4px";b.style.opacity="0.4"});return;}
+  waveInterval=setInterval(()=>{
     bars.forEach((b,i)=>{
-      const h = isSpeaking
-        ? Math.sin(Date.now()/280+i*0.38)*10+Math.random()*14+5
-        : Math.random()*9+3;
+      const phase=Date.now()/300;
+      const h=isSpeaking
+        ?Math.abs(Math.sin(phase+i*0.35))*12+Math.random()*10+4
+        :Math.random()*7+3;
       b.style.height=h+"px";
       b.style.opacity=isSpeaking?"1":"0.75";
     });
-  }, 55);
+  },50);
 }
 
-function setVoiceState(s) {
+function setVoiceState(s){
   const ov=document.getElementById("voice-overlay");
   const st=document.getElementById("vo-status");
   ov.classList.remove("idle","listening","thinking","speaking");
   ov.classList.add(s);
-  if(s==="idle"){st.textContent="Tap the mic to speak";isListening=false;isSpeaking=false;animWave(false)}
-  else if(s==="listening"){st.textContent="Listening…";isListening=true;isSpeaking=false;animWave(true)}
-  else if(s==="thinking"){st.textContent="Thinking…";isListening=false;isSpeaking=false;animWave(false)}
-  else if(s==="speaking"){st.textContent="Nova is speaking…";isListening=false;isSpeaking=true;animWave(true)}
+  if(s==="idle"){st.textContent="Tap the mic to speak";isListening=false;isSpeaking=false;animWave(false);}
+  else if(s==="listening"){st.textContent="Listening…";isListening=true;isSpeaking=false;animWave(true);}
+  else if(s==="thinking"){st.textContent="Thinking…";isListening=false;isSpeaking=false;animWave(false);}
+  else if(s==="speaking"){st.textContent="Nova is speaking…";isListening=false;isSpeaking=true;animWave(true);}
 }
 
-function addVoMsg(role, text) {
+// ── VOICE UI ───────────────────────────────────────────────
+function addVoMsg(role,text){
   const h=document.getElementById("vo-hist");
   document.getElementById("vo-hint")?.remove();
   const init=currentUser?currentUser.name.charAt(0).toUpperCase():"?";
   const row=document.createElement("div");row.className="vo-msg "+role;
   const av=document.createElement("div");av.className="vo-av "+(role==="user"?"user":"bot");
   if(role==="bot")av.innerHTML=bhAv(26);else av.textContent=init;
-  const bub=document.createElement("div");bub.className="vo-bub "+(role==="user"?"user":"bot");bub.textContent=text;
-  if(role==="user"){row.appendChild(bub);row.appendChild(av)}else{row.appendChild(av);row.appendChild(bub)}
+  const bub=document.createElement("div");bub.className="vo-bub "+(role==="user"?"user":"bot");
+  bub.textContent=text;
+  if(role==="user"){row.appendChild(bub);row.appendChild(av);}
+  else{row.appendChild(av);row.appendChild(bub);}
   h.appendChild(row);h.scrollTop=h.scrollHeight;
 }
 
-function openVoiceMode() {
+function openVoiceMode(){
   voiceActive=true;
   unlockTTS();
-  if(synth){voiceVoices=synth.getVoices();if(!voiceVoices.length)synth.addEventListener("voiceschanged",()=>{voiceVoices=synth.getVoices()},{once:true});}
+  ensureVoices();
   const ov=document.getElementById("voice-overlay");
   ov.classList.add("open");
   setVoiceState("idle");
   document.getElementById("vo-live").textContent="";
   document.getElementById("vo-lang").textContent="Auto";
 }
-function closeVoiceMode() {
+function closeVoiceMode(){
   voiceActive=false;
   stopListening();
   stopSpeaking();
   document.getElementById("voice-overlay").classList.remove("open");
 }
-function voiceModeNewChat() {
+function voiceModeNewChat(){
   stopListening();stopSpeaking();
-  document.getElementById("vo-hist").innerHTML='<div class="vo-hint" id="vo-hint">New conversation started. Speak naturally.</div>';
+  document.getElementById("vo-hist").innerHTML='<div class="vo-hint" id="vo-hint">New conversation. Tap and speak naturally.</div>';
   document.getElementById("vo-live").textContent="";
   document.getElementById("vo-lang").textContent="Auto";
   detLang="en-US";setVoiceState("idle");
 }
 
-function startListening(onFinal) {
+// ── SPEECH RECOGNITION ─────────────────────────────────────
+function startListening(onFinal){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){showToast("Speech recognition not supported on this browser.");return}
-  if(recognition){try{recognition.abort()}catch{}}
+  if(!SR){showToast("Speech recognition not supported on this browser.");return;}
+  if(recognition){try{recognition.abort();}catch{}}
   recognition=new SR();
-  // Empty lang = auto-detect language
-  recognition.lang="";
+  recognition.lang="";               // empty = browser auto-detects
   recognition.interimResults=true;
   recognition.maxAlternatives=3;
-  recognition.continuous=false;
-  let finalText="",interimText="",lastInterim="";
-  recognition.onstart=()=>{setVoiceState("listening");document.getElementById("vo-live").textContent=""};
+  recognition.continuous=false;      // stop after silence
+  let finalText="",interimText="";
+  recognition.onstart=()=>{
+    setVoiceState("listening");
+    document.getElementById("vo-live").textContent="";
+  };
   recognition.onresult=e=>{
     finalText="";interimText="";
     for(let i=e.resultIndex;i<e.results.length;i++){
-      const alt=e.results[i][0].transcript;
-      if(e.results[i].isFinal)finalText+=alt;else interimText+=alt;
+      const t=e.results[i][0].transcript;
+      if(e.results[i].isFinal)finalText+=t;else interimText+=t;
     }
     const current=(finalText||interimText).trim();
-    if(current!==lastInterim){lastInterim=current;document.getElementById("vo-live").textContent=current;}
-    if(current.length>6){const l=detectLang(current);const en=LANG_MAP[l];if(en){detLang=en.l;document.getElementById("vo-lang").textContent=l.toUpperCase();}}
+    document.getElementById("vo-live").textContent=current;
+    if(current.length>4){
+      const l=detectLang(current);
+      const en=LANG_MAP[l];
+      if(en){detLang=en.l;document.getElementById("vo-lang").textContent=l.toUpperCase();}
+    }
   };
   recognition.onend=()=>{
     isListening=false;
     const t=(finalText||interimText).trim();
-    if(t)onFinal(t);
+    if(t){onFinal(t);}
     else{setVoiceState("idle");document.getElementById("vo-live").textContent="";}
   };
   recognition.onerror=e=>{
@@ -1618,13 +1723,16 @@ function startListening(onFinal) {
     if(e.error!=="aborted"&&e.error!=="no-speech")showToast("Mic error: "+e.error);
     setVoiceState("idle");
   };
-  try{recognition.start();}catch(err){showToast("Cannot start microphone: "+err.message);}
+  try{recognition.start();}
+  catch(err){showToast("Cannot access microphone: "+err.message);}
 }
-function stopListening(){if(recognition){try{recognition.stop()}catch{}recognition=null}isListening=false}
+function stopListening(){
+  if(recognition){try{recognition.stop();}catch{}recognition=null;}
+  isListening=false;
+}
 
-function toggleVoiceMic() {
+function toggleVoiceMic(){
   if(isListening){stopListening();setVoiceState("idle");return;}
-  // If speaking, stop and start listening
   if(isSpeaking){stopSpeaking();}
   voiceAborted=false;
   unlockTTS();
@@ -1636,33 +1744,36 @@ function toggleVoiceMic() {
   });
 }
 
-async function sendVoiceMsg(text) {
-  if(messages.length===0)document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"…":text;
-
-  // Build conversational messages with system prompt that says voice mode
-  const voiceSystem = SYSTEM_PROMPT + "\n\nIMPORTANT: You are currently in VOICE MODE. Keep your response SHORT (1-3 sentences ideally), conversational, and natural. No bullet points, no markdown, no headers. Speak like you would in a natural conversation.";
-  const msgsForVoice = [
-    {role:"system", content: voiceSystem},
+async function sendVoiceMsg(text){
+  if(messages.length===0)
+    document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"…":text;
+  const voiceSystemPrompt=SYSTEM_PROMPT+"\n\nCRITICAL — VOICE MODE: Reply in 1-3 SHORT sentences. No bullet points, no markdown, no headers, no lists. Speak naturally like a human friend would. Be warm and direct.";
+  const msgsForVoice=[
+    {role:"system",content:voiceSystemPrompt},
     ...messages,
-    {role:"user", content: text}
+    {role:"user",content:text}
   ];
-
   try{
     const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgsForVoice,model:currentModel})});
     const d=await r.json();
-    if(d.rate_limited){setVoiceState("idle");addVoMsg("bot","Hmm, I've reached my daily limit. Could you switch to another model?");showRateLimitModal();return;}
+    if(d.rate_limited){
+      setVoiceState("idle");
+      addVoMsg("bot","I've reached my daily limit. Please switch to another model to continue.");
+      showRateLimitModal();return;
+    }
     const reply=d.choices[0].message.content;
     messages.push({role:"user",content:text});
     messages.push({role:"assistant",content:reply});
     if(!isGuest)persistConv();
     addVoMsg("bot",reply);
-    // Detect reply language
-    const rl=detectLang(reply);const re=LANG_MAP[rl];const rb=re?re.l:(detLang||"en-US");
-    await speakText(reply, rb, ()=>{
-      // Auto-restart listening after speaking
+    const rl=detectLang(reply);
+    const re=LANG_MAP[rl];
+    const rb=re?re.l:(detLang||"en-US");
+    await speakText(reply,rb,()=>{
+      // Auto-restart listening after reply
       if(voiceActive&&!voiceAborted){
         setTimeout(()=>{
-          if(voiceActive&&!voiceAborted&&!isListening){
+          if(voiceActive&&!voiceAborted&&!isListening&&!isSpeaking){
             startListening(async st=>{
               document.getElementById("vo-live").textContent="";
               setVoiceState("thinking");
@@ -1670,35 +1781,39 @@ async function sendVoiceMsg(text) {
               await sendVoiceMsg(st);
             });
           }
-        }, 500);
+        },400);
       }
     });
   }catch(err){
-    console.error("Voice error:",err);
+    console.error("Voice API error:",err);
     setVoiceState("idle");
-    addVoMsg("bot","Sorry, I couldn't reach the server. Please try again.");
+    addVoMsg("bot","Sorry, I couldn\'t reach the server. Please try again.");
   }
 }
 
-// Inline mic (in chat input)
-function toggleInlineMic() {
+// Inline mic in chat input
+function toggleInlineMic(){
   const btn=document.getElementById("mic-btn");
   if(inlineMicActive){
     inlineMicActive=false;btn.classList.remove("listening");
-    if(inlineRec){try{inlineRec.stop()}catch{}}inlineRec=null;return;
+    if(inlineRec){try{inlineRec.stop();}catch{}}inlineRec=null;return;
   }
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){showToast("Speech recognition not supported.");return}
+  if(!SR){showToast("Speech recognition not supported.");return;}
   inlineMicActive=true;btn.classList.add("listening");
   inlineRec=new SR();inlineRec.lang="";inlineRec.interimResults=true;
   inlineRec.onresult=e=>{
-    let f="",i="";
-    for(let j=e.resultIndex;j<e.results.length;j++){const t=e.results[j][0].transcript;if(e.results[j].isFinal)f+=t;else i+=t}
-    document.getElementById("prompt").value=f||i;autoResize();updateCount();
+    let f="",i2="";
+    for(let j=e.resultIndex;j<e.results.length;j++){
+      const t=e.results[j][0].transcript;
+      if(e.results[j].isFinal)f+=t;else i2+=t;
+    }
+    document.getElementById("prompt").value=f||i2;
+    autoResize();updateCount();
   };
-  inlineRec.onend=()=>{inlineMicActive=false;btn.classList.remove("listening");inlineRec=null};
-  inlineRec.onerror=e=>{inlineMicActive=false;btn.classList.remove("listening");inlineRec=null;if(e.error!=="aborted"&&e.error!=="no-speech")showToast("Mic error: "+e.error)};
-  try{inlineRec.start()}catch{}
+  inlineRec.onend=()=>{inlineMicActive=false;btn.classList.remove("listening");inlineRec=null;};
+  inlineRec.onerror=e=>{inlineMicActive=false;btn.classList.remove("listening");inlineRec=null;if(e.error!=="aborted"&&e.error!=="no-speech")showToast("Mic error: "+e.error);};
+  try{inlineRec.start();}catch{}
 }
 
 // ── EVENT LISTENERS ────────────────────────────────────────
@@ -1750,6 +1865,7 @@ if(synth){loadVoices();synth.addEventListener("voiceschanged",loadVoices);}
   const user=getUsers()[sess.userId];
   if(user)startApp(user,false);
 })();
+
 </script>
 </body>
 </html>
