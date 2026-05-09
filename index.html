@@ -13,12 +13,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Nova AI 618","url":"https://sixteleinekugel-commits.github.io/novaAI-chat/","applicationCategory":"AIApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <link rel="icon" type="image/jpeg" href="https://sixteleinekugel-commits.github.io/novaAI-chat/k9TBi.jpg">
+<!-- FIX #1 : EmailJS chargé mais init() appelé seulement si clé configurée, pour éviter le freeze -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-    // Initialisation EmailJS
-    emailjs.init("y5_SPE4wsKk0loSrR"); 
-    console.log("✅ EmailJS initialisé avec succès");
-</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
@@ -48,7 +44,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 @keyframes mic-ring{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.15)}}
 @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.3}}
 
-/* ── AUTH ─────────────────────────────────────────────── */
+/* ── AUTH */
 #auth-screen{display:flex;height:100dvh;overflow:hidden}
 #auth-left{width:44%;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 40px;position:relative;overflow:hidden;flex-shrink:0}
 .auth-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(124,106,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(124,106,255,.04) 1px,transparent 1px);background-size:44px 44px;pointer-events:none}
@@ -101,7 +97,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .chk-row input{accent-color:var(--accent);margin-top:2px;flex-shrink:0}
 .auth-bottom-note{text-align:center;margin-top:18px;font-size:12px;color:var(--text3);line-height:1.8}
 .auth-bottom-note a{color:var(--accent);text-decoration:underline;cursor:pointer;font-weight:500}
-/* pending email state */
 #reg-pending{display:none;text-align:center;padding:18px 0}
 .pending-icon{font-size:38px;margin-bottom:12px}
 .pending-title{font-family:var(--fh);font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px}
@@ -109,7 +104,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .pending-note{font-size:12px;color:var(--text3);line-height:1.6}
 .pending-resend{margin-top:16px;background:none;border:none;color:var(--accent);font-size:13px;cursor:pointer;text-decoration:underline;font-family:var(--fb)}
 
-/* ── APP ──────────────────────────────────────────────── */
+/* ── APP */
 #app-screen{display:none;height:100dvh;overflow:hidden;position:relative}
 #sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:150;backdrop-filter:blur(3px)}
 #sidebar-overlay.open{display:block}
@@ -166,7 +161,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .dd-item.danger{color:var(--red)}
 .dd-item.danger:hover{background:rgba(239,68,68,.08)}
 
-/* ── MAIN ─────────────────────────────────────────────── */
+/* ── MAIN */
 #main{display:flex;flex-direction:column;height:100dvh;overflow:hidden;margin-left:var(--sidebar-w)}
 #topbar{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:56px;flex-shrink:0;border-bottom:1px solid var(--border);background:rgba(5,6,8,.93);backdrop-filter:blur(20px)}
 .tb-left{display:flex;align-items:center;gap:9px;min-width:0}
@@ -179,20 +174,19 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .icon-btn{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;transition:all .15s;flex-shrink:0}
 .icon-btn:hover{background:var(--surface2);color:var(--text);border-color:var(--border2)}
 .icon-btn svg{width:14px;height:14px}
-/* Voice button — highlighted in topbar */
 .voice-btn{display:flex;align-items:center;gap:6px;padding:6px 13px;border-radius:20px;border:1px solid rgba(124,106,255,.4);background:var(--accent-dim);color:var(--accent2);font-family:var(--fb);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;flex-shrink:0}
 .voice-btn:hover{background:rgba(124,106,255,.2);border-color:var(--accent);color:var(--text)}
 .voice-btn svg{width:13px;height:13px}
 .voice-btn .vo-live-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse-dot 2s infinite;flex-shrink:0}
 
-/* ── SEARCH BANNER ───────────────────────────────────── */
+/* ── SEARCH BANNER */
 #search-banner{display:none;align-items:center;gap:8px;padding:7px 18px;background:var(--search-dim);border-bottom:1px solid rgba(14,165,233,.2);font-size:12px;color:var(--search);flex-shrink:0}
 #search-banner.show{display:flex}
 #search-banner svg{width:13px;height:13px;flex-shrink:0}
 #search-banner button{margin-left:auto;background:none;border:1px solid rgba(14,165,233,.3);color:var(--search);cursor:pointer;font-size:11px;padding:2px 9px;border-radius:20px;transition:all .15s}
 #search-banner button:hover{background:rgba(14,165,233,.15)}
 
-/* ── CHAT ─────────────────────────────────────────────── */
+/* ── CHAT */
 #chat-wrap{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
 #chat-wrap::-webkit-scrollbar{width:4px}
 #chat-wrap::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:4px}
@@ -201,7 +195,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .empty-logo{width:72px;height:72px;margin:0 auto 16px;border-radius:50%;animation:bh-glow-pulse 4s ease-in-out infinite}
 .empty-title{font-family:var(--fh);font-size:22px;font-weight:800;margin-bottom:7px}
 .empty-sub{font-size:14px;color:var(--text2);font-weight:300;max-width:340px;margin-bottom:26px;line-height:1.75}
-/* Quick action cards */
 .prompts-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;width:100%;max-width:500px}
 .p-card{padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:13px;cursor:pointer;text-align:left;transition:all .22s;position:relative;overflow:hidden}
 .p-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .2s}
@@ -215,7 +208,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .p-card-icon{font-size:18px;margin-bottom:8px;display:block}
 .p-card-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
 .p-card-sub{font-size:11px;color:var(--text3)}
-/* special highlight cards */
 .p-card.search-card{border-color:rgba(14,165,233,.2)}
 .p-card.search-card .p-card-title{color:var(--search)}
 .p-card.voice-card{border-color:rgba(124,106,255,.2)}
@@ -224,7 +216,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .p-card.image-card .p-card-title{color:var(--orange)}
 .p-card.photo-card{border-color:rgba(34,197,94,.2)}
 .p-card.photo-card .p-card-title{color:var(--green)}
-/* Messages */
 .msg-group{display:flex;flex-direction:column;gap:2px;animation:msg-in .2s cubic-bezier(.34,1.56,.64,1) both}
 .msg-row{display:flex;gap:9px;align-items:flex-start}
 .msg-row.user{flex-direction:row-reverse}
@@ -267,14 +258,12 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
 .day-div{display:flex;align-items:center;gap:11px;color:var(--text3);font-size:10.5px;margin:9px 0 3px}
 .day-div::before,.day-div::after{content:'';flex:1;height:1px;background:var(--border)}
-/* Sources web */
 .sources-wrap{margin-top:11px;display:flex;flex-wrap:wrap;gap:6px}
 .source-chip{display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;background:var(--search-dim);border:1px solid rgba(14,165,233,.2);color:var(--search);font-size:11px;text-decoration:none;cursor:pointer;transition:all .15s}
 .source-chip:hover{background:rgba(14,165,233,.2)}
 .source-chip svg{width:10px;height:10px;flex-shrink:0}
 .search-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;background:var(--search-dim);border:1px solid rgba(14,165,233,.2);color:var(--search);font-size:10px;font-weight:600;margin-bottom:8px}
 .search-badge svg{width:10px;height:10px}
-/* Image */
 .generated-img{max-width:100%;border-radius:12px;margin-top:7px;border:1px solid var(--border2);display:block}
 .img-loading{display:flex;align-items:center;gap:9px;color:var(--text2);font-size:13px;padding:5px 0}
 .img-spinner{width:17px;height:17px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
@@ -285,7 +274,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .img-edit-btn{padding:7px 13px;background:var(--accent);border:none;border-radius:8px;color:#fff;font-family:var(--fb);font-size:12.5px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap}
 .img-edit-btn:hover{background:var(--accent2)}
 .img-edit-btn:disabled{background:var(--surface3);cursor:not-allowed}
-/* Photo preview */
 .photo-preview-zone{margin-bottom:6px}
 .photo-preview-wrap{display:flex;align-items:center;gap:9px;padding:9px 12px;background:var(--surface2);border:1px solid rgba(34,197,94,.2);border-radius:11px}
 .photo-preview-thumb{width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0;border:1px solid var(--border2)}
@@ -296,7 +284,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .photo-remove-btn:hover{background:rgba(239,68,68,.15);color:var(--red)}
 .photo-remove-btn svg{width:11px;height:11px}
 
-/* ── INPUT ────────────────────────────────────────────── */
+/* ── INPUT */
 #input-zone{padding:11px 16px;padding-bottom:calc(11px + var(--sb));flex-shrink:0}
 #input-wrap-outer{max-width:740px;margin:0 auto}
 #input-box{background:var(--surface);border:1px solid var(--border2);border-radius:16px;transition:border-color .2s,box-shadow .2s;overflow:hidden}
@@ -330,7 +318,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .foot-note{text-align:center;font-size:10.5px;color:var(--text3);margin-top:7px}
 .foot-note a{color:var(--accent);text-decoration:underline;cursor:pointer}
 
-/* ── VOICE OVERLAY ────────────────────────────────────── */
+/* ── VOICE OVERLAY */
 #voice-overlay{display:none;position:fixed;inset:0;background:linear-gradient(160deg,#02030f 0%,#07041c 40%,#040210 100%);z-index:600;flex-direction:column}
 #voice-overlay.open{display:flex;animation:vo-in .3s ease}
 .vo-topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 22px 0;flex-shrink:0}
@@ -340,7 +328,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .vo-x{width:36px;height:36px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);transition:all .15s}
 .vo-x:hover{background:rgba(255,255,255,.13);color:var(--text)}
 .vo-x svg{width:15px;height:15px}
-/* History */
 .vo-hist{flex:1;overflow-y:auto;padding:16px 22px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch}
 .vo-hist::-webkit-scrollbar{width:3px}
 .vo-hist::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
@@ -353,7 +340,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .vo-bub.bot{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);color:var(--text);border-radius:3px 14px 14px 14px}
 .vo-bub.user{background:rgba(124,106,255,.22);color:#d4caff;border:1px solid rgba(124,106,255,.3);border-radius:14px 3px 14px 14px}
 .vo-hint{flex:1;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:13px;text-align:center;line-height:1.8;padding:0 30px}
-/* Orb */
 .vo-center{display:flex;flex-direction:column;align-items:center;gap:14px;padding:8px 22px;flex-shrink:0}
 .vo-orb-wrap{position:relative;display:flex;align-items:center;justify-content:center}
 .vo-ring{position:absolute;border-radius:50%;opacity:0;border:1px solid var(--accent);pointer-events:none}
@@ -361,7 +347,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .vo-r2{width:158px;height:158px}
 .vo-r3{width:196px;height:196px}
 .vo-orb{width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#0d0a22,#000);display:flex;align-items:center;justify-content:center;position:relative;z-index:1;box-shadow:0 0 50px rgba(124,106,255,.25),0 0 25px rgba(255,140,0,.1),inset 0 0 30px rgba(124,106,255,.05);overflow:hidden;transition:box-shadow .4s}
-/* States */
 #voice-overlay.idle .vo-ring{animation:none;opacity:0}
 #voice-overlay.listening .vo-orb{box-shadow:0 0 70px rgba(239,68,68,.5),0 0 30px rgba(239,68,68,.2);animation:orb-breathe .85s ease-in-out infinite alternate}
 #voice-overlay.listening .vo-ring{border-color:rgba(239,68,68,.5)}
@@ -391,7 +376,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .vo-main svg{width:30px;height:30px}
 #voice-overlay.listening .vo-main{background:linear-gradient(135deg,#ef4444,#b91c1c);box-shadow:0 6px 28px rgba(239,68,68,.45);animation:orb-breathe .8s ease-in-out infinite alternate}
 
-/* ── MODALS ───────────────────────────────────────────── */
+/* ── MODALS */
 .m-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(5px);z-index:500;align-items:center;justify-content:center;padding:18px}
 .m-overlay.open{display:flex}
 .m-box{background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:22px;width:400px;max-width:100%;animation:modal-in .2s ease;max-height:90dvh;overflow-y:auto}
@@ -410,17 +395,15 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .mbadge-def{background:rgba(255,140,0,.12);color:var(--orange)}
 .m-close{width:100%;margin-top:8px;padding:10px;background:transparent;border:1px solid var(--border);border-radius:9px;color:var(--text2);font-family:var(--fb);font-size:13px;cursor:pointer;transition:all .15s}
 .m-close:hover{background:var(--surface2)}
-/* Rate limit modal */
 #rate-limit-modal .m-box{border-color:rgba(255,140,0,.3)}
 .rate-limit-icon{font-size:36px;text-align:center;margin-bottom:12px}
 .rate-limit-warning{background:rgba(255,140,0,.08);border:1px solid rgba(255,140,0,.2);border-radius:10px;padding:11px 14px;font-size:12.5px;color:rgba(255,140,0,.9);margin-bottom:16px;line-height:1.6}
 
-/* Toast */
 #toast{position:fixed;bottom:calc(20px + var(--sb));left:50%;transform:translateX(-50%) translateY(70px);background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:9px 18px;font-size:13px;color:var(--text);z-index:999;transition:transform .3s ease;pointer-events:none;white-space:nowrap;max-width:90vw;text-overflow:ellipsis;overflow:hidden}
 #toast.show{transform:translateX(-50%) translateY(0)}
 #photo-input{display:none}
 
-/* ── RESPONSIVE ───────────────────────────────────────── */
+/* ── RESPONSIVE */
 @media(max-width:768px){
   #auth-screen{flex-direction:column;overflow-y:auto;height:auto;min-height:100dvh}
   #auth-left{display:none}
@@ -453,12 +436,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 </head>
 <body>
 
-<!-- Hidden SEO -->
 <div style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap" aria-hidden="true">
   <h1>Nova AI 618 — Free Intelligent AI Assistant created by Sixte</h1>
 </div>
-
-
 
 <!-- ══ AUTH ════════════════════════════════════════════════ -->
 <div id="auth-screen">
@@ -516,7 +496,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
         <div class="form-group"><label class="chk-row"><input type="checkbox" id="reg-terms"> I agree to the <span style="color:var(--accent);margin-left:4px">Terms of Service</span></label></div>
         <div class="form-err" id="reg-err"></div>
         <div class="form-ok" id="reg-ok"></div>
-        <!-- Pending email confirmation state -->
         <div id="reg-pending">
           <div class="pending-icon">📬</div>
           <div class="pending-title">Check your inbox!</div>
@@ -720,23 +699,37 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 <div id="toast"></div>
 
 <script>
+// ── EMAILJS CONFIG ─────────────────────────────────────────
+// FIX #1 : on n'appelle emailjs.init() que si la clé est configurée,
+// pour éviter que l'erreur EmailJS freeze toute la page.
+const EMAILJS_PUBLIC_KEY   = "y5_SPE4wsKk0loSrR";   // remplace ici
+const EMAILJS_SERVICE_ID   = "service_ls8c2ou";
+const EMAILJS_TEMPLATE_ID  = "template_4kzpytr";
 
+(function initEmailJS() {
+  try {
+    if (
+      typeof emailjs !== "undefined" &&
+      EMAILJS_PUBLIC_KEY &&
+      EMAILJS_PUBLIC_KEY !== "y5_SPE4wsKk0loSrR"
+    ) {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+    }
+  } catch (e) {
+    console.warn("EmailJS init skipped:", e);
+  }
+})();
 
 // ── CONSTANTS ──────────────────────────────────────────────
-const BACKEND = "https://jarvis-backend-utkp.onrender.com";
-const API_URL = BACKEND + "/chat";
-const IMG_URL = BACKEND + "/image";
+const BACKEND     = "https://jarvis-backend-utkp.onrender.com";
+const API_URL     = BACKEND + "/chat";
+const IMG_URL     = BACKEND + "/image";
 const ANALYZE_URL = BACKEND + "/analyze";
-const SEARCH_URL = BACKEND + "/search";
-const S_USERS = "nova_users_v2";
-const S_SESSION = "nova_sess_v2";
+const SEARCH_URL  = BACKEND + "/search";
+const S_USERS     = "nova_users_v2";
+const S_SESSION   = "nova_sess_v2";
 
-// ── EMAILJS CONFIG (replace with your keys from emailjs.com) ──
-const EMAILJS_SERVICE_ID = "service_ls8c2ou";   // ex: service_abc123
-const EMAILJS_TEMPLATE_ID = "template_4kzpytr"; // ex: template_xyz789
-// EmailJS Public Key is initialized in <head> via emailjs.init("YOUR_PUBLIC_KEY")
-
-// ── SYSTEM PROMPT — Nova's identity ───────────────────────
+// ── SYSTEM PROMPT ──────────────────────────────────────────
 const SYSTEM_PROMPT = `You are Nova AI 618, an intelligent AI assistant created by Sixte. Your name "Nova" evokes a stellar explosion — brilliant, powerful, energetic. "618" is a reference to Claude Shannon's number (the mathematical constant related to information theory), symbolizing the harmony between intelligence and cosmos.
 
 Your creator is Sixte Leinekugel, a young French developer passionate about artificial intelligence and technology.
@@ -759,16 +752,21 @@ let pendingPhoto = null, searchModeActive = false;
 let lastRegEmail = "", lastRegName = "";
 
 const ls = {
-  get: k => { try { return JSON.parse(localStorage.getItem(k)) } catch { return null } },
-  set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)) } catch {} },
-  del: k => { try { localStorage.removeItem(k) } catch {} }
+  get: k => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
+  set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+  del: k => { try { localStorage.removeItem(k); } catch {} }
 };
-const getUsers = () => ls.get(S_USERS) || {};
-const convKey = () => `nova_convs_${currentUser.id}`;
+const getUsers    = () => ls.get(S_USERS) || {};
+const convKey     = () => `nova_convs_${currentUser.id}`;
 const getUserConvs = () => isGuest ? [] : (ls.get(convKey()) || []);
-const saveConvs = c => { if (!isGuest) ls.set(convKey(), c) };
+const saveConvs   = c => { if (!isGuest) ls.set(convKey(), c); };
 
-const IMAGE_KW = ["image ","draw ","draw me","paint ","render ","visualize ","generate image","create image","make an image","make a picture","generate a picture","create a picture","generate art","create art","generate a photo","create a photo","picture of","photo of","illustration of"];
+const IMAGE_KW = [
+  "image ","draw ","draw me","paint ","render ","visualize ",
+  "generate image","create image","make an image","make a picture",
+  "generate a picture","create a picture","generate art","create art",
+  "generate a photo","create a photo","picture of","photo of","illustration of"
+];
 function isImageReq(t) {
   const s = t.toLowerCase().trim();
   if (s.startsWith("image ") || s.startsWith("image:")) return true;
@@ -776,41 +774,41 @@ function isImageReq(t) {
 }
 
 // ── UI HELPERS ─────────────────────────────────────────────
-function vi(id) { return document.getElementById(id).value.trim() }
-function stop(e) { e.stopPropagation() }
-function esc(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;") }
-function escHtml(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;") }
+function vi(id) { return document.getElementById(id).value.trim(); }
+function stop(e) { e.stopPropagation(); }
+function esc(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function escHtml(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 function bhAv(size=28) { return `<img src="https://sixteleinekugel-commits.github.io/novaAI-chat/k9TBi.jpg" style="width:${size}px;height:${size}px;border-radius:50%;object-fit:cover;" alt="Nova">`; }
 function showToast(msg, dur=2800) {
   const t = document.getElementById("toast");
   t.textContent = msg; t.classList.add("show");
   clearTimeout(t._to); t._to = setTimeout(() => t.classList.remove("show"), dur);
 }
-function showErr(el, msg) { el.textContent = msg; el.classList.add("show") }
-function toggleDd() { document.getElementById("profile-dd").classList.toggle("open") }
-document.addEventListener("click", e => { if (!e.target.closest(".user-row")) document.getElementById("profile-dd").classList.remove("open") });
+function showErr(el, msg) { el.textContent = msg; el.classList.add("show"); }
+function toggleDd() { document.getElementById("profile-dd").classList.toggle("open"); }
+document.addEventListener("click", e => { if (!e.target.closest(".user-row")) document.getElementById("profile-dd").classList.remove("open"); });
 function showAuth(tab) { document.getElementById("auth-screen").style.display="flex"; document.getElementById("app-screen").style.display="none"; switchTab(tab); }
-function openSidebar() { document.getElementById("sidebar").classList.add("open"); document.getElementById("sidebar-overlay").classList.add("open"); document.body.style.overflow="hidden" }
-function closeSidebar() { document.getElementById("sidebar").classList.remove("open"); document.getElementById("sidebar-overlay").classList.remove("open"); document.body.style.overflow="" }
-function autoResize() { const p=document.getElementById("prompt"); p.style.height="auto"; p.style.height=Math.min(p.scrollHeight,130)+"px" }
-function updateCount() { const n=document.getElementById("prompt").value.length; const el=document.getElementById("char-count"); el.textContent=n+" / 4096"; el.style.color=n>3800?"var(--red)":"var(--text3)" }
-function fillPrompt(t) { const p=document.getElementById("prompt"); p.value=t; p.focus(); autoResize(); updateCount() }
-function togglePw(id) { const el=document.getElementById(id); el.type=el.type==="password"?"text":"password" }
+function openSidebar() { document.getElementById("sidebar").classList.add("open"); document.getElementById("sidebar-overlay").classList.add("open"); document.body.style.overflow="hidden"; }
+function closeSidebar() { document.getElementById("sidebar").classList.remove("open"); document.getElementById("sidebar-overlay").classList.remove("open"); document.body.style.overflow=""; }
+function autoResize() { const p=document.getElementById("prompt"); p.style.height="auto"; p.style.height=Math.min(p.scrollHeight,130)+"px"; }
+function updateCount() { const n=document.getElementById("prompt").value.length; const el=document.getElementById("char-count"); el.textContent=n+" / 4096"; el.style.color=n>3800?"var(--red)":"var(--text3)"; }
+function fillPrompt(t) { const p=document.getElementById("prompt"); p.value=t; p.focus(); autoResize(); updateCount(); }
+function togglePw(id) { const el=document.getElementById(id); el.type=el.type==="password"?"text":"password"; }
 function checkStrength(pw) {
   let s=0;
-  if(pw.length>=6)s++;if(pw.length>=10)s++;if(/[A-Z]/.test(pw))s++;if(/[0-9]/.test(pw))s++;if(/[^A-Za-z0-9]/.test(pw))s++;
+  if(pw.length>=6)s++; if(pw.length>=10)s++; if(/[A-Z]/.test(pw))s++; if(/[0-9]/.test(pw))s++; if(/[^A-Za-z0-9]/.test(pw))s++;
   const lvl=[["0%","",""],["20%","#ef4444","Very weak"],["40%","#f97316","Weak"],["60%","#eab308","Medium"],["80%","#22c55e","Strong"],["100%","#16a34a","Very strong"]][Math.min(s,5)];
   document.getElementById("str-fill").style.cssText=`width:${lvl[0]};background:${lvl[1]}`;
-  const t=document.getElementById("str-txt"); t.textContent=lvl[2]; t.style.color=lvl[1];
+  const tt=document.getElementById("str-txt"); tt.textContent=lvl[2]; tt.style.color=lvl[1];
 }
 function downloadChat() {
-  if (!messages.length) { showToast("No messages to export."); return }
+  if (!messages.length) { showToast("No messages to export."); return; }
   const txt = messages.map(m => `[${m.role==="user"?(currentUser?.name||"You"):"Nova AI 618"}]\n${m.content}`).join("\n\n──────\n\n");
   const a = document.createElement("a"); a.href="data:text/plain;charset=utf-8,"+encodeURIComponent(txt); a.download="nova-618-chat.txt"; a.click();
 }
 function exportAll() {
   const convs = getUserConvs();
-  if (!convs.length) { showToast("No saved conversations."); return }
+  if (!convs.length) { showToast("No saved conversations."); return; }
   const all = convs.map(c => `══ ${c.title} ══\n\n`+c.messages.map(m=>`[${m.role==="user"?currentUser.name:"Nova"}]\n${m.content}`).join("\n\n──\n\n")).join("\n\n\n");
   const a = document.createElement("a"); a.href="data:text/plain;charset=utf-8,"+encodeURIComponent(all); a.download="nova-618-all.txt"; a.click();
 }
@@ -874,7 +872,7 @@ function updateModelUI(name, ctx) {
   else if (currentModel === "llama-3.3-70b-versatile") dot.className = "model-dot blue";
   else dot.className = "model-dot";
 }
-function showRateLimitModal() { document.getElementById("rate-limit-modal").classList.add("open") }
+function showRateLimitModal() { document.getElementById("rate-limit-modal").classList.add("open"); }
 
 // ── SEARCH ─────────────────────────────────────────────────
 function toggleSearch() {
@@ -884,15 +882,11 @@ function toggleSearch() {
   const banner = document.getElementById("search-banner");
   const prompt = document.getElementById("prompt");
   if (searchModeActive) {
-    btn.classList.add("active-search");
-    box.classList.add("search-active");
-    banner.classList.add("show");
+    btn.classList.add("active-search"); box.classList.add("search-active"); banner.classList.add("show");
     prompt.placeholder = "Ask anything — Nova searches the web in real time...";
     showToast("🌐 Web search enabled");
   } else {
-    btn.classList.remove("active-search");
-    box.classList.remove("search-active");
-    banner.classList.remove("show");
+    btn.classList.remove("active-search"); box.classList.remove("search-active"); banner.classList.remove("show");
     prompt.placeholder = "Ask Nova anything...";
     showToast("Web search disabled");
   }
@@ -907,93 +901,90 @@ function switchTab(t) {
 }
 
 function doRegister() {
-  const name=vi("reg-name"),email=vi("reg-email").toLowerCase(),pw=vi("reg-pw"),conf=vi("reg-confirm");
-  const terms=document.getElementById("reg-terms").checked;
-  const eEl=document.getElementById("reg-err"),oEl=document.getElementById("reg-ok");
-  eEl.classList.remove("show");oEl.classList.remove("show");
-  if(!name)return showErr(eEl,"Please enter your first name.");
-  if(!email.includes("@"))return showErr(eEl,"Invalid email address.");
-  if(pw.length<6)return showErr(eEl,"Password must be at least 6 characters.");
-  if(pw!==conf)return showErr(eEl,"Passwords do not match.");
-  if(!terms)return showErr(eEl,"Please accept the Terms of Service.");
-  const users=getUsers();
-  if(Object.values(users).find(u=>u.email===email))return showErr(eEl,"An account with this email already exists.");
+  const name=vi("reg-name"), email=vi("reg-email").toLowerCase(), pw=vi("reg-pw"), conf=vi("reg-confirm");
+  const terms = document.getElementById("reg-terms").checked;
+  const eEl=document.getElementById("reg-err"), oEl=document.getElementById("reg-ok");
+  eEl.classList.remove("show"); oEl.classList.remove("show");
+  if (!name) return showErr(eEl,"Please enter your first name.");
+  if (!email.includes("@")) return showErr(eEl,"Invalid email address.");
+  if (pw.length<6) return showErr(eEl,"Password must be at least 6 characters.");
+  if (pw!==conf) return showErr(eEl,"Passwords do not match.");
+  if (!terms) return showErr(eEl,"Please accept the Terms of Service.");
+  const users = getUsers();
+  if (Object.values(users).find(u=>u.email===email)) return showErr(eEl,"An account with this email already exists.");
 
-  const id="u_"+Date.now();
-  users[id]={id,name,email,pw:btoa(pw),created:Date.now(),verified:false};
-  ls.set(S_USERS,users);
+  const id = "u_"+Date.now();
+  users[id] = {id,name,email,pw:btoa(pw),created:Date.now(),verified:false};
+  ls.set(S_USERS, users);
 
-  const btn=document.getElementById("reg-submit-btn");
-  btn.disabled=true;btn.textContent="Creating account...";
-  lastRegEmail=email;lastRegName=name;
+  const btn = document.getElementById("reg-submit-btn");
+  btn.disabled=true; btn.textContent="Creating account...";
+  lastRegEmail=email; lastRegName=name;
 
-  function signInDirectly(msg){
+  function signInDirectly(msg) {
     const allUsers=getUsers();
     const user=Object.values(allUsers).find(u=>u.email===email);
-    if(user){user.verified=true;ls.set(S_USERS,allUsers);}
+    if (user) { user.verified=true; ls.set(S_USERS,allUsers); }
     oEl.textContent=msg||"Account created! Signing you in...";
     oEl.classList.add("show");
     btn.style.display="none";
     const divider=document.getElementById("reg-divider");
     const guestBtn=document.getElementById("reg-guest-btn");
-    if(divider)divider.style.display="none";
-    if(guestBtn)guestBtn.style.display="none";
-    setTimeout(()=>{
+    if (divider) divider.style.display="none";
+    if (guestBtn) guestBtn.style.display="none";
+    setTimeout(() => {
       const fu=Object.values(getUsers()).find(u=>u.email===email);
-      if(fu)loginUser(fu);
-    },900);
+      if (fu) loginUser(fu);
+    }, 900);
   }
 
-  // Step 1: get confirmation token from backend
-  fetch(BACKEND+"/send-confirmation",{
+  // FIX #2 : EmailJS n'est utilisé que si correctement configuré
+  const emailJsConfigured = (
+    typeof emailjs !== "undefined" &&
+    EMAILJS_PUBLIC_KEY !== "y5_SPE4wsKk0loSrR" &&
+    EMAILJS_SERVICE_ID !== "service_ls8c2ou" &&
+    EMAILJS_TEMPLATE_ID !== "template_4kzpytr"
+  );
+
+  fetch(BACKEND+"/send-confirmation", {
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({email,name})
   })
   .then(r=>r.json())
-  .then(d=>{
-    if(!d.success||!d.confirmLink){
+  .then(d => {
+    if (!d.success || !d.confirmLink || !emailJsConfigured) {
       signInDirectly("Account created! Signing you in...");
       return;
     }
-    // Step 2: send email via EmailJS (free, works without domain)
-    if(typeof emailjs==="undefined"){
-      signInDirectly("Account created! Signing you in...");
-      return;
-    }
-    emailjs.send(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,{
-      to_email:email,
-      to_name:name,
-      confirm_link:d.confirmLink,
-      from_name:"Nova AI 618"
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      to_email:email, to_name:name, confirm_link:d.confirmLink, from_name:"Nova AI 618"
     })
-    .then(()=>{
-      // Email sent successfully — show "check your inbox"
+    .then(() => {
       document.getElementById("reg-email-display").textContent=email;
       document.getElementById("reg-pending").style.display="block";
       btn.style.display="none";
       const divider=document.getElementById("reg-divider");
       const guestBtn=document.getElementById("reg-guest-btn");
-      if(divider)divider.style.display="none";
-      if(guestBtn)guestBtn.style.display="none";
+      if (divider) divider.style.display="none";
+      if (guestBtn) guestBtn.style.display="none";
     })
-    .catch(err=>{
-      console.error("EmailJS error:",err);
-      // Email failed — sign in directly anyway
+    .catch(err => {
+      console.error("EmailJS error:", err);
       signInDirectly("Account created! Signing you in...");
     });
   })
-  .catch(()=>signInDirectly("Account created! Signing you in..."));
+  .catch(() => signInDirectly("Account created! Signing you in..."));
 }
 
 function resendConfirmation() {
   if (!lastRegEmail || !lastRegName) return;
   showToast("Sending confirmation email...");
   fetch(BACKEND+"/send-confirmation", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:lastRegEmail,name:lastRegName})})
-  .then(r=>r.json()).then(d=>{
-    if(d.success) showToast("✅ Email resent! Check your inbox.");
+  .then(r=>r.json()).then(d => {
+    if (d.success) showToast("✅ Email resent! Check your inbox.");
     else showToast("❌ Could not resend: "+(d.error||"unknown"));
-  }).catch(()=>showToast("❌ Network error."));
+  }).catch(() => showToast("❌ Network error."));
 }
 
 function doLogin() {
@@ -1004,8 +995,8 @@ function doLogin() {
   if (!user||user.pw!==btoa(pw)) return showErr(eEl,"Incorrect email or password.");
   loginUser(user);
 }
-function loginUser(user) { ls.set(S_SESSION,{userId:user.id}); startApp(user,false) }
-function doGuest() { ls.set(S_SESSION,{userId:"guest"}); startApp({id:"guest",name:"Guest",email:""},true) }
+function loginUser(user) { ls.set(S_SESSION,{userId:user.id}); startApp(user,false); }
+function doGuest() { ls.set(S_SESSION,{userId:"guest"}); startApp({id:"guest",name:"Guest",email:""},true); }
 function doLogout() {
   ls.del(S_SESSION); currentUser=null; messages=[]; msgCount=0; currentConvId=null;
   closeVoiceMode();
@@ -1032,287 +1023,296 @@ function startApp(user, guest) {
   document.getElementById("logout-lbl").textContent=guest?"Exit guest mode":"Sign out";
   document.getElementById("empty-title").textContent=guest?"Hello! I'm Nova 👋":`Hello ${user.name}! 👋`;
   document.getElementById("empty-sub").textContent=guest?"Guest mode — chats won't be saved. Create an account to keep your history!":"Ask me anything — I'll search the web, generate images, or analyze your photos!";
-  if(synth){voiceVoices=synth.getVoices();synth.addEventListener("voiceschanged",()=>{voiceVoices=synth.getVoices()},{once:true})}
+  // FIX #3 : on vérifie que synth existe avant de l'utiliser dans startApp
+  if (typeof synth !== "undefined" && synth) {
+    voiceVoices = synth.getVoices();
+    synth.addEventListener("voiceschanged", () => { voiceVoices = synth.getVoices(); }, {once:true});
+  }
   refreshSidebar(); newConversation();
 }
 
 // ── CONVERSATIONS ──────────────────────────────────────────
 function newConversation() {
-  if(messages.length&&!isGuest&&currentConvId)persistConv();
+  if (messages.length&&!isGuest&&currentConvId) persistConv();
   currentConvId="c_"+Date.now(); messages=[]; msgCount=0;
-  const chatEl=document.getElementById("chat"),emptyEl=document.getElementById("empty-state");
+  const chatEl=document.getElementById("chat"), emptyEl=document.getElementById("empty-state");
   chatEl.innerHTML=""; chatEl.appendChild(emptyEl); emptyEl.style.display="flex";
   document.getElementById("conv-title").textContent="New conversation";
   clearPhoto(); refreshSidebar();
 }
 function persistConv() {
-  if(isGuest||!messages.length)return;
+  if (isGuest||!messages.length) return;
   const convs=getUserConvs();
   const title=messages[0].content.slice(0,50)+(messages[0].content.length>50?"…":"");
   const idx=convs.findIndex(c=>c.id===currentConvId);
   const conv={id:currentConvId,title,messages,ts:Date.now()};
-  if(idx>=0)convs[idx]=conv; else convs.unshift(conv);
+  if (idx>=0) convs[idx]=conv; else convs.unshift(conv);
   saveConvs(convs); refreshSidebar();
 }
 function refreshSidebar() {
-  const list=document.getElementById("convs-list"),empty=document.getElementById("convs-empty");
+  const list=document.getElementById("convs-list"), empty=document.getElementById("convs-empty");
   Array.from(list.querySelectorAll(".conv-item,.sec-label")).forEach(e=>e.remove());
-  if(isGuest){empty.style.display="block";empty.innerHTML=`Guest mode — chats not saved.<br><span style="color:var(--accent);cursor:pointer;text-decoration:underline" onclick="showAuth('register')">Create an account</span>`;return}
+  if (isGuest) { empty.style.display="block"; empty.innerHTML=`Guest mode — chats not saved.<br><span style="color:var(--accent);cursor:pointer;text-decoration:underline" onclick="showAuth('register')">Create an account</span>`; return; }
   const convs=getUserConvs();
-  if(!convs.length){empty.style.display="block";return}
+  if (!convs.length) { empty.style.display="block"; return; }
   empty.style.display="none";
-  const now=new Date();now.setHours(0,0,0,0);
-  const yest=new Date(now);yest.setDate(now.getDate()-1);
-  const week=new Date(now);week.setDate(now.getDate()-7);
+  const now=new Date(); now.setHours(0,0,0,0);
+  const yest=new Date(now); yest.setDate(now.getDate()-1);
+  const week=new Date(now); week.setDate(now.getDate()-7);
   let lg=null;
-  convs.forEach(conv=>{
-    const d=new Date(conv.ts);d.setHours(0,0,0,0);
+  convs.forEach(conv => {
+    const d=new Date(conv.ts); d.setHours(0,0,0,0);
     const grp=d>=now?"Today":d>=yest?"Yesterday":d>=week?"This week":"Older";
-    if(grp!==lg){const lbl=document.createElement("div");lbl.className="sec-label";lbl.textContent=grp;list.appendChild(lbl);lg=grp}
-    const item=document.createElement("div");item.className="conv-item"+(conv.id===currentConvId?" active":"");item.dataset.id=conv.id;
+    if (grp!==lg) { const lbl=document.createElement("div"); lbl.className="sec-label"; lbl.textContent=grp; list.appendChild(lbl); lg=grp; }
+    const item=document.createElement("div"); item.className="conv-item"+(conv.id===currentConvId?" active":""); item.dataset.id=conv.id;
     item.innerHTML=`<svg class="conv-icon" viewBox="0 0 16 16" fill="none"><path d="M13 3H3a1 1 0 00-1 1v7a1 1 0 001 1h3l2 2 2-2h3a1 1 0 001-1V4a1 1 0 00-1-1z" stroke="currentColor" stroke-width="1.2"/></svg><span class="conv-txt">${esc(conv.title)}</span><button class="conv-del" onclick="delConv('${conv.id}',event)"><svg viewBox="0 0 16 16" fill="none"><path d="M3 4h10M6 4V3h4v1M5 4l1 9h4l1-9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></button>`;
-    item.addEventListener("click",()=>{loadConv(conv.id);closeSidebar()});
+    item.addEventListener("click", () => { loadConv(conv.id); closeSidebar(); });
     list.appendChild(item);
   });
 }
 function loadConv(id) {
-  if(messages.length&&!isGuest&&currentConvId)persistConv();
-  const conv=getUserConvs().find(c=>c.id===id);if(!conv)return;
-  currentConvId=id;messages=conv.messages;msgCount=0;
-  const chatEl=document.getElementById("chat"),emptyEl=document.getElementById("empty-state");
-  chatEl.innerHTML="";chatEl.appendChild(emptyEl);emptyEl.style.display="none";
+  if (messages.length&&!isGuest&&currentConvId) persistConv();
+  const conv=getUserConvs().find(c=>c.id===id); if (!conv) return;
+  currentConvId=id; messages=conv.messages; msgCount=0;
+  const chatEl=document.getElementById("chat"), emptyEl=document.getElementById("empty-state");
+  chatEl.innerHTML=""; chatEl.appendChild(emptyEl); emptyEl.style.display="none";
   addDivider("Loaded conversation");
-  conv.messages.forEach(m=>renderMsg(m.role==="user"?"user":"bot",m.content));
+  conv.messages.forEach(m => renderMsg(m.role==="user"?"user":"bot", m.content));
   document.getElementById("conv-title").textContent=conv.title;
-  document.querySelectorAll(".conv-item").forEach(el=>el.classList.toggle("active",el.dataset.id===id));
+  document.querySelectorAll(".conv-item").forEach(el => el.classList.toggle("active", el.dataset.id===id));
 }
 function delConv(id,e) {
   e.stopPropagation();
   saveConvs(getUserConvs().filter(c=>c.id!==id));
-  if(currentConvId===id)newConversation(); else refreshSidebar();
+  if (currentConvId===id) newConversation(); else refreshSidebar();
   showToast("Conversation deleted");
 }
-function hideEmpty(){document.getElementById("empty-state").style.display="none"}
-function addDivider(txt){const d=document.createElement("div");d.className="day-div";d.textContent=txt||"Today";document.getElementById("chat").appendChild(d)}
+function hideEmpty() { document.getElementById("empty-state").style.display="none"; }
+function addDivider(txt) { const d=document.createElement("div"); d.className="day-div"; d.textContent=txt||"Today"; document.getElementById("chat").appendChild(d); }
 
 // ── RENDER MSG ─────────────────────────────────────────────
 function renderMsg(role, content, typing=false) {
-  const chatEl=document.getElementById("chat"),cw=document.getElementById("chat-wrap");
-  hideEmpty();if(msgCount===0)addDivider("Today");msgCount++;
+  const chatEl=document.getElementById("chat"), cw=document.getElementById("chat-wrap");
+  hideEmpty(); if (msgCount===0) addDivider("Today"); msgCount++;
   const init=currentUser?currentUser.name.charAt(0).toUpperCase():"?";
-  const group=document.createElement("div");group.className="msg-group";
-  const row=document.createElement("div");row.className="msg-row "+role;
-  const av=document.createElement("div");av.className="msg-av "+(role==="user"?"user":"bot");
-  if(role==="bot")av.innerHTML=bhAv(28);else av.textContent=init;
-  const wrap=document.createElement("div");wrap.className="msg-content";
-  const hdr=document.createElement("div");hdr.className="msg-header";
-  const sender=document.createElement("span");sender.className="msg-sender";sender.textContent=role==="user"?(currentUser?currentUser.name:"You"):"Nova AI 618";
-  const time=document.createElement("span");time.className="msg-time";time.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
-  hdr.appendChild(sender);hdr.appendChild(time);
-  const bubble=document.createElement("div");bubble.className="bubble "+(role==="user"?"user":"bot");
-  if(typing)bubble.innerHTML='<div class="typing-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
-  else if(role==="bot")bubble.innerHTML=formatMsg(content);
+  const group=document.createElement("div"); group.className="msg-group";
+  const row=document.createElement("div"); row.className="msg-row "+role;
+  const av=document.createElement("div"); av.className="msg-av "+(role==="user"?"user":"bot");
+  if (role==="bot") av.innerHTML=bhAv(28); else av.textContent=init;
+  const wrap=document.createElement("div"); wrap.className="msg-content";
+  const hdr=document.createElement("div"); hdr.className="msg-header";
+  const sender=document.createElement("span"); sender.className="msg-sender"; sender.textContent=role==="user"?(currentUser?currentUser.name:"You"):"Nova AI 618";
+  const time=document.createElement("span"); time.className="msg-time"; time.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
+  hdr.appendChild(sender); hdr.appendChild(time);
+  const bubble=document.createElement("div"); bubble.className="bubble "+(role==="user"?"user":"bot");
+  if (typing) bubble.innerHTML='<div class="typing-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  else if (role==="bot") bubble.innerHTML=formatMsg(content);
   else bubble.textContent=content;
-  wrap.appendChild(hdr);wrap.appendChild(bubble);
-  if(role==="user"){row.appendChild(wrap);row.appendChild(av)}else{row.appendChild(av);row.appendChild(wrap)}
-  group.appendChild(row);chatEl.appendChild(group);cw.scrollTop=cw.scrollHeight;
-  return {bubble,wrap,group};
+  wrap.appendChild(hdr); wrap.appendChild(bubble);
+  if (role==="user") { row.appendChild(wrap); row.appendChild(av); } else { row.appendChild(av); row.appendChild(wrap); }
+  group.appendChild(row); chatEl.appendChild(group); cw.scrollTop=cw.scrollHeight;
+  return {bubble, wrap, group};
 }
 
 function addActions(wrap, text) {
-  const actions=document.createElement("div");actions.className="msg-actions";
-  const copyBtn=document.createElement("button");copyBtn.className="act-btn";
+  const actions=document.createElement("div"); actions.className="msg-actions";
+  const copyBtn=document.createElement("button"); copyBtn.className="act-btn";
   copyBtn.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Copy`;
-  copyBtn.onclick=()=>{navigator.clipboard.writeText(text).then(()=>{copyBtn.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Copied!`;setTimeout(()=>{copyBtn.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Copy`},1500)})};
-  const spkBtn=document.createElement("button");spkBtn.className="act-btn";
+  copyBtn.onclick=()=>{ navigator.clipboard.writeText(text).then(()=>{ copyBtn.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Copied!`; setTimeout(()=>{ copyBtn.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Copy`; },1500); }); };
+  const spkBtn=document.createElement("button"); spkBtn.className="act-btn";
   const liIcon=`<svg viewBox="0 0 16 16" fill="none"><path d="M3 6H1v4h2l4 3V3L3 6z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M11 5a4 4 0 010 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Listen`;
   spkBtn.innerHTML=liIcon;
   spkBtn.onclick=()=>{
-    if(synth&&synth.speaking){synth.cancel();spkBtn.innerHTML=liIcon;return}
-    unlockTTS();spkBtn.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><rect x="4" y="4" width="3" height="8" rx="1" fill="currentColor"/><rect x="9" y="4" width="3" height="8" rx="1" fill="currentColor"/></svg> Stop`;
-    const dl=detectLang(text);const en=LANG_MAP[dl];
-    speakText(text,en?en.l:"en-US",()=>{spkBtn.innerHTML=liIcon});
+    if (synth&&synth.speaking) { synth.cancel(); spkBtn.innerHTML=liIcon; return; }
+    unlockTTS(); spkBtn.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><rect x="4" y="4" width="3" height="8" rx="1" fill="currentColor"/><rect x="9" y="4" width="3" height="8" rx="1" fill="currentColor"/></svg> Stop`;
+    const dl=detectLang(text); const en=LANG_MAP[dl];
+    speakText(text, en?en.l:"en-US", ()=>{ spkBtn.innerHTML=liIcon; });
   };
-  actions.appendChild(copyBtn);actions.appendChild(spkBtn);wrap.appendChild(actions);
+  actions.appendChild(copyBtn); actions.appendChild(spkBtn); wrap.appendChild(actions);
 }
 
 // ── IMAGE GEN ──────────────────────────────────────────────
 async function generateImage(prompt, editBubble=null, editWrap=null) {
-  let bubble,wrap;
-  if(editBubble&&editWrap){bubble=editBubble;wrap=editWrap;bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>Modifying image...</div>'}
-  else{
-    renderMsg("user",prompt);messages.push({role:"user",content:prompt});
-    if(messages.length===1)document.getElementById("conv-title").textContent=prompt.length>45?prompt.slice(0,45)+"…":prompt;
-    const chatEl=document.getElementById("chat"),cw=document.getElementById("chat-wrap");
-    hideEmpty();if(msgCount===0)addDivider("Today");msgCount++;
-    const group=document.createElement("div");group.className="msg-group";
-    const row=document.createElement("div");row.className="msg-row bot";
-    const av=document.createElement("div");av.className="msg-av bot";av.innerHTML=bhAv(28);
-    wrap=document.createElement("div");wrap.className="msg-content";
-    const hdr=document.createElement("div");hdr.className="msg-header";
-    const sender=document.createElement("span");sender.className="msg-sender";sender.textContent="Nova AI 618";
-    const time=document.createElement("span");time.className="msg-time";time.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
-    hdr.appendChild(sender);hdr.appendChild(time);
-    bubble=document.createElement("div");bubble.className="bubble bot";
+  let bubble, wrap;
+  if (editBubble&&editWrap) {
+    bubble=editBubble; wrap=editWrap;
+    bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>Modifying image...</div>';
+  } else {
+    renderMsg("user",prompt); messages.push({role:"user",content:prompt});
+    if (messages.length===1) document.getElementById("conv-title").textContent=prompt.length>45?prompt.slice(0,45)+"…":prompt;
+    const chatEl=document.getElementById("chat"), cw=document.getElementById("chat-wrap");
+    hideEmpty(); if (msgCount===0) addDivider("Today"); msgCount++;
+    const group=document.createElement("div"); group.className="msg-group";
+    const row=document.createElement("div"); row.className="msg-row bot";
+    const av=document.createElement("div"); av.className="msg-av bot"; av.innerHTML=bhAv(28);
+    wrap=document.createElement("div"); wrap.className="msg-content";
+    const hdr=document.createElement("div"); hdr.className="msg-header";
+    const sender=document.createElement("span"); sender.className="msg-sender"; sender.textContent="Nova AI 618";
+    const time=document.createElement("span"); time.className="msg-time"; time.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
+    hdr.appendChild(sender); hdr.appendChild(time);
+    bubble=document.createElement("div"); bubble.className="bubble bot";
     bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>Generating image (5–15s)...</div>';
-    wrap.appendChild(hdr);wrap.appendChild(bubble);row.appendChild(av);row.appendChild(wrap);group.appendChild(row);chatEl.appendChild(group);cw.scrollTop=cw.scrollHeight;
+    wrap.appendChild(hdr); wrap.appendChild(bubble); row.appendChild(av); row.appendChild(wrap); group.appendChild(row); chatEl.appendChild(group); cw.scrollTop=cw.scrollHeight;
   }
-  try{
+  try {
     const r=await fetch(IMG_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt})});
     const d=await r.json();
-    if(d.image){
+    if (d.image) {
       bubble.innerHTML="";
-      const img=document.createElement("img");img.src=d.image;img.className="generated-img";img.alt=prompt;bubble.appendChild(img);
-      const eb=document.createElement("div");eb.className="img-edit-bar";
-      const ei=document.createElement("input");ei.type="text";ei.className="img-edit-input";ei.placeholder="Modify: darker, add stars, make it warmer...";
-      const eBtn=document.createElement("button");eBtn.className="img-edit-btn";eBtn.textContent="✏️ Modify";
-      eBtn.onclick=async()=>{const np=ei.value.trim();if(!np)return;eBtn.disabled=true;eBtn.textContent="⏳...";await generateImage(prompt+", "+np,bubble,wrap)};
-      eb.appendChild(ei);eb.appendChild(eBtn);bubble.appendChild(eb);
-      const dlB=document.createElement("button");dlB.className="act-btn";dlB.style.marginTop="7px";
+      const img=document.createElement("img"); img.src=d.image; img.className="generated-img"; img.alt=prompt; bubble.appendChild(img);
+      const eb=document.createElement("div"); eb.className="img-edit-bar";
+      const ei=document.createElement("input"); ei.type="text"; ei.className="img-edit-input"; ei.placeholder="Modify: darker, add stars, make it warmer...";
+      const eBtn=document.createElement("button"); eBtn.className="img-edit-btn"; eBtn.textContent="✏️ Modify";
+      eBtn.onclick=async()=>{ const np=ei.value.trim(); if (!np) return; eBtn.disabled=true; eBtn.textContent="⏳..."; await generateImage(prompt+", "+np,bubble,wrap); };
+      eb.appendChild(ei); eb.appendChild(eBtn); bubble.appendChild(eb);
+      const dlB=document.createElement("button"); dlB.className="act-btn"; dlB.style.marginTop="7px";
       dlB.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><path d="M8 3v8M5 8l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Download`;
-      dlB.onclick=()=>{const a=document.createElement("a");a.href=d.image;a.download="nova-618-image.jpg";a.click()};
+      dlB.onclick=()=>{ const a=document.createElement("a"); a.href=d.image; a.download="nova-618-image.jpg"; a.click(); };
       bubble.appendChild(dlB);
       messages.push({role:"assistant",content:"[Image generated: "+prompt+"]"});
-      if(!isGuest)persistConv();
-    }else{bubble.innerHTML="";bubble.textContent="⚠️ "+(d.error||"Image generation failed.");bubble.style.color="var(--red)"}
-  }catch{bubble.innerHTML="";bubble.textContent="⚠️ Server error during generation.";bubble.style.color="var(--red)"}
+      if (!isGuest) persistConv();
+    } else {
+      bubble.innerHTML=""; bubble.textContent="⚠️ "+(d.error||"Image generation failed."); bubble.style.color="var(--red)";
+    }
+  } catch { bubble.innerHTML=""; bubble.textContent="⚠️ Server error during generation."; bubble.style.color="var(--red)"; }
   document.getElementById("chat-wrap").scrollTop=999999;
 }
 
 // ── ANALYZE PHOTO ──────────────────────────────────────────
-function handlePhotoUpload(e){const file=e.target.files[0];if(!file)return;if(!file.type.startsWith("image/")){showToast("Please select an image file.");return}const reader=new FileReader();reader.onload=ev=>{pendingPhoto={dataUrl:ev.target.result,name:file.name};renderPhotoPreview()};reader.readAsDataURL(file);e.target.value=""}
-function renderPhotoPreview(){
+function handlePhotoUpload(e) {
+  const file=e.target.files[0]; if (!file) return;
+  if (!file.type.startsWith("image/")) { showToast("Please select an image file."); return; }
+  const reader=new FileReader();
+  reader.onload=ev=>{ pendingPhoto={dataUrl:ev.target.result,name:file.name}; renderPhotoPreview(); };
+  reader.readAsDataURL(file); e.target.value="";
+}
+function renderPhotoPreview() {
   const z=document.getElementById("photo-preview-zone");
-  if(!pendingPhoto){z.innerHTML="";document.getElementById("photo-tool-btn").classList.remove("has-photo");document.getElementById("input-box").classList.remove("photo-active");return}
+  if (!pendingPhoto) { z.innerHTML=""; document.getElementById("photo-tool-btn").classList.remove("has-photo"); document.getElementById("input-box").classList.remove("photo-active"); return; }
   document.getElementById("photo-tool-btn").classList.add("has-photo");
   document.getElementById("input-box").classList.add("photo-active");
   z.innerHTML=`<div class="photo-preview-wrap"><img class="photo-preview-thumb" src="${pendingPhoto.dataUrl}" alt="preview"><div class="photo-preview-info"><div class="photo-preview-name">${esc(pendingPhoto.name)}</div><div class="photo-preview-sub">📸 Ready to analyze — add a question or send</div></div><div class="photo-remove-btn" onclick="clearPhoto()"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>`;
 }
-function clearPhoto(){pendingPhoto=null;renderPhotoPreview()}
+function clearPhoto() { pendingPhoto=null; renderPhotoPreview(); }
 
 async function analyzePhoto(photoDataUrl, question) {
-  const displayQ = question || "Analyze this image in detail.";
-  renderMsg("user", displayQ);
-  const chatEl=document.getElementById("chat"),cw=document.getElementById("chat-wrap");
-  hideEmpty();if(msgCount===0)addDivider("Today");msgCount++;
-  const group=document.createElement("div");group.className="msg-group";
-  const row=document.createElement("div");row.className="msg-row bot";
-  const av=document.createElement("div");av.className="msg-av bot";av.innerHTML=bhAv(28);
-  const wrap=document.createElement("div");wrap.className="msg-content";
-  const hdr=document.createElement("div");hdr.className="msg-header";
-  const sender=document.createElement("span");sender.className="msg-sender";sender.textContent="Nova AI 618";
-  const time=document.createElement("span");time.className="msg-time";time.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
-  hdr.appendChild(sender);hdr.appendChild(time);
-  const bubble=document.createElement("div");bubble.className="bubble bot";
+  const displayQ=question||"Analyze this image in detail.";
+  renderMsg("user",displayQ);
+  const chatEl=document.getElementById("chat"), cw=document.getElementById("chat-wrap");
+  hideEmpty(); if (msgCount===0) addDivider("Today"); msgCount++;
+  const group=document.createElement("div"); group.className="msg-group";
+  const row=document.createElement("div"); row.className="msg-row bot";
+  const av=document.createElement("div"); av.className="msg-av bot"; av.innerHTML=bhAv(28);
+  const wrap=document.createElement("div"); wrap.className="msg-content";
+  const hdr=document.createElement("div"); hdr.className="msg-header";
+  const sender=document.createElement("span"); sender.className="msg-sender"; sender.textContent="Nova AI 618";
+  const time=document.createElement("span"); time.className="msg-time"; time.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
+  hdr.appendChild(sender); hdr.appendChild(time);
+  const bubble=document.createElement("div"); bubble.className="bubble bot";
   bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>Analyzing your photo...</div>';
-  wrap.appendChild(hdr);wrap.appendChild(bubble);row.appendChild(av);row.appendChild(wrap);group.appendChild(row);chatEl.appendChild(group);cw.scrollTop=cw.scrollHeight;
-  try{
+  wrap.appendChild(hdr); wrap.appendChild(bubble); row.appendChild(av); row.appendChild(wrap); group.appendChild(row); chatEl.appendChild(group); cw.scrollTop=cw.scrollHeight;
+  try {
     const r=await fetch(ANALYZE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({image:photoDataUrl,question:question||"Analyze this image in detail. Describe what you see, key elements, colors, context, and anything relevant."})});
     const d=await r.json();
     const reply=d.choices[0].message.content;
-    bubble.innerHTML=formatMsg(reply);addActions(wrap,reply);
-    if(messages.length===0)document.getElementById("conv-title").textContent=displayQ.length>45?displayQ.slice(0,45)+"…":displayQ;
-    messages.push({role:"user",content:displayQ});messages.push({role:"assistant",content:reply});
-    if(!isGuest)persistConv();
-  }catch{bubble.innerHTML="";bubble.textContent="⚠️ Could not analyze the photo.";bubble.style.color="var(--red)"}
+    bubble.innerHTML=formatMsg(reply); addActions(wrap,reply);
+    if (messages.length===0) document.getElementById("conv-title").textContent=displayQ.length>45?displayQ.slice(0,45)+"…":displayQ;
+    messages.push({role:"user",content:displayQ}); messages.push({role:"assistant",content:reply});
+    if (!isGuest) persistConv();
+  } catch { bubble.innerHTML=""; bubble.textContent="⚠️ Could not analyze the photo."; bubble.style.color="var(--red)"; }
   cw.scrollTop=999999;
 }
 
 // ── SEND MESSAGE ───────────────────────────────────────────
 async function sendMessage() {
-  const promptEl=document.getElementById("prompt"),sendBtn=document.getElementById("send-btn");
+  const promptEl=document.getElementById("prompt"), sendBtn=document.getElementById("send-btn");
   const text=promptEl.value.trim();
-  if(!text&&!pendingPhoto)return;
-  if(sendBtn.disabled)return;
-  promptEl.value="";autoResize();updateCount();sendBtn.disabled=true;
+  if (!text&&!pendingPhoto) return;
+  if (sendBtn.disabled) return;
+  promptEl.value=""; autoResize(); updateCount(); sendBtn.disabled=true;
 
-  // Photo analysis
-  if(pendingPhoto){const photo=pendingPhoto;clearPhoto();await analyzePhoto(photo.dataUrl,text||undefined);sendBtn.disabled=false;promptEl.focus();return}
-  // Image generation
-  if(isImageReq(text)){await generateImage(text);sendBtn.disabled=false;return}
-  // Set title
-  if(messages.length===0)document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"…":text;
+  if (pendingPhoto) { const photo=pendingPhoto; clearPhoto(); await analyzePhoto(photo.dataUrl,text||undefined); sendBtn.disabled=false; promptEl.focus(); return; }
+  if (isImageReq(text)) { await generateImage(text); sendBtn.disabled=false; return; }
+  if (messages.length===0) document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"…":text;
 
-  // Build messages with system prompt
-  const msgsWithSystem = [
-    {role:"system", content: SYSTEM_PROMPT},
-    ...messages,
-    {role:"user", content: text}
-  ];
+  const msgsWithSystem=[{role:"system",content:SYSTEM_PROMPT},...messages,{role:"user",content:text}];
 
-  // Web search mode
-  if(searchModeActive){
+  if (searchModeActive) {
     renderMsg("user",text);
-    const chatEl=document.getElementById("chat"),cw=document.getElementById("chat-wrap");
-    hideEmpty();if(msgCount===0)addDivider("Today");msgCount++;
-    const group=document.createElement("div");group.className="msg-group";
-    const row=document.createElement("div");row.className="msg-row bot";
-    const av=document.createElement("div");av.className="msg-av bot";av.innerHTML=bhAv(28);
-    const wrap=document.createElement("div");wrap.className="msg-content";
-    const hdr=document.createElement("div");hdr.className="msg-header";
-    const sender=document.createElement("span");sender.className="msg-sender";sender.textContent="Nova AI 618";
-    const t2=document.createElement("span");t2.className="msg-time";t2.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
-    hdr.appendChild(sender);hdr.appendChild(t2);
-    const bubble=document.createElement("div");bubble.className="bubble bot";
+    const chatEl=document.getElementById("chat"), cw=document.getElementById("chat-wrap");
+    hideEmpty(); if (msgCount===0) addDivider("Today"); msgCount++;
+    const group=document.createElement("div"); group.className="msg-group";
+    const row=document.createElement("div"); row.className="msg-row bot";
+    const av=document.createElement("div"); av.className="msg-av bot"; av.innerHTML=bhAv(28);
+    const wrap=document.createElement("div"); wrap.className="msg-content";
+    const hdr=document.createElement("div"); hdr.className="msg-header";
+    const sender=document.createElement("span"); sender.className="msg-sender"; sender.textContent="Nova AI 618";
+    const t2=document.createElement("span"); t2.className="msg-time"; t2.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
+    hdr.appendChild(sender); hdr.appendChild(t2);
+    const bubble=document.createElement("div"); bubble.className="bubble bot";
     bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>🌐 Searching the web...</div>';
-    wrap.appendChild(hdr);wrap.appendChild(bubble);row.appendChild(av);row.appendChild(wrap);group.appendChild(row);chatEl.appendChild(group);cw.scrollTop=cw.scrollHeight;
-    try{
+    wrap.appendChild(hdr); wrap.appendChild(bubble); row.appendChild(av); row.appendChild(wrap); group.appendChild(row); chatEl.appendChild(group); cw.scrollTop=cw.scrollHeight;
+    try {
       const sr=await fetch(SEARCH_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:text})});
       const sd=await sr.json();
-      if(sd.error)throw new Error(sd.error);
+      if (sd.error) throw new Error(sd.error);
       const webCtx=`You have access to real-time web search results. Use them to answer the user naturally and conversationally.\n\nSearch results for "${text}":\n\n${sd.context}\n\nAnswer naturally: ${text}`;
       const searchMsgs=[{role:"system",content:SYSTEM_PROMPT},...messages,{role:"user",content:webCtx}];
       const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:searchMsgs,model:currentModel,temperature:.3})});
       const d=await r.json();
-      if(d.rate_limited){bubble.innerHTML="";bubble.textContent="⚠️ Daily limit reached. Switch model to continue.";bubble.style.color="var(--orange)";showRateLimitModal();sendBtn.disabled=false;return}
+      if (d.rate_limited) { bubble.innerHTML=""; bubble.textContent="⚠️ Daily limit reached. Switch model to continue."; bubble.style.color="var(--orange)"; showRateLimitModal(); sendBtn.disabled=false; return; }
       const reply=d.choices[0].message.content;
       bubble.innerHTML="";
-      const badge=document.createElement("div");badge.className="search-badge";badge.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Web search`;
+      const badge=document.createElement("div"); badge.className="search-badge";
+      badge.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Web search`;
       bubble.appendChild(badge);
-      const content=document.createElement("div");content.innerHTML=formatMsg(reply);bubble.appendChild(content);
-      if(sd.sources&&sd.sources.length){
-        const sw=document.createElement("div");sw.className="sources-wrap";
-        sd.sources.slice(0,5).forEach(s=>{const chip=document.createElement("a");chip.className="source-chip";chip.href=s.url;chip.target="_blank";chip.rel="noopener noreferrer";chip.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><path d="M10 3h3v3M13 3l-6 6M6 4H3v9h9v-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>${esc(s.title.length>35?s.title.slice(0,35)+"…":s.title)}`;sw.appendChild(chip)});
+      const content=document.createElement("div"); content.innerHTML=formatMsg(reply); bubble.appendChild(content);
+      if (sd.sources&&sd.sources.length) {
+        const sw=document.createElement("div"); sw.className="sources-wrap";
+        sd.sources.slice(0,5).forEach(s=>{ const chip=document.createElement("a"); chip.className="source-chip"; chip.href=s.url; chip.target="_blank"; chip.rel="noopener noreferrer"; chip.innerHTML=`<svg viewBox="0 0 16 16" fill="none"><path d="M10 3h3v3M13 3l-6 6M6 4H3v9h9v-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>${esc(s.title.length>35?s.title.slice(0,35)+"…":s.title)}`; sw.appendChild(chip); });
         bubble.appendChild(sw);
       }
       addActions(wrap,reply);
-      messages.push({role:"user",content:text});messages.push({role:"assistant",content:reply});
-      if(!isGuest)persistConv();
-    }catch(err){bubble.innerHTML="";bubble.textContent="⚠️ Search error: "+err.message;bubble.style.color="var(--red)"}
-    sendBtn.disabled=false;promptEl.focus();document.getElementById("chat-wrap").scrollTop=999999;
+      messages.push({role:"user",content:text}); messages.push({role:"assistant",content:reply});
+      if (!isGuest) persistConv();
+    } catch(err) { bubble.innerHTML=""; bubble.textContent="⚠️ Search error: "+err.message; bubble.style.color="var(--red)"; }
+    sendBtn.disabled=false; promptEl.focus(); document.getElementById("chat-wrap").scrollTop=999999;
     return;
   }
 
-  // Normal chat
   messages.push({role:"user",content:text});
   renderMsg("user",text);
-  const{bubble,wrap}=renderMsg("bot","",true);
-  try{
+  const {bubble,wrap}=renderMsg("bot","",true);
+  try {
     const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgsWithSystem,model:currentModel})});
     const d=await r.json();
-    if(d.rate_limited){
+    if (d.rate_limited) {
       bubble.innerHTML=`<div style="display:flex;align-items:center;gap:9px;color:var(--orange);font-size:13px;padding:4px 0"><span style="font-size:18px">⚠️</span><div><strong>Daily limit reached for GPT-OSS 120B.</strong><br><span style="color:var(--text2);font-size:12px">Switch to another model to continue.</span></div></div>`;
       setTimeout(()=>showRateLimitModal(),300);
-      sendBtn.disabled=false;return;
+      sendBtn.disabled=false; return;
     }
     const reply=d.choices[0].message.content;
     messages.push({role:"assistant",content:reply});
     bubble.innerHTML="";
-    // Typing animation
     let i=0; const step=Math.max(1,Math.ceil(reply.length/250));
-    function type(){if(i<reply.length){i=Math.min(i+step,reply.length);bubble.innerHTML=formatMsg(reply.slice(0,i));document.getElementById("chat-wrap").scrollTop=999999;if(i<reply.length)requestAnimationFrame(()=>setTimeout(type,10));else done()}else done()}
-    function done(){addActions(wrap,reply);if(!isGuest)persistConv()}
+    function type() {
+      if (i<reply.length) {
+        i=Math.min(i+step,reply.length);
+        bubble.innerHTML=formatMsg(reply.slice(0,i));
+        document.getElementById("chat-wrap").scrollTop=999999;
+        if (i<reply.length) requestAnimationFrame(()=>setTimeout(type,10)); else done();
+      } else done();
+    }
+    function done() { addActions(wrap,reply); if (!isGuest) persistConv(); }
     type();
-  }catch{bubble.innerHTML="";bubble.textContent="⚠️ Could not reach the server. Please try again.";bubble.style.color="var(--red)"}
-  sendBtn.disabled=false;promptEl.focus();
+  } catch { bubble.innerHTML=""; bubble.textContent="⚠️ Could not reach the server. Please try again."; bubble.style.color="var(--red)"; }
+  sendBtn.disabled=false; promptEl.focus();
 }
 
 // ══════════════════════════════════════════════════════════
+// VOICE ENGINE
 // ══════════════════════════════════════════════════════════
-// VOICE ENGINE — Ultra-fluid, iOS/Android/Desktop
-// Architecture: utterance-queue, iOS keepalive, auto-detect lang
-// ══════════════════════════════════════════════════════════
-const synth = window.speechSynthesis;
+const synth = window.speechSynthesis || null;
 const _UA = navigator.userAgent;
 const isIOS = /iPad|iPhone|iPod/.test(_UA) && !window.MSStream;
 const isAndroid = /Android/i.test(_UA);
@@ -1347,354 +1347,292 @@ function detectLang(text) {
     {l:"pt",w:["eu","obrigado","para","está","como","não","muito","também","uma","isso","pelo","você","mas"]},
     {l:"en",w:["the","is","are","have","what","how","hello","thank","please","this","that","with","for","and","but","you","your","can","not"]}
   ];
-  let best=null,bs=0;
-  for(const{l,w}of checks){
+  let best=null, bs=0;
+  for (const {l,w} of checks) {
     let s=0;
-    for(const ww of w)if(t.includes(" "+ww+" ")||t.startsWith(ww+" ")||t.endsWith(" "+ww)||t===ww)s++;
-    if(s>bs){bs=s;best=l;}
+    for (const ww of w) if (t.includes(" "+ww+" ")||t.startsWith(ww+" ")||t.endsWith(" "+ww)||t===ww) s++;
+    if (s>bs) { bs=s; best=l; }
   }
-  return bs>=1?best:"en";
+  return bs>=1 ? best : "en";
 }
 
-// ── VOICE LOADING ──────────────────────────────────────────
-function loadVoices(){
-  if(!synth)return[];
-  voiceVoices=synth.getVoices();
+function loadVoices() {
+  if (!synth) return [];
+  voiceVoices = synth.getVoices();
   return voiceVoices;
 }
 
-// iOS loads voices async — poll until ready
-function ensureVoices(){
-  return new Promise(res=>{
-    const v=synth?synth.getVoices():[];
-    if(v&&v.length>0){voiceVoices=v;res(v);return;}
+function ensureVoices() {
+  return new Promise(res => {
+    if (!synth) { res([]); return; }
+    const v=synth.getVoices();
+    if (v&&v.length>0) { voiceVoices=v; res(v); return; }
     let n=0;
-    const t=setInterval(()=>{
-      const vv=synth?synth.getVoices():[];
-      if(vv&&vv.length>0){voiceVoices=vv;clearInterval(t);res(vv);}
-      if(++n>40){clearInterval(t);res([]);}
-    },80);
-    if(synth)synth.addEventListener("voiceschanged",()=>{
-      voiceVoices=synth.getVoices();clearInterval(t);res(voiceVoices);
-    },{once:true});
+    const t=setInterval(() => {
+      const vv=synth.getVoices();
+      if (vv&&vv.length>0) { voiceVoices=vv; clearInterval(t); res(vv); }
+      if (++n>40) { clearInterval(t); res([]); }
+    }, 80);
+    synth.addEventListener("voiceschanged", () => { voiceVoices=synth.getVoices(); clearInterval(t); res(voiceVoices); }, {once:true});
   });
 }
 
-function getBestVoice(bcp47){
-  if(!bcp47)bcp47="en-US";
+function getBestVoice(bcp47) {
+  if (!bcp47) bcp47="en-US";
   const voices=voiceVoices.length?voiceVoices:(synth?synth.getVoices():[]);
-  if(!voices||!voices.length)return null;
+  if (!voices||!voices.length) return null;
   const lang=bcp47.slice(0,2).toLowerCase();
-  const scored=voices.map(v=>{
-    const n=v.name.toLowerCase(),l=v.lang.toLowerCase();
-    if(!l.startsWith(lang))return{v,s:-999};
+  const scored=voices.map(v => {
+    const n=v.name.toLowerCase(), l=v.lang.toLowerCase();
+    if (!l.startsWith(lang)) return {v,s:-999};
     let s=0;
-    if(l===bcp47.toLowerCase())s+=50;
-    // iOS premium voices
-    if(n.includes("enhanced"))s+=120;
-    if(n.includes("premium"))s+=115;
-    if(n.includes("siri"))s+=110;
-    // Named iOS voices (high quality)
-    if(n.includes("samantha"))s+=108;  // EN
-    if(n.includes("karen"))s+=106;     // EN-AU
-    if(n.includes("daniel"))s+=106;    // EN-GB
-    if(n.includes("thomas"))s+=106;    // FR
-    if(n.includes("aurelie"))s+=106;   // FR
-    if(n.includes("monica"))s+=106;    // ES
-    if(n.includes("anna"))s+=106;      // DE
-    // Cross-platform
-    if(n.includes("neural"))s+=95;
-    if(n.includes("natural"))s+=90;
-    if(n.includes("wavenet"))s+=88;
-    if(n.includes("google"))s+=80;
-    if(n.includes("microsoft"))s+=75;
-    // Penalize bad voices
-    if(n.includes("compact"))s-=100;
-    if(n.includes("mono"))s-=80;
-    if(n.includes("junior"))s-=60;
-    return{v,s};
+    if (l===bcp47.toLowerCase()) s+=50;
+    if (n.includes("enhanced")) s+=120;
+    if (n.includes("premium")) s+=115;
+    if (n.includes("siri")) s+=110;
+    if (n.includes("samantha")) s+=108;
+    if (n.includes("karen")) s+=106;
+    if (n.includes("daniel")) s+=106;
+    if (n.includes("thomas")) s+=106;
+    if (n.includes("aurelie")) s+=106;
+    if (n.includes("monica")) s+=106;
+    if (n.includes("anna")) s+=106;
+    if (n.includes("neural")) s+=95;
+    if (n.includes("natural")) s+=90;
+    if (n.includes("wavenet")) s+=88;
+    if (n.includes("google")) s+=80;
+    if (n.includes("microsoft")) s+=75;
+    if (n.includes("compact")) s-=100;
+    if (n.includes("mono")) s-=80;
+    if (n.includes("junior")) s-=60;
+    return {v,s};
   }).filter(x=>x.s>-900).sort((a,b)=>b.s-a.s);
-  return scored.length?scored[0].v:null;
+  return scored.length ? scored[0].v : null;
 }
 
-// MUST be called on user interaction (tap/click) for iOS
-function unlockTTS(){
-  if(ttsUnlocked||!synth)return;
-  try{
+function unlockTTS() {
+  if (ttsUnlocked||!synth) return;
+  try {
     const u=new SpeechSynthesisUtterance(" ");
-    u.volume=0;u.rate=16;u.lang="en-US";
+    u.volume=0; u.rate=16; u.lang="en-US";
     synth.speak(u);
-  }catch(e){}
+  } catch(e) {}
   ttsUnlocked=true;
 }
 
-// iOS synth freezes after ~15s — pause/resume prevents it
-function startKeepAlive(){
+function startKeepAlive() {
   stopKeepAlive();
-  if(!isMobile)return;
-  _keepAliveTimer=setInterval(()=>{
-    if(synth&&synth.speaking&&!synth.paused){
+  if (!isMobile) return;
+  _keepAliveTimer=setInterval(() => {
+    if (synth&&synth.speaking&&!synth.paused) {
       synth.pause();
-      setTimeout(()=>{try{if(synth.paused)synth.resume();}catch(e){}},25);
+      setTimeout(() => { try { if (synth.paused) synth.resume(); } catch(e) {} }, 25);
     }
-  },7000);
+  }, 7000);
 }
-function stopKeepAlive(){
-  if(_keepAliveTimer){clearInterval(_keepAliveTimer);_keepAliveTimer=null;}
+function stopKeepAlive() {
+  if (_keepAliveTimer) { clearInterval(_keepAliveTimer); _keepAliveTimer=null; }
 }
 
-// ── TEXT CLEANING & CHUNKING ───────────────────────────────
-function cleanForSpeech(text){
+// FIX #4 : regex nettoyée avec \n correctement escapé (c'était le bug principal du freeze)
+function cleanForSpeech(text) {
   return text
-    .replace(/```[\s\S]*?```/g," ")
-    .replace(/`[^`
-]+`/g," ")
-    .replace(/\*\*([^*]+)\*\*/g,"$1")
-    .replace(/\*([^*]+)\*/g,"$1")
-    .replace(/#{1,6}\s+/g,"")
-    .replace(/\[([^\]]+)\]\([^)]+\)/g,"$1")
-    .replace(/https?:\/\/\S+/g,"")
-    .replace(/[-•*]\s+/g,"")
-    .replace(/
-{2,}/g,". ")
-    .replace(/
-/g," ")
-    .replace(/[*_~`#>|]/g,"")
-    .replace(/\s{2,}/g," ")
-    .replace(/\.\s*\./g,".")
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`[^`\n]+`/g, " ")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/\*([^*]+)\*/g, "$1")
+    .replace(/#{1,6}\s+/g, "")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/https?:\/\/\S+/g, "")
+    .replace(/[-•*]\s+/g, "")
+    .replace(/\n{2,}/g, ". ")   // FIX : était un vrai newline dans la regex
+    .replace(/\n/g, " ")         // FIX : idem
+    .replace(/[*_~`#>|]/g, "")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\.\s*\./g, ".")
     .trim();
 }
 
-function splitIntoChunks(text){
+function splitIntoChunks(text) {
   const clean=cleanForSpeech(text);
-  if(!clean)return[];
-  // iOS: very short chunks prevent freezing & sound more natural
+  if (!clean) return [];
   const maxLen=isIOS?80:isMobile?100:170;
-  // Split at sentence boundaries
   const sents=clean.match(/[^.!?;]+[.!?;]+(?:\s|$)|[^.!?;]+$/g)||[clean];
-  const chunks=[];
-  let buf="";
-  for(const s of sents){
-    const tr=s.trim();if(!tr)continue;
+  const chunks=[]; let buf="";
+  for (const s of sents) {
+    const tr=s.trim(); if (!tr) continue;
     const cand=buf?(buf+" "+tr):tr;
-    if(cand.length<=maxLen){
-      buf=cand;
-    }else{
-      if(buf)chunks.push(buf);
-      if(tr.length>maxLen){
-        // Split at comma for very long sentences
-        const parts=tr.split(/,\s*/);
-        let sub="";
-        for(const p of parts){
+    if (cand.length<=maxLen) { buf=cand; }
+    else {
+      if (buf) chunks.push(buf);
+      if (tr.length>maxLen) {
+        const parts=tr.split(/,\s*/); let sub="";
+        for (const p of parts) {
           const c=sub?(sub+", "+p):p;
-          if(c.length<=maxLen){sub=c;}
-          else{if(sub)chunks.push(sub);sub=p.length>maxLen?p.slice(0,maxLen):p;}
+          if (c.length<=maxLen) { sub=c; }
+          else { if (sub) chunks.push(sub); sub=p.length>maxLen?p.slice(0,maxLen):p; }
         }
         buf=sub;
-      }else{buf=tr;}
+      } else { buf=tr; }
     }
   }
-  if(buf.trim())chunks.push(buf.trim());
+  if (buf.trim()) chunks.push(buf.trim());
   return chunks.filter(c=>c.length>0);
 }
 
-// ── CORE SPEAK FUNCTION ────────────────────────────────────
-async function speakText(text,bcp,onDone){
+async function speakText(text, bcp, onDone) {
   voiceAborted=false;
-  // Cancel previous speech
-  if(synth&&(synth.speaking||synth.pending)){
-    synth.cancel();
-    await new Promise(r=>setTimeout(r,isIOS?200:60));
-  }
-  if(voiceAborted){if(onDone)onDone();return;}
-  // Ensure voices loaded (critical for iOS)
+  if (synth&&(synth.speaking||synth.pending)) { synth.cancel(); await new Promise(r=>setTimeout(r,isIOS?200:60)); }
+  if (voiceAborted) { if (onDone) onDone(); return; }
   await ensureVoices();
   const chunks=splitIntoChunks(text);
-  if(!chunks.length){setVoiceState("idle");if(onDone)onDone();return;}
+  if (!chunks.length) { setVoiceState("idle"); if (onDone) onDone(); return; }
   const langCode=bcp||"en-US";
   const voice=getBestVoice(langCode);
   setVoiceState("speaking");
   startKeepAlive();
-  await _playQueue(chunks,langCode,voice);
+  await _playQueue(chunks, langCode, voice);
   stopKeepAlive();
-  if(!voiceAborted){
+  if (!voiceAborted) {
     setVoiceState("idle");
-    const lv=document.getElementById("vo-live");
-    if(lv)lv.textContent="";
+    const lv=document.getElementById("vo-live"); if (lv) lv.textContent="";
   }
-  if(onDone)onDone();
+  if (onDone) onDone();
 }
 
-// Plays utterances one-by-one, waiting for each to finish
-function _playQueue(chunks,lang,voice){
-  return new Promise(resolve=>{
-    if(!synth||voiceAborted){resolve();return;}
+function _playQueue(chunks, lang, voice) {
+  return new Promise(resolve => {
+    if (!synth||voiceAborted) { resolve(); return; }
     let i=0;
-    function next(){
-      if(voiceAborted||i>=chunks.length){resolve();return;}
+    function next() {
+      if (voiceAborted||i>=chunks.length) { resolve(); return; }
       const chunk=chunks[i++];
       const u=new SpeechSynthesisUtterance(chunk);
-      u.lang=lang;
-      u.volume=1.0;
-      // Tuned per platform for maximum naturalness
-      if(isIOS){u.rate=0.87;u.pitch=1.07;}
-      else if(isAndroid){u.rate=0.90;u.pitch=1.02;}
-      else{u.rate=0.92;u.pitch=1.0;}
-      if(voice)u.voice=voice;
-      // Live subtitle
+      u.lang=lang; u.volume=1.0;
+      if (isIOS) { u.rate=0.87; u.pitch=1.07; }
+      else if (isAndroid) { u.rate=0.90; u.pitch=1.02; }
+      else { u.rate=0.92; u.pitch=1.0; }
+      if (voice) u.voice=voice;
       const lv=document.getElementById("vo-live");
-      if(lv){const p=chunk.length>80?chunk.slice(0,80)+"…":chunk;lv.textContent=p;}
+      if (lv) { const p=chunk.length>80?chunk.slice(0,80)+"…":chunk; lv.textContent=p; }
       let settled=false;
-      const settle=(ms)=>{if(settled)return;settled=true;setTimeout(next,ms);};
+      const settle=(ms)=>{ if (settled) return; settled=true; setTimeout(next,ms); };
       u.onend=()=>settle(isIOS?60:25);
-      u.onerror=(e)=>{
-        if(e.error==="canceled"||e.error==="interrupted"){settle(50);return;}
-        console.warn("TTS:",e.error,"|",chunk.slice(0,30));
-        settle(100);
-      };
-      try{synth.speak(u);}
-      catch(e){console.warn("synth.speak failed:",e);settle(120);}
+      u.onerror=(e)=>{ if (e.error==="canceled"||e.error==="interrupted") { settle(50); return; } console.warn("TTS:",e.error,"|",chunk.slice(0,30)); settle(100); };
+      try { synth.speak(u); } catch(e) { console.warn("synth.speak failed:",e); settle(120); }
     }
     next();
   });
 }
 
-function stopSpeaking(){
-  voiceAborted=true;
-  stopKeepAlive();
-  if(synth){try{synth.cancel();}catch(e){}}
-  isSpeaking=false;
-  setVoiceState("idle");
-  const lv=document.getElementById("vo-live");
-  if(lv)lv.textContent="";
+function stopSpeaking() {
+  voiceAborted=true; stopKeepAlive();
+  if (synth) { try { synth.cancel(); } catch(e) {} }
+  isSpeaking=false; setVoiceState("idle");
+  const lv=document.getElementById("vo-live"); if (lv) lv.textContent="";
 }
 
 // ── WAVE ANIMATION ─────────────────────────────────────────
 const waveEl=document.getElementById("vo-wave");
-for(let wi=0;wi<28;wi++){const b=document.createElement("div");b.className="wave-bar";b.style.height="4px";waveEl.appendChild(b);}
+for (let wi=0;wi<28;wi++) { const b=document.createElement("div"); b.className="wave-bar"; b.style.height="4px"; waveEl.appendChild(b); }
 
-function animWave(on){
+function animWave(on) {
   clearInterval(waveInterval);
   const bars=waveEl.querySelectorAll(".wave-bar");
-  if(!on){bars.forEach(b=>{b.style.height="4px";b.style.opacity="0.4";});return;}
-  waveInterval=setInterval(()=>{
+  if (!on) { bars.forEach(b=>{ b.style.height="4px"; b.style.opacity="0.4"; }); return; }
+  waveInterval=setInterval(() => {
     const t=Date.now();
-    bars.forEach((b,i)=>{
-      const h=isSpeaking
-        ?Math.abs(Math.sin(t/270+i*0.34))*13+Math.random()*9+4
-        :Math.random()*6+3;
-      b.style.height=h+"px";
-      b.style.opacity=isSpeaking?"1":"0.7";
+    bars.forEach((b,i) => {
+      const h=isSpeaking?Math.abs(Math.sin(t/270+i*0.34))*13+Math.random()*9+4:Math.random()*6+3;
+      b.style.height=h+"px"; b.style.opacity=isSpeaking?"1":"0.7";
     });
-  },48);
+  }, 48);
 }
 
-function setVoiceState(s){
-  const ov=document.getElementById("voice-overlay");
-  const st=document.getElementById("vo-status");
-  ov.classList.remove("idle","listening","thinking","speaking");
-  ov.classList.add(s);
-  if(s==="idle"){st.textContent="Tap the mic to speak";isListening=false;isSpeaking=false;animWave(false);}
-  else if(s==="listening"){st.textContent="Listening…";isListening=true;isSpeaking=false;animWave(true);}
-  else if(s==="thinking"){st.textContent="Thinking…";isListening=false;isSpeaking=false;animWave(false);}
-  else if(s==="speaking"){st.textContent="Nova is speaking…";isListening=false;isSpeaking=true;animWave(true);}
+function setVoiceState(s) {
+  const ov=document.getElementById("voice-overlay"), st=document.getElementById("vo-status");
+  ov.classList.remove("idle","listening","thinking","speaking"); ov.classList.add(s);
+  if (s==="idle") { st.textContent="Tap the mic to speak"; isListening=false; isSpeaking=false; animWave(false); }
+  else if (s==="listening") { st.textContent="Listening…"; isListening=true; isSpeaking=false; animWave(true); }
+  else if (s==="thinking") { st.textContent="Thinking…"; isListening=false; isSpeaking=false; animWave(false); }
+  else if (s==="speaking") { st.textContent="Nova is speaking…"; isListening=false; isSpeaking=true; animWave(true); }
 }
 
-// ── VOICE UI HELPERS ───────────────────────────────────────
-function addVoMsg(role,text){
+// ── VOICE UI ───────────────────────────────────────────────
+function addVoMsg(role, text) {
   const h=document.getElementById("vo-hist");
   document.getElementById("vo-hint")?.remove();
   const init=currentUser?currentUser.name.charAt(0).toUpperCase():"?";
-  const row=document.createElement("div");row.className="vo-msg "+role;
-  const av=document.createElement("div");av.className="vo-av "+(role==="user"?"user":"bot");
-  if(role==="bot")av.innerHTML=bhAv(26);else av.textContent=init;
-  const bub=document.createElement("div");bub.className="vo-bub "+(role==="user"?"user":"bot");
+  const row=document.createElement("div"); row.className="vo-msg "+role;
+  const av=document.createElement("div"); av.className="vo-av "+(role==="user"?"user":"bot");
+  if (role==="bot") av.innerHTML=bhAv(26); else av.textContent=init;
+  const bub=document.createElement("div"); bub.className="vo-bub "+(role==="user"?"user":"bot");
   bub.textContent=text;
-  if(role==="user"){row.appendChild(bub);row.appendChild(av);}
-  else{row.appendChild(av);row.appendChild(bub);}
-  h.appendChild(row);h.scrollTop=h.scrollHeight;
+  if (role==="user") { row.appendChild(bub); row.appendChild(av); }
+  else { row.appendChild(av); row.appendChild(bub); }
+  h.appendChild(row); h.scrollTop=h.scrollHeight;
 }
 
-function openVoiceMode(){
-  voiceActive=true;
-  unlockTTS();
-  ensureVoices();
-  const ov=document.getElementById("voice-overlay");
-  ov.classList.add("open");
+function openVoiceMode() {
+  voiceActive=true; unlockTTS(); ensureVoices();
+  const ov=document.getElementById("voice-overlay"); ov.classList.add("open");
   setVoiceState("idle");
   document.getElementById("vo-live").textContent="";
   document.getElementById("vo-lang").textContent="Auto";
 }
-function closeVoiceMode(){
-  voiceActive=false;
-  stopListening();
-  stopSpeaking();
+function closeVoiceMode() {
+  voiceActive=false; stopListening(); stopSpeaking();
   document.getElementById("voice-overlay").classList.remove("open");
 }
-function voiceModeNewChat(){
-  stopListening();stopSpeaking();
+function voiceModeNewChat() {
+  stopListening(); stopSpeaking();
   const h=document.getElementById("vo-hist");
   h.innerHTML='<div class="vo-hint" id="vo-hint">New conversation. Speak naturally in any language.</div>';
   document.getElementById("vo-live").textContent="";
   document.getElementById("vo-lang").textContent="Auto";
-  detLang="en-US";setVoiceState("idle");
+  detLang="en-US"; setVoiceState("idle");
 }
 
 // ── SPEECH RECOGNITION ─────────────────────────────────────
-function startListening(onFinal){
+function startListening(onFinal) {
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){showToast("Speech recognition not supported on this browser.");return;}
-  if(recognition){try{recognition.abort();}catch(e){}}
-  recognition=new SR();
-  recognition.lang="";         // auto-detect language
-  recognition.interimResults=true;
-  recognition.maxAlternatives=3;
-  recognition.continuous=false;
-  let finalText="",interimText="";
-  recognition.onstart=()=>{
-    setVoiceState("listening");
-    document.getElementById("vo-live").textContent="";
-  };
+  if (!SR) { showToast("Speech recognition not supported on this browser."); return; }
+  if (recognition) { try { recognition.abort(); } catch(e) {} }
+  recognition=new SR(); recognition.lang=""; recognition.interimResults=true; recognition.maxAlternatives=3; recognition.continuous=false;
+  let finalText="", interimText="";
+  recognition.onstart=()=>{ setVoiceState("listening"); document.getElementById("vo-live").textContent=""; };
   recognition.onresult=e=>{
-    finalText="";interimText="";
-    for(let i=e.resultIndex;i<e.results.length;i++){
-      const t=e.results[i][0].transcript;
-      if(e.results[i].isFinal)finalText+=t;else interimText+=t;
+    finalText=""; interimText="";
+    for (let i=e.resultIndex;i<e.results.length;i++) {
+      const tt=e.results[i][0].transcript;
+      if (e.results[i].isFinal) finalText+=tt; else interimText+=tt;
     }
     const cur=(finalText||interimText).trim();
     document.getElementById("vo-live").textContent=cur;
-    if(cur.length>4){
-      const l=detectLang(cur);
-      const en=LANG_MAP[l];
-      if(en){detLang=en.l;document.getElementById("vo-lang").textContent=l.toUpperCase();}
+    if (cur.length>4) {
+      const l=detectLang(cur); const en=LANG_MAP[l];
+      if (en) { detLang=en.l; document.getElementById("vo-lang").textContent=l.toUpperCase(); }
     }
   };
   recognition.onend=()=>{
     isListening=false;
-    const t=(finalText||interimText).trim();
-    if(t){onFinal(t);}
-    else{setVoiceState("idle");document.getElementById("vo-live").textContent="";}
+    const tt=(finalText||interimText).trim();
+    if (tt) onFinal(tt); else { setVoiceState("idle"); document.getElementById("vo-live").textContent=""; }
   };
-  recognition.onerror=e=>{
-    isListening=false;
-    if(e.error!=="aborted"&&e.error!=="no-speech")showToast("Mic error: "+e.error);
-    setVoiceState("idle");
-  };
-  try{recognition.start();}
-  catch(err){showToast("Microphone access denied: "+err.message);}
+  recognition.onerror=e=>{ isListening=false; if (e.error!=="aborted"&&e.error!=="no-speech") showToast("Mic error: "+e.error); setVoiceState("idle"); };
+  try { recognition.start(); } catch(err) { showToast("Microphone access denied: "+err.message); }
 }
 
-function stopListening(){
-  if(recognition){try{recognition.stop();}catch(e){}recognition=null;}
+function stopListening() {
+  if (recognition) { try { recognition.stop(); } catch(e) {} recognition=null; }
   isListening=false;
 }
 
-function toggleVoiceMic(){
-  if(isListening){stopListening();setVoiceState("idle");return;}
-  if(isSpeaking){stopSpeaking();}
-  voiceAborted=false;
-  unlockTTS();
-  startListening(async text=>{
+function toggleVoiceMic() {
+  if (isListening) { stopListening(); setVoiceState("idle"); return; }
+  if (isSpeaking) stopSpeaking();
+  voiceAborted=false; unlockTTS();
+  startListening(async text => {
     document.getElementById("vo-live").textContent="";
     setVoiceState("thinking");
     addVoMsg("user",text);
@@ -1702,125 +1640,100 @@ function toggleVoiceMic(){
   });
 }
 
-async function sendVoiceMsg(text){
-  if(messages.length===0)
-    document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"…":text;
+async function sendVoiceMsg(text) {
+  if (messages.length===0) document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"…":text;
   const voiceSys=SYSTEM_PROMPT+"\n\nCRITICAL — VOICE MODE ACTIVE: Answer in 1 to 3 short sentences maximum. No lists, no bullet points, no markdown, no headers. Speak naturally as a human friend would in a conversation. Be warm, direct and concise.";
   const msgsForVoice=[{role:"system",content:voiceSys},...messages,{role:"user",content:text}];
-  try{
+  try {
     const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgsForVoice,model:currentModel})});
     const d=await r.json();
-    if(d.rate_limited){
-      setVoiceState("idle");
-      addVoMsg("bot","I've reached my daily limit. Please switch to another model to continue.");
-      showRateLimitModal();return;
-    }
+    if (d.rate_limited) { setVoiceState("idle"); addVoMsg("bot","I've reached my daily limit. Please switch to another model to continue."); showRateLimitModal(); return; }
     const reply=d.choices[0].message.content;
-    messages.push({role:"user",content:text});
-    messages.push({role:"assistant",content:reply});
-    if(!isGuest)persistConv();
+    messages.push({role:"user",content:text}); messages.push({role:"assistant",content:reply});
+    if (!isGuest) persistConv();
     addVoMsg("bot",reply);
-    const rl=detectLang(reply);
-    const re=LANG_MAP[rl];
+    const rl=detectLang(reply); const re=LANG_MAP[rl];
     const rb=re?re.l:(detLang||"en-US");
-    await speakText(reply,rb,()=>{
-      // Auto-restart listening
-      if(voiceActive&&!voiceAborted){
-        setTimeout(()=>{
-          if(voiceActive&&!voiceAborted&&!isListening&&!isSpeaking){
-            startListening(async st=>{
+    await speakText(reply, rb, () => {
+      if (voiceActive&&!voiceAborted) {
+        setTimeout(() => {
+          if (voiceActive&&!voiceAborted&&!isListening&&!isSpeaking) {
+            startListening(async st => {
               document.getElementById("vo-live").textContent="";
               setVoiceState("thinking");
               addVoMsg("user",st);
               await sendVoiceMsg(st);
             });
           }
-        },400);
+        }, 400);
       }
     });
-  }catch(err){
+  } catch(err) {
     console.error("Voice API error:",err);
     setVoiceState("idle");
-    addVoMsg("bot","Sorry, I couldn\'t reach the server. Please check your connection.");
+    addVoMsg("bot","Sorry, I couldn't reach the server. Please check your connection.");
   }
 }
 
-// Inline mic for chat input
-function toggleInlineMic(){
+function toggleInlineMic() {
   const btn=document.getElementById("mic-btn");
-  if(inlineMicActive){
-    inlineMicActive=false;btn.classList.remove("listening");
-    if(inlineRec){try{inlineRec.stop();}catch(e){}}inlineRec=null;return;
-  }
+  if (inlineMicActive) { inlineMicActive=false; btn.classList.remove("listening"); if (inlineRec) { try { inlineRec.stop(); } catch(e) {} } inlineRec=null; return; }
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){showToast("Speech recognition not supported.");return;}
-  inlineMicActive=true;btn.classList.add("listening");
-  inlineRec=new SR();inlineRec.lang="";inlineRec.interimResults=true;
-  inlineRec.onresult=e=>{
-    let f="",iv="";
-    for(let j=e.resultIndex;j<e.results.length;j++){
-      const t=e.results[j][0].transcript;
-      if(e.results[j].isFinal)f+=t;else iv+=t;
-    }
-    document.getElementById("prompt").value=f||iv;
-    autoResize();updateCount();
-  };
-  inlineRec.onend=()=>{inlineMicActive=false;btn.classList.remove("listening");inlineRec=null;};
-  inlineRec.onerror=e=>{inlineMicActive=false;btn.classList.remove("listening");inlineRec=null;if(e.error!=="aborted"&&e.error!=="no-speech")showToast("Mic: "+e.error);};
-  try{inlineRec.start();}catch(e){}
+  if (!SR) { showToast("Speech recognition not supported."); return; }
+  inlineMicActive=true; btn.classList.add("listening");
+  inlineRec=new SR(); inlineRec.lang=""; inlineRec.interimResults=true;
+  inlineRec.onresult=e=>{ let f="",iv=""; for (let j=e.resultIndex;j<e.results.length;j++) { const tt=e.results[j][0].transcript; if (e.results[j].isFinal) f+=tt; else iv+=tt; } document.getElementById("prompt").value=f||iv; autoResize(); updateCount(); };
+  inlineRec.onend=()=>{ inlineMicActive=false; btn.classList.remove("listening"); inlineRec=null; };
+  inlineRec.onerror=e=>{ inlineMicActive=false; btn.classList.remove("listening"); inlineRec=null; if (e.error!=="aborted"&&e.error!=="no-speech") showToast("Mic: "+e.error); };
+  try { inlineRec.start(); } catch(e) {}
 }
 
 // ── EVENT LISTENERS ────────────────────────────────────────
-document.getElementById("prompt").addEventListener("input",()=>{autoResize();updateCount()});
-document.getElementById("prompt").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage()}});
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeVoiceMode()});
+document.getElementById("prompt").addEventListener("input", () => { autoResize(); updateCount(); });
+document.getElementById("prompt").addEventListener("keydown", e => { if (e.key==="Enter"&&!e.shiftKey) { e.preventDefault(); sendMessage(); } });
+document.addEventListener("keydown", e => { if (e.key==="Escape") closeVoiceMode(); });
 let tsx=0;
-document.addEventListener("touchstart",e=>{tsx=e.touches[0].clientX},{passive:true});
-document.addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-tsx;if(dx<-60&&document.getElementById("sidebar").classList.contains("open"))closeSidebar()},{passive:true});
-// Load voices early
-if(synth){ensureVoices();synth.addEventListener("voiceschanged",()=>loadVoices());}
+document.addEventListener("touchstart", e => { tsx=e.touches[0].clientX; }, {passive:true});
+document.addEventListener("touchend", e => { const dx=e.changedTouches[0].clientX-tsx; if (dx<-60&&document.getElementById("sidebar").classList.contains("open")) closeSidebar(); }, {passive:true});
+
+// FIX #5 : vérification synth avant d'appeler ses méthodes
+if (synth) { ensureVoices(); synth.addEventListener("voiceschanged", () => loadVoices()); }
 
 // ── INIT ───────────────────────────────────────────────────
 (function init() {
-  // Handle email confirmation token in URL
-  const params = new URLSearchParams(window.location.search);
-  const confirmToken = params.get("confirm");
-  if(confirmToken){
+  const params=new URLSearchParams(window.location.search);
+  const confirmToken=params.get("confirm");
+  if (confirmToken) {
     fetch(`${BACKEND}/verify-email?token=${confirmToken}`)
     .then(r=>r.json())
-    .then(d=>{
+    .then(d => {
       window.history.replaceState({},"",window.location.pathname);
-      if(d.success){
-        // Mark user as verified in localStorage
+      if (d.success) {
         const users=getUsers();
         const user=Object.values(users).find(u=>u.email===d.email);
-        if(user){user.verified=true;ls.set(S_USERS,users);}
-        // Show success on login form
+        if (user) { user.verified=true; ls.set(S_USERS,users); }
         switchTab("login");
         const banner=document.createElement("div");
         banner.style.cssText="padding:12px 14px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);border-radius:10px;color:#22c55e;font-size:13px;margin-bottom:14px;text-align:center";
         banner.innerHTML="✅ Email confirmed! You can now sign in.";
         document.getElementById("login-form").prepend(banner);
-        if(d.email)document.getElementById("login-email").value=d.email;
-      }else{
+        if (d.email) document.getElementById("login-email").value=d.email;
+      } else {
         showToast("❌ "+(d.error||"Invalid confirmation link"));
       }
     })
-    .catch(()=>{
+    .catch(() => {
       window.history.replaceState({},"",window.location.pathname);
       showToast("❌ Could not verify email. Try again.");
     });
   }
 
-  // Resume session
   const sess=ls.get(S_SESSION);
-  if(!sess)return;
-  if(sess.userId==="guest"){doGuest();return}
+  if (!sess) return;
+  if (sess.userId==="guest") { doGuest(); return; }
   const user=getUsers()[sess.userId];
-  if(user)startApp(user,false);
+  if (user) startApp(user,false);
 })();
-
-
 </script>
 </body>
 </html>
