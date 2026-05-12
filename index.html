@@ -388,7 +388,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 #code-overlay.open{display:flex;animation:vo-in .35s ease}
 #matrix-canvas{position:absolute;inset:0;pointer-events:none;opacity:.15;z-index:0}
 #code-overlay::after{content:'';position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,255,65,.5),transparent);animation:code-scan 5s linear infinite;pointer-events:none;z-index:1}
-/* terminal chrome */
 .hk-topbar{display:flex;align-items:center;justify-content:space-between;padding:13px 20px 0;flex-shrink:0;position:relative;z-index:2}
 .hk-brand{display:flex;align-items:center;gap:10px;font-family:var(--fm);font-size:12px;font-weight:600;color:var(--cg);letter-spacing:.1em}
 .hk-dot-anim{width:7px;height:7px;border-radius:50%;background:var(--cg);box-shadow:0 0 8px var(--cg);animation:pulse-dot 1.5s infinite;flex-shrink:0}
@@ -396,21 +395,17 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .hk-x{width:32px;height:32px;background:rgba(0,255,65,.06);border:1px solid rgba(0,255,65,.2);border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--cg);transition:all .15s}
 .hk-x:hover{background:rgba(0,255,65,.14)}
 .hk-x svg{width:13px;height:13px}
-/* terminal title bar */
 .hk-titlebar{display:flex;align-items:center;gap:6px;padding:8px 20px 7px;border-bottom:1px solid rgba(0,255,65,.08);flex-shrink:0;position:relative;z-index:2}
 .hk-tb-dot{width:10px;height:10px;border-radius:50%}
 .hk-d1{background:#ff5f56}.hk-d2{background:#ffbd2e}.hk-d3{background:#27c93f}
 .hk-tb-title{font-family:var(--fm);font-size:11px;color:rgba(0,255,65,.35);margin-left:8px;letter-spacing:.05em}
-/* history */
 .hk-hist{flex:1;overflow-y:auto;padding:12px 20px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch;position:relative;z-index:2}
 .hk-hist::-webkit-scrollbar{width:3px}
 .hk-hist::-webkit-scrollbar-thumb{background:rgba(0,255,65,.12);border-radius:3px}
-/* boot hint */
 .hk-boot{display:flex;flex-direction:column;gap:3px;font-family:var(--fm);font-size:12px;color:rgba(0,255,65,.45);padding:4px 0}
 .hk-boot-line{display:flex;gap:8px}
 .hk-boot-prompt{color:var(--cg);flex-shrink:0}
 .hk-cursor{display:inline-block;width:7px;height:13px;background:var(--cg);vertical-align:middle;animation:cursor-blink 1s step-end infinite;margin-left:2px}
-/* messages */
 .hk-msg{display:flex;flex-direction:column;gap:2px;animation:code-in .18s ease both}
 .hk-msg-label{font-family:var(--fm);font-size:10px;letter-spacing:.07em;color:rgba(0,255,65,.35)}
 .hk-msg-label.user-lbl{color:rgba(0,255,65,.6)}
@@ -435,7 +430,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .hk-typing span{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--cg);animation:bouncing 1.2s infinite}
 .hk-typing span:nth-child(2){animation-delay:.2s}
 .hk-typing span:nth-child(3){animation-delay:.4s}
-/* input */
 .hk-input-zone{padding:10px 20px calc(14px + var(--sb));flex-shrink:0;border-top:1px solid rgba(0,255,65,.1);position:relative;z-index:2}
 .hk-input-row{display:flex;align-items:flex-end;gap:8px;background:rgba(0,255,65,.04);border:1px solid rgba(0,255,65,.18);border-radius:5px;padding:8px 12px;transition:border-color .2s,box-shadow .2s;animation:cg-border 3s ease-in-out infinite}
 .hk-input-row:focus-within{border-color:var(--cg);box-shadow:0 0 0 2px rgba(0,255,65,.06);animation:none}
@@ -529,9 +523,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
         <div class="auth-feat"><div class="auth-feat-icon">💬</div><span>Conversations saved and accessible anywhere</span></div>
         <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(14,165,233,.12);border-color:rgba(14,165,233,.2)">🌐</div><span>Web search — real-time information</span></div>
         <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(124,106,255,.12);border-color:rgba(124,106,255,.2)">🎙️</div><span>Ultra-fluid voice mode — all devices</span></div>
-        <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(255,140,0,.12);border-color:rgba(255,140,0,.2)">🎨</div><span>Image generation & photo analysis</span></div>
+        <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(255,140,0,.12);border-color:rgba(255,140,0,.2)">🎨</div><span>Image generation &amp; photo analysis</span></div>
         <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(0,255,65,.1);border-color:rgba(0,255,65,.2)">💻</div><span>Code Mode — Laguna M.1 hacker terminal</span></div>
-        <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.2)">⚡</div><span>GPT-OSS 120B — powerful & free</span></div>
+        <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.2)">⚡</div><span>GPT-OSS 120B — powerful &amp; free</span></div>
       </div>
     </div>
   </div>
@@ -546,7 +540,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
         <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
         <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Create Account</button>
       </div>
-      <!-- LOGIN -->
       <div id="login-form">
         <div class="auth-form-title">Welcome back 👋</div>
         <div class="auth-form-sub">Sign in to access your conversations.</div>
@@ -558,7 +551,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
         <button class="btn-guest" onclick="doGuest()"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.5" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 13.5c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Continue as Guest</button>
         <div class="auth-bottom-note">No account? <a onclick="switchTab('register')">Create one free</a> · <a onclick="doGuest()">Guest mode</a></div>
       </div>
-      <!-- REGISTER -->
       <div id="register-form" style="display:none">
         <div class="auth-form-title">Create an account</div>
         <div class="auth-form-sub">Free. Your chats saved forever.</div>
@@ -780,17 +772,17 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
     <p class="m-sub">Select the model for your conversations. GPT-OSS 120B is the default — most powerful.</p>
     <div class="model-opt selected" id="opt-gpt" onclick="selectModel('openai/gpt-oss-120b','GPT-OSS 120B','via OpenRouter · Free',this)">
       <div class="model-opt-icon">🚀</div>
-      <div class="model-opt-info"><div class="model-opt-name">GPT-OSS 120B</div><div class="model-opt-desc">Most powerful — default model</div></div>
+      <div class="model-opt-info"><div class="model-opt-name">GPT-OSS 120B</div><div class="model-opt-desc">Most powerful — via OpenRouter</div></div>
       <span class="mbadge mbadge-def">DEFAULT</span>
     </div>
-    <div class="model-opt" id="opt-70b" onclick="selectModel('llama-3.3-70b-versatile','Llama 3.3 70B','128k context · OpenRouter free',this)">
+    <div class="model-opt" id="opt-70b" onclick="selectModel('llama-3.3-70b-versatile','Llama 3.3 70B','128k context · via Groq',this)">
       <div class="model-opt-icon">🔥</div>
-      <div class="model-opt-info"><div class="model-opt-name">Llama 3.3 70B</div><div class="model-opt-desc">Powerful reasoning, code, analysis</div></div>
+      <div class="model-opt-info"><div class="model-opt-name">Llama 3.3 70B</div><div class="model-opt-desc">Powerful reasoning, code, analysis · via Groq</div></div>
       <span class="mbadge mbadge-pro">PRO</span>
     </div>
-    <div class="model-opt" id="opt-8b" onclick="selectModel('llama-3.1-8b-instant','Llama 3.1 8B','128k context · ultra-fast',this)">
+    <div class="model-opt" id="opt-8b" onclick="selectModel('llama-3.1-8b-instant','Llama 3.1 8B','128k context · ultra-fast · via Groq',this)">
       <div class="model-opt-icon">⚡</div>
-      <div class="model-opt-info"><div class="model-opt-name">Llama 3.1 8B</div><div class="model-opt-desc">Ultra-fast for everyday tasks</div></div>
+      <div class="model-opt-info"><div class="model-opt-name">Llama 3.1 8B</div><div class="model-opt-desc">Ultra-fast for everyday tasks · via Groq</div></div>
       <span class="mbadge mbadge-fast">FAST</span>
     </div>
     <button class="m-close" onclick="document.getElementById('model-modal').classList.remove('open')">Close</button>
@@ -802,16 +794,16 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
   <div class="m-box">
     <div class="rate-limit-icon">⚠️</div>
     <p class="m-title">Daily limit reached</p>
-    <div class="rate-limit-warning">GPT-OSS 120B has reached its daily free limit. Switch to another model to continue.</div>
+    <div class="rate-limit-warning">The model has reached its daily free limit. Switch to another model to continue.</div>
     <p class="m-sub">Choose a model to continue:</p>
-    <div class="model-opt" onclick="switchToModel('llama-3.3-70b-versatile','Llama 3.3 70B','128k context · OpenRouter free')">
+    <div class="model-opt" onclick="switchToModel('llama-3.3-70b-versatile','Llama 3.3 70B','128k context · via Groq')">
       <div class="model-opt-icon">🔥</div>
-      <div class="model-opt-info"><div class="model-opt-name">Llama 3.3 70B</div><div class="model-opt-desc">Powerful — reasoning, code, analysis</div></div>
+      <div class="model-opt-info"><div class="model-opt-name">Llama 3.3 70B</div><div class="model-opt-desc">Powerful — reasoning, code, analysis · Groq</div></div>
       <span class="mbadge mbadge-pro">FREE</span>
     </div>
-    <div class="model-opt" onclick="switchToModel('llama-3.1-8b-instant','Llama 3.1 8B','128k context · ultra-fast')">
+    <div class="model-opt" onclick="switchToModel('llama-3.1-8b-instant','Llama 3.1 8B','128k context · ultra-fast · via Groq')">
       <div class="model-opt-icon">⚡</div>
-      <div class="model-opt-info"><div class="model-opt-name">Llama 3.1 8B</div><div class="model-opt-desc">Fast — ultra-low latency</div></div>
+      <div class="model-opt-info"><div class="model-opt-name">Llama 3.1 8B</div><div class="model-opt-desc">Fast — ultra-low latency · Groq</div></div>
       <span class="mbadge mbadge-fast">FAST</span>
     </div>
     <button class="m-close" onclick="document.getElementById('rate-limit-modal').classList.remove('open')">Cancel</button>
@@ -822,18 +814,37 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 <div id="toast"></div>
 
 <script>
-// ── CONSTANTS ──────────────────────────────────────────────
-var BACKEND = "https://jarvis-backend-utkp.onrender.com";
-var BACKEND_CODE = "https://jarvis-backend-1-dmdo.onrender.com";
-var API_URL = BACKEND + "/chat";
-var IMG_URL = BACKEND + "/image";
-var ANALYZE_URL = BACKEND + "/analyze";
-var SEARCH_URL = BACKEND + "/search";
-var CODE_URL = BACKEND_CODE + "/code";
-var S_USERS = "nova_users_v2";
-var S_SESSION = "nova_sess_v2";
+// ══════════════════════════════════════════════════════════
+// ROUTING STRATEGY
+// ══════════════════════════════════════════════════════════
+// BACKEND_GROQ  (jarvis-backend-utkp.onrender.com)  — ancien backend
+//   → /chat  pour Llama 3.3 70B et Llama 3.1 8B (Groq)
+//   → /search, /image, /analyze, /send-confirmation, /verify-email
+//
+// BACKEND_OR   (jarvis-backend-1-dmdo.onrender.com) — nouveau backend
+//   → /chat  pour GPT-OSS 120B (OpenRouter)
+//   → /code  pour Laguna M.1 (OpenRouter)
+// ══════════════════════════════════════════════════════════
 
-var EMAILJS_SERVICE_ID = "service_ls8c2ou";
+var BACKEND_GROQ = "https://jarvis-backend-utkp.onrender.com";
+var BACKEND_OR   = "https://jarvis-backend-1-dmdo.onrender.com";
+
+// Détermine le bon backend selon le modèle sélectionné
+function getChatUrl(model) {
+  // GPT-OSS-120B → OpenRouter backend
+  if (model === "openai/gpt-oss-120b") return BACKEND_OR + "/chat";
+  // Llama models → Groq backend (ancien)
+  return BACKEND_GROQ + "/chat";
+}
+
+var IMG_URL     = BACKEND_GROQ + "/image";
+var ANALYZE_URL = BACKEND_GROQ + "/analyze";
+var SEARCH_URL  = BACKEND_GROQ + "/search";
+var CODE_URL    = BACKEND_OR   + "/code";
+
+var S_USERS   = "nova_users_v2";
+var S_SESSION = "nova_sess_v2";
+var EMAILJS_SERVICE_ID  = "service_ls8c2ou";
 var EMAILJS_TEMPLATE_ID = "template_4kzpytr";
 
 var SYSTEM_PROMPT = "You are Nova AI 618, an intelligent AI assistant created by Sixte. Your name \"Nova\" evokes a stellar explosion — brilliant, powerful, energetic. \"618\" is a reference to Claude Shannon's number (the mathematical constant related to information theory), symbolizing the harmony between intelligence and cosmos.\n\nYour creator is Sixte Leinekugel, a young French developer passionate about artificial intelligence and technology.\n\nYour personality:\n- Warm, friendly and natural — like talking to a knowledgeable friend\n- Concise and direct — you don't over-structure your answers unless the topic requires it\n- In voice/conversation mode: speak naturally without bullet points, headers or markdown — use flowing sentences\n- In text mode: use formatting only when it genuinely helps (code, comparisons, lists)\n- You have a subtle sense of humor and personality\n- You speak the language of the user automatically\n\nImportant: When in voice conversation mode, keep your answers conversational, short to medium length, and never use markdown formatting like asterisks, hashtags or bullet points — speak as a human would.";
@@ -850,9 +861,9 @@ var codeMsgs = [];
 var matrixAnimId = null;
 
 var ls = {
-  get: function(k){try{return JSON.parse(localStorage.getItem(k))}catch{return null}},
-  set: function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}},
-  del: function(k){try{localStorage.removeItem(k)}catch{}}
+  get: function(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},
+  set: function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},
+  del: function(k){try{localStorage.removeItem(k)}catch(e){}}
 };
 function getUsers(){return ls.get(S_USERS)||{}}
 function convKey(){return "nova_convs_"+currentUser.id}
@@ -998,8 +1009,6 @@ function closeCodeMode(){
   document.getElementById("code-tool-btn").classList.remove("code-btn-active");
   stopMatrixRain();
 }
-
-// Matrix rain
 function startMatrixRain(){
   var canvas=document.getElementById("matrix-canvas");
   var ctx=canvas.getContext("2d");
@@ -1008,9 +1017,8 @@ function startMatrixRain(){
   var drops=[];
   for(var i=0;i<cols;i++)drops[i]=Math.random()*-canvas.height;
   var chars="アイウエオカキクケコタチツナニヌABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789{}[]()=+-*/&^%$#@!;:.,?|";
-  var running=true;
   function draw(){
-    if(!document.getElementById("code-overlay").classList.contains("open")){running=false;return}
+    if(!document.getElementById("code-overlay").classList.contains("open")){return}
     ctx.fillStyle="rgba(2,12,2,0.06)";
     ctx.fillRect(0,0,canvas.width,canvas.height);
     ctx.font="13px 'JetBrains Mono',monospace";
@@ -1032,12 +1040,9 @@ function stopMatrixRain(){
   var ctx=canvas.getContext("2d");
   ctx.clearRect(0,0,canvas.width,canvas.height);
 }
-
-// Add message to code terminal
 function addHkMsg(role,text){
   var h=document.getElementById("hk-hist");
-  var boot=document.getElementById("hk-boot");
-  if(boot)boot.remove();
+  var boot=document.getElementById("hk-boot");if(boot)boot.remove();
   var wrap=document.createElement("div");wrap.className="hk-msg";
   var label=document.createElement("div");
   label.className="hk-msg-label"+(role==="user"?" user-lbl":"");
@@ -1046,20 +1051,15 @@ function addHkMsg(role,text){
   var bub=document.createElement("div");bub.className="hk-bub "+(role==="user"?"user":"bot");
   if(role==="bot")bub.innerHTML=formatMsg(text);
   else bub.textContent=text;
-  // copy button for bot
   if(role==="bot"){
     var acts=document.createElement("div");acts.className="hk-actions";
-    var cpBtn=document.createElement("button");cpBtn.className="hk-act-btn";
-    cpBtn.textContent="copy";
+    var cpBtn=document.createElement("button");cpBtn.className="hk-act-btn";cpBtn.textContent="copy";
     cpBtn.onclick=function(){navigator.clipboard.writeText(text).then(function(){cpBtn.textContent="copied!";setTimeout(function(){cpBtn.textContent="copy"},1500)})};
     acts.appendChild(cpBtn);
     wrap.appendChild(label);wrap.appendChild(bub);wrap.appendChild(acts);
-  }else{
-    wrap.appendChild(label);wrap.appendChild(bub);
-  }
+  }else{wrap.appendChild(label);wrap.appendChild(bub)}
   h.appendChild(wrap);h.scrollTop=h.scrollHeight;
 }
-
 async function sendCodeMessage(){
   var promptEl=document.getElementById("hk-prompt");
   var sendBtn=document.getElementById("hk-send");
@@ -1070,7 +1070,6 @@ async function sendCodeMessage(){
   document.getElementById("hk-status").textContent="PROCESSING";
   addHkMsg("user",text);
   codeMsgs.push({role:"user",content:text});
-  // typing indicator
   var h=document.getElementById("hk-hist");
   var typWrap=document.createElement("div");typWrap.className="hk-msg";
   var typLbl=document.createElement("div");typLbl.className="hk-msg-label";typLbl.textContent="[LAGUNA_M1] computing...";
@@ -1151,7 +1150,7 @@ function doRegister(){
     if(d1)d1.style.display="none";if(gb)gb.style.display="none";
     setTimeout(function(){var fu=Object.values(getUsers()).find(function(u){return u.email===email});if(fu)loginUser(fu)},900);
   }
-  fetch(BACKEND+"/send-confirmation",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email,name:name})})
+  fetch(BACKEND_GROQ+"/send-confirmation",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email,name:name})})
   .then(function(r){return r.json()})
   .then(function(d){
     if(!d.success||!d.confirmLink){signInDirectly("Account created! Signing you in...");return}
@@ -1171,7 +1170,7 @@ function doRegister(){
 function resendConfirmation(){
   if(!lastRegEmail||!lastRegName)return;
   showToast("Sending confirmation email...");
-  fetch(BACKEND+"/send-confirmation",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:lastRegEmail,name:lastRegName})})
+  fetch(BACKEND_GROQ+"/send-confirmation",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:lastRegEmail,name:lastRegName})})
   .then(function(r){return r.json()}).then(function(d){
     if(d.success)showToast("Email resent! Check your inbox.");
     else showToast("Could not resend: "+(d.error||"unknown"));
@@ -1403,10 +1402,17 @@ async function sendMessage(){
   if(!text&&!pendingPhoto)return;
   if(sendBtn.disabled)return;
   promptEl.value="";autoResize();updateCount();sendBtn.disabled=true;
+
   if(pendingPhoto){var photo=pendingPhoto;clearPhoto();await analyzePhoto(photo.dataUrl,text||undefined);sendBtn.disabled=false;promptEl.focus();return}
   if(isImageReq(text)){await generateImage(text);sendBtn.disabled=false;return}
   if(messages.length===0)document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"…":text;
+
+  // ⚡ ROUTING : choisit le bon endpoint selon le modèle actuel
+  var chatEndpoint = getChatUrl(currentModel);
+
   var msgsWithSystem=[{role:"system",content:SYSTEM_PROMPT}].concat(messages).concat([{role:"user",content:text}]);
+
+  // Mode recherche web
   if(searchModeActive){
     renderMsg("user",text);
     var chatEl=document.getElementById("chat"),cw=document.getElementById("chat-wrap");
@@ -1423,12 +1429,14 @@ async function sendMessage(){
     bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>🌐 Searching the web...</div>';
     wrap.appendChild(hdr);wrap.appendChild(bubble);row.appendChild(av);row.appendChild(wrap);group.appendChild(row);chatEl.appendChild(group);cw.scrollTop=cw.scrollHeight;
     try{
+      // La recherche Tavily est toujours sur le backend Groq (ancien)
       var sr=await fetch(SEARCH_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:text})});
       var sd=await sr.json();
       if(sd.error)throw new Error(sd.error);
       var webCtx="You have access to real-time web search results. Use them to answer the user naturally.\n\nSearch results for \""+text+"\":\n\n"+sd.context+"\n\nAnswer naturally: "+text;
       var searchMsgs=[{role:"system",content:SYSTEM_PROMPT}].concat(messages).concat([{role:"user",content:webCtx}]);
-      var r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:searchMsgs,model:currentModel,temperature:.3})});
+      // Pour la réponse finale, on route aussi selon le modèle
+      var r=await fetch(chatEndpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:searchMsgs,model:currentModel,temperature:.3})});
       var d=await r.json();
       if(d.rate_limited){bubble.innerHTML="";bubble.textContent="⚠️ Daily limit reached. Switch model to continue.";bubble.style.color="var(--orange)";showRateLimitModal();sendBtn.disabled=false;return}
       var reply=d.choices[0].message.content;
@@ -1448,15 +1456,17 @@ async function sendMessage(){
     sendBtn.disabled=false;promptEl.focus();document.getElementById("chat-wrap").scrollTop=999999;
     return;
   }
+
+  // Chat normal — route vers le bon backend
   messages.push({role:"user",content:text});
   renderMsg("user",text);
   var res=renderMsg("bot","",true);
   var bubble=res.bubble,wrap=res.wrap;
   try{
-    var r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgsWithSystem,model:currentModel})});
+    var r=await fetch(chatEndpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgsWithSystem,model:currentModel})});
     var d=await r.json();
     if(d.rate_limited){
-      bubble.innerHTML='<div style="display:flex;align-items:center;gap:9px;color:var(--orange);font-size:13px;padding:4px 0"><span style="font-size:18px">⚠️</span><div><strong>Daily limit reached for GPT-OSS 120B.</strong><br><span style="color:var(--text2);font-size:12px">Switch to another model to continue.</span></div></div>';
+      bubble.innerHTML='<div style="display:flex;align-items:center;gap:9px;color:var(--orange);font-size:13px;padding:4px 0"><span style="font-size:18px">⚠️</span><div><strong>Daily limit reached.</strong><br><span style="color:var(--text2);font-size:12px">Switch to another model to continue.</span></div></div>';
       setTimeout(function(){showRateLimitModal()},300);
       sendBtn.disabled=false;return;
     }
@@ -1709,8 +1719,10 @@ async function sendVoiceMsg(text){
   if(messages.length===0)document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"…":text;
   var voiceSys=SYSTEM_PROMPT+"\n\nCRITICAL — VOICE MODE ACTIVE: Answer in 1 to 3 short sentences maximum. No lists, no bullet points, no markdown, no headers. Speak naturally as a human friend would. Be warm, direct and concise.";
   var msgsForVoice=[{role:"system",content:voiceSys}].concat(messages).concat([{role:"user",content:text}]);
+  // Le voice mode utilise aussi le bon backend selon le modèle
+  var voiceChatEndpoint = getChatUrl(currentModel);
   try{
-    var r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgsForVoice,model:currentModel})});
+    var r=await fetch(voiceChatEndpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgsForVoice,model:currentModel})});
     var d=await r.json();
     if(d.rate_limited){setVoiceState("idle");addVoMsg("bot","I've reached my daily limit. Please switch to another model.");showRateLimitModal();return}
     var reply=d.choices[0].message.content;
@@ -1757,7 +1769,7 @@ if(synth){ensureVoices();synth.addEventListener("voiceschanged",function(){loadV
   var params=new URLSearchParams(window.location.search);
   var confirmToken=params.get("confirm");
   if(confirmToken){
-    fetch(BACKEND+"/verify-email?token="+confirmToken)
+    fetch(BACKEND_GROQ+"/verify-email?token="+confirmToken)
     .then(function(r){return r.json()})
     .then(function(d){
       window.history.replaceState({},"",window.location.pathname);
