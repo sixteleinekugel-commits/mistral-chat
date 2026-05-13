@@ -4,13 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Nova AI 618 — Free Intelligent AI Assistant</title>
-<meta name="description" content="Nova AI 618 — Your free intelligent AI assistant created by Sixte. Chat, generate images, analyze photos, voice mode.">
+<meta name="description" content="Nova AI 618 — Your free intelligent AI assistant created by Sixte.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://sixteleinekugel-commits.github.io/novaAI-chat/">
 <meta property="og:title" content="Nova AI 618 — Free Intelligent AI Assistant">
 <meta property="og:url" content="https://sixteleinekugel-commits.github.io/novaAI-chat/">
-<meta property="og:image" content="https://sixteleinekugel-commits.github.io/novaAI-chat/nova-ai-618-preview.png">
-<meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Nova AI 618","url":"https://sixteleinekugel-commits.github.io/novaAI-chat/","applicationCategory":"AIApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <link rel="icon" type="image/jpeg" href="https://sixteleinekugel-commits.github.io/novaAI-chat/k9TBi.jpg">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -27,11 +25,14 @@
   --green:#22c55e;--red:#ef4444;--orange:#ff8c00;
   --search:#0ea5e9;--search-dim:rgba(14,165,233,0.12);
   --cg:#00ff41;--cg-dim:rgba(0,255,65,0.10);--cg-bg:#020c02;
+  --vid:#a855f7;--vid-dim:rgba(168,85,247,0.12);
+  --gold:#f59e0b;--gold-dim:rgba(245,158,11,0.12);
   --sidebar-w:272px;--fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--fm:'JetBrains Mono',monospace;
   --sb:env(safe-area-inset-bottom,0px)
 }
 html{height:100%}
 body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;height:100%;overflow:hidden;-webkit-tap-highlight-color:transparent}
+
 @keyframes bh-glow-pulse{0%,100%{filter:drop-shadow(0 0 18px rgba(124,106,255,.5)) drop-shadow(0 0 8px rgba(255,140,0,.3))}50%{filter:drop-shadow(0 0 40px rgba(124,106,255,.8)) drop-shadow(0 0 20px rgba(255,140,0,.5))}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes msg-in{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
@@ -48,6 +49,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 @keyframes code-scan{0%{top:-2px}100%{top:100%}}
 @keyframes code-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 @keyframes cursor-blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes progress-stripe{0%{background-position:0 0}100%{background-position:30px 0}}
+@keyframes tier-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
 /* ── AUTH ─────────────────────────────────────────────── */
 #auth-screen{display:flex;height:100dvh;overflow:hidden}
@@ -137,6 +140,13 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .conv-item:hover .conv-del{display:flex}
 .sb-empty{text-align:center;padding:20px 10px;color:var(--text3);font-size:12px;line-height:1.9}
 .sb-footer{padding:11px 9px;border-top:1px solid var(--border);padding-bottom:calc(11px + var(--sb))}
+.quota-bar-wrap{padding:6px 11px;margin-bottom:6px}
+.quota-bar-label{display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-bottom:4px}
+.quota-bar-label span:last-child{color:var(--accent2)}
+.quota-bar{height:3px;background:var(--surface3);border-radius:3px;overflow:hidden}
+.quota-bar-fill{height:100%;border-radius:3px;transition:width .4s ease;background:var(--accent)}
+.quota-bar-fill.warn{background:var(--orange)}
+.quota-bar-fill.danger{background:var(--red)}
 .model-sel{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);cursor:pointer;transition:all .2s;margin-bottom:7px}
 .model-sel:hover{border-color:var(--border2);background:var(--surface3)}
 .model-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);flex-shrink:0;transition:all .3s}
@@ -155,11 +165,14 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .badge{font-size:10px;padding:1px 7px;border-radius:20px;font-weight:600;display:inline-block}
 .badge-pro{background:var(--accent-dim);color:var(--accent)}
 .badge-guest{background:var(--surface3);color:var(--text3);border:1px solid var(--border)}
+.badge-starter{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(245,158,11,.2)}
+.badge-premium{background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(124,106,255,.2));color:var(--vid);border:1px solid rgba(168,85,247,.3)}
 #profile-dd{display:none;position:absolute;bottom:calc(100% + 5px);left:0;right:0;background:var(--surface2);border:1px solid var(--border2);border-radius:12px;overflow:hidden;z-index:300;animation:dd-in .15s ease}
 #profile-dd.open{display:block}
 .dd-header{padding:13px 15px;border-bottom:1px solid var(--border)}
 .dd-uname{font-size:13px;font-weight:500}
 .dd-email{font-size:11px;color:var(--text3);margin-top:2px}
+.dd-tier-badge{display:inline-flex;align-items:center;gap:4px;margin-top:5px;font-size:10px;padding:2px 7px;border-radius:20px}
 .dd-item{display:flex;align-items:center;gap:9px;padding:10px 15px;font-size:13px;color:var(--text2);cursor:pointer;transition:background .1s}
 .dd-item:hover{background:var(--surface3);color:var(--text)}
 .dd-item svg{width:13px;height:13px;flex-shrink:0}
@@ -208,6 +221,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .p-card.image-card::before{background:linear-gradient(135deg,rgba(255,140,0,.07),transparent)}
 .p-card.photo-card::before{background:linear-gradient(135deg,rgba(34,197,94,.07),transparent)}
 .p-card.code-card::before{background:linear-gradient(135deg,rgba(0,255,65,.07),transparent)}
+.p-card.video-card::before{background:linear-gradient(135deg,rgba(168,85,247,.07),transparent)}
 .p-card:hover{transform:translateY(-2px);border-color:rgba(124,106,255,.3)}
 .p-card:hover::before{opacity:1}
 .p-card:active{transform:scale(.98)}
@@ -218,9 +232,10 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .p-card.voice-card{border-color:rgba(124,106,255,.2)}.p-card.voice-card .p-card-title{color:var(--accent2)}
 .p-card.image-card{border-color:rgba(255,140,0,.2)}.p-card.image-card .p-card-title{color:var(--orange)}
 .p-card.photo-card{border-color:rgba(34,197,94,.2)}.p-card.photo-card .p-card-title{color:var(--green)}
-.p-card.code-card{border-color:rgba(0,255,65,.25);grid-column:1/-1}
-.p-card.code-card .p-card-title{color:var(--cg);font-family:var(--fm)}
-.p-card.code-card:hover{border-color:var(--cg);box-shadow:0 0 20px rgba(0,255,65,.1)}
+.p-card.code-card{border-color:rgba(0,255,65,.25);grid-column:1/-1}.p-card.code-card .p-card-title{color:var(--cg);font-family:var(--fm)}.p-card.code-card:hover{border-color:var(--cg);box-shadow:0 0 20px rgba(0,255,65,.1)}
+.p-card.video-card{border-color:rgba(168,85,247,.25);grid-column:1/-1}.p-card.video-card .p-card-title{color:var(--vid)}.p-card.video-card:hover{border-color:var(--vid);box-shadow:0 0 20px rgba(168,85,247,.1)}
+.p-card-locked{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--gold);background:var(--gold-dim);border:1px solid rgba(245,158,11,.2);padding:2px 7px;border-radius:20px;margin-top:4px}
+
 /* Messages */
 .msg-group{display:flex;flex-direction:column;gap:2px;animation:msg-in .2s cubic-bezier(.34,1.56,.64,1) both}
 .msg-row{display:flex;gap:9px;align-items:flex-start}
@@ -350,9 +365,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .vo-center{display:flex;flex-direction:column;align-items:center;gap:14px;padding:8px 22px;flex-shrink:0}
 .vo-orb-wrap{position:relative;display:flex;align-items:center;justify-content:center}
 .vo-ring{position:absolute;border-radius:50%;opacity:0;border:1px solid var(--accent);pointer-events:none}
-.vo-r1{width:120px;height:120px}
-.vo-r2{width:158px;height:158px}
-.vo-r3{width:196px;height:196px}
+.vo-r1{width:120px;height:120px}.vo-r2{width:158px;height:158px}.vo-r3{width:196px;height:196px}
 .vo-orb{width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#0d0a22,#000);display:flex;align-items:center;justify-content:center;position:relative;z-index:1;box-shadow:0 0 50px rgba(124,106,255,.25),0 0 25px rgba(255,140,0,.1),inset 0 0 30px rgba(124,106,255,.05);overflow:hidden;transition:box-shadow .4s}
 #voice-overlay.idle .vo-ring{animation:none;opacity:0}
 #voice-overlay.listening .vo-orb{box-shadow:0 0 70px rgba(239,68,68,.5),0 0 30px rgba(239,68,68,.2);animation:orb-breathe .85s ease-in-out infinite alternate}
@@ -415,14 +428,11 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .hk-bub p{margin:5px 0;color:rgba(0,255,65,.85)}.hk-bub p:first-child{margin-top:0}.hk-bub p:last-child{margin-bottom:0}
 .hk-bub h1,.hk-bub h2,.hk-bub h3{color:var(--cg);font-size:13px;margin:8px 0 4px;font-family:var(--fm)}
 .hk-bub strong{color:var(--cg);font-weight:600}
-.hk-bub em{color:rgba(0,255,65,.6);font-style:normal}
 .hk-bub code{background:rgba(0,0,0,.4);border:1px solid rgba(0,255,65,.18);padding:1px 5px;border-radius:2px;font-size:12px;color:var(--cg)}
 .hk-bub pre{background:rgba(0,0,0,.5);border:1px solid rgba(0,255,65,.2);border-radius:4px;padding:11px 13px;margin:8px 0;overflow-x:auto;font-size:12px;line-height:1.55}
 .hk-bub pre code{background:none;border:none;padding:0;color:var(--cg)}
 .hk-bub ul,.hk-bub ol{padding-left:16px;margin:5px 0}
 .hk-bub li{color:rgba(0,255,65,.8);margin:2px 0}.hk-bub li::marker{color:var(--cg)}
-.hk-bub blockquote{border-left:2px solid rgba(0,255,65,.4);padding-left:10px;margin:6px 0;color:rgba(0,255,65,.55)}
-.hk-bub a{color:var(--cg);text-decoration:underline}
 .hk-bub table{width:100%;border-collapse:collapse;margin:8px 0;font-size:12px}
 .hk-bub th{background:rgba(0,255,65,.06);padding:5px 10px;border:1px solid rgba(0,255,65,.15);color:var(--cg);text-align:left}
 .hk-bub td{padding:5px 10px;border:1px solid rgba(0,255,65,.1);color:rgba(0,255,65,.75)}
@@ -447,6 +457,86 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .hk-msg:hover .hk-actions{opacity:1}
 .hk-act-btn{display:flex;align-items:center;gap:4px;padding:2px 8px;border-radius:3px;border:1px solid rgba(0,255,65,.15);background:transparent;color:rgba(0,255,65,.4);font-size:10px;cursor:pointer;font-family:var(--fm);transition:all .15s}
 .hk-act-btn:hover{background:rgba(0,255,65,.07);color:var(--cg);border-color:rgba(0,255,65,.35)}
+
+/* ── VIDEO OVERLAY ────────────────────────────────────── */
+#video-overlay{display:none;position:fixed;inset:0;z-index:700;flex-direction:column;background:linear-gradient(160deg,#0a0210 0%,#1a0530 40%,#0e0220 100%);overflow:hidden}
+#video-overlay.open{display:flex;animation:vo-in .35s ease}
+.vid-topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 22px 0;flex-shrink:0}
+.vid-brand{display:flex;align-items:center;gap:10px;font-family:var(--fh);font-size:15px;font-weight:800;color:var(--text)}
+.vid-brand-dot{width:8px;height:8px;border-radius:50%;background:var(--vid);box-shadow:0 0 10px var(--vid);animation:pulse-dot 2s infinite;flex-shrink:0}
+.vid-status-badge{font-size:10px;padding:2px 9px;border-radius:20px;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.25);color:var(--vid);font-family:var(--fb);font-weight:600}
+.vid-x{width:36px;height:36px;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--vid);transition:all .15s}
+.vid-x:hover{background:rgba(168,85,247,.15);color:var(--text)}
+.vid-x svg{width:15px;height:15px}
+.vid-quota{padding:9px 22px;flex-shrink:0;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text2)}
+.vid-quota-bar{flex:1;height:4px;background:rgba(168,85,247,.12);border-radius:4px;overflow:hidden}
+.vid-quota-fill{height:100%;background:linear-gradient(90deg,var(--vid),rgba(168,85,247,.5));border-radius:4px;transition:width .4s ease}
+.vid-content{flex:1;overflow-y:auto;padding:16px 22px;display:flex;flex-direction:column;gap:14px;-webkit-overflow-scrolling:touch}
+.vid-input-zone{padding:14px 22px calc(20px + var(--sb));flex-shrink:0;border-top:1px solid rgba(168,85,247,.1)}
+.vid-input-wrap{display:flex;gap:9px;align-items:flex-end;background:rgba(168,85,247,.05);border:1px solid rgba(168,85,247,.2);border-radius:13px;padding:10px 13px;transition:border-color .2s}
+.vid-input-wrap:focus-within{border-color:var(--vid);box-shadow:0 0 0 2px rgba(168,85,247,.08)}
+#vid-prompt{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-family:var(--fb);font-size:14px;line-height:1.6;resize:none;min-height:22px;max-height:100px;caret-color:var(--vid)}
+#vid-prompt::placeholder{color:rgba(168,85,247,.3)}
+#vid-send{width:34px;height:34px;border-radius:9px;background:var(--vid);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+#vid-send:hover{background:#c084fc}
+#vid-send:disabled{background:var(--surface3);cursor:not-allowed}
+#vid-send svg{width:14px;height:14px}
+.vid-footer-note{text-align:center;font-size:10.5px;color:rgba(168,85,247,.3);margin-top:7px}
+.vid-card{background:rgba(168,85,247,.05);border:1px solid rgba(168,85,247,.15);border-radius:14px;overflow:hidden;animation:code-in .25s ease both}
+.vid-card-prompt{padding:12px 14px;font-size:12px;color:rgba(168,85,247,.7);border-bottom:1px solid rgba(168,85,247,.08);font-style:italic}
+.vid-card-body{padding:14px}
+.vid-card-loading{display:flex;flex-direction:column;gap:10px;align-items:center;padding:20px 0;color:var(--vid);font-size:13px;text-align:center}
+.vid-card-spinner{width:32px;height:32px;border:3px solid rgba(168,85,247,.15);border-top-color:var(--vid);border-radius:50%;animation:spin 1s linear infinite}
+.vid-card-note{font-size:11px;color:rgba(168,85,247,.4);margin-top:4px}
+.vid-card video{width:100%;border-radius:8px;display:block;background:#000;max-height:300px}
+.vid-card-actions{display:flex;gap:7px;margin-top:10px}
+.vid-dl-btn{display:flex;align-items:center;gap:5px;padding:6px 13px;border-radius:7px;border:1px solid rgba(168,85,247,.25);background:rgba(168,85,247,.07);color:var(--vid);font-size:12px;cursor:pointer;transition:all .15s;font-family:var(--fb)}
+.vid-dl-btn:hover{background:rgba(168,85,247,.14);border-color:var(--vid)}
+.vid-dl-btn svg{width:12px;height:12px}
+.vid-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;color:var(--text3)}
+.vid-empty-icon{font-size:44px;margin-bottom:14px}
+.vid-empty-title{font-family:var(--fh);font-size:16px;font-weight:700;color:var(--text2);margin-bottom:6px}
+.vid-empty-sub{font-size:13px;line-height:1.7}
+
+/* ── SUBSCRIPTION MODAL ──────────────────────────────── */
+#sub-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:800;align-items:center;justify-content:center;padding:16px}
+#sub-modal.open{display:flex}
+.sub-box{background:var(--surface);border:1px solid var(--border2);border-radius:22px;width:100%;max-width:560px;max-height:92dvh;overflow-y:auto;animation:modal-in .25s ease;position:relative}
+.sub-header{padding:24px 24px 0;text-align:center}
+.sub-logo{font-size:32px;margin-bottom:10px}
+.sub-title{font-family:var(--fh);font-size:20px;font-weight:800;margin-bottom:5px}
+.sub-subtitle{font-size:13px;color:var(--text2);font-weight:300;line-height:1.6;margin-bottom:20px}
+.sub-close{position:absolute;top:16px;right:16px;width:32px;height:32px;background:var(--surface2);border:1px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text3);transition:all .15s}
+.sub-close:hover{background:var(--surface3);color:var(--text)}
+.sub-close svg{width:13px;height:13px}
+.sub-grid{display:flex;flex-direction:column;gap:10px;padding:0 24px 24px}
+.tier-card{border-radius:14px;border:1px solid var(--border2);padding:18px;cursor:pointer;transition:all .22s;position:relative;animation:tier-in .3s ease both}
+.tier-card:nth-child(2){animation-delay:.05s}
+.tier-card:nth-child(3){animation-delay:.1s}
+.tier-card.free-tier:hover{border-color:var(--accent);background:var(--accent-dim)}
+.tier-card.starter-tier{border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.03)}
+.tier-card.starter-tier:hover{border-color:var(--gold);background:rgba(245,158,11,.07);box-shadow:0 0 20px rgba(245,158,11,.1)}
+.tier-card.premium-tier{border-color:rgba(168,85,247,.3);background:rgba(168,85,247,.04);cursor:not-allowed;opacity:.7}
+.tier-card.current-tier.free-tier{border-color:var(--accent);background:var(--accent-dim)}
+.tier-card.current-tier.starter-tier{border-color:var(--gold);background:rgba(245,158,11,.07)}
+.tier-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+.tier-name{font-family:var(--fh);font-size:15px;font-weight:800}
+.tier-price{font-family:var(--fh);font-size:20px;font-weight:800}
+.tier-price span{font-size:12px;font-weight:400;color:var(--text3)}
+.tier-badge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;display:inline-block;margin-bottom:6px}
+.tier-badge.free-badge{background:var(--accent-dim);color:var(--accent)}
+.tier-badge.starter-badge{background:var(--gold-dim);color:var(--gold)}
+.tier-badge.premium-badge{background:rgba(168,85,247,.15);color:var(--vid)}
+.tier-features{display:flex;flex-direction:column;gap:5px}
+.tier-feat{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text2)}
+.tier-feat-icon{font-size:13px;width:18px;text-align:center;flex-shrink:0}
+.tier-feat strong{color:var(--text);font-weight:600}
+.tier-cta{margin-top:14px;width:100%;padding:10px;border-radius:9px;border:none;font-family:var(--fh);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.tier-cta.free-cta{background:var(--surface2);color:var(--text2);cursor:default}
+.tier-cta.starter-cta{background:linear-gradient(135deg,var(--gold),#d97706);color:#fff}
+.tier-cta.starter-cta:hover{opacity:.9}
+.tier-cta.premium-cta{background:var(--surface3);color:var(--text3);cursor:not-allowed}
+.tier-coming-soon{font-size:10px;color:var(--text3);text-align:center;margin-top:6px}
 
 /* ── MODALS ───────────────────────────────────────────── */
 .m-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(5px);z-index:500;align-items:center;justify-content:center;padding:18px}
@@ -496,9 +586,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
   #char-count{display:none}
   .tool-btn-label{display:none}
   .vo-orb{width:80px;height:80px}
-  .vo-r1{width:106px;height:106px}
-  .vo-r2{width:138px;height:138px}
-  .vo-r3{width:170px;height:170px}
+  .vo-r1{width:106px;height:106px}.vo-r2{width:138px;height:138px}.vo-r3{width:170px;height:170px}
+  .sub-grid{padding:0 14px 20px}
+  .tier-card{padding:14px}
 }
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:4px}
@@ -525,7 +615,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
         <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(124,106,255,.12);border-color:rgba(124,106,255,.2)">🎙️</div><span>Ultra-fluid voice mode — all devices</span></div>
         <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(255,140,0,.12);border-color:rgba(255,140,0,.2)">🎨</div><span>Image generation &amp; photo analysis</span></div>
         <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(0,255,65,.1);border-color:rgba(0,255,65,.2)">💻</div><span>Code Mode — Laguna M.1 hacker terminal</span></div>
-        <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.2)">⚡</div><span>GPT-OSS 120B — powerful &amp; free</span></div>
+        <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.2)">🎬</div><span>Video Generation — Starter &amp; Premium</span></div>
       </div>
     </div>
   </div>
@@ -592,6 +682,10 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
     </div>
     <div class="sb-scroll" id="convs-list"><div class="sb-empty" id="convs-empty">No conversations yet.<br>Start chatting!</div></div>
     <div class="sb-footer">
+      <div class="quota-bar-wrap" id="quota-display" style="display:none">
+        <div class="quota-bar-label"><span>Text requests today</span><span id="quota-val">0 / 15</span></div>
+        <div class="quota-bar"><div class="quota-bar-fill" id="quota-fill" style="width:0%"></div></div>
+      </div>
       <div class="model-sel" onclick="document.getElementById('model-modal').classList.add('open');closeSidebar()">
         <div class="model-dot" id="model-dot"></div>
         <div class="model-info"><div class="model-nm" id="model-nm">GPT-OSS 120B</div><div class="model-ctx" id="model-ctx">via OpenRouter · Free</div></div>
@@ -602,7 +696,12 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
         <div class="u-info"><div class="u-name" id="u-nm">...</div><span class="badge badge-guest" id="u-badge">Guest</span></div>
         <svg width="12" height="12" viewBox="0 0 16 16" fill="none" style="color:var(--text3);flex-shrink:0"><path d="M5 7l3-3 3 3M5 10l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         <div id="profile-dd">
-          <div class="dd-header"><div class="dd-uname" id="dd-name">...</div><div class="dd-email" id="dd-email"></div></div>
+          <div class="dd-header">
+            <div class="dd-uname" id="dd-name">...</div>
+            <div class="dd-email" id="dd-email"></div>
+            <div class="dd-tier-badge badge" id="dd-tier-badge">Free</div>
+          </div>
+          <div class="dd-item" onclick="stop(event);openSubModal()"><svg viewBox="0 0 16 16" fill="none"><path d="M8 1l2 4 4.5.7-3.25 3.2.77 4.5L8 11.3l-4 2.1.77-4.5L1.5 5.7 6 5z" stroke="currentColor" stroke-width="1.2"/></svg>Plans &amp; Subscription</div>
           <div class="dd-item" onclick="stop(event);exportAll()"><svg viewBox="0 0 16 16" fill="none"><path d="M8 3v8M5 8l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Export conversations</div>
           <div class="dd-item danger" onclick="stop(event);doLogout()"><svg viewBox="0 0 16 16" fill="none"><path d="M10 3h3a1 1 0 011 1v8a1 1 0 01-1 1h-3M7 11l3-3-3-3M10 8H2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span id="logout-lbl">Sign out</span></div>
         </div>
@@ -627,19 +726,17 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
         <button class="icon-btn" title="New chat" onclick="newConversation()"><svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
       </div>
     </div>
-
     <div id="search-banner">
       <svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
       <span>🌐 Web search active — Nova searches the internet in real time</span>
       <button onclick="toggleSearch()">Disable</button>
     </div>
-
     <div id="chat-wrap">
       <div id="chat">
         <div id="empty-state">
           <div class="empty-logo"><img src="https://sixteleinekugel-commits.github.io/novaAI-chat/k9TBi.jpg" style="width:72px;height:72px;border-radius:50%;object-fit:cover;" alt="Nova AI 618"></div>
           <div class="empty-title" id="empty-title">Hello! I'm Nova 👋</div>
-          <div class="empty-sub" id="empty-sub">Created by Sixte, powered by GPT-OSS 120B. Ask me anything, I'll generate images, search the web or analyze your photos!</div>
+          <div class="empty-sub" id="empty-sub">Created by Sixte, powered by GPT-OSS 120B.</div>
           <div class="prompts-grid">
             <div class="p-card search-card" onclick="toggleSearch();fillPrompt('What happened in the world today?')">
               <span class="p-card-icon">🌐</span>
@@ -654,23 +751,28 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
             <div class="p-card image-card" onclick="fillPrompt('image a nebula in deep space with vivid colors')">
               <span class="p-card-icon">🎨</span>
               <div class="p-card-title">Generate Image</div>
-              <div class="p-card-sub">Type "image ..."</div>
+              <div class="p-card-sub">Unlimited · Type "image ..."</div>
             </div>
             <div class="p-card photo-card" onclick="document.getElementById('photo-input').click()">
               <span class="p-card-icon">📸</span>
               <div class="p-card-title">Analyze Photo</div>
-              <div class="p-card-sub">Upload any image</div>
+              <div class="p-card-sub" id="photo-card-sub">4 analyses / day</div>
             </div>
             <div class="p-card code-card" onclick="openCodeMode()">
               <span class="p-card-icon">💻</span>
               <div class="p-card-title">Code Mode — Laguna M.1</div>
-              <div class="p-card-sub">Specialist coding AI · hacker terminal · via OpenRouter</div>
+              <div class="p-card-sub" id="code-card-sub">15 requests / day · hacker terminal</div>
+            </div>
+            <div class="p-card video-card" id="video-card" onclick="handleVideoCardClick()">
+              <span class="p-card-icon">🎬</span>
+              <div class="p-card-title">Video Generation</div>
+              <div class="p-card-sub" id="video-card-sub">AI video from text — Starter plan</div>
+              <div class="p-card-locked" id="video-card-lock">🔒 Starter plan — 3.49€/mo</div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
     <div id="input-zone">
       <div id="input-wrap-outer">
         <div class="photo-preview-zone" id="photo-preview-zone"></div>
@@ -689,9 +791,13 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
                 <svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
                 <span class="tool-btn-label">Search</span>
               </button>
-              <button class="tool-btn" id="code-tool-btn" title="Code Mode — Laguna M.1" onclick="openCodeMode()">
+              <button class="tool-btn" id="code-tool-btn" title="Code Mode" onclick="openCodeMode()">
                 <svg viewBox="0 0 16 16" fill="none"><polyline points="4,5 1,8 4,11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><polyline points="12,5 15,8 12,11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><line x1="9" y1="2" x2="7" y2="14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
                 <span class="tool-btn-label">Code</span>
+              </button>
+              <button class="tool-btn" id="video-tool-btn" title="Video Generation" onclick="handleVideoCardClick()">
+                <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M11 6l4-2v8l-4-2V6z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+                <span class="tool-btn-label">Video</span>
               </button>
               <button id="mic-btn" title="Voice input" onclick="toggleInlineMic()">
                 <svg viewBox="0 0 16 16" fill="none"><rect x="5" y="1" width="6" height="9" rx="3" stroke="currentColor" stroke-width="1.3"/><path d="M2 8a6 6 0 0012 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M8 14v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
@@ -700,7 +806,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
             <div class="input-meta"><span id="char-count">0 / 4096</span><span class="kbd">↵ Send</span></div>
           </div>
         </div>
-        <p class="foot-note">Nova AI 618 by Sixte · <a onclick="showAuth('login')">Sign in</a> · <a onclick="showAuth('register')">Create account</a></p>
+        <p class="foot-note">Nova AI 618 by Sixte · <a onclick="showAuth('login')">Sign in</a> · <a onclick="showAuth('register')">Create account</a> · <a onclick="openSubModal()">Plans</a></p>
       </div>
     </div>
   </main>
@@ -712,20 +818,20 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
     <div class="vo-brand"><div class="vo-dot"></div><span>NOVA AI 618</span><span class="vo-lang" id="vo-lang">Auto</span></div>
     <button class="vo-x" onclick="closeVoiceMode()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
   </div>
-  <div class="vo-hist" id="vo-hist"><div class="vo-hint" id="vo-hint">Your conversation appears here.<br>Tap the mic and speak naturally — any language.</div></div>
+  <div class="vo-hist" id="vo-hist"><div class="vo-hint" id="vo-hint">Tap the mic and speak naturally — any language.</div></div>
   <div class="vo-center">
     <div class="vo-orb-wrap">
       <div class="vo-ring vo-r1"></div><div class="vo-ring vo-r2"></div><div class="vo-ring vo-r3"></div>
-      <div class="vo-orb"><img src="https://sixteleinekugel-commits.github.io/novaAI-chat/k9TBi.jpg" style="width:88px;height:88px;border-radius:50%;object-fit:cover;opacity:0.9;" alt="Nova AI 618"></div>
+      <div class="vo-orb"><img src="https://sixteleinekugel-commits.github.io/novaAI-chat/k9TBi.jpg" style="width:88px;height:88px;border-radius:50%;object-fit:cover;opacity:0.9;" alt="Nova"></div>
     </div>
     <div class="vo-wave" id="vo-wave"></div>
     <div class="vo-status" id="vo-status">Tap the mic to speak</div>
     <div class="vo-live" id="vo-live"></div>
   </div>
   <div class="vo-controls">
-    <button class="vo-btn vo-sec" onclick="stopSpeaking()" title="Stop speaking"><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg></button>
-    <button class="vo-btn vo-main" id="vo-main-btn" onclick="toggleVoiceMic()"><svg viewBox="0 0 24 24" fill="none"><rect x="8" y="2" width="8" height="13" rx="4" fill="white"/><path d="M4 11a8 8 0 0016 0" stroke="white" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M12 19v3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-    <button class="vo-btn vo-sec" onclick="voiceModeNewChat()" title="New voice conversation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+    <button class="vo-btn vo-sec" onclick="stopSpeaking()"><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg></button>
+    <button class="vo-btn vo-main" onclick="toggleVoiceMic()"><svg viewBox="0 0 24 24" fill="none"><rect x="8" y="2" width="8" height="13" rx="4" fill="white"/><path d="M4 11a8 8 0 0016 0" stroke="white" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M12 19v3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <button class="vo-btn vo-sec" onclick="voiceModeNewChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
   </div>
 </div>
 
@@ -737,16 +843,13 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
     <button class="hk-x" onclick="closeCodeMode()"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
   </div>
   <div class="hk-titlebar">
-    <div class="hk-tb-dot hk-d1"></div>
-    <div class="hk-tb-dot hk-d2"></div>
-    <div class="hk-tb-dot hk-d3"></div>
+    <div class="hk-tb-dot hk-d1"></div><div class="hk-tb-dot hk-d2"></div><div class="hk-tb-dot hk-d3"></div>
     <span class="hk-tb-title">nova@laguna-m1:~$</span>
   </div>
   <div class="hk-hist" id="hk-hist">
     <div class="hk-boot" id="hk-boot">
       <div class="hk-boot-line"><span class="hk-boot-prompt">nova@laguna-m1:~$</span><span> system initialized</span></div>
-      <div class="hk-boot-line"><span class="hk-boot-prompt">nova@laguna-m1:~$</span><span> model: poolside/laguna-m.1 — loaded</span></div>
-      <div class="hk-boot-line"><span class="hk-boot-prompt">nova@laguna-m1:~$</span><span> backend: openrouter — connected</span></div>
+      <div class="hk-boot-line"><span class="hk-boot-prompt">nova@laguna-m1:~$</span><span> model: poolside/laguna-m.1 — loaded via OpenRouter</span></div>
       <div class="hk-boot-line"><span class="hk-boot-prompt">nova@laguna-m1:~$</span><span> ready for coding session <span class="hk-cursor"></span></span></div>
     </div>
   </div>
@@ -754,13 +857,101 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
     <div class="hk-input-row">
       <span class="hk-sym">$</span>
       <textarea id="hk-prompt" rows="1" placeholder="write a function, debug code, explain an algo..."></textarea>
-      <button id="hk-send" onclick="sendCodeMessage()">
-        <svg viewBox="0 0 16 16" fill="none"><path d="M14 8L2 2l3 6-3 6 12-6z" fill="currentColor"/></svg>
-      </button>
+      <button id="hk-send" onclick="sendCodeMessage()"><svg viewBox="0 0 16 16" fill="none"><path d="M14 8L2 2l3 6-3 6 12-6z" fill="currentColor"/></svg></button>
     </div>
     <div class="hk-footer">
-      <div class="hk-footer-model"><div class="hk-footer-dot"></div>laguna-m.1 · openrouter · specialized coding AI</div>
+      <div class="hk-footer-model"><div class="hk-footer-dot"></div><span>laguna-m.1 · openrouter · </span><span id="hk-quota-info">15 remaining today</span></div>
       <span>↵ execute</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ VIDEO OVERLAY ══════════════════════════════════════════ -->
+<div id="video-overlay">
+  <div class="vid-topbar">
+    <div class="vid-brand"><div class="vid-brand-dot"></div>NOVA VIDEO<span class="vid-status-badge" id="vid-status-badge">READY</span></div>
+    <button class="vid-x" onclick="closeVideoMode()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div class="vid-quota">
+    <span id="vid-quota-txt">0 / 1 video today</span>
+    <div class="vid-quota-bar"><div class="vid-quota-fill" id="vid-quota-fill" style="width:0%"></div></div>
+  </div>
+  <div class="vid-content" id="vid-content">
+    <div class="vid-empty" id="vid-empty">
+      <div class="vid-empty-icon">🎬</div>
+      <div class="vid-empty-title">Generate a video with AI</div>
+      <div class="vid-empty-sub">Describe what you want to see.<br>The AI will create a short video clip from your text.</div>
+    </div>
+  </div>
+  <div class="vid-input-zone">
+    <div class="vid-input-wrap">
+      <textarea id="vid-prompt" rows="1" placeholder="A sunset over mountains, cinematic, golden hour..."></textarea>
+      <button id="vid-send" onclick="generateVideo()"><svg viewBox="0 0 16 16" fill="none"><path d="M14 8L2 2l3 6-3 6 12-6z" fill="white"/></svg></button>
+    </div>
+    <div class="vid-footer-note">Powered by Pollinations AI · Generation takes 30–90 seconds</div>
+  </div>
+</div>
+
+<!-- ══ SUBSCRIPTION MODAL ════════════════════════════════════ -->
+<div id="sub-modal">
+  <div class="sub-box">
+    <button class="sub-close" onclick="closeSubModal()"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    <div class="sub-header">
+      <div class="sub-logo">✨</div>
+      <div class="sub-title">Nova AI 618 Plans</div>
+      <div class="sub-subtitle">Choose the plan that fits your needs.<br>All plans include unlimited image generation &amp; voice mode.</div>
+    </div>
+    <div class="sub-grid">
+      <!-- FREE -->
+      <div class="tier-card free-tier" id="tier-free-card">
+        <div class="tier-card-top">
+          <div><span class="tier-badge free-badge">FREE</span><div class="tier-name">Free</div></div>
+          <div class="tier-price">0€</div>
+        </div>
+        <div class="tier-features">
+          <div class="tier-feat"><span class="tier-feat-icon">💬</span><span><strong>15</strong> text requests / day</span></div>
+          <div class="tier-feat"><span class="tier-feat-icon">🎨</span><span><strong>Unlimited</strong> image generation</span></div>
+          <div class="tier-feat"><span class="tier-feat-icon">📸</span><span><strong>4</strong> photo analyses / day</span></div>
+          <div class="tier-feat"><span class="tier-feat-icon">💻</span><span><strong>15</strong> code mode requests / day</span></div>
+          <div class="tier-feat"><span class="tier-feat-icon">🎙️</span><span><strong>Unlimited</strong> voice mode</span></div>
+          <div class="tier-feat"><span class="tier-feat-icon">🎬</span><span style="color:var(--text3)">No video generation</span></div>
+        </div>
+        <button class="tier-cta free-cta" disabled id="tier-free-cta">Current plan</button>
+      </div>
+      <!-- STARTER -->
+      <div class="tier-card starter-tier" id="tier-starter-card" onclick="handleStarterClick()">
+        <div class="tier-card-top">
+          <div><span class="tier-badge starter-badge">STARTER</span><div class="tier-name" style="color:var(--gold)">Starter</div></div>
+          <div class="tier-price" style="color:var(--gold)">3.49€<span>/mo</span></div>
+        </div>
+        <div class="tier-features">
+          <div class="tier-feat"><span class="tier-feat-icon">💬</span><span><strong>35</strong> text requests / day</span></div>
+          <div class="tier-feat"><span class="tier-feat-icon">🎨</span><span><strong>Unlimited</strong> image generation</span></div>
+          <div class="tier-feat"><span class="tier-feat-icon">📸</span><span><strong>5</strong> photo analyses / day</span></div>
+          <div class="tier-feat"><span class="tier-feat-icon">💻</span><span><strong>35</strong> code mode requests / day</span></div>
+          <div class="tier-feat"><span class="tier-feat-icon">🎙️</span><span><strong>Unlimited</strong> voice mode</span></div>
+          <div class="tier-feat"><span class="tier-feat-icon">🎬</span><span><strong>1 video</strong> generation / day</span></div>
+        </div>
+        <button class="tier-cta starter-cta" id="tier-starter-cta">Subscribe — 3.49€/mo</button>
+        <div class="tier-coming-soon" id="starter-note"></div>
+      </div>
+      <!-- PREMIUM -->
+      <div class="tier-card premium-tier" id="tier-premium-card">
+        <div class="tier-card-top">
+          <div><span class="tier-badge premium-badge">PREMIUM</span><div class="tier-name" style="color:var(--vid)">Premium</div></div>
+          <div class="tier-price" style="color:var(--vid)">???<span>/mo</span></div>
+        </div>
+        <div class="tier-features">
+          <div class="tier-feat"><span class="tier-feat-icon">💬</span><span><strong>Unlimited</strong> text requests</span></div>
+          <div class="tier-feat"><span class="tier-feat-icon">🎨</span><span><strong>Unlimited</strong> image generation</span></div>
+          <div class="tier-feat"><span class="tier-feat-icon">📸</span><span><strong>10</strong> photo analyses / day</span></div>
+          <div class="tier-feat"><span class="tier-feat-icon">💻</span><span><strong>Unlimited</strong> code mode</span></div>
+          <div class="tier-feat"><span class="tier-feat-icon">🎙️</span><span><strong>Unlimited</strong> voice mode</span></div>
+          <div class="tier-feat"><span class="tier-feat-icon">🎬</span><span><strong>2 videos</strong> / day</span></div>
+        </div>
+        <button class="tier-cta premium-cta" disabled>Coming soon</button>
+        <div class="tier-coming-soon">Payment integration in progress</div>
+      </div>
     </div>
   </div>
 </div>
@@ -769,20 +960,20 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 <div class="m-overlay" id="model-modal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="m-box">
     <p class="m-title">Choose AI Model</p>
-    <p class="m-sub">Select the model for your conversations. GPT-OSS 120B is the default — most powerful.</p>
+    <p class="m-sub">All models via OpenRouter. GPT-OSS 120B is the most capable.</p>
     <div class="model-opt selected" id="opt-gpt" onclick="selectModel('openai/gpt-oss-120b','GPT-OSS 120B','via OpenRouter · Free',this)">
       <div class="model-opt-icon">🚀</div>
-      <div class="model-opt-info"><div class="model-opt-name">GPT-OSS 120B</div><div class="model-opt-desc">Most powerful — via OpenRouter</div></div>
+      <div class="model-opt-info"><div class="model-opt-name">GPT-OSS 120B</div><div class="model-opt-desc">Most powerful — default model</div></div>
       <span class="mbadge mbadge-def">DEFAULT</span>
     </div>
-    <div class="model-opt" id="opt-70b" onclick="selectModel('llama-3.3-70b-versatile','Llama 3.3 70B','128k context · via Groq',this)">
+    <div class="model-opt" id="opt-70b" onclick="selectModel('llama-3.3-70b-versatile','Llama 3.3 70B','128k context · via OpenRouter',this)">
       <div class="model-opt-icon">🔥</div>
-      <div class="model-opt-info"><div class="model-opt-name">Llama 3.3 70B</div><div class="model-opt-desc">Powerful reasoning, code, analysis · via Groq</div></div>
+      <div class="model-opt-info"><div class="model-opt-name">Llama 3.3 70B</div><div class="model-opt-desc">Powerful reasoning, code, analysis</div></div>
       <span class="mbadge mbadge-pro">PRO</span>
     </div>
-    <div class="model-opt" id="opt-8b" onclick="selectModel('llama-3.1-8b-instant','Llama 3.1 8B','128k context · ultra-fast · via Groq',this)">
+    <div class="model-opt" id="opt-8b" onclick="selectModel('llama-3.1-8b-instant','Llama 3.1 8B','128k context · ultra-fast',this)">
       <div class="model-opt-icon">⚡</div>
-      <div class="model-opt-info"><div class="model-opt-name">Llama 3.1 8B</div><div class="model-opt-desc">Ultra-fast for everyday tasks · via Groq</div></div>
+      <div class="model-opt-info"><div class="model-opt-name">Llama 3.1 8B</div><div class="model-opt-desc">Ultra-fast for everyday tasks</div></div>
       <span class="mbadge mbadge-fast">FAST</span>
     </div>
     <button class="m-close" onclick="document.getElementById('model-modal').classList.remove('open')">Close</button>
@@ -793,20 +984,15 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 <div class="m-overlay" id="rate-limit-modal">
   <div class="m-box">
     <div class="rate-limit-icon">⚠️</div>
-    <p class="m-title">Daily limit reached</p>
-    <div class="rate-limit-warning">The model has reached its daily free limit. Switch to another model to continue.</div>
-    <p class="m-sub">Choose a model to continue:</p>
-    <div class="model-opt" onclick="switchToModel('llama-3.3-70b-versatile','Llama 3.3 70B','128k context · via Groq')">
-      <div class="model-opt-icon">🔥</div>
-      <div class="model-opt-info"><div class="model-opt-name">Llama 3.3 70B</div><div class="model-opt-desc">Powerful — reasoning, code, analysis · Groq</div></div>
-      <span class="mbadge mbadge-pro">FREE</span>
+    <p class="m-title" id="rl-title">Daily limit reached</p>
+    <div class="rate-limit-warning" id="rl-msg">You've used all your daily requests. Upgrade your plan or wait until tomorrow.</div>
+    <p class="m-sub">Upgrade to get more:</p>
+    <div class="model-opt" onclick="closeRateLimit();openSubModal()">
+      <div class="model-opt-icon">⭐</div>
+      <div class="model-opt-info"><div class="model-opt-name">Starter Plan — 3.49€/mo</div><div class="model-opt-desc">35 text · 35 code · 5 photo · 1 video / day</div></div>
+      <span class="mbadge mbadge-fast">UPGRADE</span>
     </div>
-    <div class="model-opt" onclick="switchToModel('llama-3.1-8b-instant','Llama 3.1 8B','128k context · ultra-fast · via Groq')">
-      <div class="model-opt-icon">⚡</div>
-      <div class="model-opt-info"><div class="model-opt-name">Llama 3.1 8B</div><div class="model-opt-desc">Fast — ultra-low latency · Groq</div></div>
-      <span class="mbadge mbadge-fast">FAST</span>
-    </div>
-    <button class="m-close" onclick="document.getElementById('rate-limit-modal').classList.remove('open')">Cancel</button>
+    <button class="m-close" onclick="closeRateLimit()">Close — wait until tomorrow</button>
   </div>
 </div>
 
@@ -815,41 +1001,35 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 
 <script>
 // ══════════════════════════════════════════════════════════
-// ROUTING STRATEGY
+// BACKEND URLS — doc 6 structure
 // ══════════════════════════════════════════════════════════
-// BACKEND_GROQ  (jarvis-backend-utkp.onrender.com)  — ancien backend
-//   → /chat  pour Llama 3.3 70B et Llama 3.1 8B (Groq)
-//   → /search, /image, /analyze, /send-confirmation, /verify-email
-//
-// BACKEND_OR   (jarvis-backend-1-dmdo.onrender.com) — nouveau backend
-//   → /chat  pour GPT-OSS 120B (OpenRouter)
-//   → /code  pour Laguna M.1 (OpenRouter)
-// ══════════════════════════════════════════════════════════
-
-var BACKEND_GROQ = "https://jarvis-backend-utkp.onrender.com";
 var BACKEND_OR   = "https://jarvis-backend-1-dmdo.onrender.com";
+var BACKEND_GROQ = "https://jarvis-backend-utkp.onrender.com";
 
-// Détermine le bon backend selon le modèle sélectionné
-function getChatUrl(model) {
-  // GPT-OSS-120B → OpenRouter backend
-  if (model === "openai/gpt-oss-120b") return BACKEND_OR + "/chat";
-  // Llama models → Groq backend (ancien)
-  return BACKEND_GROQ + "/chat";
-}
-
-var IMG_URL     = BACKEND_GROQ + "/image";
-var ANALYZE_URL = BACKEND_GROQ + "/analyze";
-var SEARCH_URL  = BACKEND_GROQ + "/search";
+var API_URL     = BACKEND_OR   + "/chat";
 var CODE_URL    = BACKEND_OR   + "/code";
+var ANALYZE_URL = BACKEND_OR   + "/analyze";
+var VIDEO_URL   = BACKEND_OR   + "/video";
+var IMG_URL     = BACKEND_GROQ + "/image";
+var SEARCH_URL  = BACKEND_GROQ + "/search";
 
 var S_USERS   = "nova_users_v2";
 var S_SESSION = "nova_sess_v2";
+var S_QUOTAS  = "nova_quotas_v1";
 var EMAILJS_SERVICE_ID  = "service_ls8c2ou";
 var EMAILJS_TEMPLATE_ID = "template_4kzpytr";
 
-var SYSTEM_PROMPT = "You are Nova AI 618, an intelligent AI assistant created by Sixte. Your name \"Nova\" evokes a stellar explosion — brilliant, powerful, energetic. \"618\" is a reference to Claude Shannon's number (the mathematical constant related to information theory), symbolizing the harmony between intelligence and cosmos.\n\nYour creator is Sixte Leinekugel, a young French developer passionate about artificial intelligence and technology.\n\nYour personality:\n- Warm, friendly and natural — like talking to a knowledgeable friend\n- Concise and direct — you don't over-structure your answers unless the topic requires it\n- In voice/conversation mode: speak naturally without bullet points, headers or markdown — use flowing sentences\n- In text mode: use formatting only when it genuinely helps (code, comparisons, lists)\n- You have a subtle sense of humor and personality\n- You speak the language of the user automatically\n\nImportant: When in voice conversation mode, keep your answers conversational, short to medium length, and never use markdown formatting like asterisks, hashtags or bullet points — speak as a human would.";
+// ── TIER LIMITS ────────────────────────────────────────────
+var TIER_LIMITS = {
+  free:    { text: 15,        photo: 4,  code: 15,       video: 0 },
+  starter: { text: 35,        photo: 5,  code: 35,       video: 1 },
+  premium: { text: Infinity,  photo: 10, code: Infinity, video: 2 }
+};
 
-var CODE_SYSTEM_PROMPT = "You are Nova Code, an elite coding AI powered by Laguna M.1. You are a specialist in all programming languages, frameworks, algorithms, debugging, architecture, and software engineering best practices.\n\nYour style:\n- Precise, technical, direct\n- Always provide working, clean, well-commented code\n- Use markdown formatting with proper code blocks\n- Explain your reasoning briefly but clearly\n- Support all languages: Python, JavaScript, TypeScript, Rust, Go, C++, Java, Swift, SQL, Shell, and more\n- When debugging, identify root causes clearly\n- When asked to architect, provide scalable, modern solutions\n\nYou are running in a hacker terminal. Stay focused and technical.";
+// ── SYSTEM PROMPTS ─────────────────────────────────────────
+var SYSTEM_PROMPT = "You are Nova AI 618, an intelligent AI assistant created by Sixte. Your name \"Nova\" evokes a stellar explosion — brilliant, powerful, energetic. \"618\" is a reference to Claude Shannon's number, symbolizing the harmony between intelligence and cosmos.\n\nYour creator is Sixte Leinekugel, a young French developer passionate about artificial intelligence and technology.\n\nYour personality:\n- Warm, friendly and natural — like talking to a knowledgeable friend\n- Concise and direct — you don't over-structure unless needed\n- In voice mode: no markdown, speak naturally\n- In text mode: use formatting only when it genuinely helps\n- You speak the language of the user automatically";
+
+var CODE_SYSTEM_PROMPT = "You are Nova Code, an elite coding AI powered by Laguna M.1. You are a specialist in all programming languages, frameworks, algorithms, debugging and software engineering.\n\nYour style:\n- Precise, technical, direct\n- Always provide working, clean, well-commented code\n- Use markdown with proper code blocks\n- Explain your reasoning briefly but clearly\n- Support all languages: Python, JavaScript, TypeScript, Rust, Go, C++, Java, Swift, SQL, Shell, and more\n- When debugging, identify root causes clearly\n\nYou are running in a hacker terminal. Stay focused and technical.";
 
 // ── STATE ──────────────────────────────────────────────────
 var currentUser = null, isGuest = false, currentConvId = null;
@@ -857,20 +1037,172 @@ var messages = [], msgCount = 0;
 var currentModel = "openai/gpt-oss-120b";
 var pendingPhoto = null, searchModeActive = false;
 var lastRegEmail = "", lastRegName = "";
-var codeMsgs = [];
-var matrixAnimId = null;
+var codeMsgs = [], matrixAnimId = null;
 
-var ls = {
-  get: function(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},
-  set: function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},
-  del: function(k){try{localStorage.removeItem(k)}catch(e){}}
+// ── QUOTA SYSTEM ───────────────────────────────────────────
+function todayStr(){return new Date().toISOString().slice(0,10)}
+
+function getQuotas(){
+  var q=ls.get(S_QUOTAS),today=todayStr();
+  if(!q||q.date!==today){
+    q={date:today,tier:(q&&q.tier)||"free",text:0,photo:0,code:0,video:0};
+    ls.set(S_QUOTAS,q);
+  }
+  return q;
+}
+function saveQuotas(q){ls.set(S_QUOTAS,q)}
+function getCurrentTier(){return getQuotas().tier}
+function getTierLimits(){return TIER_LIMITS[getCurrentTier()]||TIER_LIMITS.free}
+function canUse(type){
+  var q=getQuotas(),lim=getTierLimits()[type];
+  if(lim===Infinity)return true;
+  return(q[type]||0)<lim;
+}
+function useQuota(type){
+  var q=getQuotas();q[type]=(q[type]||0)+1;saveQuotas(q);refreshQuotaUI();
+}
+function getRemainingStr(type){
+  var q=getQuotas(),lim=getTierLimits()[type];
+  if(lim===Infinity)return"\u221e";
+  return Math.max(0,lim-(q[type]||0));
+}
+
+function refreshQuotaUI(){
+  var q=getQuotas(),lim=getTierLimits(),tier=getCurrentTier();
+  // Quota bar
+  var qd=document.getElementById("quota-display");
+  if(qd&&!isGuest){
+    qd.style.display="block";
+    var tv=document.getElementById("quota-val"),tf=document.getElementById("quota-fill");
+    var textLim=lim.text,textUsed=q.text||0;
+    if(textLim===Infinity){tv.textContent=textUsed+" / \u221e";tf.style.width="30%";tf.className="quota-bar-fill"}
+    else{tv.textContent=textUsed+" / "+textLim;var pct=Math.min(100,(textUsed/textLim)*100);tf.style.width=pct+"%";tf.className="quota-bar-fill"+(pct>=80?" danger":pct>=60?" warn":"")}
+  }
+  // Code footer
+  var hkq=document.getElementById("hk-quota-info");
+  if(hkq){var cr=getRemainingStr("code");hkq.textContent=(lim.code===Infinity?"\u221e":cr)+" remaining today"}
+  // Video quota
+  var vqt=document.getElementById("vid-quota-txt"),vqf=document.getElementById("vid-quota-fill");
+  if(vqt){
+    var vl=lim.video,vu=q.video||0;
+    if(vl===0){vqt.textContent="Video not available — Starter plan required";if(vqf)vqf.style.width="0%"}
+    else{vqt.textContent=vu+" / "+vl+" video"+(vl>1?"s":"")+" today";if(vqf)vqf.style.width=Math.min(100,(vu/vl)*100)+"%"}
+  }
+  // Video card
+  var vc=document.getElementById("video-card-sub"),vl2=document.getElementById("video-card-lock");
+  if(vc&&vl2){
+    if(tier==="free"){vc.textContent="AI video from text — Starter plan";vl2.style.display="inline-flex"}
+    else{var vr=getRemainingStr("video");vc.textContent="AI video · "+vr+" remaining today";vl2.style.display="none"}
+  }
+  // Code card
+  var cc=document.getElementById("code-card-sub");
+  if(cc){var crr=getRemainingStr("code");cc.textContent=(lim.code===Infinity?"\u221e":crr)+" requests remaining · hacker terminal"}
+  // Photo card
+  var pc=document.getElementById("photo-card-sub");
+  if(pc){pc.textContent=getRemainingStr("photo")+" analyses remaining today"}
+  // Badges
+  var badge=document.getElementById("u-badge"),ddBadge=document.getElementById("dd-tier-badge");
+  if(badge&&ddBadge){
+    if(tier==="starter"){badge.textContent="Starter";badge.className="badge badge-starter";ddBadge.textContent="\u2b50 Starter Plan";ddBadge.className="dd-tier-badge badge badge-starter"}
+    else if(tier==="premium"){badge.textContent="Premium";badge.className="badge badge-premium";ddBadge.textContent="\uD83D\uDC8E Premium Plan";ddBadge.className="dd-tier-badge badge badge-premium"}
+    else{if(!isGuest){badge.textContent="Member";badge.className="badge badge-pro"}ddBadge.textContent="Free Plan";ddBadge.className="dd-tier-badge badge badge-guest"}
+  }
+  updateSubModal();
+}
+
+function updateSubModal(){
+  var tier=getCurrentTier();
+  var fc=document.getElementById("tier-free-card"),fcta=document.getElementById("tier-free-cta");
+  if(fc&&fcta){fc.classList.toggle("current-tier",tier==="free");fcta.textContent=tier==="free"?"Current plan":"Downgrade to Free";fcta.disabled=tier==="free"}
+  var sc=document.getElementById("tier-starter-card"),scta=document.getElementById("tier-starter-cta");
+  if(sc&&scta){
+    sc.classList.toggle("current-tier",tier==="starter");
+    if(tier==="starter"){scta.textContent="Current plan \u2713";scta.disabled=true;scta.className="tier-cta free-cta"}
+    else{scta.textContent="Subscribe \u2014 3.49\u20ac/mo";scta.disabled=false;scta.className="tier-cta starter-cta"}
+  }
+}
+
+// ── SUBSCRIPTION MODAL ─────────────────────────────────────
+function openSubModal(){updateSubModal();document.getElementById("sub-modal").classList.add("open");document.getElementById("profile-dd").classList.remove("open")}
+function closeSubModal(){document.getElementById("sub-modal").classList.remove("open")}
+document.getElementById("sub-modal").addEventListener("click",function(e){if(e.target===this)closeSubModal()});
+
+function handleStarterClick(){
+  var tier=getCurrentTier();
+  if(tier==="starter"){showToast("You are already on the Starter plan!");return}
+  // Demo: activate starter locally
+  var q=getQuotas();q.tier="starter";saveQuotas(q);
+  refreshQuotaUI();closeSubModal();
+  showToast("\uD83C\uDF89 Starter plan activated! (Demo mode)",3500);
+}
+
+// ── VIDEO MODE ─────────────────────────────────────────────
+function handleVideoCardClick(){
+  var tier=getCurrentTier();
+  if(tier==="free"){openSubModal();showToast("\uD83D\uDD12 Video generation requires the Starter plan");return}
+  if(!canUse("video")){showRateLimitModal("video");return}
+  openVideoMode();
+}
+function openVideoMode(){
+  document.getElementById("video-overlay").classList.add("open");
+  refreshQuotaUI();
+  var vp=document.getElementById("vid-prompt");
+  setTimeout(function(){vp.focus()},300);
+  if(!vp._inited){
+    vp._inited=true;
+    vp.addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();generateVideo()}});
+    vp.addEventListener("input",function(){this.style.height="auto";this.style.height=Math.min(this.scrollHeight,100)+"px"});
+  }
+}
+function closeVideoMode(){document.getElementById("video-overlay").classList.remove("open")}
+
+async function generateVideo(){
+  var promptEl=document.getElementById("vid-prompt"),sendBtn=document.getElementById("vid-send");
+  var text=promptEl.value.trim();
+  if(!text||sendBtn.disabled)return;
+  if(!canUse("video")){showRateLimitModal("video");return}
+  promptEl.value="";promptEl.style.height="auto";
+  sendBtn.disabled=true;
+  document.getElementById("vid-status-badge").textContent="GENERATING";
+  var empty=document.getElementById("vid-empty");if(empty)empty.remove();
+  var content=document.getElementById("vid-content");
+  var card=document.createElement("div");card.className="vid-card";
+  card.innerHTML='<div class="vid-card-prompt">\uD83C\uDFAC '+esc(text)+'</div><div class="vid-card-body"><div class="vid-card-loading"><div class="vid-card-spinner"></div><div>Generating your video...</div><div class="vid-card-note">This can take 30\u201390 seconds</div></div></div>';
+  content.appendChild(card);content.scrollTop=content.scrollHeight;
+  try{
+    var r=await fetch(VIDEO_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:text})});
+    var d=await r.json();
+    var body=card.querySelector(".vid-card-body");
+    if(d.video){
+      useQuota("video");
+      body.innerHTML='<video class="generated-vid" controls autoplay muted playsinline><source src="'+d.video+'" type="video/mp4"></video><div class="vid-card-actions"><button class="vid-dl-btn" onclick="downloadVid(\''+d.video.slice(0,60)+'\',this)"><svg viewBox="0 0 16 16" fill="none"><path d="M8 3v8M5 8l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Download</button></div>';
+      refreshQuotaUI();
+    }else{body.innerHTML='<div style="color:var(--red);font-size:13px;padding:10px 0">\u26a0\ufe0f '+(d.error||"Video generation failed.")+'</div>'}
+  }catch(err){
+    var body2=card.querySelector(".vid-card-body");
+    body2.innerHTML='<div style="color:var(--red);font-size:13px;padding:10px 0">\u26a0\ufe0f Connection error: '+err.message+'</div>';
+  }
+  sendBtn.disabled=false;
+  document.getElementById("vid-status-badge").textContent="READY";
+  content.scrollTop=content.scrollHeight;
+}
+function downloadVid(url,btn){
+  var a=document.createElement("a");a.href=url;a.download="nova-618-video.mp4";a.click();
+  btn.textContent="Downloaded!";setTimeout(function(){btn.innerHTML='<svg viewBox="0 0 16 16" fill="none"><path d="M8 3v8M5 8l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Download'},1500);
+}
+
+// ── LS ─────────────────────────────────────────────────────
+var ls={
+  get:function(k){try{return JSON.parse(localStorage.getItem(k))}catch{return null}},
+  set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}},
+  del:function(k){try{localStorage.removeItem(k)}catch{}}
 };
 function getUsers(){return ls.get(S_USERS)||{}}
-function convKey(){return "nova_convs_"+currentUser.id}
+function convKey(){return"nova_convs_"+currentUser.id}
 function getUserConvs(){return isGuest?[]:(ls.get(convKey())||[])}
 function saveConvs(c){if(!isGuest)ls.set(convKey(),c)}
 
-var IMAGE_KW = ["image ","draw ","draw me","paint ","render ","visualize ","generate image","create image","make an image","make a picture","generate a picture","create a picture","generate art","create art","generate a photo","create a photo","picture of","photo of","illustration of"];
+var IMAGE_KW=["image ","draw ","draw me","paint ","render ","visualize ","generate image","create image","make an image","make a picture","generate a picture","create a picture","generate art","create art","generate a photo","create a photo","picture of","photo of","illustration of"];
 function isImageReq(t){
   var s=t.toLowerCase().trim();
   if(s.startsWith("image ")||s.startsWith("image:"))return true;
@@ -882,10 +1214,9 @@ function vi(id){return document.getElementById(id).value.trim()}
 function stop(e){e.stopPropagation()}
 function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
 function escHtml(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
-function bhAv(size){size=size||28;return '<img src="https://sixteleinekugel-commits.github.io/novaAI-chat/k9TBi.jpg" style="width:'+size+'px;height:'+size+'px;border-radius:50%;object-fit:cover;" alt="Nova">'}
+function bhAv(size){size=size||28;return'<img src="https://sixteleinekugel-commits.github.io/novaAI-chat/k9TBi.jpg" style="width:'+size+'px;height:'+size+'px;border-radius:50%;object-fit:cover;" alt="Nova">'}
 function showToast(msg,dur){
-  dur=dur||2800;
-  var t=document.getElementById("toast");
+  dur=dur||2800;var t=document.getElementById("toast");
   t.textContent=msg;t.classList.add("show");
   clearTimeout(t._to);t._to=setTimeout(function(){t.classList.remove("show")},dur);
 }
@@ -909,15 +1240,15 @@ function checkStrength(pw){
 }
 function downloadChat(){
   if(!messages.length){showToast("No messages to export.");return}
-  var txt=messages.map(function(m){return "["+(m.role==="user"?(currentUser&&currentUser.name?currentUser.name:"You"):"Nova AI 618")+"]\n"+m.content}).join("\n\n──────\n\n");
+  var txt=messages.map(function(m){return"["+(m.role==="user"?(currentUser&&currentUser.name?currentUser.name:"You"):"Nova AI 618")+"]\n"+m.content}).join("\n\n\u2500\u2500\u2500\u2500\u2500\u2500\n\n");
   var a=document.createElement("a");a.href="data:text/plain;charset=utf-8,"+encodeURIComponent(txt);a.download="nova-618-chat.txt";a.click();
 }
 function exportAll(){
-  var convs=getUserConvs();
-  if(!convs.length){showToast("No saved conversations.");return}
-  var all=convs.map(function(c){return "══ "+c.title+" ══\n\n"+c.messages.map(function(m){return "["+(m.role==="user"?currentUser.name:"Nova")+"]\n"+m.content}).join("\n\n──\n\n")}).join("\n\n\n");
+  var convs=getUserConvs();if(!convs.length){showToast("No saved conversations.");return}
+  var all=convs.map(function(c){return"\u2550\u2550 "+c.title+" \u2550\u2550\n\n"+c.messages.map(function(m){return"["+(m.role==="user"?currentUser.name:"Nova")+"]\n"+m.content}).join("\n\n\u2500\u2500\n\n")}).join("\n\n\n");
   var a=document.createElement("a");a.href="data:text/plain;charset=utf-8,"+encodeURIComponent(all);a.download="nova-618-all.txt";a.click();
 }
+function closeRateLimit(){document.getElementById("rate-limit-modal").classList.remove("open")}
 
 // ── MARKDOWN ───────────────────────────────────────────────
 function formatMsg(text){
@@ -925,10 +1256,8 @@ function formatMsg(text){
   var t=text;
   t=t.replace(/```([\w]*)\n?([\s\S]*?)```/g,function(_,lang,code){return"<pre><code>"+escHtml(code.trim())+"</code></pre>"});
   t=t.replace(/`([^`\n]+)`/g,function(_,c){return"<code>"+escHtml(c)+"</code>"});
-  t=t.replace(/^#{4}\s+(.+)$/gm,"<h4>$1</h4>");
-  t=t.replace(/^#{3}\s+(.+)$/gm,"<h3>$1</h3>");
-  t=t.replace(/^#{2}\s+(.+)$/gm,"<h2>$1</h2>");
-  t=t.replace(/^#{1}\s+(.+)$/gm,"<h1>$1</h1>");
+  t=t.replace(/^#{4}\s+(.+)$/gm,"<h4>$1</h4>");t=t.replace(/^#{3}\s+(.+)$/gm,"<h3>$1</h3>");
+  t=t.replace(/^#{2}\s+(.+)$/gm,"<h2>$1</h2>");t=t.replace(/^#{1}\s+(.+)$/gm,"<h1>$1</h1>");
   t=t.replace(/\*\*\*(.+?)\*\*\*/g,"<strong><em>$1</em></strong>");
   t=t.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>");
   t=t.replace(/\*(.+?)\*/g,"<em>$1</em>");
@@ -953,19 +1282,8 @@ function formatMsg(text){
 // ── MODEL ──────────────────────────────────────────────────
 function selectModel(id,name,ctx,el){
   document.querySelectorAll("#model-modal .model-opt").forEach(function(o){o.classList.remove("selected")});
-  el.classList.add("selected");
-  currentModel=id;updateModelUI(name,ctx);
-  document.getElementById("model-modal").classList.remove("open");
-  showToast("Model: "+name);
-}
-function switchToModel(id,name,ctx){
-  currentModel=id;updateModelUI(name,ctx);
-  document.querySelectorAll("#model-modal .model-opt").forEach(function(o){o.classList.remove("selected")});
-  var map={"openai/gpt-oss-120b":"opt-gpt","llama-3.3-70b-versatile":"opt-70b","llama-3.1-8b-instant":"opt-8b"};
-  var el=document.getElementById(map[id]);
-  if(el)el.classList.add("selected");
-  document.getElementById("rate-limit-modal").classList.remove("open");
-  showToast("Switched to "+name);
+  el.classList.add("selected");currentModel=id;updateModelUI(name,ctx);
+  document.getElementById("model-modal").classList.remove("open");showToast("Model: "+name);
 }
 function updateModelUI(name,ctx){
   document.getElementById("model-nm").textContent=name;
@@ -976,22 +1294,20 @@ function updateModelUI(name,ctx){
   else if(currentModel==="llama-3.3-70b-versatile")dot.className="model-dot blue";
   else dot.className="model-dot";
 }
-function showRateLimitModal(){document.getElementById("rate-limit-modal").classList.add("open")}
+function showRateLimitModal(type){
+  var lim=getTierLimits()[type||"text"];
+  document.getElementById("rl-title").textContent="Daily limit reached";
+  document.getElementById("rl-msg").textContent="You've used all your "+(type||"text")+" requests for today ("+(lim===Infinity?"\u221e":lim)+" / day). Upgrade your plan or try again tomorrow.";
+  document.getElementById("rate-limit-modal").classList.add("open");
+}
 
 // ── SEARCH ─────────────────────────────────────────────────
 function toggleSearch(){
   searchModeActive=!searchModeActive;
-  var btn=document.getElementById("search-tool-btn");
-  var box=document.getElementById("input-box");
-  var banner=document.getElementById("search-banner");
-  var prompt=document.getElementById("prompt");
-  if(searchModeActive){
-    btn.classList.add("active-search");box.classList.add("search-active");banner.classList.add("show");
-    prompt.placeholder="Ask anything — Nova searches the web in real time...";showToast("🌐 Web search enabled");
-  }else{
-    btn.classList.remove("active-search");box.classList.remove("search-active");banner.classList.remove("show");
-    prompt.placeholder="Ask Nova anything...";showToast("Web search disabled");
-  }
+  var btn=document.getElementById("search-tool-btn"),box=document.getElementById("input-box");
+  var banner=document.getElementById("search-banner"),prompt=document.getElementById("prompt");
+  if(searchModeActive){btn.classList.add("active-search");box.classList.add("search-active");banner.classList.add("show");prompt.placeholder="Ask anything — Nova searches the web...";showToast("\uD83C\uDF10 Web search enabled")}
+  else{btn.classList.remove("active-search");box.classList.remove("search-active");banner.classList.remove("show");prompt.placeholder="Ask Nova anything...";showToast("Web search disabled")}
 }
 
 // ── CODE MODE ──────────────────────────────────────────────
@@ -1000,9 +1316,13 @@ function openCodeMode(){
   document.getElementById("code-tool-btn").classList.add("code-btn-active");
   startMatrixRain();
   var hp=document.getElementById("hk-prompt");
-  hp.addEventListener("input",function(){hp.style.height="auto";hp.style.height=Math.min(hp.scrollHeight,120)+"px"});
-  hp.addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendCodeMessage()}});
+  if(!hp._inited){
+    hp._inited=true;
+    hp.addEventListener("input",function(){hp.style.height="auto";hp.style.height=Math.min(hp.scrollHeight,120)+"px"});
+    hp.addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendCodeMessage()}});
+  }
   setTimeout(function(){hp.focus()},300);
+  refreshQuotaUI();
 }
 function closeCodeMode(){
   document.getElementById("code-overlay").classList.remove("open");
@@ -1013,21 +1333,18 @@ function startMatrixRain(){
   var canvas=document.getElementById("matrix-canvas");
   var ctx=canvas.getContext("2d");
   canvas.width=window.innerWidth;canvas.height=window.innerHeight;
-  var cols=Math.floor(canvas.width/16);
-  var drops=[];
+  var cols=Math.floor(canvas.width/16),drops=[];
   for(var i=0;i<cols;i++)drops[i]=Math.random()*-canvas.height;
-  var chars="アイウエオカキクケコタチツナニヌABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789{}[]()=+-*/&^%$#@!;:.,?|";
+  var chars="\u30A2\u30A4\u30A6\u30A8\u30AA\u30AB\u30AD\u30AF\u30B1\u30B3ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789{}[]()=+-*/&^%$#@!;:.,?|";
   function draw(){
-    if(!document.getElementById("code-overlay").classList.contains("open")){return}
-    ctx.fillStyle="rgba(2,12,2,0.06)";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+    if(!document.getElementById("code-overlay").classList.contains("open"))return;
+    ctx.fillStyle="rgba(2,12,2,0.06)";ctx.fillRect(0,0,canvas.width,canvas.height);
     ctx.font="13px 'JetBrains Mono',monospace";
-    for(var i=0;i<drops.length;i++){
+    for(var j=0;j<drops.length;j++){
       ctx.fillStyle="rgba(0,255,65,"+(Math.random()*0.4+0.1)+")";
-      var c=chars[Math.floor(Math.random()*chars.length)];
-      ctx.fillText(c,i*16,drops[i]);
-      if(drops[i]>canvas.height&&Math.random()>0.978)drops[i]=0;
-      drops[i]+=16;
+      ctx.fillText(chars[Math.floor(Math.random()*chars.length)],j*16,drops[j]);
+      if(drops[j]>canvas.height&&Math.random()>0.978)drops[j]=0;
+      drops[j]+=16;
     }
     matrixAnimId=requestAnimationFrame(draw);
   }
@@ -1037,8 +1354,7 @@ function startMatrixRain(){
 function stopMatrixRain(){
   if(matrixAnimId){cancelAnimationFrame(matrixAnimId);matrixAnimId=null}
   var canvas=document.getElementById("matrix-canvas");
-  var ctx=canvas.getContext("2d");
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  canvas.getContext("2d").clearRect(0,0,canvas.width,canvas.height);
 }
 function addHkMsg(role,text){
   var h=document.getElementById("hk-hist");
@@ -1046,73 +1362,55 @@ function addHkMsg(role,text){
   var wrap=document.createElement("div");wrap.className="hk-msg";
   var label=document.createElement("div");
   label.className="hk-msg-label"+(role==="user"?" user-lbl":"");
-  var userName=currentUser?currentUser.name.toUpperCase():"USER";
-  label.textContent=role==="user"?"["+userName+"] ~$":"[LAGUNA_M1] output:";
+  label.textContent=role==="user"?"["+(currentUser?currentUser.name.toUpperCase():"USER")+"] ~$":"[LAGUNA_M1] output:";
   var bub=document.createElement("div");bub.className="hk-bub "+(role==="user"?"user":"bot");
-  if(role==="bot")bub.innerHTML=formatMsg(text);
-  else bub.textContent=text;
+  if(role==="bot")bub.innerHTML=formatMsg(text);else bub.textContent=text;
   if(role==="bot"){
     var acts=document.createElement("div");acts.className="hk-actions";
     var cpBtn=document.createElement("button");cpBtn.className="hk-act-btn";cpBtn.textContent="copy";
     cpBtn.onclick=function(){navigator.clipboard.writeText(text).then(function(){cpBtn.textContent="copied!";setTimeout(function(){cpBtn.textContent="copy"},1500)})};
-    acts.appendChild(cpBtn);
-    wrap.appendChild(label);wrap.appendChild(bub);wrap.appendChild(acts);
+    acts.appendChild(cpBtn);wrap.appendChild(label);wrap.appendChild(bub);wrap.appendChild(acts);
   }else{wrap.appendChild(label);wrap.appendChild(bub)}
   h.appendChild(wrap);h.scrollTop=h.scrollHeight;
 }
 async function sendCodeMessage(){
-  var promptEl=document.getElementById("hk-prompt");
-  var sendBtn=document.getElementById("hk-send");
+  var promptEl=document.getElementById("hk-prompt"),sendBtn=document.getElementById("hk-send");
   var text=promptEl.value.trim();
   if(!text||sendBtn.disabled)return;
+  if(!canUse("code")){showRateLimitModal("code");return}
   promptEl.value="";promptEl.style.height="auto";
-  sendBtn.disabled=true;
-  document.getElementById("hk-status").textContent="PROCESSING";
-  addHkMsg("user",text);
-  codeMsgs.push({role:"user",content:text});
+  sendBtn.disabled=true;document.getElementById("hk-status").textContent="PROCESSING";
+  addHkMsg("user",text);codeMsgs.push({role:"user",content:text});
   var h=document.getElementById("hk-hist");
-  var typWrap=document.createElement("div");typWrap.className="hk-msg";
-  var typLbl=document.createElement("div");typLbl.className="hk-msg-label";typLbl.textContent="[LAGUNA_M1] computing...";
-  var typBub=document.createElement("div");typBub.className="hk-bub bot";
-  typBub.innerHTML='<div class="hk-typing"><span></span><span></span><span></span></div>';
-  typWrap.appendChild(typLbl);typWrap.appendChild(typBub);
-  h.appendChild(typWrap);h.scrollTop=h.scrollHeight;
-  var msgsToSend=[{role:"system",content:CODE_SYSTEM_PROMPT}].concat(codeMsgs);
+  var tw=document.createElement("div");tw.className="hk-msg";
+  var tl=document.createElement("div");tl.className="hk-msg-label";tl.textContent="[LAGUNA_M1] computing...";
+  var tb=document.createElement("div");tb.className="hk-bub bot";tb.innerHTML='<div class="hk-typing"><span></span><span></span><span></span></div>';
+  tw.appendChild(tl);tw.appendChild(tb);h.appendChild(tw);h.scrollTop=h.scrollHeight;
+  var msgs=[{role:"system",content:CODE_SYSTEM_PROMPT}].concat(codeMsgs);
   try{
-    var r=await fetch(CODE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgsToSend})});
-    var d=await r.json();
-    typWrap.remove();
+    var r=await fetch(CODE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgs})});
+    var d=await r.json();tw.remove();
     if(d.error){
-      var errWrap=document.createElement("div");errWrap.className="hk-msg";
-      var errLbl=document.createElement("div");errLbl.className="hk-msg-label";errLbl.textContent="[ERROR]";
-      var errBub=document.createElement("div");errBub.className="hk-bub bot";errBub.style.color="rgba(255,80,80,.85)";
-      errBub.textContent="error: "+d.error+(d.fix?" — "+d.fix:"");
-      errWrap.appendChild(errLbl);errWrap.appendChild(errBub);h.appendChild(errWrap);
-      document.getElementById("hk-status").textContent="ERROR";
+      var ew=document.createElement("div");ew.className="hk-msg";
+      var el2=document.createElement("div");el2.className="hk-msg-label";el2.textContent="[ERROR]";
+      var eb=document.createElement("div");eb.className="hk-bub bot";eb.style.color="rgba(255,80,80,.85)";eb.textContent="error: "+d.error+(d.fix?" \u2014 "+d.fix:"");
+      ew.appendChild(el2);ew.appendChild(eb);h.appendChild(ew);document.getElementById("hk-status").textContent="ERROR";
     }else{
       var reply="";
-      if(d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content){
-        reply=d.choices[0].message.content;
-      }else if(d.content&&Array.isArray(d.content)){
-        reply=d.content.filter(function(b){return b.type==="text"}).map(function(b){return b.text}).join("\n");
-      }
+      if(d.choices&&d.choices[0]&&d.choices[0].message)reply=d.choices[0].message.content;
+      else if(d.content&&Array.isArray(d.content))reply=d.content.filter(function(b){return b.type==="text"}).map(function(b){return b.text}).join("\n");
       if(!reply)reply="[no output received]";
-      codeMsgs.push({role:"assistant",content:reply});
-      addHkMsg("bot",reply);
-      document.getElementById("hk-status").textContent="READY";
+      useQuota("code");codeMsgs.push({role:"assistant",content:reply});
+      addHkMsg("bot",reply);document.getElementById("hk-status").textContent="READY";
     }
   }catch(err){
-    typWrap.remove();
-    var errWrap2=document.createElement("div");errWrap2.className="hk-msg";
-    var errLbl2=document.createElement("div");errLbl2.className="hk-msg-label";errLbl2.textContent="[NETWORK_ERROR]";
-    var errBub2=document.createElement("div");errBub2.className="hk-bub bot";errBub2.style.color="rgba(255,80,80,.85)";
-    errBub2.textContent="connection failed: "+err.message;
-    errWrap2.appendChild(errLbl2);errWrap2.appendChild(errBub2);h.appendChild(errWrap2);
-    document.getElementById("hk-status").textContent="ERROR";
+    tw.remove();
+    var ew2=document.createElement("div");ew2.className="hk-msg";
+    var el3=document.createElement("div");el3.className="hk-msg-label";el3.textContent="[NETWORK_ERROR]";
+    var eb2=document.createElement("div");eb2.className="hk-bub bot";eb2.style.color="rgba(255,80,80,.85)";eb2.textContent="connection failed: "+err.message;
+    ew2.appendChild(el3);ew2.appendChild(eb2);h.appendChild(ew2);document.getElementById("hk-status").textContent="ERROR";
   }
-  sendBtn.disabled=false;
-  document.getElementById("hk-prompt").focus();
-  h.scrollTop=h.scrollHeight;
+  sendBtn.disabled=false;document.getElementById("hk-prompt").focus();h.scrollTop=h.scrollHeight;
 }
 
 // ── AUTH ───────────────────────────────────────────────────
@@ -1141,8 +1439,7 @@ function doRegister(){
   btn.disabled=true;btn.textContent="Creating account...";
   lastRegEmail=email;lastRegName=name;
   function signInDirectly(msg){
-    var allUsers=getUsers();
-    var user=Object.values(allUsers).find(function(u){return u.email===email});
+    var allUsers=getUsers(),user=Object.values(allUsers).find(function(u){return u.email===email});
     if(user){user.verified=true;ls.set(S_USERS,allUsers)}
     oEl.textContent=msg||"Account created! Signing you in...";oEl.classList.add("show");
     btn.style.display="none";
@@ -1163,7 +1460,7 @@ function doRegister(){
       var d1=document.getElementById("reg-divider"),gb=document.getElementById("reg-guest-btn");
       if(d1)d1.style.display="none";if(gb)gb.style.display="none";
     })
-    .catch(function(err){console.error("EmailJS:",err);signInDirectly("Account created! Signing you in...")});
+    .catch(function(){signInDirectly("Account created! Signing you in...")});
   })
   .catch(function(){signInDirectly("Account created! Signing you in...")});
 }
@@ -1171,10 +1468,8 @@ function resendConfirmation(){
   if(!lastRegEmail||!lastRegName)return;
   showToast("Sending confirmation email...");
   fetch(BACKEND_GROQ+"/send-confirmation",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:lastRegEmail,name:lastRegName})})
-  .then(function(r){return r.json()}).then(function(d){
-    if(d.success)showToast("Email resent! Check your inbox.");
-    else showToast("Could not resend: "+(d.error||"unknown"));
-  }).catch(function(){showToast("Network error.")});
+  .then(function(r){return r.json()}).then(function(d){showToast(d.success?"Email resent!":"Could not resend: "+(d.error||"unknown"))})
+  .catch(function(){showToast("Network error.")});
 }
 function doLogin(){
   var email=vi("login-email").toLowerCase(),pw=vi("login-pw");
@@ -1188,13 +1483,12 @@ function loginUser(user){ls.set(S_SESSION,{userId:user.id});startApp(user,false)
 function doGuest(){ls.set(S_SESSION,{userId:"guest"});startApp({id:"guest",name:"Guest",email:""},true)}
 function doLogout(){
   ls.del(S_SESSION);currentUser=null;messages=[];msgCount=0;currentConvId=null;
-  closeVoiceMode();closeCodeMode();
+  closeVoiceMode();closeCodeMode();closeVideoMode();
   document.getElementById("app-screen").style.display="none";
   document.getElementById("auth-screen").style.display="flex";
   document.getElementById("profile-dd").classList.remove("open");
   closeSidebar();
-  document.getElementById("login-email").value="";
-  document.getElementById("login-pw").value="";
+  document.getElementById("login-email").value="";document.getElementById("login-pw").value="";
   document.getElementById("login-err").classList.remove("show");
 }
 function startApp(user,guest){
@@ -1202,17 +1496,15 @@ function startApp(user,guest){
   document.getElementById("auth-screen").style.display="none";
   document.getElementById("app-screen").style.display="block";
   var init=user.name.charAt(0).toUpperCase();
-  var av=document.getElementById("u-av");
-  av.textContent=init;av.className="u-av"+(guest?" guest":"");
+  var av=document.getElementById("u-av");av.textContent=init;av.className="u-av"+(guest?" guest":"");
   document.getElementById("u-nm").textContent=user.name;
   document.getElementById("dd-name").textContent=user.name;
   document.getElementById("dd-email").textContent=user.email||"Guest mode";
-  var badge=document.getElementById("u-badge");badge.textContent=guest?"Guest":"Member";badge.className="badge "+(guest?"badge-guest":"badge-pro");
   document.getElementById("logout-lbl").textContent=guest?"Exit guest mode":"Sign out";
-  document.getElementById("empty-title").textContent=guest?"Hello! I'm Nova 👋":"Hello "+user.name+"! 👋";
-  document.getElementById("empty-sub").textContent=guest?"Guest mode — chats won't be saved. Create an account to keep your history!":"Ask me anything — search the web, generate images, analyze photos, or enter Code Mode!";
+  document.getElementById("empty-title").textContent=guest?"Hello! I'm Nova \uD83D\uDC4B":"Hello "+user.name+"! \uD83D\uDC4B";
+  document.getElementById("empty-sub").textContent=guest?"Guest mode \u2014 chats won't be saved.":"Ask me anything \u2014 search the web, generate images, analyze photos, code or generate videos!";
   if(synth){voiceVoices=synth.getVoices();synth.addEventListener("voiceschanged",function(){voiceVoices=synth.getVoices()},{once:true})}
-  refreshSidebar();newConversation();
+  refreshQuotaUI();refreshSidebar();newConversation();
 }
 
 // ── CONVERSATIONS ──────────────────────────────────────────
@@ -1227,7 +1519,7 @@ function newConversation(){
 function persistConv(){
   if(isGuest||!messages.length)return;
   var convs=getUserConvs();
-  var title=messages[0].content.slice(0,50)+(messages[0].content.length>50?"…":"");
+  var title=messages[0].content.slice(0,50)+(messages[0].content.length>50?"\u2026":"");
   var idx=convs.findIndex(function(c){return c.id===currentConvId});
   var conv={id:currentConvId,title:title,messages:messages,ts:Date.now()};
   if(idx>=0)convs[idx]=conv;else convs.unshift(conv);
@@ -1236,7 +1528,7 @@ function persistConv(){
 function refreshSidebar(){
   var list=document.getElementById("convs-list"),empty=document.getElementById("convs-empty");
   Array.from(list.querySelectorAll(".conv-item,.sec-label")).forEach(function(e){e.remove()});
-  if(isGuest){empty.style.display="block";empty.innerHTML='Guest mode — chats not saved.<br><span style="color:var(--accent);cursor:pointer;text-decoration:underline" onclick="showAuth(\'register\')">Create an account</span>';return}
+  if(isGuest){empty.style.display="block";empty.innerHTML='Guest mode \u2014 chats not saved.<br><span style="color:var(--accent);cursor:pointer;text-decoration:underline" onclick="showAuth(\'register\')">Create an account</span>';return}
   var convs=getUserConvs();
   if(!convs.length){empty.style.display="block";return}
   empty.style.display="none";
@@ -1278,11 +1570,10 @@ function addDivider(txt){var d=document.createElement("div");d.className="day-di
 function renderMsg(role,content,typing){
   var chatEl=document.getElementById("chat"),cw=document.getElementById("chat-wrap");
   hideEmpty();if(msgCount===0)addDivider("Today");msgCount++;
-  var init=currentUser?currentUser.name.charAt(0).toUpperCase():"?";
   var group=document.createElement("div");group.className="msg-group";
   var row=document.createElement("div");row.className="msg-row "+role;
   var av=document.createElement("div");av.className="msg-av "+(role==="user"?"user":"bot");
-  if(role==="bot")av.innerHTML=bhAv(28);else av.textContent=init;
+  if(role==="bot")av.innerHTML=bhAv(28);else av.textContent=currentUser?currentUser.name.charAt(0).toUpperCase():"?";
   var wrap=document.createElement("div");wrap.className="msg-content";
   var hdr=document.createElement("div");hdr.className="msg-header";
   var sender=document.createElement("span");sender.className="msg-sender";sender.textContent=role==="user"?(currentUser?currentUser.name:"You"):"Nova AI 618";
@@ -1308,7 +1599,7 @@ function addActions(wrap,text){
   spkBtn.onclick=function(){
     if(synth&&synth.speaking){synth.cancel();spkBtn.innerHTML=liIcon;return}
     unlockTTS();spkBtn.innerHTML='<svg viewBox="0 0 16 16" fill="none"><rect x="4" y="4" width="3" height="8" rx="1" fill="currentColor"/><rect x="9" y="4" width="3" height="8" rx="1" fill="currentColor"/></svg> Stop';
-    var dl=detectLang(text);var en=LANG_MAP[dl];
+    var dl=detectLang(text),en=LANG_MAP[dl];
     speakText(text,en?en.l:"en-US",function(){spkBtn.innerHTML=liIcon});
   };
   actions.appendChild(copyBtn);actions.appendChild(spkBtn);wrap.appendChild(actions);
@@ -1320,7 +1611,7 @@ async function generateImage(prompt,editBubble,editWrap){
   if(editBubble&&editWrap){bubble=editBubble;wrap=editWrap;bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>Modifying image...</div>'}
   else{
     renderMsg("user",prompt);messages.push({role:"user",content:prompt});
-    if(messages.length===1)document.getElementById("conv-title").textContent=prompt.length>45?prompt.slice(0,45)+"…":prompt;
+    if(messages.length===1)document.getElementById("conv-title").textContent=prompt.length>45?prompt.slice(0,45)+"\u2026":prompt;
     var chatEl=document.getElementById("chat"),cw=document.getElementById("chat-wrap");
     hideEmpty();if(msgCount===0)addDivider("Today");msgCount++;
     var group=document.createElement("div");group.className="msg-group";
@@ -1328,11 +1619,11 @@ async function generateImage(prompt,editBubble,editWrap){
     var av=document.createElement("div");av.className="msg-av bot";av.innerHTML=bhAv(28);
     wrap=document.createElement("div");wrap.className="msg-content";
     var hdr=document.createElement("div");hdr.className="msg-header";
-    var sender=document.createElement("span");sender.className="msg-sender";sender.textContent="Nova AI 618";
-    var time=document.createElement("span");time.className="msg-time";time.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
-    hdr.appendChild(sender);hdr.appendChild(time);
+    var se=document.createElement("span");se.className="msg-sender";se.textContent="Nova AI 618";
+    var te=document.createElement("span");te.className="msg-time";te.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
+    hdr.appendChild(se);hdr.appendChild(te);
     bubble=document.createElement("div");bubble.className="bubble bot";
-    bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>Generating image (5–15s)...</div>';
+    bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>Generating image (5\u201315s)...</div>';
     wrap.appendChild(hdr);wrap.appendChild(bubble);row.appendChild(av);row.appendChild(wrap);group.appendChild(row);chatEl.appendChild(group);cw.scrollTop=cw.scrollHeight;
   }
   try{
@@ -1343,8 +1634,8 @@ async function generateImage(prompt,editBubble,editWrap){
       var img=document.createElement("img");img.src=d.image;img.className="generated-img";img.alt=prompt;bubble.appendChild(img);
       var eb=document.createElement("div");eb.className="img-edit-bar";
       var ei=document.createElement("input");ei.type="text";ei.className="img-edit-input";ei.placeholder="Modify: darker, add stars...";
-      var eBtn=document.createElement("button");eBtn.className="img-edit-btn";eBtn.textContent="✏️ Modify";
-      eBtn.onclick=async function(){var np=ei.value.trim();if(!np)return;eBtn.disabled=true;eBtn.textContent="⏳...";await generateImage(prompt+", "+np,bubble,wrap)};
+      var eBtn=document.createElement("button");eBtn.className="img-edit-btn";eBtn.textContent="\u270F\uFE0F Modify";
+      eBtn.onclick=async function(){var np=ei.value.trim();if(!np)return;eBtn.disabled=true;eBtn.textContent="\u23F3...";await generateImage(prompt+", "+np,bubble,wrap)};
       eb.appendChild(ei);eb.appendChild(eBtn);bubble.appendChild(eb);
       var dlB=document.createElement("button");dlB.className="act-btn";dlB.style.marginTop="7px";
       dlB.innerHTML='<svg viewBox="0 0 16 16" fill="none"><path d="M8 3v8M5 8l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Download';
@@ -1352,21 +1643,29 @@ async function generateImage(prompt,editBubble,editWrap){
       bubble.appendChild(dlB);
       messages.push({role:"assistant",content:"[Image generated: "+prompt+"]"});
       if(!isGuest)persistConv();
-    }else{bubble.innerHTML="";bubble.textContent="⚠️ "+(d.error||"Image generation failed.");bubble.style.color="var(--red)"}
-  }catch(e){bubble.innerHTML="";bubble.textContent="⚠️ Server error.";bubble.style.color="var(--red)"}
+    }else{bubble.innerHTML="";bubble.textContent="\u26A0\uFE0F "+(d.error||"Image generation failed.");bubble.style.color="var(--red)"}
+  }catch(e){bubble.innerHTML="";bubble.textContent="\u26A0\uFE0F Server error.";bubble.style.color="var(--red)"}
   document.getElementById("chat-wrap").scrollTop=999999;
 }
 
 // ── ANALYZE PHOTO ──────────────────────────────────────────
-function handlePhotoUpload(e){var file=e.target.files[0];if(!file)return;if(!file.type.startsWith("image/")){showToast("Please select an image file.");return}var reader=new FileReader();reader.onload=function(ev){pendingPhoto={dataUrl:ev.target.result,name:file.name};renderPhotoPreview()};reader.readAsDataURL(file);e.target.value=""}
+function handlePhotoUpload(e){
+  var file=e.target.files[0];if(!file)return;
+  if(!file.type.startsWith("image/")){showToast("Please select an image file.");return}
+  if(!canUse("photo")){showRateLimitModal("photo");e.target.value="";return}
+  var reader=new FileReader();
+  reader.onload=function(ev){pendingPhoto={dataUrl:ev.target.result,name:file.name};renderPhotoPreview()};
+  reader.readAsDataURL(file);e.target.value="";
+}
 function renderPhotoPreview(){
   var z=document.getElementById("photo-preview-zone");
   if(!pendingPhoto){z.innerHTML="";document.getElementById("photo-tool-btn").classList.remove("has-photo");document.getElementById("input-box").classList.remove("photo-active");return}
   document.getElementById("photo-tool-btn").classList.add("has-photo");
   document.getElementById("input-box").classList.add("photo-active");
-  z.innerHTML='<div class="photo-preview-wrap"><img class="photo-preview-thumb" src="'+pendingPhoto.dataUrl+'" alt="preview"><div class="photo-preview-info"><div class="photo-preview-name">'+esc(pendingPhoto.name)+'</div><div class="photo-preview-sub">📸 Ready to analyze — add a question or send</div></div><div class="photo-remove-btn" onclick="clearPhoto()"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>';
+  z.innerHTML='<div class="photo-preview-wrap"><img class="photo-preview-thumb" src="'+pendingPhoto.dataUrl+'" alt="preview"><div class="photo-preview-info"><div class="photo-preview-name">'+esc(pendingPhoto.name)+'</div><div class="photo-preview-sub">\uD83D\uDCF8 Ready to analyze \u2014 add a question or send</div></div><div class="photo-remove-btn" onclick="clearPhoto()"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>';
 }
 function clearPhoto(){pendingPhoto=null;renderPhotoPreview()}
+
 async function analyzePhoto(photoDataUrl,question){
   var displayQ=question||"Analyze this image in detail.";
   renderMsg("user",displayQ);
@@ -1377,21 +1676,22 @@ async function analyzePhoto(photoDataUrl,question){
   var av=document.createElement("div");av.className="msg-av bot";av.innerHTML=bhAv(28);
   var wrap=document.createElement("div");wrap.className="msg-content";
   var hdr=document.createElement("div");hdr.className="msg-header";
-  var sender=document.createElement("span");sender.className="msg-sender";sender.textContent="Nova AI 618";
-  var time=document.createElement("span");time.className="msg-time";time.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
-  hdr.appendChild(sender);hdr.appendChild(time);
+  var se=document.createElement("span");se.className="msg-sender";se.textContent="Nova AI 618";
+  var te=document.createElement("span");te.className="msg-time";te.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
+  hdr.appendChild(se);hdr.appendChild(te);
   var bubble=document.createElement("div");bubble.className="bubble bot";
   bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>Analyzing your photo...</div>';
   wrap.appendChild(hdr);wrap.appendChild(bubble);row.appendChild(av);row.appendChild(wrap);group.appendChild(row);chatEl.appendChild(group);cw.scrollTop=cw.scrollHeight;
   try{
-    var r=await fetch(ANALYZE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({image:photoDataUrl,question:question||"Analyze this image in detail. Describe what you see, key elements, colors, context."})});
+    var r=await fetch(ANALYZE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({image:photoDataUrl,question:question||"Analyze this image in detail. Describe what you see, key elements, colors, context and anything relevant."})});
     var d=await r.json();
     var reply=d.choices[0].message.content;
     bubble.innerHTML=formatMsg(reply);addActions(wrap,reply);
-    if(messages.length===0)document.getElementById("conv-title").textContent=displayQ.length>45?displayQ.slice(0,45)+"…":displayQ;
+    useQuota("photo");
+    if(messages.length===0)document.getElementById("conv-title").textContent=displayQ.length>45?displayQ.slice(0,45)+"\u2026":displayQ;
     messages.push({role:"user",content:displayQ});messages.push({role:"assistant",content:reply});
     if(!isGuest)persistConv();
-  }catch(e){bubble.innerHTML="";bubble.textContent="⚠️ Could not analyze the photo.";bubble.style.color="var(--red)"}
+  }catch(e){bubble.innerHTML="";bubble.textContent="\u26A0\uFE0F Could not analyze the photo.";bubble.style.color="var(--red)"}
   cw.scrollTop=999999;
 }
 
@@ -1401,18 +1701,12 @@ async function sendMessage(){
   var text=promptEl.value.trim();
   if(!text&&!pendingPhoto)return;
   if(sendBtn.disabled)return;
+  if(text&&!pendingPhoto&&!isImageReq(text)&&!canUse("text")){showRateLimitModal("text");return}
   promptEl.value="";autoResize();updateCount();sendBtn.disabled=true;
-
   if(pendingPhoto){var photo=pendingPhoto;clearPhoto();await analyzePhoto(photo.dataUrl,text||undefined);sendBtn.disabled=false;promptEl.focus();return}
   if(isImageReq(text)){await generateImage(text);sendBtn.disabled=false;return}
-  if(messages.length===0)document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"…":text;
-
-  // ⚡ ROUTING : choisit le bon endpoint selon le modèle actuel
-  var chatEndpoint = getChatUrl(currentModel);
-
+  if(messages.length===0)document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"\u2026":text;
   var msgsWithSystem=[{role:"system",content:SYSTEM_PROMPT}].concat(messages).concat([{role:"user",content:text}]);
-
-  // Mode recherche web
   if(searchModeActive){
     renderMsg("user",text);
     var chatEl=document.getElementById("chat"),cw=document.getElementById("chat-wrap");
@@ -1422,62 +1716,59 @@ async function sendMessage(){
     var av=document.createElement("div");av.className="msg-av bot";av.innerHTML=bhAv(28);
     var wrap=document.createElement("div");wrap.className="msg-content";
     var hdr=document.createElement("div");hdr.className="msg-header";
-    var sender=document.createElement("span");sender.className="msg-sender";sender.textContent="Nova AI 618";
+    var se=document.createElement("span");se.className="msg-sender";se.textContent="Nova AI 618";
     var t2=document.createElement("span");t2.className="msg-time";t2.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
-    hdr.appendChild(sender);hdr.appendChild(t2);
+    hdr.appendChild(se);hdr.appendChild(t2);
     var bubble=document.createElement("div");bubble.className="bubble bot";
-    bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>🌐 Searching the web...</div>';
+    bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>\uD83C\uDF10 Searching the web...</div>';
     wrap.appendChild(hdr);wrap.appendChild(bubble);row.appendChild(av);row.appendChild(wrap);group.appendChild(row);chatEl.appendChild(group);cw.scrollTop=cw.scrollHeight;
     try{
-      // La recherche Tavily est toujours sur le backend Groq (ancien)
       var sr=await fetch(SEARCH_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:text})});
-      var sd=await sr.json();
-      if(sd.error)throw new Error(sd.error);
-      var webCtx="You have access to real-time web search results. Use them to answer the user naturally.\n\nSearch results for \""+text+"\":\n\n"+sd.context+"\n\nAnswer naturally: "+text;
-      var searchMsgs=[{role:"system",content:SYSTEM_PROMPT}].concat(messages).concat([{role:"user",content:webCtx}]);
-      // Pour la réponse finale, on route aussi selon le modèle
-      var r=await fetch(chatEndpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:searchMsgs,model:currentModel,temperature:.3})});
+      var sd=await sr.json();if(sd.error)throw new Error(sd.error);
+      var webCtx="You have access to real-time web search results. Use them to answer naturally.\n\nSearch results for \""+text+"\":\n\n"+sd.context+"\n\nAnswer naturally: "+text;
+      var smsg=[{role:"system",content:SYSTEM_PROMPT}].concat(messages).concat([{role:"user",content:webCtx}]);
+      var r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:smsg,model:currentModel,temperature:.3})});
       var d=await r.json();
-      if(d.rate_limited){bubble.innerHTML="";bubble.textContent="⚠️ Daily limit reached. Switch model to continue.";bubble.style.color="var(--orange)";showRateLimitModal();sendBtn.disabled=false;return}
+      if(d.rate_limited||(d.error&&d.error.includes("rate"))){bubble.innerHTML="";bubble.textContent="\u26A0\uFE0F API rate limit. Try again in a moment.";bubble.style.color="var(--orange)";sendBtn.disabled=false;return}
       var reply=d.choices[0].message.content;
       bubble.innerHTML="";
       var badge=document.createElement("div");badge.className="search-badge";badge.innerHTML='<svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Web search';
       bubble.appendChild(badge);
-      var content=document.createElement("div");content.innerHTML=formatMsg(reply);bubble.appendChild(content);
+      var cd=document.createElement("div");cd.innerHTML=formatMsg(reply);bubble.appendChild(cd);
       if(sd.sources&&sd.sources.length){
         var sw=document.createElement("div");sw.className="sources-wrap";
-        sd.sources.slice(0,5).forEach(function(s){var chip=document.createElement("a");chip.className="source-chip";chip.href=s.url;chip.target="_blank";chip.rel="noopener noreferrer";chip.innerHTML='<svg viewBox="0 0 16 16" fill="none"><path d="M10 3h3v3M13 3l-6 6M6 4H3v9h9v-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+esc(s.title.length>35?s.title.slice(0,35)+"…":s.title);sw.appendChild(chip)});
+        sd.sources.slice(0,5).forEach(function(s){
+          var chip=document.createElement("a");chip.className="source-chip";chip.href=s.url;chip.target="_blank";chip.rel="noopener noreferrer";
+          chip.innerHTML='<svg viewBox="0 0 16 16" fill="none"><path d="M10 3h3v3M13 3l-6 6M6 4H3v9h9v-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+esc(s.title.length>35?s.title.slice(0,35)+"\u2026":s.title);
+          sw.appendChild(chip)
+        });
         bubble.appendChild(sw);
       }
-      addActions(wrap,reply);
+      addActions(wrap,reply);useQuota("text");
       messages.push({role:"user",content:text});messages.push({role:"assistant",content:reply});
       if(!isGuest)persistConv();
-    }catch(err){bubble.innerHTML="";bubble.textContent="⚠️ Search error: "+err.message;bubble.style.color="var(--red)"}
+    }catch(err){bubble.innerHTML="";bubble.textContent="\u26A0\uFE0F Search error: "+err.message;bubble.style.color="var(--red)"}
     sendBtn.disabled=false;promptEl.focus();document.getElementById("chat-wrap").scrollTop=999999;
     return;
   }
-
-  // Chat normal — route vers le bon backend
-  messages.push({role:"user",content:text});
-  renderMsg("user",text);
+  messages.push({role:"user",content:text});renderMsg("user",text);
   var res=renderMsg("bot","",true);
   var bubble=res.bubble,wrap=res.wrap;
   try{
-    var r=await fetch(chatEndpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgsWithSystem,model:currentModel})});
+    var r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgsWithSystem,model:currentModel})});
     var d=await r.json();
-    if(d.rate_limited){
-      bubble.innerHTML='<div style="display:flex;align-items:center;gap:9px;color:var(--orange);font-size:13px;padding:4px 0"><span style="font-size:18px">⚠️</span><div><strong>Daily limit reached.</strong><br><span style="color:var(--text2);font-size:12px">Switch to another model to continue.</span></div></div>';
-      setTimeout(function(){showRateLimitModal()},300);
+    if(d.rate_limited||(d.error&&d.error.includes("rate"))){
+      bubble.innerHTML='<div style="display:flex;align-items:center;gap:9px;color:var(--orange);font-size:13px;padding:4px 0"><span style="font-size:18px">\u26A0\uFE0F</span><div><strong>API rate limit reached.</strong><br><span style="color:var(--text2);font-size:12px">Please try again in a moment.</span></div></div>';
       sendBtn.disabled=false;return;
     }
     var reply=d.choices[0].message.content;
-    messages.push({role:"assistant",content:reply});
+    useQuota("text");messages.push({role:"assistant",content:reply});
     bubble.innerHTML="";
-    var i=0;var step=Math.max(1,Math.ceil(reply.length/250));
+    var i=0,step=Math.max(1,Math.ceil(reply.length/250));
     function type(){if(i<reply.length){i=Math.min(i+step,reply.length);bubble.innerHTML=formatMsg(reply.slice(0,i));document.getElementById("chat-wrap").scrollTop=999999;if(i<reply.length)requestAnimationFrame(function(){setTimeout(type,10)});else done()}else done()}
     function done(){addActions(wrap,reply);if(!isGuest)persistConv()}
     type();
-  }catch(e){bubble.innerHTML="";bubble.textContent="⚠️ Could not reach the server. Please try again.";bubble.style.color="var(--red)"}
+  }catch(e){bubble.innerHTML="";bubble.textContent="\u26A0\uFE0F Could not reach the server.";bubble.style.color="var(--red)"}
   sendBtn.disabled=false;promptEl.focus();
 }
 
@@ -1510,19 +1801,17 @@ function detectLang(text){
   ];
   var best=null,bs=0;
   for(var ci=0;ci<checks.length;ci++){
-    var ch=checks[ci];var s=0;
+    var ch=checks[ci],s=0;
     for(var wi=0;wi<ch.w.length;wi++){var ww=ch.w[wi];if(t.includes(" "+ww+" ")||t.startsWith(ww+" ")||t.endsWith(" "+ww)||t===ww)s++}
     if(s>bs){bs=s;best=ch.l}
   }
   return bs>=1?best:"en";
 }
-function loadVoices(){if(!synth)return[];voiceVoices=synth.getVoices();return voiceVoices}
 function ensureVoices(){
   return new Promise(function(res){
     var v=synth?synth.getVoices():[];
     if(v&&v.length>0){voiceVoices=v;res(v);return}
-    var n=0;
-    var t=setInterval(function(){
+    var n=0,t=setInterval(function(){
       var vv=synth?synth.getVoices():[];
       if(vv&&vv.length>0){voiceVoices=vv;clearInterval(t);res(vv)}
       if(++n>40){clearInterval(t);res([])}
@@ -1541,11 +1830,9 @@ function getBestVoice(bcp47){
     var s=0;
     if(l===bcp47.toLowerCase())s+=50;
     if(n.includes("enhanced"))s+=120;if(n.includes("premium"))s+=115;if(n.includes("siri"))s+=110;
-    if(n.includes("samantha"))s+=108;if(n.includes("karen"))s+=106;if(n.includes("daniel"))s+=106;
-    if(n.includes("thomas"))s+=106;if(n.includes("aurelie"))s+=106;
-    if(n.includes("neural"))s+=95;if(n.includes("natural"))s+=90;if(n.includes("wavenet"))s+=88;
-    if(n.includes("google"))s+=80;if(n.includes("microsoft"))s+=75;
-    if(n.includes("compact"))s-=100;if(n.includes("mono"))s-=80;if(n.includes("junior"))s-=60;
+    if(n.includes("samantha"))s+=108;if(n.includes("daniel"))s+=106;if(n.includes("thomas"))s+=106;
+    if(n.includes("neural"))s+=95;if(n.includes("wavenet"))s+=88;if(n.includes("google"))s+=80;
+    if(n.includes("compact"))s-=100;if(n.includes("mono"))s-=80;
     return{v:v,s:s};
   }).filter(function(x){return x.s>-900}).sort(function(a,b){return b.s-a.s});
   return scored.length?scored[0].v:null;
@@ -1556,7 +1843,7 @@ function unlockTTS(){
   ttsUnlocked=true;
 }
 function startKeepAlive(){
-  stopKeepAlive();if(!isMobile)return;
+  if(!isMobile)return;
   _keepAliveTimer=setInterval(function(){
     if(synth&&synth.speaking&&!synth.paused){synth.pause();setTimeout(function(){try{if(synth.paused)synth.resume()}catch(e){}},25)}
   },7000);
@@ -1583,8 +1870,8 @@ function splitIntoChunks(text){
     else{
       if(buf)chunks.push(buf);
       if(tr.length>maxLen){
-        var parts=tr.split(/,\s*/);var sub="";
-        for(var j=0;j<parts.length;j++){var p=parts[j];var c=sub?(sub+", "+p):p;if(c.length<=maxLen){sub=c}else{if(sub)chunks.push(sub);sub=p.length>maxLen?p.slice(0,maxLen):p}}
+        var parts=tr.split(/,\s*/),sub="";
+        for(var j=0;j<parts.length;j++){var p=parts[j],c=sub?(sub+", "+p):p;if(c.length<=maxLen){sub=c}else{if(sub)chunks.push(sub);sub=p.length>maxLen?p.slice(0,maxLen):p}}
         buf=sub;
       }else{buf=tr}
     }
@@ -1599,9 +1886,8 @@ async function speakText(text,bcp,onDone){
   await ensureVoices();
   var chunks=splitIntoChunks(text);
   if(!chunks.length){setVoiceState("idle");if(onDone)onDone();return}
-  var langCode=bcp||"en-US";var voice=getBestVoice(langCode);
   setVoiceState("speaking");startKeepAlive();
-  await _playQueue(chunks,langCode,voice);
+  await _playQueue(chunks,bcp||"en-US",getBestVoice(bcp||"en-US"));
   stopKeepAlive();
   if(!voiceAborted){setVoiceState("idle");var lv=document.getElementById("vo-live");if(lv)lv.textContent=""}
   if(onDone)onDone();
@@ -1617,9 +1903,8 @@ function _playQueue(chunks,lang,voice){
       u.lang=lang;u.volume=1.0;
       if(isIOS){u.rate=0.87;u.pitch=1.07}else if(isAndroid){u.rate=0.90;u.pitch=1.02}else{u.rate=0.92;u.pitch=1.0}
       if(voice)u.voice=voice;
-      var lv=document.getElementById("vo-live");if(lv){lv.textContent=chunk.length>80?chunk.slice(0,80)+"…":chunk}
-      var settled=false;
-      var settle=function(ms){if(settled)return;settled=true;setTimeout(next,ms)};
+      var lv=document.getElementById("vo-live");if(lv)lv.textContent=chunk.length>80?chunk.slice(0,80)+"\u2026":chunk;
+      var settled=false,settle=function(ms){if(settled)return;settled=true;setTimeout(next,ms)};
       u.onend=function(){settle(isIOS?60:25)};
       u.onerror=function(e){if(e.error==="canceled"||e.error==="interrupted"){settle(50);return}settle(100)};
       try{synth.speak(u)}catch(e){settle(120)}
@@ -1636,8 +1921,7 @@ function stopSpeaking(){
 var waveEl=document.getElementById("vo-wave");
 for(var wi=0;wi<28;wi++){var wb=document.createElement("div");wb.className="wave-bar";wb.style.height="4px";waveEl.appendChild(wb)}
 function animWave(on){
-  clearInterval(waveInterval);
-  var bars=waveEl.querySelectorAll(".wave-bar");
+  clearInterval(waveInterval);var bars=waveEl.querySelectorAll(".wave-bar");
   if(!on){bars.forEach(function(b){b.style.height="4px";b.style.opacity="0.4"});return}
   waveInterval=setInterval(function(){
     var t=Date.now();
@@ -1648,20 +1932,19 @@ function animWave(on){
   },48);
 }
 function setVoiceState(s){
-  var ov=document.getElementById("voice-overlay");var st=document.getElementById("vo-status");
+  var ov=document.getElementById("voice-overlay"),st=document.getElementById("vo-status");
   ov.classList.remove("idle","listening","thinking","speaking");ov.classList.add(s);
   if(s==="idle"){st.textContent="Tap the mic to speak";isListening=false;isSpeaking=false;animWave(false)}
-  else if(s==="listening"){st.textContent="Listening…";isListening=true;isSpeaking=false;animWave(true)}
-  else if(s==="thinking"){st.textContent="Thinking…";isListening=false;isSpeaking=false;animWave(false)}
-  else if(s==="speaking"){st.textContent="Nova is speaking…";isListening=false;isSpeaking=true;animWave(true)}
+  else if(s==="listening"){st.textContent="Listening\u2026";isListening=true;isSpeaking=false;animWave(true)}
+  else if(s==="thinking"){st.textContent="Thinking\u2026";isListening=false;isSpeaking=false;animWave(false)}
+  else if(s==="speaking"){st.textContent="Nova is speaking\u2026";isListening=false;isSpeaking=true;animWave(true)}
 }
 function addVoMsg(role,text){
   var h=document.getElementById("vo-hist");
   var hint=document.getElementById("vo-hint");if(hint)hint.remove();
-  var init=currentUser?currentUser.name.charAt(0).toUpperCase():"?";
   var row=document.createElement("div");row.className="vo-msg "+role;
   var av=document.createElement("div");av.className="vo-av "+(role==="user"?"user":"bot");
-  if(role==="bot")av.innerHTML=bhAv(26);else av.textContent=init;
+  if(role==="bot")av.innerHTML=bhAv(26);else av.textContent=currentUser?currentUser.name.charAt(0).toUpperCase():"?";
   var bub=document.createElement("div");bub.className="vo-bub "+(role==="user"?"user":"bot");
   bub.textContent=text;
   if(role==="user"){row.appendChild(bub);row.appendChild(av)}else{row.appendChild(av);row.appendChild(bub)}
@@ -1687,7 +1970,7 @@ function voiceModeNewChat(){
 }
 function startListening(onFinal){
   var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){showToast("Speech recognition not supported on this browser.");return}
+  if(!SR){showToast("Speech recognition not supported.");return}
   if(recognition){try{recognition.abort()}catch(e){}}
   recognition=new SR();recognition.lang="";recognition.interimResults=true;recognition.maxAlternatives=3;recognition.continuous=false;
   var finalText="",interimText="";
@@ -1697,7 +1980,7 @@ function startListening(onFinal){
     for(var i=e.resultIndex;i<e.results.length;i++){var t=e.results[i][0].transcript;if(e.results[i].isFinal)finalText+=t;else interimText+=t}
     var cur=(finalText||interimText).trim();
     document.getElementById("vo-live").textContent=cur;
-    if(cur.length>4){var l=detectLang(cur);var en=LANG_MAP[l];if(en){detLang=en.l;document.getElementById("vo-lang").textContent=l.toUpperCase()}}
+    if(cur.length>4){var l=detectLang(cur),en=LANG_MAP[l];if(en){detLang=en.l;document.getElementById("vo-lang").textContent=l.toUpperCase()}}
   };
   recognition.onend=function(){
     isListening=false;var t=(finalText||interimText).trim();
@@ -1716,20 +1999,18 @@ function toggleVoiceMic(){
   });
 }
 async function sendVoiceMsg(text){
-  if(messages.length===0)document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"…":text;
-  var voiceSys=SYSTEM_PROMPT+"\n\nCRITICAL — VOICE MODE ACTIVE: Answer in 1 to 3 short sentences maximum. No lists, no bullet points, no markdown, no headers. Speak naturally as a human friend would. Be warm, direct and concise.";
-  var msgsForVoice=[{role:"system",content:voiceSys}].concat(messages).concat([{role:"user",content:text}]);
-  // Le voice mode utilise aussi le bon backend selon le modèle
-  var voiceChatEndpoint = getChatUrl(currentModel);
+  if(messages.length===0)document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"\u2026":text;
+  var voiceSys=SYSTEM_PROMPT+"\n\nCRITICAL \u2014 VOICE MODE ACTIVE: Answer in 1 to 3 short sentences maximum. No lists, no bullet points, no markdown. Speak naturally as a human friend would. Be warm, direct and concise.";
+  var msgs=[{role:"system",content:voiceSys}].concat(messages).concat([{role:"user",content:text}]);
   try{
-    var r=await fetch(voiceChatEndpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgsForVoice,model:currentModel})});
+    var r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgs,model:currentModel})});
     var d=await r.json();
-    if(d.rate_limited){setVoiceState("idle");addVoMsg("bot","I've reached my daily limit. Please switch to another model.");showRateLimitModal();return}
+    if(d.rate_limited){setVoiceState("idle");addVoMsg("bot","I've reached the API limit. Please try again in a moment.");return}
     var reply=d.choices[0].message.content;
     messages.push({role:"user",content:text});messages.push({role:"assistant",content:reply});
     if(!isGuest)persistConv();
     addVoMsg("bot",reply);
-    var rl=detectLang(reply);var re=LANG_MAP[rl];var rb=re?re.l:(detLang||"en-US");
+    var rl=detectLang(reply),re=LANG_MAP[rl],rb=re?re.l:(detLang||"en-US");
     await speakText(reply,rb,function(){
       if(voiceActive&&!voiceAborted){
         setTimeout(function(){
@@ -1757,12 +2038,12 @@ function toggleInlineMic(){
 // ── EVENT LISTENERS ────────────────────────────────────────
 document.getElementById("prompt").addEventListener("input",function(){autoResize();updateCount()});
 document.getElementById("prompt").addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage()}});
-document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeVoiceMode();closeCodeMode()}});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeVoiceMode();closeCodeMode();closeVideoMode();closeSubModal()}});
 var tsx=0;
 document.addEventListener("touchstart",function(e){tsx=e.touches[0].clientX},{passive:true});
 document.addEventListener("touchend",function(e){var dx=e.changedTouches[0].clientX-tsx;if(dx<-60&&document.getElementById("sidebar").classList.contains("open"))closeSidebar()},{passive:true});
 window.addEventListener("resize",function(){if(document.getElementById("code-overlay").classList.contains("open")){var c=document.getElementById("matrix-canvas");c.width=window.innerWidth;c.height=window.innerHeight}});
-if(synth){ensureVoices();synth.addEventListener("voiceschanged",function(){loadVoices()})}
+if(synth){ensureVoices();synth.addEventListener("voiceschanged",function(){voiceVoices=synth.getVoices()||[]})}
 
 // ── INIT ───────────────────────────────────────────────────
 (function init(){
@@ -1774,18 +2055,17 @@ if(synth){ensureVoices();synth.addEventListener("voiceschanged",function(){loadV
     .then(function(d){
       window.history.replaceState({},"",window.location.pathname);
       if(d.success){
-        var users=getUsers();
-        var user=Object.values(users).find(function(u){return u.email===d.email});
+        var users=getUsers(),user=Object.values(users).find(function(u){return u.email===d.email});
         if(user){user.verified=true;ls.set(S_USERS,users)}
         switchTab("login");
         var banner=document.createElement("div");
         banner.style.cssText="padding:12px 14px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);border-radius:10px;color:#22c55e;font-size:13px;margin-bottom:14px;text-align:center";
-        banner.innerHTML="Email confirmed! You can now sign in.";
+        banner.innerHTML="\u2705 Email confirmed! You can now sign in.";
         document.getElementById("login-form").prepend(banner);
         if(d.email)document.getElementById("login-email").value=d.email;
-      }else{showToast("Invalid confirmation link")}
+      }else{showToast("\u274C Invalid confirmation link")}
     })
-    .catch(function(){window.history.replaceState({},"",window.location.pathname);showToast("Could not verify email.")});
+    .catch(function(){window.history.replaceState({},"",window.location.pathname);showToast("\u274C Could not verify email.")});
   }
   var sess=ls.get(S_SESSION);
   if(!sess)return;
