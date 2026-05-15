@@ -45,11 +45,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 @keyframes scanlines{0%{background-position:0 0}100%{background-position:0 4px}}
 @keyframes glow-text{0%,100%{text-shadow:0 0 8px rgba(0,255,65,.6)}50%{text-shadow:0 0 22px rgba(0,255,65,1),0 0 40px rgba(0,255,65,.35)}}
 @keyframes premium-glow{0%,100%{box-shadow:0 0 30px rgba(168,85,247,.15)}50%{box-shadow:0 0 50px rgba(168,85,247,.3)}}
-@keyframes tier-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-/* ──────────────────────────────────────────────
-   AUTH
-────────────────────────────────────────────── */
+/* AUTH */
 #auth-screen{display:flex;height:100dvh;overflow:hidden}
 #auth-left{width:44%;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 40px;position:relative;overflow:hidden;flex-shrink:0}
 .auth-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(124,106,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(124,106,255,.04) 1px,transparent 1px);background-size:44px 44px;pointer-events:none}
@@ -108,9 +105,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .pending-note{font-size:12px;color:var(--text3);line-height:1.6}
 .pending-resend{margin-top:16px;background:none;border:none;color:var(--accent);font-size:13px;cursor:pointer;text-decoration:underline;font-family:var(--fb)}
 
-/* ──────────────────────────────────────────────
-   APP SHELL
-────────────────────────────────────────────── */
+/* APP SHELL */
 #app-screen{display:none;height:100dvh;overflow:hidden;position:relative}
 #sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:150;backdrop-filter:blur(3px)}
 #sidebar-overlay.open{display:block}
@@ -147,9 +142,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .quota-bar-fill.danger{background:var(--red)}
 .model-sel{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);cursor:pointer;transition:all .2s;margin-bottom:7px}
 .model-sel:hover{background:var(--surface3)}
-.model-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);flex-shrink:0;transition:all .3s}
-.model-dot.orange{background:var(--orange);box-shadow:0 0 5px var(--orange)}
-.model-dot.blue{background:var(--search);box-shadow:0 0 5px var(--search)}
+.model-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);flex-shrink:0}
 .model-info{flex:1;overflow:hidden}
 .model-nm{font-size:12px;font-weight:500;color:var(--text)}
 .model-ctx{font-size:10px;color:var(--text3)}
@@ -176,9 +169,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .dd-item.danger{color:var(--red)}
 .dd-item.danger:hover{background:rgba(239,68,68,.08)}
 
-/* ──────────────────────────────────────────────
-   MAIN LAYOUT
-────────────────────────────────────────────── */
+/* MAIN */
 #main{display:flex;flex-direction:column;height:100dvh;overflow:hidden;margin-left:var(--sidebar-w)}
 #topbar{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:56px;flex-shrink:0;border-bottom:1px solid var(--border);background:rgba(5,6,8,.93);backdrop-filter:blur(20px)}
 .tb-left{display:flex;align-items:center;gap:9px;min-width:0}
@@ -201,9 +192,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 #search-banner button{margin-left:auto;background:none;border:1px solid rgba(14,165,233,.3);color:var(--search);cursor:pointer;font-size:11px;padding:2px 9px;border-radius:20px;transition:all .15s}
 #search-banner button:hover{background:rgba(14,165,233,.15)}
 
-/* ──────────────────────────────────────────────
-   CHAT AREA
-────────────────────────────────────────────── */
+/* CHAT */
 #chat-wrap{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
 #chat-wrap::-webkit-scrollbar{width:4px}
 #chat-wrap::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:4px}
@@ -226,8 +215,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .p-card-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
 .p-card-sub{font-size:11px;color:var(--text3)}
 .p-card-locked{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--vid);background:var(--vid-dim);border:1px solid rgba(168,85,247,.25);padding:2px 7px;border-radius:20px;margin-top:4px}
-
-/* Messages */
 .msg-group{display:flex;flex-direction:column;gap:2px;animation:msg-in .2s cubic-bezier(.34,1.56,.64,1) both}
 .msg-row{display:flex;gap:9px;align-items:flex-start}
 .msg-row.user{flex-direction:row-reverse}
@@ -296,9 +283,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .photo-remove-btn svg{width:11px;height:11px}
 .generated-media{max-width:100%;border-radius:12px;margin-top:7px;border:1px solid rgba(168,85,247,.3);display:block;background:#000}
 
-/* ──────────────────────────────────────────────
-   INPUT ZONE
-────────────────────────────────────────────── */
+/* INPUT */
 #input-zone{padding:11px 16px;padding-bottom:calc(11px + var(--sb));flex-shrink:0}
 #input-wrap-outer{max-width:740px;margin:0 auto}
 #input-box{background:var(--surface);border:1px solid var(--border2);border-radius:16px;transition:border-color .2s,box-shadow .2s;overflow:hidden}
@@ -309,7 +294,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 #prompt{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-family:var(--fb);font-size:15px;line-height:1.6;resize:none;min-height:22px;max-height:130px;-webkit-appearance:none}
 #prompt::placeholder{color:var(--text3)}
 #send-btn{width:34px;height:34px;border-radius:9px;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;margin-bottom:1px}
-#send-btn:hover{background:var(--accent2)}.#send-btn:active{transform:scale(.95)}.#send-btn:disabled{background:var(--surface3);cursor:not-allowed}
+#send-btn:hover{background:var(--accent2)}
+#send-btn:active{transform:scale(.95)}
+#send-btn:disabled{background:var(--surface3);cursor:not-allowed}
 #send-btn svg{width:14px;height:14px}
 #input-bottom{display:flex;align-items:center;justify-content:space-between;padding:5px 11px 9px;border-top:1px solid var(--border)}
 .tools{display:flex;align-items:center;gap:3px}
@@ -330,9 +317,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .foot-note{text-align:center;font-size:10.5px;color:var(--text3);margin-top:7px}
 .foot-note a{color:var(--accent);text-decoration:underline;cursor:pointer}
 
-/* ──────────────────────────────────────────────
-   VOICE OVERLAY
-────────────────────────────────────────────── */
+/* VOICE OVERLAY */
 #voice-overlay{display:none;position:fixed;inset:0;background:linear-gradient(160deg,#02030f 0%,#07041c 40%,#040210 100%);z-index:600;flex-direction:column}
 #voice-overlay.open{display:flex;animation:vo-in .3s ease}
 .vo-topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 22px 0;flex-shrink:0}
@@ -387,17 +372,12 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .vo-main svg{width:30px;height:30px}
 #voice-overlay.listening .vo-main{background:linear-gradient(135deg,#ef4444,#b91c1c);box-shadow:0 6px 28px rgba(239,68,68,.45);animation:orb-breathe .8s ease-in-out infinite alternate}
 
-/* ──────────────────────────────────────────────
-   CODE MODE — MATRIX ULTRA-IMMERSIF
-────────────────────────────────────────────── */
+/* CODE MODE */
 #code-overlay{display:none;position:fixed;inset:0;z-index:700;flex-direction:column;background:var(--cg-bg);overflow:hidden}
 #code-overlay.open{display:flex;animation:vo-in .35s ease}
 #matrix-canvas{position:absolute;inset:0;pointer-events:none;z-index:0}
-/* Scanlines CRT */
 #code-overlay::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:1;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0px,rgba(0,0,0,.18) 1px,transparent 1px,transparent 4px);animation:scanlines .15s linear infinite}
-/* Ligne de scan verte */
 #code-overlay::after{content:'';position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(0,255,65,.8),rgba(127,255,127,.6),rgba(0,255,65,.8),transparent);animation:code-scan 4s linear infinite;pointer-events:none;z-index:2;box-shadow:0 0 12px rgba(0,255,65,.6)}
-/* Vignette verte */
 .cg-vignette{position:absolute;inset:0;pointer-events:none;z-index:1;box-shadow:inset 0 0 100px rgba(0,20,0,.85),inset 0 0 35px rgba(0,8,0,.5)}
 .hk-topbar{display:flex;align-items:center;justify-content:space-between;padding:13px 20px 0;flex-shrink:0;position:relative;z-index:3}
 .hk-brand{display:flex;align-items:center;gap:10px;font-family:var(--fm);font-size:13px;font-weight:600;color:var(--cg);letter-spacing:.15em;animation:glow-text 3s ease-in-out infinite}
@@ -408,9 +388,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .hk-x svg{width:13px;height:13px}
 .hk-titlebar{display:flex;align-items:center;gap:6px;padding:8px 20px 7px;border-bottom:1px solid rgba(0,255,65,.18);flex-shrink:0;position:relative;z-index:3;background:rgba(0,18,3,.4)}
 .hk-tb-dot{width:10px;height:10px;border-radius:50%}
-.hk-d1{background:#ff5f56;box-shadow:0 0 5px rgba(255,95,86,.6)}
-.hk-d2{background:#ffbd2e;box-shadow:0 0 5px rgba(255,189,46,.6)}
-.hk-d3{background:#27c93f;box-shadow:0 0 5px rgba(39,201,63,.6)}
+.hk-d1{background:#ff5f56;box-shadow:0 0 5px rgba(255,95,86,.6)}.hk-d2{background:#ffbd2e;box-shadow:0 0 5px rgba(255,189,46,.6)}.hk-d3{background:#27c93f;box-shadow:0 0 5px rgba(39,201,63,.6)}
 .hk-tb-title{font-family:var(--fm);font-size:11px;color:rgba(0,255,65,.5);margin-left:8px;letter-spacing:.06em}
 .hk-hist{flex:1;overflow-y:auto;padding:14px 20px;display:flex;flex-direction:column;gap:12px;-webkit-overflow-scrolling:touch;position:relative;z-index:3}
 .hk-hist::-webkit-scrollbar{width:4px}
@@ -422,7 +400,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .hk-msg{display:flex;flex-direction:column;gap:3px;animation:code-in .18s ease both}
 .hk-msg-label{font-family:var(--fm);font-size:10px;letter-spacing:.08em;color:rgba(0,255,65,.4);margin-bottom:2px}
 .hk-msg-label.user-lbl{color:rgba(127,255,127,.65)}
-/* BULLES: fond sombre, texte clair et lisible */
 .hk-bub{font-family:var(--fm);line-height:1.75;padding:12px 16px;border-radius:4px;word-break:break-word;max-width:94%;font-size:13.5px}
 .hk-bub.bot{background:rgba(0,28,5,.75);border:1px solid rgba(0,255,65,.18);border-left:3px solid rgba(0,255,65,.85);color:#c8ffd4;text-shadow:0 0 2px rgba(0,180,40,.18)}
 .hk-bub.user{background:rgba(0,38,10,.65);border:1px solid rgba(0,255,65,.28);border-right:3px solid rgba(0,255,65,.9);color:#dfffea;align-self:flex-end}
@@ -431,12 +408,12 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .hk-bub strong{color:#90ff90;font-weight:700}
 .hk-bub em{color:rgba(0,255,100,.65);font-style:normal}
 .hk-bub code{background:rgba(0,0,0,.65);border:1px solid rgba(0,255,65,.3);padding:2px 6px;border-radius:3px;font-size:12.5px;color:#7fff7f;text-shadow:0 0 4px rgba(0,255,65,.4)}
-.hk-bub pre{background:rgba(0,0,0,.75);border:1px solid rgba(0,255,65,.22);border-left:3px solid rgba(0,255,65,.75);border-radius:5px;padding:13px 15px;margin:10px 0;overflow-x:auto;font-size:12.5px;line-height:1.6;box-shadow:0 0 16px rgba(0,255,65,.04)}
+.hk-bub pre{background:rgba(0,0,0,.75);border:1px solid rgba(0,255,65,.22);border-left:3px solid rgba(0,255,65,.75);border-radius:5px;padding:13px 15px;margin:10px 0;overflow-x:auto;font-size:12.5px;line-height:1.6}
 .hk-bub pre code{background:none;border:none;padding:0;color:#90ff90;text-shadow:0 0 3px rgba(0,255,65,.3)}
 .hk-bub ul,.hk-bub ol{padding-left:18px;margin:6px 0}
-.hk-bub li{color:#c8ffd4;margin:3px 0}.hk-bub li::marker{color:var(--cg);text-shadow:0 0 4px rgba(0,255,65,.5)}
+.hk-bub li{color:#c8ffd4;margin:3px 0}.hk-bub li::marker{color:var(--cg)}
 .hk-bub table{width:100%;border-collapse:collapse;margin:9px 0;font-size:12.5px}
-.hk-bub th{background:rgba(0,38,6,.6);padding:6px 12px;border:1px solid rgba(0,255,65,.18);color:var(--cg);text-align:left;text-shadow:0 0 4px rgba(0,255,65,.4)}
+.hk-bub th{background:rgba(0,38,6,.6);padding:6px 12px;border:1px solid rgba(0,255,65,.18);color:var(--cg);text-align:left}
 .hk-bub td{padding:6px 12px;border:1px solid rgba(0,255,65,.1);color:#c8ffd4}
 .hk-typing{display:flex;gap:5px;align-items:center;padding:3px 0}
 .hk-typing span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--cg);box-shadow:0 0 7px var(--cg);animation:bounce 1.2s infinite}
@@ -458,11 +435,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .hk-actions{display:flex;gap:4px;margin-top:5px;opacity:0;transition:opacity .15s}
 .hk-msg:hover .hk-actions{opacity:1}
 .hk-act-btn{display:flex;align-items:center;gap:4px;padding:3px 9px;border-radius:3px;border:1px solid rgba(0,255,65,.18);background:transparent;color:rgba(127,255,127,.5);font-size:10px;cursor:pointer;font-family:var(--fm);transition:all .15s}
-.hk-act-btn:hover{background:rgba(0,255,65,.1);color:var(--cg);border-color:rgba(0,255,65,.5);box-shadow:0 0 7px rgba(0,255,65,.2)}
+.hk-act-btn:hover{background:rgba(0,255,65,.1);color:var(--cg);border-color:rgba(0,255,65,.5)}
 
-/* ──────────────────────────────────────────────
-   VIDEO OVERLAY
-────────────────────────────────────────────── */
+/* VIDEO OVERLAY */
 #video-overlay{display:none;position:fixed;inset:0;z-index:700;flex-direction:column;background:linear-gradient(160deg,#0a0210 0%,#1a0530 40%,#0e0220 100%);overflow:hidden}
 #video-overlay.open{display:flex;animation:vo-in .35s ease}
 .vid-topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 22px 0;flex-shrink:0}
@@ -504,14 +479,10 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .vid-empty-sub{font-size:13px;line-height:1.7}
 .vid-hf-note{font-size:11px;color:rgba(168,85,247,.4);margin-top:16px;padding:10px 16px;background:rgba(168,85,247,.04);border:1px solid rgba(168,85,247,.1);border-radius:9px;line-height:1.65}
 
-/* ──────────────────────────────────────────────
-   SUBSCRIPTION MODAL — PREMIUM UNIQUEMENT
-   Design ultra-professionnel
-────────────────────────────────────────────── */
+/* SUBSCRIPTION MODAL */
 #sub-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(14px);z-index:800;align-items:center;justify-content:center;padding:16px}
 #sub-modal.open{display:flex}
 .sub-box{background:var(--surface);border:1px solid rgba(168,85,247,.22);border-radius:24px;width:100%;max-width:460px;max-height:92dvh;overflow-y:auto;animation:modal-in .3s cubic-bezier(.34,1.2,.64,1);position:relative;box-shadow:0 0 60px rgba(168,85,247,.14),0 20px 60px rgba(0,0,0,.55)}
-/* Header avec gradient subtil */
 .sub-header{padding:32px 26px 22px;text-align:center;border-bottom:1px solid rgba(168,85,247,.1);position:relative;overflow:hidden}
 .sub-header::before{content:'';position:absolute;top:-50%;left:-15%;width:130%;height:180%;background:radial-gradient(ellipse at 50% 0%,rgba(168,85,247,.1) 0%,transparent 65%);pointer-events:none}
 .sub-close{position:absolute;top:16px;right:16px;width:30px;height:30px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text3);transition:all .15s;z-index:1}
@@ -520,7 +491,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .sub-icon{width:60px;height:60px;margin:0 auto 14px;border-radius:50%;background:linear-gradient(135deg,rgba(168,85,247,.28),rgba(124,106,255,.18));border:1px solid rgba(168,85,247,.4);display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 0 28px rgba(168,85,247,.28)}
 .sub-title{font-family:var(--fh);font-size:21px;font-weight:800;margin-bottom:5px;letter-spacing:-.3px}
 .sub-sub{font-size:13px;color:var(--text2);font-weight:300;line-height:1.65}
-/* Bloc FREE compact */
 .sub-free-row{display:flex;align-items:center;justify-content:space-between;margin:18px 26px 0;padding:13px 16px;background:var(--surface2);border:1px solid var(--border2);border-radius:12px}
 .sub-free-left{display:flex;align-items:center;gap:10px}
 .sub-free-icon{width:34px;height:34px;border-radius:8px;background:var(--accent-dim);border:1px solid rgba(124,106,255,.14);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
@@ -529,14 +499,11 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .sub-free-right{text-align:right}
 .sub-free-price{font-family:var(--fh);font-size:16px;font-weight:800;color:var(--text2)}
 .sub-free-active{font-size:10px;color:var(--accent);background:var(--accent-dim);padding:2px 7px;border-radius:20px;font-weight:600;margin-top:4px;display:inline-block}
-/* Limites free */
 .sub-free-limits{display:flex;flex-wrap:wrap;gap:4px 12px;margin:10px 26px 0;padding:10px 14px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:9px}
 .sub-free-limit{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
 .sub-free-limit::before{content:'•';font-size:14px;color:var(--text3)}
-/* Séparateur */
 .sub-sep{display:flex;align-items:center;gap:11px;margin:20px 26px 0;color:var(--text3);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase}
 .sub-sep::before,.sub-sep::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(168,85,247,.35),transparent)}
-/* PREMIUM CARD */
 .sub-premium{margin:16px 26px 26px;border-radius:18px;border:2px solid rgba(168,85,247,.5);background:linear-gradient(145deg,rgba(168,85,247,.08),rgba(124,106,255,.04));box-shadow:0 0 40px rgba(168,85,247,.12);animation:premium-glow 3s ease-in-out infinite;cursor:pointer;transition:all .25s;position:relative}
 .sub-premium:hover{border-color:rgba(168,85,247,.8);box-shadow:0 0 60px rgba(168,85,247,.25);transform:translateY(-2px)}
 .sub-premium-badge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#a855f7,#7c6aff);color:#fff;font-size:10px;font-weight:700;padding:4px 16px;border-radius:0 0 10px 10px;letter-spacing:.08em;font-family:var(--fh);box-shadow:0 4px 12px rgba(168,85,247,.4);white-space:nowrap}
@@ -557,14 +524,11 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .sub-cta:active{transform:scale(.98)}
 .sub-cta:disabled{background:rgba(168,85,247,.3);cursor:not-allowed;box-shadow:none}
 .sub-cta-note{text-align:center;font-size:11px;color:rgba(168,85,247,.45);margin-top:9px;line-height:1.6}
-/* Garanties */
 .sub-guarantees{display:flex;align-items:center;justify-content:center;gap:16px;padding:0 26px 22px;flex-wrap:wrap}
 .sub-guar{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)}
 .sub-guar svg{width:12px;height:12px;color:var(--green);flex-shrink:0}
 
-/* ──────────────────────────────────────────────
-   MODALS GÉNÉRAUX
-────────────────────────────────────────────── */
+/* MODALS */
 .m-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(5px);z-index:500;align-items:center;justify-content:center;padding:18px}
 .m-overlay.open{display:flex}
 .m-box{background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:22px;width:400px;max-width:100%;animation:modal-in .2s ease;max-height:90dvh;overflow-y:auto}
@@ -578,8 +542,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .model-opt-name{font-size:13px;font-weight:600}
 .model-opt-desc{font-size:11.5px;color:var(--text3);margin-top:2px}
 .mbadge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;white-space:nowrap}
-.mbadge-fast{background:rgba(34,197,94,.12);color:#22c55e}
-.mbadge-pro{background:var(--accent-dim);color:var(--accent)}
 .mbadge-def{background:rgba(255,140,0,.12);color:var(--orange)}
 .m-close{width:100%;margin-top:8px;padding:10px;background:transparent;border:1px solid var(--border);border-radius:9px;color:var(--text2);font-family:var(--fb);font-size:13px;cursor:pointer;transition:all .15s}
 .m-close:hover{background:var(--surface2)}
@@ -590,9 +552,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 #toast.show{transform:translateX(-50%) translateY(0)}
 #photo-input{display:none}
 
-/* ──────────────────────────────────────────────
-   RESPONSIVE
-────────────────────────────────────────────── */
+/* RESPONSIVE */
 @media(max-width:768px){
   #auth-screen{flex-direction:column;overflow-y:auto;height:auto;min-height:100dvh}
   #auth-left{display:none}
@@ -624,9 +584,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════════════════
-     AUTH
-═══════════════════════════════════════════════════════════ -->
+<!-- AUTH -->
 <div id="auth-screen">
   <div id="auth-left">
     <div class="auth-grid"></div><div class="auth-glow"></div>
@@ -638,7 +596,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
         <div class="auth-feat"><div class="auth-feat-icon">💬</div><span>Conversations saved anywhere</span></div>
         <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(14,165,233,.12);border-color:rgba(14,165,233,.2)">🌐</div><span>Real-time web search</span></div>
         <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(124,106,255,.12);border-color:rgba(124,106,255,.2)">🎙️</div><span>Ultra-fluid voice mode</span></div>
-        <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(255,140,0,.12);border-color:rgba(255,140,0,.2)">🎨</div><span>Image generation &amp; photo analysis</span></div>
+        <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(255,140,0,.12);border-color:rgba(255,140,0,.2)">🎨</div><span>Image generation &amp; photo/video analysis</span></div>
         <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(0,255,65,.1);border-color:rgba(0,255,65,.2)">💻</div><span>Code Mode — Laguna M.1</span></div>
         <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.2)">🎬</div><span>AI Video Generation — Premium</span></div>
       </div>
@@ -655,7 +613,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
         <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
         <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Create Account</button>
       </div>
-      <!-- LOGIN -->
       <div id="login-form">
         <div class="auth-form-title">Welcome back 👋</div>
         <div class="auth-form-sub">Sign in to access your conversations.</div>
@@ -671,7 +628,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
         <button class="btn-guest" onclick="doGuest()"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.5" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 13.5c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Continue as Guest</button>
         <div class="auth-bottom-note">No account? <a onclick="switchTab('register')">Create one free</a> · <a onclick="doGuest()">Guest mode</a></div>
       </div>
-      <!-- REGISTER -->
       <div id="register-form" style="display:none">
         <div class="auth-form-title">Create an account</div>
         <div class="auth-form-sub">Free. Your chats saved forever.</div>
@@ -704,9 +660,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════
-     APP
-═══════════════════════════════════════════════════════════ -->
+<!-- APP -->
 <div id="app-screen">
   <div id="sidebar-overlay" onclick="closeSidebar()"></div>
   <aside id="sidebar">
@@ -722,7 +676,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
       </div>
       <div class="model-sel" onclick="document.getElementById('model-modal').classList.add('open');closeSidebar()">
         <div class="model-dot" id="model-dot"></div>
-        <div class="model-info"><div class="model-nm" id="model-nm">GPT-OSS 120B</div><div class="model-ctx" id="model-ctx">via OpenRouter · Free</div></div>
+        <div class="model-info"><div class="model-nm" id="model-nm">Gemma 4 31B</div><div class="model-ctx" id="model-ctx">google · vision · via OpenRouter · Free</div></div>
         <svg viewBox="0 0 16 16" fill="none"><path d="M5 7l3-3 3 3M5 10l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
       </div>
       <div class="user-row" onclick="toggleDd()">
@@ -748,7 +702,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
       <div class="tb-left">
         <button class="hamburger" onclick="openSidebar()"><svg viewBox="0 0 18 18" fill="none"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
         <span class="conv-title" id="conv-title">New conversation</span>
-        <span class="conv-badge" id="model-badge">gpt-oss-120b</span>
+        <span class="conv-badge" id="model-badge">gemma-4-31b</span>
       </div>
       <div class="tb-actions">
         <button class="voice-btn" onclick="openVoiceMode()">
@@ -769,7 +723,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
       <div id="empty-state">
         <div class="empty-logo"><img src="https://sixteleinekugel-commits.github.io/novaAI-chat/k9TBi.jpg" style="width:72px;height:72px;border-radius:50%;object-fit:cover" alt="Nova AI 618"></div>
         <div class="empty-title" id="empty-title">Hello! I'm Nova 👋</div>
-        <div class="empty-sub" id="empty-sub">Created by Sixte, powered by GPT-OSS 120B.</div>
+        <div class="empty-sub" id="empty-sub">Created by Sixte, powered by Gemma 4 31B.</div>
         <div class="prompts-grid">
           <div class="p-card search-card" onclick="toggleSearch();fillPrompt('What happened in the world today?')"><span class="p-card-icon">🌐</span><div class="p-card-title">Web Search</div><div class="p-card-sub">Real-time information</div></div>
           <div class="p-card voice-card" onclick="openVoiceMode()"><span class="p-card-icon">🎙️</span><div class="p-card-title">Voice Mode</div><div class="p-card-sub">Speak naturally</div></div>
@@ -805,9 +759,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
   </main>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════
-     VOICE OVERLAY
-═══════════════════════════════════════════════════════════ -->
+<!-- VOICE OVERLAY -->
 <div id="voice-overlay">
   <div class="vo-topbar">
     <div class="vo-brand"><div class="vo-dot"></div><span>NOVA AI 618</span><span class="vo-lang" id="vo-lang">Auto</span></div>
@@ -830,9 +782,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════
-     CODE MODE OVERLAY
-═══════════════════════════════════════════════════════════ -->
+<!-- CODE MODE -->
 <div id="code-overlay">
   <canvas id="matrix-canvas"></canvas>
   <div class="cg-vignette"></div>
@@ -864,9 +814,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════
-     VIDEO OVERLAY
-═══════════════════════════════════════════════════════════ -->
+<!-- VIDEO OVERLAY -->
 <div id="video-overlay">
   <div class="vid-topbar">
     <div class="vid-brand"><div class="vid-brand-dot"></div>NOVA VIDEO<span class="vid-status-badge" id="vid-status-badge">READY</span></div>
@@ -893,9 +841,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════
-     SUBSCRIPTION MODAL — PREMIUM UNIQUEMENT
-═══════════════════════════════════════════════════════════ -->
+<!-- SUBSCRIPTION MODAL -->
 <div id="sub-modal">
   <div class="sub-box">
     <button class="sub-close" onclick="closeSubModal()"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
@@ -904,7 +850,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
       <div class="sub-title">Nova AI 618</div>
       <div class="sub-sub">Simple, honest pricing — one plan that unlocks everything.</div>
     </div>
-    <!-- FREE compact -->
     <div class="sub-free-row">
       <div class="sub-free-left">
         <div class="sub-free-icon">🆓</div>
@@ -922,9 +867,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
       <span class="sub-free-limit">∞ images</span>
       <span class="sub-free-limit">No video</span>
     </div>
-    <!-- Separator -->
     <div class="sub-sep">Upgrade to unlock everything</div>
-    <!-- PREMIUM -->
     <div class="sub-premium" onclick="handlePremiumClick()">
       <div class="sub-premium-badge">✦ RECOMMENDED</div>
       <div class="sub-premium-head">
@@ -940,7 +883,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
       <div class="sub-premium-feats">
         <div class="sub-pfeat"><div class="sub-pfeat-icon">💬</div><span><strong>Unlimited</strong> text conversations</span></div>
         <div class="sub-pfeat"><div class="sub-pfeat-icon">🎨</div><span><strong>Unlimited</strong> image generation</span></div>
-        <div class="sub-pfeat"><div class="sub-pfeat-icon">📸</div><span><strong>10</strong> photo analyses / day</span></div>
+        <div class="sub-pfeat"><div class="sub-pfeat-icon">📸</div><span><strong>10</strong> photo &amp; video analyses / day</span></div>
         <div class="sub-pfeat"><div class="sub-pfeat-icon">💻</div><span><strong>Unlimited</strong> code mode requests</span></div>
         <div class="sub-pfeat"><div class="sub-pfeat-icon">🎙️</div><span><strong>Unlimited</strong> voice mode</span></div>
         <div class="sub-pfeat"><div class="sub-pfeat-icon">🎬</div><span><strong>2 AI video</strong> generations / day</span></div>
@@ -950,7 +893,6 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
         <div class="sub-cta-note" id="premium-note">Payment integration coming soon — click to preview</div>
       </div>
     </div>
-    <!-- Guarantees -->
     <div class="sub-guarantees">
       <div class="sub-guar"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Cancel anytime</div>
       <div class="sub-guar"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>No hidden fees</div>
@@ -959,35 +901,21 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════
-     MODEL MODAL
-═══════════════════════════════════════════════════════════ -->
+<!-- MODEL MODAL — GEMMA UNIQUEMENT -->
 <div class="m-overlay" id="model-modal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="m-box">
-    <p class="m-title">Choose AI Model</p>
-    <p class="m-sub">All models via OpenRouter · Free tier.</p>
-    <div class="model-opt selected" id="opt-gpt" onclick="selectModel('openai/gpt-oss-120b','GPT-OSS 120B','via OpenRouter · Free · 4k tokens',this)">
-      <div class="model-opt-icon">🚀</div>
-      <div class="model-opt-info"><div class="model-opt-name">GPT-OSS 120B</div><div class="model-opt-desc">Most powerful — default model</div></div>
+    <p class="m-title">AI Model</p>
+    <p class="m-sub">Powered by Gemma 4 31B via OpenRouter — free, multimodal, vision-capable.</p>
+    <div class="model-opt selected" id="opt-gemma" onclick="selectModel('google/gemma-4-31b-it:free','Gemma 4 31B','google · vision · via OpenRouter · Free',this)">
+      <div class="model-opt-icon">✨</div>
+      <div class="model-opt-info"><div class="model-opt-name">Gemma 4 31B</div><div class="model-opt-desc">Google · Multimodal · Images &amp; video analysis</div></div>
       <span class="mbadge mbadge-def">DEFAULT</span>
-    </div>
-    <div class="model-opt" id="opt-70b" onclick="selectModel('llama-3.3-70b-versatile','Llama 3.3 70B','128k context · via OpenRouter',this)">
-      <div class="model-opt-icon">🔥</div>
-      <div class="model-opt-info"><div class="model-opt-name">Llama 3.3 70B</div><div class="model-opt-desc">Powerful reasoning, code, analysis</div></div>
-      <span class="mbadge mbadge-pro">PRO</span>
-    </div>
-    <div class="model-opt" id="opt-8b" onclick="selectModel('llama-3.1-8b-instant','Llama 3.1 8B','128k context · ultra-fast',this)">
-      <div class="model-opt-icon">⚡</div>
-      <div class="model-opt-info"><div class="model-opt-name">Llama 3.1 8B</div><div class="model-opt-desc">Ultra-fast for everyday tasks</div></div>
-      <span class="mbadge mbadge-fast">FAST</span>
     </div>
     <button class="m-close" onclick="document.getElementById('model-modal').classList.remove('open')">Close</button>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════
-     RATE LIMIT MODAL
-═══════════════════════════════════════════════════════════ -->
+<!-- RATE LIMIT MODAL -->
 <div class="m-overlay" id="rate-limit-modal">
   <div class="m-box">
     <div class="rate-limit-icon">⚠️</div>
@@ -996,8 +924,8 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
     <p class="m-sub">Unlock more with Premium:</p>
     <div class="model-opt" onclick="closeRateLimit();openSubModal()">
       <div class="model-opt-icon">💎</div>
-      <div class="model-opt-info"><div class="model-opt-name">Premium — 3.49€/mo</div><div class="model-opt-desc">Unlimited text · Unlimited code · 10 photos · 2 videos/day</div></div>
-      <span class="mbadge mbadge-pro">UPGRADE</span>
+      <div class="model-opt-info"><div class="model-opt-name">Premium — 3.49€/mo</div><div class="model-opt-desc">Unlimited text &amp; code · 10 photo analyses · 2 videos/day</div></div>
+      <span class="mbadge mbadge-def" style="background:rgba(168,85,247,.15);color:var(--vid)">UPGRADE</span>
     </div>
     <button class="m-close" onclick="closeRateLimit()">Close — wait until tomorrow</button>
   </div>
@@ -1007,9 +935,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 <div id="toast"></div>
 
 <script>
-// ══════════════════════════════════════════════════════════
 // CONFIG
-// ══════════════════════════════════════════════════════════
 var BACKEND_OR   = "https://jarvis-backend-1-dmdo.onrender.com";
 var BACKEND_GROQ = "https://jarvis-backend-utkp.onrender.com";
 var API_URL      = BACKEND_OR   + "/chat";
@@ -1022,7 +948,6 @@ var SEARCH_URL   = BACKEND_GROQ + "/search";
 var S_USERS="nova_users_v2", S_SESSION="nova_sess_v2", S_QUOTAS="nova_quotas_v1";
 var EMAILJS_SID="service_ls8c2ou", EMAILJS_TID="template_4kzpytr";
 
-// TIER: free=limites, premium=illimité + vidéo
 var TIER_LIMITS={
   free:    {text:15,       photo:4,  code:15,       video:0},
   premium: {text:Infinity, photo:10, code:Infinity, video:2}
@@ -1032,14 +957,14 @@ var SYSTEM_PROMPT="You are Nova AI 618, an intelligent AI assistant created by S
 
 var CODE_SYSTEM_PROMPT="You are Nova Code, an elite coding AI powered by Laguna M.1 via OpenRouter.\nSpecialist in all programming languages, frameworks, algorithms, debugging.\n\nStyle:\n- Precise, technical, direct\n- Always provide working, clean, well-commented code\n- Use markdown with proper code blocks\n- Support all languages: Python, JavaScript, TypeScript, Rust, Go, C++, Java, Swift, SQL, Shell, etc.\n- When debugging, identify root causes clearly\n\nYou run in a hacker terminal. Stay focused and technical.";
 
-// STATE
+// STATE — Gemma 4 31B par défaut
 var currentUser=null, isGuest=false, currentConvId=null;
-var messages=[], msgCount=0, currentModel="openai/gpt-oss-120b";
+var messages=[], msgCount=0, currentModel="google/gemma-4-31b-it:free";
 var pendingPhoto=null, searchModeActive=false;
 var lastRegEmail="", lastRegName="";
 var codeMsgs=[], matrixAnimId=null;
 
-// ── QUOTA ─────────────────────────────────────────────────
+// QUOTA
 function todayStr(){return new Date().toISOString().slice(0,10)}
 function getQuotas(){
   var q=ls.get(S_QUOTAS),t=todayStr();
@@ -1055,7 +980,6 @@ function getRem(type){var q=getQuotas(),lim=getTierLimits()[type];if(lim===Infin
 
 function refreshQuotaUI(){
   var q=getQuotas(),lim=getTierLimits(),tier=getCurrentTier();
-  // Quota bar sidebar
   var qd=document.getElementById("quota-display");
   if(qd&&!isGuest){
     qd.style.display="block";
@@ -1064,58 +988,46 @@ function refreshQuotaUI(){
     if(tl===Infinity){tv.textContent=tu+" / \u221e";tf.style.width="30%";tf.className="quota-bar-fill"}
     else{tv.textContent=tu+" / "+tl;var p=Math.min(100,(tu/tl)*100);tf.style.width=p+"%";tf.className="quota-bar-fill"+(p>=80?" danger":p>=60?" warn":"")}
   }
-  // Code footer
   var hkq=document.getElementById("hk-quota-info");
   if(hkq){var cr=getRem("code");hkq.textContent=(lim.code===Infinity?"\u221e":cr)+" remaining"}
-  // Video quota
   var vqt=document.getElementById("vid-quota-txt"),vqf=document.getElementById("vid-quota-fill");
   if(vqt){
     var vl=lim.video,vu=q.video||0;
     if(vl===0){vqt.textContent="Video not available — Premium required";if(vqf)vqf.style.width="0%"}
     else{vqt.textContent=vu+" / "+vl+" video"+(vl>1?"s":"")+" today";if(vqf)vqf.style.width=Math.min(100,(vu/vl)*100)+"%"}
   }
-  // Video card
   var vc=document.getElementById("video-card-sub"),vl2=document.getElementById("video-card-lock");
   if(vc&&vl2){
     if(tier==="free"){vc.textContent="AI video — Premium plan";vl2.style.display="inline-flex"}
     else{vc.textContent="AI video · "+getRem("video")+" remaining today";vl2.style.display="none"}
   }
-  // Code card
   var cc=document.getElementById("code-card-sub");
   if(cc){var crr=getRem("code");cc.textContent=(lim.code===Infinity?"\u221e":crr)+" requests remaining · hacker terminal"}
-  // Photo card
   var pc=document.getElementById("photo-card-sub");
   if(pc){pc.textContent=getRem("photo")+" analyses remaining today"}
-  // Badges
   var badge=document.getElementById("u-badge"),ddTier=document.getElementById("dd-tier");
   if(badge){
     if(tier==="premium"){badge.textContent="Premium";badge.className="badge badge-premium";if(ddTier){ddTier.textContent="\uD83D\uDC8E Premium Plan";ddTier.className="dd-tier badge badge-premium"}}
     else{if(!isGuest){badge.textContent="Free";badge.className="badge badge-free"}if(ddTier){ddTier.textContent="Free Plan";ddTier.className="dd-tier badge badge-free"}}
   }
-  // Sub modal badges
   var fab=document.getElementById("free-active-badge"),pcta=document.getElementById("premium-cta"),pn=document.getElementById("premium-note");
-  if(fab){
-    if(tier==="premium"){fab.textContent="Previous";fab.style.opacity=".5"}
-    else{fab.textContent="Active";fab.style.opacity="1"}
-  }
+  if(fab){if(tier==="premium"){fab.textContent="Previous";fab.style.opacity=".5"}else{fab.textContent="Active";fab.style.opacity="1"}}
   if(pcta&&pn){
     if(tier==="premium"){pcta.textContent="Current plan \u2713";pcta.disabled=true;pcta.style.background="rgba(168,85,247,.3)";pn.textContent=""}
     else{pcta.textContent="Get Premium \u2014 3.49\u20ac/mo";pcta.disabled=false;pcta.style.background="";pn.textContent="Payment integration coming soon \u2014 click to preview"}
   }
 }
 
-// ── SUBSCRIPTION ──────────────────────────────────────────
 function openSubModal(){refreshQuotaUI();document.getElementById("sub-modal").classList.add("open");document.getElementById("profile-dd").classList.remove("open")}
 function closeSubModal(){document.getElementById("sub-modal").classList.remove("open")}
 document.getElementById("sub-modal").addEventListener("click",function(e){if(e.target===this)closeSubModal()});
 function handlePremiumClick(){
   if(getCurrentTier()==="premium"){showToast("You are already on the Premium plan!");return}
   var q=getQuotas();q.tier="premium";saveQuotas(q);
-  refreshQuotaUI();closeSubModal();
-  showToast("\uD83D\uDC8E Premium activated! (Demo mode)",3500);
+  refreshQuotaUI();closeSubModal();showToast("\uD83D\uDC8E Premium activated! (Demo mode)",3500);
 }
 
-// ── VIDEO ─────────────────────────────────────────────────
+// VIDEO
 function handleVideoCardClick(){
   if(getCurrentTier()==="free"){openSubModal();showToast("\uD83D\uDD12 Video requires Premium \u2014 3.49\u20ac/mo");return}
   if(!canUse("video")){showRateLimitModal("video");return}
@@ -1147,48 +1059,28 @@ async function generateVideo(){
 
   var card=document.createElement("div");card.className="vid-card";
   card.innerHTML='<div class="vid-card-prompt">\uD83C\uDFAC '+esc(text)+'</div>'
-    +'<div class="vid-card-body">'
-      +'<div class="vid-card-loading">'
-        +'<div class="vid-card-spinner"></div>'
-        +'<div>Generating with HuggingFace AI...</div>'
-        +'<div class="vid-card-note">Takes 30\u201390 seconds \u00b7 First run may be slower</div>'
-      +'</div>'
-    +'</div>';
+    +'<div class="vid-card-body"><div class="vid-card-loading"><div class="vid-card-spinner"></div>'
+    +'<div>Generating with HuggingFace AI...</div>'
+    +'<div class="vid-card-note">Takes 30\u201390 seconds \u00b7 First run may be slower</div>'
+    +'</div></div>';
   content.appendChild(card);content.scrollTop=content.scrollHeight;
 
   try{
     var r=await fetch(VIDEO_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:text})});
     var d=await r.json();
     var body=card.querySelector(".vid-card-body");
-
     if(d.video){
       useQuota("video");
       var mediaHTML="";
-      if(d.isVideo){
-        mediaHTML='<video class="generated-media" controls autoplay muted playsinline><source src="'+d.video+'" type="video/mp4"></video>';
-      }else{
-        // GIF ou image
-        mediaHTML='<img class="generated-media" src="'+d.video+'" alt="Generated '+( d.isGif?"animation":"image")+'">';
-      }
+      if(d.isVideo){mediaHTML='<video class="generated-media" controls autoplay muted playsinline><source src="'+d.video+'" type="video/mp4"></video>'}
+      else{mediaHTML='<img class="generated-media" src="'+d.video+'" alt="Generated '+(d.isGif?"animation":"image")+'">';}
       var ext=d.isVideo?"mp4":d.isGif?"gif":"jpg";
-      body.innerHTML=mediaHTML
-        +'<div class="vid-card-actions">'
-          +'<button class="vid-dl-btn" id="dl-btn-'+Date.now()+'">'
-            +'<svg viewBox="0 0 16 16" fill="none"><path d="M8 3v8M5 8l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>'
-            +' Download '+(d.isGif?"GIF":d.isVideo?"MP4":"Image")
-          +'</button>'
-        +'</div>';
-      // Stocker data pour download
+      body.innerHTML=mediaHTML+'<div class="vid-card-actions"><button class="vid-dl-btn"><svg viewBox="0 0 16 16" fill="none"><path d="M8 3v8M5 8l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Download '+(d.isGif?"GIF":d.isVideo?"MP4":"Image")+'</button></div>';
       card._vidData=d.video;card._vidExt=ext;
-      card.querySelector(".vid-dl-btn").addEventListener("click",function(){
-        var a=document.createElement("a");a.href=card._vidData;a.download="nova-618-video."+card._vidExt;a.click();
-      });
+      card.querySelector(".vid-dl-btn").addEventListener("click",function(){var a=document.createElement("a");a.href=card._vidData;a.download="nova-618-video."+card._vidExt;a.click()});
       refreshQuotaUI();
     }else{
-      body.innerHTML='<div style="color:var(--red);font-size:13px;padding:12px 0;line-height:1.7">'
-        +'\u26A0\uFE0F '+(d.error||"Generation failed.")
-        +'<br><small style="color:var(--text3)">The AI model may be warming up. Please retry in ~30 seconds.</small>'
-        +'</div>';
+      body.innerHTML='<div style="color:var(--red);font-size:13px;padding:12px 0;line-height:1.7">\u26A0\uFE0F '+(d.error||"Generation failed.")+'<br><small style="color:var(--text3)">The AI model may be warming up. Please retry in ~30 seconds.</small></div>';
     }
   }catch(err){
     var body2=card.querySelector(".vid-card-body");
@@ -1199,7 +1091,7 @@ async function generateVideo(){
   content.scrollTop=content.scrollHeight;
 }
 
-// ── LS ─────────────────────────────────────────────────────
+// LS
 var ls={
   get:function(k){try{return JSON.parse(localStorage.getItem(k))}catch{return null}},
   set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}},
@@ -1213,7 +1105,7 @@ function saveConvs(c){if(!isGuest)ls.set(convKey(),c)}
 var IMAGE_KW=["image ","draw ","draw me","paint ","render ","visualize ","generate image","create image","make an image","make a picture","generate a picture","create a picture","generate art","create art","generate a photo","create a photo","picture of","photo of","illustration of"];
 function isImageReq(t){var s=t.toLowerCase().trim();if(s.startsWith("image ")||s.startsWith("image:"))return true;return IMAGE_KW.some(function(k){return s.includes(k)})}
 
-// ── HELPERS ────────────────────────────────────────────────
+// HELPERS
 function vi(id){return document.getElementById(id).value.trim()}
 function stop(e){e.stopPropagation()}
 function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
@@ -1239,17 +1131,17 @@ function checkStrength(pw){
 }
 function downloadChat(){
   if(!messages.length){showToast("No messages to export.");return}
-  var txt=messages.map(function(m){return"["+(m.role==="user"?(currentUser&&currentUser.name||"You"):"Nova AI 618")+"]\n"+m.content}).join("\n\n──────\n\n");
+  var txt=messages.map(function(m){return"["+(m.role==="user"?(currentUser&&currentUser.name||"You"):"Nova AI 618")+"]\n"+m.content}).join("\n\n\u2500\u2500\u2500\u2500\u2500\u2500\n\n");
   var a=document.createElement("a");a.href="data:text/plain;charset=utf-8,"+encodeURIComponent(txt);a.download="nova-618-chat.txt";a.click();
 }
 function exportAll(){
   var convs=getUserConvs();if(!convs.length){showToast("No saved conversations.");return}
-  var all=convs.map(function(c){return"══ "+c.title+" ══\n\n"+c.messages.map(function(m){return"["+(m.role==="user"?currentUser.name:"Nova")+"]\n"+m.content}).join("\n\n──\n\n")}).join("\n\n\n");
+  var all=convs.map(function(c){return"\u2550\u2550 "+c.title+" \u2550\u2550\n\n"+c.messages.map(function(m){return"["+(m.role==="user"?currentUser.name:"Nova")+"]\n"+m.content}).join("\n\n\u2500\u2500\n\n")}).join("\n\n\n");
   var a=document.createElement("a");a.href="data:text/plain;charset=utf-8,"+encodeURIComponent(all);a.download="nova-618-all.txt";a.click();
 }
 function closeRateLimit(){document.getElementById("rate-limit-modal").classList.remove("open")}
 
-// ── MARKDOWN ───────────────────────────────────────────────
+// MARKDOWN
 function formatMsg(text){
   if(!text)return"";var t=text;
   t=t.replace(/```([\w]*)\n?([\s\S]*?)```/g,function(_,l,code){return"<pre><code>"+escHtml(code.trim())+"</code></pre>"});
@@ -1268,7 +1160,7 @@ function formatMsg(text){
   return out.join("\n");
 }
 
-// ── MODEL ──────────────────────────────────────────────────
+// MODEL — Gemma seul
 function selectModel(id,name,ctx,el){
   document.querySelectorAll("#model-modal .model-opt").forEach(function(o){o.classList.remove("selected")});
   el.classList.add("selected");currentModel=id;updateModelUI(name,ctx);
@@ -1278,10 +1170,7 @@ function updateModelUI(name,ctx){
   document.getElementById("model-nm").textContent=name;
   document.getElementById("model-ctx").textContent=ctx;
   document.getElementById("model-badge").textContent=name.toLowerCase().replace(/\s+/g,"-");
-  var dot=document.getElementById("model-dot");
-  if(currentModel==="llama-3.1-8b-instant")dot.className="model-dot orange";
-  else if(currentModel==="llama-3.3-70b-versatile")dot.className="model-dot blue";
-  else dot.className="model-dot";
+  document.getElementById("model-dot").className="model-dot";
 }
 function showRateLimitModal(type){
   var lim=getTierLimits()[type||"text"];
@@ -1290,7 +1179,7 @@ function showRateLimitModal(type){
   document.getElementById("rate-limit-modal").classList.add("open");
 }
 
-// ── SEARCH ─────────────────────────────────────────────────
+// SEARCH
 function toggleSearch(){
   searchModeActive=!searchModeActive;
   var btn=document.getElementById("search-tool-btn"),box=document.getElementById("input-box"),banner=document.getElementById("search-banner"),prompt=document.getElementById("prompt");
@@ -1298,7 +1187,7 @@ function toggleSearch(){
   else{btn.classList.remove("active-search");box.classList.remove("search-active");banner.classList.remove("show");prompt.placeholder="Ask Nova anything...";showToast("Web search disabled")}
 }
 
-// ── CODE MODE ──────────────────────────────────────────────
+// CODE MODE
 function openCodeMode(){
   document.getElementById("code-overlay").classList.add("open");
   document.getElementById("code-tool-btn").classList.add("code-btn-active");
@@ -1328,10 +1217,10 @@ function startMatrixRain(){
     ctx.font="bold "+colSize+"px 'JetBrains Mono',monospace";
     for(var j=0;j<drops.length;j++){
       var char=chars[Math.floor(Math.random()*chars.length)],rand=Math.random();
-      if(rand<0.03)ctx.fillStyle="rgba(255,255,255,"+(Math.random()*0.5+0.45)+")";       // blanc brillant
-      else if(rand<0.08)ctx.fillStyle="rgba(0,255,220,"+(Math.random()*0.5+0.3)+")";     // cyan
-      else if(rand<0.18)ctx.fillStyle="rgba(127,255,127,"+(Math.random()*0.4+0.4)+")";   // vert clair
-      else ctx.fillStyle="rgba(0,255,65,"+(Math.random()*0.5+0.3)+")";                    // vert principal
+      if(rand<0.03)ctx.fillStyle="rgba(255,255,255,"+(Math.random()*0.5+0.45)+")";
+      else if(rand<0.08)ctx.fillStyle="rgba(0,255,220,"+(Math.random()*0.5+0.3)+")";
+      else if(rand<0.18)ctx.fillStyle="rgba(127,255,127,"+(Math.random()*0.4+0.4)+")";
+      else ctx.fillStyle="rgba(0,255,65,"+(Math.random()*0.5+0.3)+")";
       ctx.fillText(char,j*colSize,drops[j]);
       if(drops[j]>canvas.height&&Math.random()>0.975)drops[j]=0;
       drops[j]+=colSize;
@@ -1379,7 +1268,7 @@ async function sendCodeMessage(){
     if(d.error){
       var ew=document.createElement("div");ew.className="hk-msg";
       var el2=document.createElement("div");el2.className="hk-msg-label";el2.textContent="[ERROR]";
-      var eb=document.createElement("div");eb.className="hk-bub bot";eb.style.color="rgba(255,100,100,.9)";eb.textContent="error: "+d.error+(d.fix?" — "+d.fix:"");
+      var eb=document.createElement("div");eb.className="hk-bub bot";eb.style.color="rgba(255,100,100,.9)";eb.textContent="error: "+d.error+(d.fix?" \u2014 "+d.fix:"");
       ew.appendChild(el2);ew.appendChild(eb);h.appendChild(ew);document.getElementById("hk-status").textContent="ERROR";
     }else{
       var reply="";
@@ -1398,7 +1287,7 @@ async function sendCodeMessage(){
   sb.disabled=false;document.getElementById("hk-prompt").focus();h.scrollTop=h.scrollHeight;
 }
 
-// ── AUTH ───────────────────────────────────────────────────
+// AUTH
 function switchTab(t){
   document.getElementById("login-form").style.display=t==="login"?"block":"none";
   document.getElementById("register-form").style.display=t==="register"?"block":"none";
@@ -1420,10 +1309,10 @@ function doRegister(){
   var id="u_"+Date.now();users[id]={id:id,name:name,email:email,pw:btoa(pw),created:Date.now(),verified:false};ls.set(S_USERS,users);
   var btn=document.getElementById("reg-submit-btn");btn.disabled=true;btn.textContent="Creating account...";
   lastRegEmail=email;lastRegName=name;
-  function signInDirectly(msg){
+  function signInDirectly(){
     var allU=getUsers(),u=Object.values(allU).find(function(u){return u.email===email});
     if(u){u.verified=true;ls.set(S_USERS,allU)}
-    oEl.textContent=msg||"Account created! Signing you in...";oEl.classList.add("show");btn.style.display="none";
+    oEl.textContent="Account created! Signing you in...";oEl.classList.add("show");btn.style.display="none";
     var d1=document.getElementById("reg-divider"),gb=document.getElementById("reg-guest-btn");
     if(d1)d1.style.display="none";if(gb)gb.style.display="none";
     setTimeout(function(){var fu=Object.values(getUsers()).find(function(u){return u.email===email});if(fu)loginUser(fu)},900);
@@ -1438,8 +1327,8 @@ function doRegister(){
       document.getElementById("reg-pending").style.display="block";btn.style.display="none";
       var d1=document.getElementById("reg-divider"),gb=document.getElementById("reg-guest-btn");
       if(d1)d1.style.display="none";if(gb)gb.style.display="none";
-    }).catch(function(){signInDirectly()});
-  }).catch(function(){signInDirectly()});
+    }).catch(signInDirectly);
+  }).catch(signInDirectly);
 }
 function resendConfirmation(){
   if(!lastRegEmail||!lastRegName)return;showToast("Sending...");
@@ -1481,7 +1370,7 @@ function startApp(user,guest){
   refreshQuotaUI();refreshSidebar();newConversation();
 }
 
-// ── CONVERSATIONS ──────────────────────────────────────────
+// CONVERSATIONS
 function newConversation(){
   if(messages.length&&!isGuest&&currentConvId)persistConv();
   currentConvId="c_"+Date.now();messages=[];msgCount=0;
@@ -1540,7 +1429,7 @@ function delConv(id,e){
 function hideEmpty(){document.getElementById("empty-state").style.display="none"}
 function addDivider(txt){var d=document.createElement("div");d.className="day-div";d.textContent=txt||"Today";document.getElementById("chat").appendChild(d)}
 
-// ── RENDER MSG ─────────────────────────────────────────────
+// RENDER MSG
 function renderMsg(role,content,typing){
   var chatEl=document.getElementById("chat"),cw=document.getElementById("chat-wrap");
   hideEmpty();if(msgCount===0)addDivider("Today");msgCount++;
@@ -1579,7 +1468,7 @@ function addActions(wrap,text){
   actions.appendChild(cpBtn);actions.appendChild(spkBtn);wrap.appendChild(actions);
 }
 
-// ── IMAGE GEN ──────────────────────────────────────────────
+// IMAGE GEN
 async function generateImage(prompt,editBubble,editWrap){
   var bubble,wrap;
   if(editBubble&&editWrap){bubble=editBubble;wrap=editWrap;bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>Modifying image...</div>'}
@@ -1622,7 +1511,7 @@ async function generateImage(prompt,editBubble,editWrap){
   document.getElementById("chat-wrap").scrollTop=999999;
 }
 
-// ── PHOTO ANALYSIS ─────────────────────────────────────────
+// PHOTO
 function handlePhotoUpload(e){
   var file=e.target.files[0];if(!file)return;
   if(!file.type.startsWith("image/")){showToast("Please select an image file.");return}
@@ -1663,7 +1552,7 @@ async function analyzePhoto(photoDataUrl,question){
   var te=document.createElement("span");te.className="msg-time";te.textContent=new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
   hdr.appendChild(se);hdr.appendChild(te);
   var bubble=document.createElement("div");bubble.className="bubble bot";
-  bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>Analyzing your photo...</div>';
+  bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>Analyzing with Gemma 4 31B vision...</div>';
   wrap.appendChild(hdr);wrap.appendChild(bubble);row.appendChild(av);row.appendChild(wrap);group.appendChild(row);chatEl.appendChild(group);cw.scrollTop=cw.scrollHeight;
   try{
     var r=await fetch(ANALYZE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({image:photoDataUrl,question:question||"Analyze this image in detail. Describe what you see, key elements, colors, context and anything relevant."})});
@@ -1678,7 +1567,7 @@ async function analyzePhoto(photoDataUrl,question){
   cw.scrollTop=999999;
 }
 
-// ── SEND MESSAGE ───────────────────────────────────────────
+// SEND MESSAGE
 async function sendMessage(){
   var promptEl=document.getElementById("prompt"),sendBtn=document.getElementById("send-btn");
   var text=promptEl.value.trim();
@@ -1758,9 +1647,7 @@ async function sendMessage(){
   sendBtn.disabled=false;promptEl.focus();
 }
 
-// ══════════════════════════════════════════════════════════
 // VOICE ENGINE
-// ══════════════════════════════════════════════════════════
 var synth=window.speechSynthesis;
 var _UA=navigator.userAgent;
 var isIOS=/iPad|iPhone|iPod/.test(_UA)&&!window.MSStream;
@@ -1995,7 +1882,7 @@ function toggleInlineMic(){
   try{inlineRec.start()}catch(e){}
 }
 
-// ── EVENTS ─────────────────────────────────────────────────
+// EVENTS
 document.getElementById("prompt").addEventListener("input",function(){autoResize();updateCount()});
 document.getElementById("prompt").addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage()}});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeVoiceMode();closeCodeMode();closeVideoMode();closeSubModal()}});
@@ -2005,7 +1892,7 @@ document.addEventListener("touchend",function(e){var dx=e.changedTouches[0].clie
 window.addEventListener("resize",function(){if(document.getElementById("code-overlay").classList.contains("open")){var c=document.getElementById("matrix-canvas");c.width=window.innerWidth;c.height=window.innerHeight}});
 if(synth){ensureVoices();synth.addEventListener("voiceschanged",function(){voiceVoices=synth.getVoices()||[]})}
 
-// ── INIT ───────────────────────────────────────────────────
+// INIT
 (function init(){
   var params=new URLSearchParams(window.location.search);
   var confirmToken=params.get("confirm");
