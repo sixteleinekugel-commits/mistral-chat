@@ -211,25 +211,22 @@ select.form-input{cursor:pointer}
 #chat-wrap::-webkit-scrollbar{width:4px}
 #chat-wrap::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:4px}
 #chat{max-width:740px;margin:0 auto;padding:22px 20px;display:flex;flex-direction:column;gap:4px;min-height:100%}
-#empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px 0}
-.empty-logo{width:72px;height:72px;margin:0 auto 16px;border-radius:50%;animation:glow-pulse 4s ease-in-out infinite}
-.empty-title{font-family:var(--fh);font-size:22px;font-weight:800;margin-bottom:7px}
-.empty-sub{font-size:14px;color:var(--text2);font-weight:300;max-width:340px;margin-bottom:26px;line-height:1.75}
-.prompts-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;width:100%;max-width:500px}
-.p-card{padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:13px;cursor:pointer;text-align:left;transition:all .22s;position:relative;overflow:hidden}
-.p-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .2s}
-.p-card:hover{transform:translateY(-2px)}.p-card:hover::before{opacity:1}.p-card:active{transform:scale(.98)}
-.p-card.search-card{border-color:rgba(14,165,233,.2)}.p-card.search-card::before{background:linear-gradient(135deg,rgba(14,165,233,.07),transparent)}.p-card.search-card .p-card-title{color:var(--search)}
-.p-card.voice-card{border-color:rgba(124,106,255,.2)}.p-card.voice-card::before{background:linear-gradient(135deg,rgba(124,106,255,.07),transparent)}.p-card.voice-card .p-card-title{color:var(--accent2)}
-.p-card.image-card{border-color:rgba(255,140,0,.2)}.p-card.image-card::before{background:linear-gradient(135deg,rgba(255,140,0,.07),transparent)}.p-card.image-card .p-card-title{color:var(--orange)}
-.p-card.photo-card{border-color:rgba(34,197,94,.2)}.p-card.photo-card::before{background:linear-gradient(135deg,rgba(34,197,94,.07),transparent)}.p-card.photo-card .p-card-title{color:var(--green)}
-.p-card.persona-card{border-color:rgba(245,158,11,.25)}.p-card.persona-card::before{background:linear-gradient(135deg,rgba(245,158,11,.07),transparent)}.p-card.persona-card .p-card-title{color:var(--gold)}.p-card.persona-card:hover{border-color:var(--gold);box-shadow:0 0 20px rgba(245,158,11,.1)}
-.p-card.code-card{border-color:rgba(0,255,65,.25);grid-column:1/-1}.p-card.code-card::before{background:linear-gradient(135deg,rgba(0,255,65,.07),transparent)}.p-card.code-card .p-card-title{color:var(--cg);font-family:var(--fm)}.p-card.code-card:hover{border-color:var(--cg);box-shadow:0 0 20px rgba(0,255,65,.12)}
-.p-card.video-card{border-color:rgba(168,85,247,.25);grid-column:1/-1}.p-card.video-card::before{background:linear-gradient(135deg,rgba(168,85,247,.07),transparent)}.p-card.video-card .p-card-title{color:var(--vid)}.p-card.video-card:hover{border-color:var(--vid);box-shadow:0 0 20px rgba(168,85,247,.1)}
-.p-card-icon{font-size:18px;margin-bottom:8px;display:block}
-.p-card-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
-.p-card-sub{font-size:11px;color:var(--text3)}
-.p-card-locked{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--vid);background:var(--vid-dim);border:1px solid rgba(168,85,247,.25);padding:2px 7px;border-radius:20px;margin-top:4px}
+/* ── EMPTY STATE — design épuré centré façon Claude/ChatGPT ── */
+#empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 20px;gap:0}
+.empty-logo{width:44px;height:44px;margin:0 auto 20px;border-radius:50%;opacity:.9;animation:glow-pulse 5s ease-in-out infinite}
+.empty-title{font-family:var(--fh);font-size:28px;font-weight:700;margin-bottom:8px;letter-spacing:-.5px;background:linear-gradient(135deg,var(--text) 40%,var(--text2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.empty-sub{font-size:13.5px;color:var(--text3);font-weight:300;max-width:300px;margin-bottom:36px;line-height:1.7}
+
+/* Suggestions de prompts — style sobre et horizontal */
+.suggestion-row{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:580px;margin-bottom:0}
+.sug-chip{display:flex;align-items:center;gap:6px;padding:8px 14px;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:22px;cursor:pointer;font-size:12.5px;color:var(--text2);transition:all .18s;white-space:nowrap}
+.sug-chip:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:var(--text);transform:translateY(-1px)}
+.sug-chip svg{width:13px;height:13px;flex-shrink:0;opacity:.6}
+/* On garde les IDs pour le JS qui les lit */
+#photo-card-sub,#code-card-sub,#video-card-sub,#persona-card-sub{display:none}
+#video-card-lock{display:none}
+/* Classes p-card conservées pour ne pas casser le JS mais cachées dans l'empty-state */
+.p-card,.prompts-grid{display:none!important}
 .msg-group{display:flex;flex-direction:column;gap:2px;animation:msg-in .2s cubic-bezier(.34,1.56,.64,1) both}
 .msg-row{display:flex;gap:9px;align-items:flex-start}
 .msg-row.user{flex-direction:row-reverse}
@@ -299,39 +296,48 @@ select.form-input{cursor:pointer}
 .generated-media{max-width:100%;border-radius:12px;margin-top:7px;border:1px solid rgba(168,85,247,.3);display:block;background:#000}
 
 /* INPUT */
-#input-zone{padding:11px 16px;padding-bottom:calc(11px + var(--sb));flex-shrink:0}
-#input-wrap-outer{max-width:740px;margin:0 auto}
-#input-box{background:var(--surface);border:1px solid var(--border2);border-radius:16px;transition:border-color .2s,box-shadow .2s;overflow:hidden}
-#input-box:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(124,106,255,.07)}
-#input-box.search-active{border-color:var(--search);box-shadow:0 0 0 3px rgba(14,165,233,.1)}
-#input-box.photo-active{border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,.08)}
-#input-top{display:flex;align-items:flex-end;padding:9px 11px 7px;gap:9px}
-#prompt{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-family:var(--fb);font-size:15px;line-height:1.6;resize:none;min-height:22px;max-height:130px;-webkit-appearance:none}
-#prompt::placeholder{color:var(--text3)}
-#send-btn{width:34px;height:34px;border-radius:9px;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;margin-bottom:1px}
-#send-btn:hover{background:var(--accent2)}
-#send-btn:active{transform:scale(.95)}
-#send-btn:disabled{background:var(--surface3);cursor:not-allowed}
+/* ── INPUT ZONE — centré, premium, sobre ── */
+#input-zone{padding:16px 20px;padding-bottom:calc(16px + var(--sb));flex-shrink:0}
+#input-wrap-outer{max-width:680px;margin:0 auto}
+#input-box{
+  background:var(--surface);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:18px;
+  transition:border-color .25s,box-shadow .25s;
+  overflow:hidden;
+  box-shadow:0 4px 32px rgba(0,0,0,.3),0 1px 0 rgba(255,255,255,.04) inset;
+}
+#input-box:focus-within{border-color:rgba(124,106,255,.35);box-shadow:0 4px 32px rgba(0,0,0,.3),0 0 0 3px rgba(124,106,255,.08),0 1px 0 rgba(255,255,255,.04) inset}
+#input-box.search-active{border-color:rgba(14,165,233,.35);box-shadow:0 4px 32px rgba(0,0,0,.3),0 0 0 3px rgba(14,165,233,.08)}
+#input-box.photo-active{border-color:rgba(34,197,94,.35);box-shadow:0 4px 32px rgba(0,0,0,.3),0 0 0 3px rgba(34,197,94,.07)}
+#input-top{display:flex;align-items:flex-end;padding:13px 14px 10px;gap:10px}
+#prompt{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-family:var(--fb);font-size:15.5px;line-height:1.65;resize:none;min-height:24px;max-height:160px;-webkit-appearance:none}
+#prompt::placeholder{color:rgba(255,255,255,.2)}
+#send-btn{width:36px;height:36px;border-radius:10px;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;margin-bottom:2px;box-shadow:0 2px 8px rgba(124,106,255,.4)}
+#send-btn:hover{background:var(--accent2);box-shadow:0 4px 14px rgba(124,106,255,.5)}
+#send-btn:active{transform:scale(.94)}
+#send-btn:disabled{background:var(--surface3);cursor:not-allowed;box-shadow:none}
 #send-btn svg{width:14px;height:14px}
-#input-bottom{display:flex;align-items:center;justify-content:space-between;padding:5px 11px 9px;border-top:1px solid var(--border)}
-.tools{display:flex;align-items:center;gap:3px}
-.tool-btn{height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;background:transparent;border:none;color:var(--text3);cursor:pointer;transition:all .15s;padding:0 7px;gap:5px;font-family:var(--fb);font-size:11px;font-weight:500}
-.tool-btn:hover{background:var(--surface2);color:var(--text2)}
-.tool-btn svg{width:13px;height:13px;flex-shrink:0}
-.tool-btn.active-search{color:var(--search);background:var(--search-dim);border:1px solid rgba(14,165,233,.2)}
-.tool-btn.has-photo{color:var(--green);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2)}
-.tool-btn.code-btn-active{color:var(--cg);background:var(--cg-dim);border:1px solid rgba(0,255,65,.4);font-family:var(--fm)}
-.tool-btn.persona-active{color:var(--gold);background:var(--gold-dim);border:1px solid rgba(245,158,11,.35)}
-#mic-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;background:transparent;border:none;color:var(--text3);cursor:pointer;transition:all .15s;flex-shrink:0;position:relative}
-#mic-btn:hover{background:var(--surface2);color:var(--accent)}
-#mic-btn.listening{color:var(--red);background:rgba(239,68,68,.1)}
+#input-bottom{display:flex;align-items:center;justify-content:space-between;padding:6px 12px 10px;border-top:1px solid rgba(255,255,255,.05)}
+.tools{display:flex;align-items:center;gap:1px}
+.tool-btn{height:30px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:transparent;border:none;color:rgba(255,255,255,.3);cursor:pointer;transition:all .15s;padding:0 8px;gap:5px;font-family:var(--fb);font-size:11px;font-weight:500}
+.tool-btn:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.7)}
+.tool-btn svg{width:14px;height:14px;flex-shrink:0}
+.tool-btn.active-search{color:var(--search);background:rgba(14,165,233,.1)}
+.tool-btn.has-photo{color:var(--green);background:rgba(34,197,94,.08)}
+.tool-btn.code-btn-active{color:var(--cg);background:rgba(0,255,65,.08);font-family:var(--fm)}
+.tool-btn.persona-active{color:var(--gold);background:rgba(245,158,11,.09)}
+#mic-btn{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:transparent;border:none;color:rgba(255,255,255,.3);cursor:pointer;transition:all .15s;flex-shrink:0;position:relative}
+#mic-btn:hover{background:rgba(255,255,255,.06);color:var(--accent)}
+#mic-btn.listening{color:var(--red);background:rgba(239,68,68,.08)}
 #mic-btn.listening::after{content:'';position:absolute;inset:-3px;border-radius:10px;border:2px solid var(--red);animation:mic-ring 1s ease-in-out infinite}
-#mic-btn svg{width:13px;height:13px}
+#mic-btn svg{width:14px;height:14px}
 .input-meta{display:flex;align-items:center;gap:9px}
 #char-count{font-size:10.5px;color:var(--text3)}
 .kbd{font-size:10px;color:var(--text3);background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:1px 5px}
-.foot-note{text-align:center;font-size:10.5px;color:var(--text3);margin-top:7px}
-.foot-note a{color:var(--accent);text-decoration:underline;cursor:pointer}
+.foot-note{text-align:center;font-size:11px;color:rgba(255,255,255,.15);margin-top:10px;letter-spacing:.01em}
+.foot-note a{color:rgba(255,255,255,.3);text-decoration:none;cursor:pointer;transition:color .15s}
+.foot-note a:hover{color:rgba(255,255,255,.6)}
 
 /* ──────────────────────────────
    PERSONA MODAL
@@ -798,17 +804,46 @@ select.form-input{cursor:pointer}
     </div>
     <div id="chat-wrap"><div id="chat">
       <div id="empty-state">
-        <div class="empty-logo"><img src="https://sixteleinekugel-commits.github.io/novaAI-chat/k9TBi.jpg" style="width:72px;height:72px;border-radius:50%;object-fit:cover" alt="Nova AI 618"></div>
-        <div class="empty-title" id="empty-title">Hello! I'm Nova 👋</div>
-        <div class="empty-sub" id="empty-sub">Created by Sixte, powered by GPT-OSS 120B.</div>
-        <div class="prompts-grid">
-          <div class="p-card search-card" onclick="toggleSearch();fillPrompt('What happened in the world today?')"><span class="p-card-icon">🌐</span><div class="p-card-title">Web Search</div><div class="p-card-sub">Real-time information</div></div>
-          <div class="p-card voice-card" onclick="openVoiceMode()"><span class="p-card-icon">🎙️</span><div class="p-card-title">Voice Mode</div><div class="p-card-sub">Speak naturally</div></div>
-          <div class="p-card image-card" onclick="fillPrompt('image a nebula in deep space with vivid colors')"><span class="p-card-icon">🎨</span><div class="p-card-title">Generate Image</div><div class="p-card-sub">Unlimited · Type "image ..."</div></div>
-          <div class="p-card photo-card" onclick="document.getElementById('photo-input').click()"><span class="p-card-icon">📸</span><div class="p-card-title">Analyze Photo</div><div class="p-card-sub" id="photo-card-sub">4 analyses / day</div></div>
-          <div class="p-card persona-card" onclick="openPersonaModal()"><span class="p-card-icon">✨</span><div class="p-card-title">My Persona</div><div class="p-card-sub" id="persona-card-sub">Nova doesn't know you yet — configure</div></div>
-          <div class="p-card code-card" onclick="openCodeMode()"><span class="p-card-icon">💻</span><div class="p-card-title">Code Mode — Laguna M.1</div><div class="p-card-sub" id="code-card-sub">15 requests / day · hacker terminal</div></div>
-          <div class="p-card video-card" id="video-card" onclick="handleVideoCardClick()"><span class="p-card-icon">🎬</span><div class="p-card-title">Video Generation</div><div class="p-card-sub" id="video-card-sub">AI video — Premium plan</div><div class="p-card-locked" id="video-card-lock">🔒 Premium — 3.49€/mo</div></div>
+        <div class="empty-logo"><img src="https://sixteleinekugel-commits.github.io/novaAI-chat/k9TBi.jpg" style="width:44px;height:44px;border-radius:50%;object-fit:cover" alt="Nova AI 618"></div>
+        <div class="empty-title" id="empty-title">How can I help you?</div>
+        <div class="empty-sub" id="empty-sub">Nova AI 618 · Created by Sixte</div>
+        <!-- Suggestion chips épurés, sans emoji -->
+        <div class="suggestion-row">
+          <div class="sug-chip" onclick="toggleSearch();fillPrompt('What happened in the world today?')">
+            <svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            Search the web
+          </div>
+          <div class="sug-chip" onclick="fillPrompt('image a ')">
+            <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/><circle cx="5.5" cy="6.5" r="1.5" stroke="currentColor" stroke-width="1.1"/><path d="M1 10l3.5-3.5L8 10l2.5-2.5L15 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Generate image
+          </div>
+          <div class="sug-chip" onclick="document.getElementById('photo-input').click()">
+            <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="2.4" stroke="currentColor" stroke-width="1.2"/><circle cx="12.5" cy="5" r=".9" fill="currentColor"/></svg>
+            Analyze photo
+          </div>
+          <div class="sug-chip" onclick="openCodeMode()">
+            <svg viewBox="0 0 16 16" fill="none"><polyline points="4,5 1,8 4,11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><polyline points="12,5 15,8 12,11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><line x1="9" y1="2" x2="7" y2="14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            Write code
+          </div>
+          <div class="sug-chip" onclick="openPersonaModal()">
+            <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            <span id="persona-card-sub">My Persona</span>
+          </div>
+          <div class="sug-chip" onclick="handleVideoCardClick()">
+            <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M11 6l4-2v8l-4-2V6z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+            Generate video
+          </div>
+        </div>
+        <!-- IDs cachés nécessaires pour le JS -->
+        <span id="photo-card-sub" style="display:none">4 analyses / day</span>
+        <span id="code-card-sub" style="display:none">15 requests / day</span>
+        <span id="video-card-sub" style="display:none">AI video — Premium plan</span>
+        <span id="video-card-lock" style="display:none"></span>
+        <div id="video-card" style="display:none"></div>
+        <!-- p-card IDs conservés pour compatibilité JS -->
+        <div class="prompts-grid" style="display:none">
+          <div class="p-card photo-card"><div class="p-card-sub" id="photo-card-sub-hidden">4 analyses / day</div></div>
+          <div class="p-card code-card"><div class="p-card-sub" id="code-card-sub-hidden">15 requests / day</div></div>
         </div>
       </div>
     </div></div>
