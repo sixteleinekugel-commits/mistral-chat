@@ -20,6 +20,7 @@
   --search:#0ea5e9;--search-dim:rgba(14,165,233,.12);
   --cg:#00ff41;--cg-dim:rgba(0,255,65,.12);--cg-bg:#010801;
   --vid:#a855f7;--vid-dim:rgba(168,85,247,.12);
+  --gold:#f59e0b;--gold-dim:rgba(245,158,11,.12);
   --sidebar-w:272px;--fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--fm:'JetBrains Mono',monospace;
   --sb:env(safe-area-inset-bottom,0px)
 }
@@ -44,7 +45,10 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 @keyframes cg-border{0%,100%{border-color:rgba(0,255,65,.4)}50%{border-color:rgba(0,255,65,.9)}}
 @keyframes scanlines{0%{background-position:0 0}100%{background-position:0 4px}}
 @keyframes glow-text{0%,100%{text-shadow:0 0 8px rgba(0,255,65,.6)}50%{text-shadow:0 0 22px rgba(0,255,65,1),0 0 40px rgba(0,255,65,.35)}}
-@keyframes premium-glow{0%,100%{box-shadow:0 0 30px rgba(168,85,247,.15)}50%{box-shadow:0 0 50px rgba(168,85,247,.3)}}
+@keyframes premium-glow{0%,100%{box-shadow:0 0 40px rgba(168,85,247,.2),0 0 80px rgba(245,158,11,.05)}50%{box-shadow:0 0 70px rgba(168,85,247,.4),0 0 120px rgba(245,158,11,.1)}}
+@keyframes gold-shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+@keyframes persona-in{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:none}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 
 /* AUTH */
 #auth-screen{display:flex;height:100dvh;overflow:hidden}
@@ -76,6 +80,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .form-input{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:11px 13px;color:var(--text);font-family:var(--fb);font-size:16px;outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none}
 .form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(124,106,255,.1)}
 .form-input::placeholder{color:var(--text3)}
+select.form-input{cursor:pointer}
 .form-err{font-size:12px;color:var(--red);margin-top:5px;display:none;line-height:1.5}
 .form-err.show{display:block}
 .form-ok{font-size:12px;color:var(--green);margin-top:5px;display:none}
@@ -192,6 +197,15 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 #search-banner button{margin-left:auto;background:none;border:1px solid rgba(14,165,233,.3);color:var(--search);cursor:pointer;font-size:11px;padding:2px 9px;border-radius:20px;transition:all .15s}
 #search-banner button:hover{background:rgba(14,165,233,.15)}
 
+/* PERSONA BANNER */
+#persona-banner{display:none;align-items:center;gap:9px;padding:6px 18px;background:linear-gradient(90deg,rgba(124,106,255,.07),rgba(245,158,11,.05));border-bottom:1px solid rgba(124,106,255,.12);font-size:12px;color:var(--text2);flex-shrink:0}
+#persona-banner.show{display:flex}
+#persona-banner .persona-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px var(--gold);flex-shrink:0;animation:pulse 2s infinite}
+#persona-banner .persona-txt{flex:1}
+#persona-banner .persona-txt strong{color:var(--text)}
+#persona-banner button{background:none;border:1px solid rgba(124,106,255,.25);color:var(--accent);cursor:pointer;font-size:11px;padding:2px 9px;border-radius:20px;transition:all .15s;white-space:nowrap}
+#persona-banner button:hover{background:rgba(124,106,255,.1)}
+
 /* CHAT */
 #chat-wrap{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
 #chat-wrap::-webkit-scrollbar{width:4px}
@@ -209,6 +223,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .p-card.voice-card{border-color:rgba(124,106,255,.2)}.p-card.voice-card::before{background:linear-gradient(135deg,rgba(124,106,255,.07),transparent)}.p-card.voice-card .p-card-title{color:var(--accent2)}
 .p-card.image-card{border-color:rgba(255,140,0,.2)}.p-card.image-card::before{background:linear-gradient(135deg,rgba(255,140,0,.07),transparent)}.p-card.image-card .p-card-title{color:var(--orange)}
 .p-card.photo-card{border-color:rgba(34,197,94,.2)}.p-card.photo-card::before{background:linear-gradient(135deg,rgba(34,197,94,.07),transparent)}.p-card.photo-card .p-card-title{color:var(--green)}
+.p-card.persona-card{border-color:rgba(245,158,11,.25)}.p-card.persona-card::before{background:linear-gradient(135deg,rgba(245,158,11,.07),transparent)}.p-card.persona-card .p-card-title{color:var(--gold)}.p-card.persona-card:hover{border-color:var(--gold);box-shadow:0 0 20px rgba(245,158,11,.1)}
 .p-card.code-card{border-color:rgba(0,255,65,.25);grid-column:1/-1}.p-card.code-card::before{background:linear-gradient(135deg,rgba(0,255,65,.07),transparent)}.p-card.code-card .p-card-title{color:var(--cg);font-family:var(--fm)}.p-card.code-card:hover{border-color:var(--cg);box-shadow:0 0 20px rgba(0,255,65,.12)}
 .p-card.video-card{border-color:rgba(168,85,247,.25);grid-column:1/-1}.p-card.video-card::before{background:linear-gradient(135deg,rgba(168,85,247,.07),transparent)}.p-card.video-card .p-card-title{color:var(--vid)}.p-card.video-card:hover{border-color:var(--vid);box-shadow:0 0 20px rgba(168,85,247,.1)}
 .p-card-icon{font-size:18px;margin-bottom:8px;display:block}
@@ -306,6 +321,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .tool-btn.active-search{color:var(--search);background:var(--search-dim);border:1px solid rgba(14,165,233,.2)}
 .tool-btn.has-photo{color:var(--green);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2)}
 .tool-btn.code-btn-active{color:var(--cg);background:var(--cg-dim);border:1px solid rgba(0,255,65,.4);font-family:var(--fm)}
+.tool-btn.persona-active{color:var(--gold);background:var(--gold-dim);border:1px solid rgba(245,158,11,.35)}
 #mic-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;background:transparent;border:none;color:var(--text3);cursor:pointer;transition:all .15s;flex-shrink:0;position:relative}
 #mic-btn:hover{background:var(--surface2);color:var(--accent)}
 #mic-btn.listening{color:var(--red);background:rgba(239,68,68,.1)}
@@ -316,6 +332,33 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .kbd{font-size:10px;color:var(--text3);background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:1px 5px}
 .foot-note{text-align:center;font-size:10.5px;color:var(--text3);margin-top:7px}
 .foot-note a{color:var(--accent);text-decoration:underline;cursor:pointer}
+
+/* ──────────────────────────────
+   PERSONA MODAL
+────────────────────────────── */
+#persona-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);z-index:800;align-items:center;justify-content:center;padding:16px}
+#persona-modal.open{display:flex}
+.persona-box{background:var(--surface);border:1px solid rgba(245,158,11,.22);border-radius:22px;width:100%;max-width:440px;max-height:92dvh;overflow-y:auto;animation:modal-in .3s cubic-bezier(.34,1.2,.64,1);position:relative;box-shadow:0 0 50px rgba(245,158,11,.1),0 20px 60px rgba(0,0,0,.55)}
+.persona-header{padding:26px 24px 18px;text-align:center;border-bottom:1px solid rgba(245,158,11,.1);position:relative;overflow:hidden}
+.persona-header::before{content:'';position:absolute;top:-40%;left:-10%;width:120%;height:160%;background:radial-gradient(ellipse at 50% 0%,rgba(245,158,11,.08) 0%,transparent 65%);pointer-events:none}
+.persona-close{position:absolute;top:14px;right:14px;width:28px;height:28px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text3);transition:all .15s;z-index:1}
+.persona-close:hover{background:rgba(255,255,255,.12);color:var(--text)}
+.persona-close svg{width:11px;height:11px}
+.persona-icon{font-size:36px;margin-bottom:10px;animation:float 3s ease-in-out infinite}
+.persona-title{font-family:var(--fh);font-size:18px;font-weight:800;margin-bottom:4px;letter-spacing:-.3px}
+.persona-sub{font-size:12px;color:var(--text2);font-weight:300;line-height:1.6}
+.persona-body{padding:20px 24px 24px;display:flex;flex-direction:column;gap:14px}
+.persona-field{display:flex;flex-direction:column;gap:6px}
+.persona-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:flex;align-items:center;gap:6px}
+.persona-label span{font-size:14px}
+.persona-preview{margin:4px 24px;padding:13px 16px;background:linear-gradient(135deg,rgba(245,158,11,.06),rgba(124,106,255,.04));border:1px solid rgba(245,158,11,.15);border-radius:12px;font-size:12px;color:var(--text2);line-height:1.7}
+.persona-preview strong{color:var(--gold);font-size:12px}
+.persona-preview code{font-family:var(--fm);font-size:11px;color:var(--accent2);background:var(--surface3);padding:1px 5px;border-radius:4px}
+.persona-save{width:100%;padding:12px;background:linear-gradient(135deg,rgba(245,158,11,.9),rgba(217,119,6,.95));border:none;border-radius:11px;color:#000;font-family:var(--fh);font-size:14px;font-weight:700;cursor:pointer;transition:all .25s;box-shadow:0 4px 16px rgba(245,158,11,.3);letter-spacing:.02em}
+.persona-save:hover{opacity:.92;box-shadow:0 6px 24px rgba(245,158,11,.4)}
+.persona-save:active{transform:scale(.98)}
+.persona-reset{width:100%;padding:9px;background:transparent;border:1px solid var(--border);border-radius:9px;color:var(--text3);font-family:var(--fb);font-size:12px;cursor:pointer;transition:all .15s;margin-top:4px}
+.persona-reset:hover{background:var(--surface2);color:var(--red);border-color:rgba(239,68,68,.3)}
 
 /* VOICE OVERLAY */
 #voice-overlay{display:none;position:fixed;inset:0;background:linear-gradient(160deg,#02030f 0%,#07041c 40%,#040210 100%);z-index:600;flex-direction:column}
@@ -479,54 +522,78 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .vid-empty-sub{font-size:13px;line-height:1.7}
 .vid-hf-note{font-size:11px;color:rgba(168,85,247,.4);margin-top:16px;padding:10px 16px;background:rgba(168,85,247,.04);border:1px solid rgba(168,85,247,.1);border-radius:9px;line-height:1.65}
 
-/* SUBSCRIPTION MODAL */
-#sub-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(14px);z-index:800;align-items:center;justify-content:center;padding:16px}
+/* ──────────────────────────────
+   SUBSCRIPTION MODAL — PREMIUM REDESIGN
+────────────────────────────── */
+#sub-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(18px);z-index:800;align-items:center;justify-content:center;padding:16px}
 #sub-modal.open{display:flex}
-.sub-box{background:var(--surface);border:1px solid rgba(168,85,247,.22);border-radius:24px;width:100%;max-width:460px;max-height:92dvh;overflow-y:auto;animation:modal-in .3s cubic-bezier(.34,1.2,.64,1);position:relative;box-shadow:0 0 60px rgba(168,85,247,.14),0 20px 60px rgba(0,0,0,.55)}
-.sub-header{padding:32px 26px 22px;text-align:center;border-bottom:1px solid rgba(168,85,247,.1);position:relative;overflow:hidden}
-.sub-header::before{content:'';position:absolute;top:-50%;left:-15%;width:130%;height:180%;background:radial-gradient(ellipse at 50% 0%,rgba(168,85,247,.1) 0%,transparent 65%);pointer-events:none}
-.sub-close{position:absolute;top:16px;right:16px;width:30px;height:30px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text3);transition:all .15s;z-index:1}
+.sub-box{background:var(--surface);border:1px solid rgba(168,85,247,.22);border-radius:26px;width:100%;max-width:470px;max-height:92dvh;overflow-y:auto;animation:modal-in .35s cubic-bezier(.34,1.2,.64,1);position:relative;box-shadow:0 0 80px rgba(168,85,247,.18),0 0 160px rgba(245,158,11,.05),0 30px 80px rgba(0,0,0,.7)}
+/* Fond étoilé subtil */
+.sub-box::before{content:'';position:absolute;inset:0;border-radius:26px;background:radial-gradient(ellipse at 50% 0%,rgba(168,85,247,.1) 0%,transparent 60%),radial-gradient(ellipse at 80% 100%,rgba(245,158,11,.06) 0%,transparent 55%);pointer-events:none;z-index:0}
+.sub-header{padding:34px 26px 24px;text-align:center;border-bottom:1px solid rgba(168,85,247,.12);position:relative;z-index:1}
+.sub-close{position:absolute;top:16px;right:16px;width:30px;height:30px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text3);transition:all .15s;z-index:2}
 .sub-close:hover{background:rgba(255,255,255,.12);color:var(--text)}
 .sub-close svg{width:12px;height:12px}
-.sub-icon{width:60px;height:60px;margin:0 auto 14px;border-radius:50%;background:linear-gradient(135deg,rgba(168,85,247,.28),rgba(124,106,255,.18));border:1px solid rgba(168,85,247,.4);display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 0 28px rgba(168,85,247,.28)}
-.sub-title{font-family:var(--fh);font-size:21px;font-weight:800;margin-bottom:5px;letter-spacing:-.3px}
-.sub-sub{font-size:13px;color:var(--text2);font-weight:300;line-height:1.65}
-.sub-free-row{display:flex;align-items:center;justify-content:space-between;margin:18px 26px 0;padding:13px 16px;background:var(--surface2);border:1px solid var(--border2);border-radius:12px}
+/* Icône animée */
+.sub-icon-wrap{position:relative;width:68px;height:68px;margin:0 auto 16px}
+.sub-icon-bg{position:absolute;inset:0;border-radius:50%;background:linear-gradient(135deg,rgba(168,85,247,.35),rgba(124,106,255,.2));border:1px solid rgba(168,85,247,.45);box-shadow:0 0 35px rgba(168,85,247,.35),0 0 60px rgba(168,85,247,.1);animation:premium-glow 3s ease-in-out infinite}
+.sub-icon{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:30px;z-index:1;animation:float 4s ease-in-out infinite}
+.sub-title{font-family:var(--fh);font-size:22px;font-weight:800;margin-bottom:4px;letter-spacing:-.4px;background:linear-gradient(135deg,#fff 40%,#d4aaff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub-tagline{font-size:12px;color:rgba(168,85,247,.7);font-weight:400;letter-spacing:.05em;text-transform:uppercase;margin-bottom:2px}
+/* Plan FREE compact et neutre */
+.sub-free-row{display:flex;align-items:center;justify-content:space-between;margin:18px 24px 0;padding:12px 15px;background:var(--surface2);border:1px solid var(--border2);border-radius:12px;position:relative;z-index:1}
 .sub-free-left{display:flex;align-items:center;gap:10px}
-.sub-free-icon{width:34px;height:34px;border-radius:8px;background:var(--accent-dim);border:1px solid rgba(124,106,255,.14);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.sub-free-name{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--text)}
-.sub-free-desc{font-size:11px;color:var(--text3);margin-top:2px}
+.sub-free-icon{width:32px;height:32px;border-radius:8px;background:var(--accent-dim);border:1px solid rgba(124,106,255,.14);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.sub-free-name{font-family:var(--fh);font-size:13px;font-weight:700;color:var(--text)}
+.sub-free-desc{font-size:10.5px;color:var(--text3);margin-top:1px}
 .sub-free-right{text-align:right}
-.sub-free-price{font-family:var(--fh);font-size:16px;font-weight:800;color:var(--text2)}
-.sub-free-active{font-size:10px;color:var(--accent);background:var(--accent-dim);padding:2px 7px;border-radius:20px;font-weight:600;margin-top:4px;display:inline-block}
-.sub-free-limits{display:flex;flex-wrap:wrap;gap:4px 12px;margin:10px 26px 0;padding:10px 14px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:9px}
+.sub-free-price{font-family:var(--fh);font-size:15px;font-weight:800;color:var(--text2)}
+.sub-free-active{font-size:10px;color:var(--accent);background:var(--accent-dim);padding:2px 7px;border-radius:20px;font-weight:600;margin-top:3px;display:inline-block}
+.sub-free-limits{display:flex;flex-wrap:wrap;gap:3px 10px;margin:8px 24px 0;padding:9px 13px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:9px;position:relative;z-index:1}
 .sub-free-limit{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
-.sub-free-limit::before{content:'•';font-size:14px;color:var(--text3)}
-.sub-sep{display:flex;align-items:center;gap:11px;margin:20px 26px 0;color:var(--text3);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase}
-.sub-sep::before,.sub-sep::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(168,85,247,.35),transparent)}
-.sub-premium{margin:16px 26px 26px;border-radius:18px;border:2px solid rgba(168,85,247,.5);background:linear-gradient(145deg,rgba(168,85,247,.08),rgba(124,106,255,.04));box-shadow:0 0 40px rgba(168,85,247,.12);animation:premium-glow 3s ease-in-out infinite;cursor:pointer;transition:all .25s;position:relative}
-.sub-premium:hover{border-color:rgba(168,85,247,.8);box-shadow:0 0 60px rgba(168,85,247,.25);transform:translateY(-2px)}
-.sub-premium-badge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#a855f7,#7c6aff);color:#fff;font-size:10px;font-weight:700;padding:4px 16px;border-radius:0 0 10px 10px;letter-spacing:.08em;font-family:var(--fh);box-shadow:0 4px 12px rgba(168,85,247,.4);white-space:nowrap}
-.sub-premium-head{padding:22px 20px 14px;border-bottom:1px solid rgba(168,85,247,.12)}
-.sub-premium-name-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px}
-.sub-premium-name{font-family:var(--fh);font-size:18px;font-weight:800;color:#fff}
-.sub-premium-price{font-family:var(--fh);font-size:26px;font-weight:800;color:#d4aaff;line-height:1}
-.sub-premium-period{font-size:11px;color:rgba(168,85,247,.6);font-weight:400;text-align:right;margin-top:3px}
-.sub-premium-tagline{font-size:12px;color:rgba(168,85,247,.6)}
-.sub-premium-feats{padding:16px 20px 20px;display:flex;flex-direction:column;gap:9px}
-.sub-pfeat{display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.85)}
-.sub-pfeat-icon{width:22px;height:22px;border-radius:6px;background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.25);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.sub-free-limit::before{content:'•';font-size:13px;color:var(--text3)}
+/* Séparateur "Upgrade" */
+.sub-sep{display:flex;align-items:center;gap:11px;margin:20px 24px 0;color:rgba(245,158,11,.6);font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;position:relative;z-index:1}
+.sub-sep::before,.sub-sep::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(245,158,11,.4),transparent)}
+/* PREMIUM CARD — éclat doré */
+.sub-premium{margin:14px 24px 0;border-radius:18px;border:2px solid rgba(168,85,247,.5);background:linear-gradient(145deg,rgba(168,85,247,.1),rgba(124,106,255,.05),rgba(245,158,11,.04));box-shadow:0 0 50px rgba(168,85,247,.15),inset 0 1px 0 rgba(255,255,255,.05);animation:premium-glow 3s ease-in-out infinite;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;z-index:1}
+.sub-premium:hover{border-color:rgba(168,85,247,.85);box-shadow:0 0 80px rgba(168,85,247,.3),0 0 40px rgba(245,158,11,.08);transform:translateY(-3px)}
+.sub-premium:active{transform:translateY(-1px)}
+/* Shimmer doré en hover */
+.sub-premium::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent);transition:left .5s ease}
+.sub-premium:hover::after{left:160%}
+.sub-premium-badge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#a855f7,#7c6aff,#f59e0b);background-size:200% auto;animation:gold-shimmer 3s linear infinite;color:#fff;font-size:10px;font-weight:700;padding:4px 18px;border-radius:0 0 12px 12px;letter-spacing:.1em;font-family:var(--fh);box-shadow:0 4px 16px rgba(168,85,247,.5),0 4px 16px rgba(245,158,11,.2);white-space:nowrap}
+.sub-premium-head{padding:24px 22px 16px;border-bottom:1px solid rgba(168,85,247,.12)}
+.sub-premium-name-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:5px}
+.sub-premium-name{font-family:var(--fh);font-size:20px;font-weight:800;color:#fff;display:flex;align-items:center;gap:7px}
+.sub-premium-name-badge{font-size:9px;padding:2px 8px;border-radius:20px;background:linear-gradient(135deg,rgba(245,158,11,.25),rgba(168,85,247,.2));border:1px solid rgba(245,158,11,.35);color:#fbbf24;font-weight:600;letter-spacing:.06em}
+.sub-price-block{text-align:right}
+.sub-premium-price{font-family:var(--fh);font-size:30px;font-weight:800;line-height:1;background:linear-gradient(135deg,#d4aaff,#f0abfc,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub-premium-period{font-size:10.5px;color:rgba(168,85,247,.55);font-weight:400;text-align:right;margin-top:3px}
+.sub-premium-annual{font-size:11px;color:rgba(245,158,11,.7);margin-top:6px;display:flex;align-items:center;gap:5px}
+.sub-premium-annual::before{content:'💡';font-size:11px}
+.sub-premium-tagline{font-size:12px;color:rgba(168,85,247,.65)}
+/* Features avec checkmarks */
+.sub-premium-feats{padding:16px 22px 20px;display:flex;flex-direction:column;gap:10px}
+.sub-pfeat{display:flex;align-items:center;gap:11px;font-size:13px;color:rgba(255,255,255,.9)}
+.sub-pfeat-check{width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,rgba(168,85,247,.3),rgba(124,106,255,.2));border:1px solid rgba(168,85,247,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sub-pfeat-check svg{width:9px;height:9px;color:#d4aaff}
 .sub-pfeat strong{color:#fff;font-weight:600}
-.sub-pfeat span{color:rgba(255,255,255,.5)}
-.sub-cta-wrap{padding:0 20px 20px}
-.sub-cta{width:100%;padding:13px;background:linear-gradient(135deg,#a855f7,#7c6aff);border:none;border-radius:11px;color:#fff;font-family:var(--fh);font-size:15px;font-weight:700;cursor:pointer;transition:all .25s;box-shadow:0 4px 20px rgba(168,85,247,.4);letter-spacing:.02em}
-.sub-cta:hover{opacity:.92;box-shadow:0 6px 28px rgba(168,85,247,.5)}
+.sub-pfeat span{color:rgba(255,255,255,.45)}
+/* CTA */
+.sub-cta-wrap{padding:0 22px 22px}
+.sub-cta{width:100%;padding:14px;background:linear-gradient(135deg,#a855f7,#7c6aff,#9333ea);border:none;border-radius:12px;color:#fff;font-family:var(--fh);font-size:15px;font-weight:700;cursor:pointer;transition:all .3s;box-shadow:0 6px 24px rgba(168,85,247,.5),0 2px 8px rgba(245,158,11,.15);letter-spacing:.02em;position:relative;overflow:hidden}
+.sub-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.1),transparent);opacity:0;transition:opacity .2s}
+.sub-cta:hover{opacity:.95;box-shadow:0 8px 32px rgba(168,85,247,.65),0 4px 12px rgba(245,158,11,.2);transform:translateY(-1px)}
+.sub-cta:hover::before{opacity:1}
 .sub-cta:active{transform:scale(.98)}
-.sub-cta:disabled{background:rgba(168,85,247,.3);cursor:not-allowed;box-shadow:none}
-.sub-cta-note{text-align:center;font-size:11px;color:rgba(168,85,247,.45);margin-top:9px;line-height:1.6}
-.sub-guarantees{display:flex;align-items:center;justify-content:center;gap:16px;padding:0 26px 22px;flex-wrap:wrap}
+.sub-cta:disabled{background:rgba(168,85,247,.3);cursor:not-allowed;box-shadow:none;transform:none}
+.sub-cta-note{text-align:center;font-size:11px;color:rgba(168,85,247,.4);margin-top:9px;line-height:1.6}
+/* Garanties redesignées */
+.sub-guarantees{display:flex;align-items:center;justify-content:center;gap:14px;padding:0 24px 24px;flex-wrap:wrap;position:relative;z-index:1}
 .sub-guar{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)}
-.sub-guar svg{width:12px;height:12px;color:var(--green);flex-shrink:0}
+.sub-guar-check{width:14px;height:14px;border-radius:50%;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sub-guar-check svg{width:7px;height:7px;color:var(--green)}
 
 /* MODALS */
 .m-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(5px);z-index:500;align-items:center;justify-content:center;padding:18px}
@@ -574,8 +641,12 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
   #char-count{display:none}
   .vo-orb{width:80px;height:80px}
   .vo-r1{width:106px;height:106px}.vo-r2{width:138px;height:138px}.vo-r3{width:170px;height:170px}
-  .sub-free-row,.sub-free-limits,.sub-sep,.sub-premium,.sub-guarantees{margin-left:16px;margin-right:16px}
-  .sub-header{padding:28px 20px 18px}
+  .sub-free-row,.sub-free-limits,.sub-sep,.sub-premium,.sub-guarantees{margin-left:14px;margin-right:14px}
+  .sub-header{padding:28px 18px 18px}
+  .sub-premium-head{padding:22px 16px 14px}
+  .sub-premium-feats{padding:14px 16px 18px}
+  .sub-cta-wrap{padding:0 16px 18px}
+  .persona-box{max-width:100%}
 }
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:4px}
@@ -584,7 +655,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 </head>
 <body>
 
-<!-- AUTH -->
+<!-- ══════════ AUTH ══════════ -->
 <div id="auth-screen">
   <div id="auth-left">
     <div class="auth-grid"></div><div class="auth-glow"></div>
@@ -598,7 +669,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
         <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(124,106,255,.12);border-color:rgba(124,106,255,.2)">🎙️</div><span>Ultra-fluid voice mode</span></div>
         <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(255,140,0,.12);border-color:rgba(255,140,0,.2)">🎨</div><span>Image generation &amp; photo/video analysis</span></div>
         <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(0,255,65,.1);border-color:rgba(0,255,65,.2)">💻</div><span>Code Mode — Laguna M.1</span></div>
-        <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.2)">🎬</div><span>AI Video Generation — Premium</span></div>
+        <div class="auth-feat"><div class="auth-feat-icon" style="background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.2)">✨</div><span>Persona Mode — Nova knows you</span></div>
       </div>
     </div>
   </div>
@@ -660,7 +731,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
   </div>
 </div>
 
-<!-- APP -->
+<!-- ══════════ APP ══════════ -->
 <div id="app-screen">
   <div id="sidebar-overlay" onclick="closeSidebar()"></div>
   <aside id="sidebar">
@@ -676,7 +747,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
       </div>
       <div class="model-sel" onclick="document.getElementById('model-modal').classList.add('open');closeSidebar()">
         <div class="model-dot" id="model-dot"></div>
-        <div class="model-info"><div class="model-nm" id="model-nm">Gemma 4 31B</div><div class="model-ctx" id="model-ctx">google · vision · via OpenRouter · Free</div></div>
+        <div class="model-info"><div class="model-nm" id="model-nm">GPT-OSS 120B</div><div class="model-ctx" id="model-ctx">via OpenRouter · Free</div></div>
         <svg viewBox="0 0 16 16" fill="none"><path d="M5 7l3-3 3 3M5 10l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
       </div>
       <div class="user-row" onclick="toggleDd()">
@@ -689,6 +760,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
             <div class="dd-email" id="dd-email"></div>
             <div class="dd-tier badge" id="dd-tier">Free Plan</div>
           </div>
+          <div class="dd-item" onclick="stop(event);openPersonaModal()"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M11 3l1 1-3 3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>My Persona</div>
           <div class="dd-item" onclick="stop(event);openSubModal()"><svg viewBox="0 0 16 16" fill="none"><path d="M8 1l2 4 4.5.7-3.25 3.2.77 4.5L8 11.3l-4 2.1.77-4.5L1.5 5.7 6 5z" stroke="currentColor" stroke-width="1.2"/></svg>Plans &amp; Subscription</div>
           <div class="dd-item" onclick="stop(event);exportAll()"><svg viewBox="0 0 16 16" fill="none"><path d="M8 3v8M5 8l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Export conversations</div>
           <div class="dd-item danger" onclick="stop(event);doLogout()"><svg viewBox="0 0 16 16" fill="none"><path d="M10 3h3a1 1 0 011 1v8a1 1 0 01-1 1h-3M7 11l3-3-3-3M10 8H2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span id="logout-lbl">Sign out</span></div>
@@ -702,7 +774,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
       <div class="tb-left">
         <button class="hamburger" onclick="openSidebar()"><svg viewBox="0 0 18 18" fill="none"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
         <span class="conv-title" id="conv-title">New conversation</span>
-        <span class="conv-badge" id="model-badge">gemma-4-31b</span>
+        <span class="conv-badge" id="model-badge">gpt-oss-120b</span>
       </div>
       <div class="tb-actions">
         <button class="voice-btn" onclick="openVoiceMode()">
@@ -719,16 +791,22 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
       <span>🌐 Web search active — Nova searches the internet in real time</span>
       <button onclick="toggleSearch()">Disable</button>
     </div>
+    <div id="persona-banner">
+      <div class="persona-dot"></div>
+      <div class="persona-txt"><strong id="persona-banner-name">Persona active</strong> — <span id="persona-banner-desc">Nova adapts to your style</span></div>
+      <button onclick="openPersonaModal()">Edit</button>
+    </div>
     <div id="chat-wrap"><div id="chat">
       <div id="empty-state">
         <div class="empty-logo"><img src="https://sixteleinekugel-commits.github.io/novaAI-chat/k9TBi.jpg" style="width:72px;height:72px;border-radius:50%;object-fit:cover" alt="Nova AI 618"></div>
         <div class="empty-title" id="empty-title">Hello! I'm Nova 👋</div>
-        <div class="empty-sub" id="empty-sub">Created by Sixte, powered by Gemma 4 31B.</div>
+        <div class="empty-sub" id="empty-sub">Created by Sixte, powered by GPT-OSS 120B.</div>
         <div class="prompts-grid">
           <div class="p-card search-card" onclick="toggleSearch();fillPrompt('What happened in the world today?')"><span class="p-card-icon">🌐</span><div class="p-card-title">Web Search</div><div class="p-card-sub">Real-time information</div></div>
           <div class="p-card voice-card" onclick="openVoiceMode()"><span class="p-card-icon">🎙️</span><div class="p-card-title">Voice Mode</div><div class="p-card-sub">Speak naturally</div></div>
           <div class="p-card image-card" onclick="fillPrompt('image a nebula in deep space with vivid colors')"><span class="p-card-icon">🎨</span><div class="p-card-title">Generate Image</div><div class="p-card-sub">Unlimited · Type "image ..."</div></div>
           <div class="p-card photo-card" onclick="document.getElementById('photo-input').click()"><span class="p-card-icon">📸</span><div class="p-card-title">Analyze Photo</div><div class="p-card-sub" id="photo-card-sub">4 analyses / day</div></div>
+          <div class="p-card persona-card" onclick="openPersonaModal()"><span class="p-card-icon">✨</span><div class="p-card-title">My Persona</div><div class="p-card-sub" id="persona-card-sub">Nova doesn't know you yet — configure</div></div>
           <div class="p-card code-card" onclick="openCodeMode()"><span class="p-card-icon">💻</span><div class="p-card-title">Code Mode — Laguna M.1</div><div class="p-card-sub" id="code-card-sub">15 requests / day · hacker terminal</div></div>
           <div class="p-card video-card" id="video-card" onclick="handleVideoCardClick()"><span class="p-card-icon">🎬</span><div class="p-card-title">Video Generation</div><div class="p-card-sub" id="video-card-sub">AI video — Premium plan</div><div class="p-card-locked" id="video-card-lock">🔒 Premium — 3.49€/mo</div></div>
         </div>
@@ -746,6 +824,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
             <div class="tools">
               <button class="tool-btn" id="photo-tool-btn" title="Photo analysis" onclick="document.getElementById('photo-input').click()"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="2.4" stroke="currentColor" stroke-width="1.2"/><circle cx="12.5" cy="5" r=".9" fill="currentColor"/></svg></button>
               <button class="tool-btn" id="search-tool-btn" title="Web search" onclick="toggleSearch()"><svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+              <button class="tool-btn" id="persona-tool-btn" title="My Persona" onclick="openPersonaModal()"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></button>
               <button class="tool-btn" id="code-tool-btn" title="Code Mode" onclick="openCodeMode()"><svg viewBox="0 0 16 16" fill="none"><polyline points="4,5 1,8 4,11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><polyline points="12,5 15,8 12,11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><line x1="9" y1="2" x2="7" y2="14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
               <button class="tool-btn" id="video-tool-btn" title="Video Generation" onclick="handleVideoCardClick()"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M11 6l4-2v8l-4-2V6z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></button>
               <button id="mic-btn" title="Voice input" onclick="toggleInlineMic()"><svg viewBox="0 0 16 16" fill="none"><rect x="5" y="1" width="6" height="9" rx="3" stroke="currentColor" stroke-width="1.3"/><path d="M2 8a6 6 0 0012 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M8 14v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
@@ -759,7 +838,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
   </main>
 </div>
 
-<!-- VOICE OVERLAY -->
+<!-- ══════════ VOICE OVERLAY ══════════ -->
 <div id="voice-overlay">
   <div class="vo-topbar">
     <div class="vo-brand"><div class="vo-dot"></div><span>NOVA AI 618</span><span class="vo-lang" id="vo-lang">Auto</span></div>
@@ -782,7 +861,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
   </div>
 </div>
 
-<!-- CODE MODE -->
+<!-- ══════════ CODE MODE ══════════ -->
 <div id="code-overlay">
   <canvas id="matrix-canvas"></canvas>
   <div class="cg-vignette"></div>
@@ -814,7 +893,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
   </div>
 </div>
 
-<!-- VIDEO OVERLAY -->
+<!-- ══════════ VIDEO OVERLAY ══════════ -->
 <div id="video-overlay">
   <div class="vid-topbar">
     <div class="vid-brand"><div class="vid-brand-dot"></div>NOVA VIDEO<span class="vid-status-badge" id="vid-status-badge">READY</span></div>
@@ -841,15 +920,84 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
   </div>
 </div>
 
-<!-- SUBSCRIPTION MODAL -->
+<!-- ══════════ PERSONA MODAL ══════════ -->
+<div id="persona-modal">
+  <div class="persona-box">
+    <button class="persona-close" onclick="closePersonaModal()"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    <div class="persona-header">
+      <div class="persona-icon">✨</div>
+      <div class="persona-title">My Persona</div>
+      <div class="persona-sub">Configure your profile once — Nova adapts to every conversation, forever.</div>
+    </div>
+    <div class="persona-body">
+      <div class="persona-field">
+        <label class="persona-label"><span>👤</span> Your name (displayed by Nova)</label>
+        <input class="form-input" id="p-name" type="text" placeholder="Alex" maxlength="30">
+      </div>
+      <div class="persona-field">
+        <label class="persona-label"><span>🎭</span> Tone of responses</label>
+        <select class="form-input" id="p-tone">
+          <option value="friendly and casual">😊 Friendly & casual</option>
+          <option value="direct and concise">⚡ Direct & concise</option>
+          <option value="formal and professional">🧑‍💼 Formal & professional</option>
+          <option value="enthusiastic and motivating">🔥 Enthusiastic & motivating</option>
+          <option value="calm and educational">🎓 Calm & educational</option>
+        </select>
+      </div>
+      <div class="persona-field">
+        <label class="persona-label"><span>💼</span> Your main domain</label>
+        <select class="form-input" id="p-domain">
+          <option value="software development">💻 Software development</option>
+          <option value="design and UX">🎨 Design & UX</option>
+          <option value="marketing and content">📣 Marketing & content</option>
+          <option value="business and entrepreneurship">🚀 Business & entrepreneurship</option>
+          <option value="science and research">🔬 Science & research</option>
+          <option value="education and learning">📚 Education & learning</option>
+          <option value="writing and creativity">✍️ Writing & creativity</option>
+          <option value="general topics">🌍 General topics</option>
+        </select>
+      </div>
+      <div class="persona-field">
+        <label class="persona-label"><span>📏</span> Response length</label>
+        <select class="form-input" id="p-length">
+          <option value="concise (2-3 sentences max)">🎯 Concise (2-3 sentences max)</option>
+          <option value="balanced" selected>⚖️ Balanced</option>
+          <option value="detailed and thorough">📖 Detailed & thorough</option>
+        </select>
+      </div>
+      <div class="persona-field">
+        <label class="persona-label"><span>🌐</span> Language</label>
+        <select class="form-input" id="p-lang">
+          <option value="the same language as the user (auto-detect)">🔄 Auto-detect</option>
+          <option value="English">🇬🇧 English</option>
+          <option value="French">🇫🇷 Français</option>
+          <option value="Spanish">🇪🇸 Español</option>
+          <option value="German">🇩🇪 Deutsch</option>
+          <option value="Italian">🇮🇹 Italiano</option>
+          <option value="Portuguese">🇵🇹 Português</option>
+          <option value="Arabic">🇸🇦 العربية</option>
+        </select>
+      </div>
+      <!-- Preview du system prompt -->
+      <div class="persona-preview" id="persona-preview">
+        Configure your profile above — Nova will use these preferences in <strong>every conversation</strong>.
+      </div>
+      <button class="persona-save" onclick="savePersona()">✨ Save my Persona</button>
+      <button class="persona-reset" onclick="resetPersona()">Reset to default</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SUBSCRIPTION MODAL ══════════ -->
 <div id="sub-modal">
   <div class="sub-box">
     <button class="sub-close" onclick="closeSubModal()"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
     <div class="sub-header">
-      <div class="sub-icon">💎</div>
+      <div class="sub-icon-wrap"><div class="sub-icon-bg"></div><div class="sub-icon">💎</div></div>
+      <div class="sub-tagline">Choose your plan</div>
       <div class="sub-title">Nova AI 618</div>
-      <div class="sub-sub">Simple, honest pricing — one plan that unlocks everything.</div>
     </div>
+    <!-- FREE -->
     <div class="sub-free-row">
       <div class="sub-free-left">
         <div class="sub-free-icon">🆓</div>
@@ -867,48 +1015,52 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
       <span class="sub-free-limit">∞ images</span>
       <span class="sub-free-limit">No video</span>
     </div>
-    <div class="sub-sep">Upgrade to unlock everything</div>
+    <div class="sub-sep">✦ Upgrade to Premium</div>
+    <!-- PREMIUM -->
     <div class="sub-premium" onclick="handlePremiumClick()">
-      <div class="sub-premium-badge">✦ RECOMMENDED</div>
+      <div class="sub-premium-badge">✦ MOST POPULAR</div>
       <div class="sub-premium-head">
         <div class="sub-premium-name-row">
-          <div class="sub-premium-name">Premium</div>
-          <div style="text-align:right">
+          <div class="sub-premium-name">Premium <span class="sub-premium-name-badge">PRO</span></div>
+          <div class="sub-price-block">
             <div class="sub-premium-price">3.49€</div>
-            <div class="sub-premium-period">/month</div>
+            <div class="sub-premium-period">/month, billed monthly</div>
           </div>
         </div>
-        <div class="sub-premium-tagline">Everything unlocked. No limits.</div>
+        <div class="sub-premium-annual">That's less than a coffee — everything unlimited.</div>
+        <div class="sub-premium-tagline">No limits. No waiting. Just Nova at full power.</div>
       </div>
       <div class="sub-premium-feats">
-        <div class="sub-pfeat"><div class="sub-pfeat-icon">💬</div><span><strong>Unlimited</strong> text conversations</span></div>
-        <div class="sub-pfeat"><div class="sub-pfeat-icon">🎨</div><span><strong>Unlimited</strong> image generation</span></div>
-        <div class="sub-pfeat"><div class="sub-pfeat-icon">📸</div><span><strong>10</strong> photo &amp; video analyses / day</span></div>
-        <div class="sub-pfeat"><div class="sub-pfeat-icon">💻</div><span><strong>Unlimited</strong> code mode requests</span></div>
-        <div class="sub-pfeat"><div class="sub-pfeat-icon">🎙️</div><span><strong>Unlimited</strong> voice mode</span></div>
-        <div class="sub-pfeat"><div class="sub-pfeat-icon">🎬</div><span><strong>2 AI video</strong> generations / day</span></div>
+        <div class="sub-pfeat"><div class="sub-pfeat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>Unlimited</strong> text conversations</span></div>
+        <div class="sub-pfeat"><div class="sub-pfeat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>Unlimited</strong> image generation</span></div>
+        <div class="sub-pfeat"><div class="sub-pfeat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>10</strong> photo &amp; video analyses / day</span></div>
+        <div class="sub-pfeat"><div class="sub-pfeat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>Unlimited</strong> code mode requests</span></div>
+        <div class="sub-pfeat"><div class="sub-pfeat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>Unlimited</strong> voice mode</span></div>
+        <div class="sub-pfeat"><div class="sub-pfeat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>2 AI video</strong> generations / day</span></div>
+        <div class="sub-pfeat"><div class="sub-pfeat-check" style="background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.35)"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#fbbf24" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span><strong>✨ Persona Mode</strong> <span>— Nova knows you</span></span></div>
       </div>
       <div class="sub-cta-wrap">
         <button class="sub-cta" id="premium-cta">Get Premium — 3.49€/mo</button>
         <div class="sub-cta-note" id="premium-note">Payment integration coming soon — click to preview</div>
       </div>
     </div>
+    <!-- Garanties redesign -->
     <div class="sub-guarantees">
-      <div class="sub-guar"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Cancel anytime</div>
-      <div class="sub-guar"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>No hidden fees</div>
-      <div class="sub-guar"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Secure payment</div>
+      <div class="sub-guar"><div class="sub-guar-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Cancel anytime</div>
+      <div class="sub-guar"><div class="sub-guar-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>No hidden fees</div>
+      <div class="sub-guar"><div class="sub-guar-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Secure payment</div>
     </div>
   </div>
 </div>
 
-<!-- MODEL MODAL — GEMMA UNIQUEMENT -->
+<!-- MODEL MODAL — OSS 120B -->
 <div class="m-overlay" id="model-modal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="m-box">
     <p class="m-title">AI Model</p>
-    <p class="m-sub">Powered by Gemma 4 31B via OpenRouter — free, multimodal, vision-capable.</p>
-    <div class="model-opt selected" id="opt-gemma" onclick="selectModel('google/gemma-4-31b-it:free','Gemma 4 31B','google · vision · via OpenRouter · Free',this)">
-      <div class="model-opt-icon">✨</div>
-      <div class="model-opt-info"><div class="model-opt-name">Gemma 4 31B</div><div class="model-opt-desc">Google · Multimodal · Images &amp; video analysis</div></div>
+    <p class="m-sub">Powered by GPT-OSS 120B via OpenRouter — free, fast, powerful.</p>
+    <div class="model-opt selected" id="opt-oss" onclick="selectModel('openai/gpt-oss-120b','GPT-OSS 120B','via OpenRouter · Free',this)">
+      <div class="model-opt-icon">🚀</div>
+      <div class="model-opt-info"><div class="model-opt-name">GPT-OSS 120B</div><div class="model-opt-desc">Most powerful — default model</div></div>
       <span class="mbadge mbadge-def">DEFAULT</span>
     </div>
     <button class="m-close" onclick="document.getElementById('model-modal').classList.remove('open')">Close</button>
@@ -935,7 +1087,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 <div id="toast"></div>
 
 <script>
+// ══════════════════════════════════════════════════════════
 // CONFIG
+// ══════════════════════════════════════════════════════════
 var BACKEND_OR   = "https://jarvis-backend-1-dmdo.onrender.com";
 var BACKEND_GROQ = "https://jarvis-backend-utkp.onrender.com";
 var API_URL      = BACKEND_OR   + "/chat";
@@ -945,7 +1099,7 @@ var VIDEO_URL    = BACKEND_OR   + "/video";
 var IMG_URL      = BACKEND_GROQ + "/image";
 var SEARCH_URL   = BACKEND_GROQ + "/search";
 
-var S_USERS="nova_users_v2", S_SESSION="nova_sess_v2", S_QUOTAS="nova_quotas_v1";
+var S_USERS="nova_users_v2", S_SESSION="nova_sess_v2", S_QUOTAS="nova_quotas_v1", S_PERSONA="nova_persona_v1";
 var EMAILJS_SID="service_ls8c2ou", EMAILJS_TID="template_4kzpytr";
 
 var TIER_LIMITS={
@@ -953,18 +1107,134 @@ var TIER_LIMITS={
   premium: {text:Infinity, photo:10, code:Infinity, video:2}
 };
 
-var SYSTEM_PROMPT="You are Nova AI 618, an intelligent AI assistant created by Sixte Leinekugel, a young French developer passionate about AI.\n\n\"Nova\" evokes a stellar explosion — brilliant and powerful. \"618\" references Claude Shannon's number, symbolizing harmony between intelligence and cosmos.\n\nPersonality:\n- Warm, friendly, natural — like a knowledgeable friend\n- Concise and direct — no over-structuring unless needed\n- Voice mode: no markdown, speak naturally\n- Text mode: use formatting only when it genuinely helps\n- You automatically speak the language of the user";
+// BASE SYSTEM PROMPT
+var BASE_SYSTEM_PROMPT="You are Nova AI 618, an intelligent AI assistant created by Sixte Leinekugel, a young French developer passionate about AI.\n\n\"Nova\" evokes a stellar explosion — brilliant and powerful. \"618\" references Claude Shannon's number, symbolizing harmony between intelligence and cosmos.\n\nPersonality:\n- Warm, friendly, natural — like a knowledgeable friend\n- Concise and direct — no over-structuring unless needed\n- Voice mode: no markdown, speak naturally\n- Text mode: use formatting only when it genuinely helps\n- You automatically speak the language of the user";
 
 var CODE_SYSTEM_PROMPT="You are Nova Code, an elite coding AI powered by Laguna M.1 via OpenRouter.\nSpecialist in all programming languages, frameworks, algorithms, debugging.\n\nStyle:\n- Precise, technical, direct\n- Always provide working, clean, well-commented code\n- Use markdown with proper code blocks\n- Support all languages: Python, JavaScript, TypeScript, Rust, Go, C++, Java, Swift, SQL, Shell, etc.\n- When debugging, identify root causes clearly\n\nYou run in a hacker terminal. Stay focused and technical.";
 
-// STATE — Gemma 4 31B par défaut
+// STATE
 var currentUser=null, isGuest=false, currentConvId=null;
-var messages=[], msgCount=0, currentModel="google/gemma-4-31b-it:free";
+var messages=[], msgCount=0;
+// Modèle par défaut: GPT-OSS 120B
+var currentModel="openai/gpt-oss-120b";
 var pendingPhoto=null, searchModeActive=false;
 var lastRegEmail="", lastRegName="";
 var codeMsgs=[], matrixAnimId=null;
 
+// ══════════════════════════════════════════════════════════
+// PERSONA MODE
+// ══════════════════════════════════════════════════════════
+var S_PERSONA_KEY = "nova_persona_v1";
+
+function getPersona(){
+  return ls.get(S_PERSONA_KEY) || null;
+}
+function savePersonaToStorage(p){
+  ls.set(S_PERSONA_KEY, p);
+}
+function deletePersona(){
+  ls.del(S_PERSONA_KEY);
+}
+
+// Construit le system prompt en injectant la persona si définie
+function buildSystemPrompt(){
+  var persona = getPersona();
+  if(!persona || !persona.name) return BASE_SYSTEM_PROMPT;
+  var prefix = "PERSONA — Important user preferences to always apply:\n"
+    + "- Call the user by their name: " + persona.name + "\n"
+    + "- Use a " + persona.tone + " tone at all times\n"
+    + "- The user works in: " + persona.domain + "\n"
+    + "- Keep responses " + persona.length + "\n"
+    + "- Always respond in: " + persona.lang + "\n\n";
+  return prefix + BASE_SYSTEM_PROMPT;
+}
+
+function openPersonaModal(){
+  var p = getPersona();
+  if(p){
+    document.getElementById("p-name").value = p.name || "";
+    document.getElementById("p-tone").value = p.tone || "friendly and casual";
+    document.getElementById("p-domain").value = p.domain || "general topics";
+    document.getElementById("p-length").value = p.length || "balanced";
+    document.getElementById("p-lang").value = p.lang || "the same language as the user (auto-detect)";
+  }
+  updatePersonaPreview();
+  document.getElementById("persona-modal").classList.add("open");
+  document.getElementById("profile-dd").classList.remove("open");
+}
+function closePersonaModal(){
+  document.getElementById("persona-modal").classList.remove("open");
+}
+document.getElementById("persona-modal").addEventListener("click",function(e){if(e.target===this)closePersonaModal()});
+
+function updatePersonaPreview(){
+  var name = document.getElementById("p-name").value.trim() || "you";
+  var tone = document.getElementById("p-tone").value;
+  var domain = document.getElementById("p-domain").value;
+  var length = document.getElementById("p-length").value;
+  var lang = document.getElementById("p-lang").value;
+  var prev = document.getElementById("persona-preview");
+  prev.innerHTML = "Nova will address you as <strong>" + esc(name) + "</strong>, "
+    + "respond in a <code>" + esc(tone) + "</code> tone, "
+    + "focus on <code>" + esc(domain) + "</code>, "
+    + "keep answers <code>" + esc(length) + "</code>, "
+    + "and reply in <code>" + esc(lang) + "</code>.";
+}
+
+// Listeners pour le preview en temps réel
+["p-name","p-tone","p-domain","p-length","p-lang"].forEach(function(id){
+  document.getElementById(id).addEventListener("input", updatePersonaPreview);
+  document.getElementById(id).addEventListener("change", updatePersonaPreview);
+});
+
+function savePersona(){
+  var name = document.getElementById("p-name").value.trim();
+  var tone = document.getElementById("p-tone").value;
+  var domain = document.getElementById("p-domain").value;
+  var length = document.getElementById("p-length").value;
+  var lang = document.getElementById("p-lang").value;
+  if(!name){showToast("Please enter your name first.");return}
+  var p = {name:name, tone:tone, domain:domain, length:length, lang:lang};
+  savePersonaToStorage(p);
+  closePersonaModal();
+  refreshPersonaUI();
+  showToast("✨ Persona saved! Nova now knows you.",3000);
+}
+
+function resetPersona(){
+  deletePersona();
+  document.getElementById("p-name").value="";
+  document.getElementById("p-tone").value="friendly and casual";
+  document.getElementById("p-domain").value="general topics";
+  document.getElementById("p-length").value="balanced";
+  document.getElementById("p-lang").value="the same language as the user (auto-detect)";
+  updatePersonaPreview();
+  closePersonaModal();
+  refreshPersonaUI();
+  showToast("Persona reset.");
+}
+
+function refreshPersonaUI(){
+  var p = getPersona();
+  var banner = document.getElementById("persona-banner");
+  var toolBtn = document.getElementById("persona-tool-btn");
+  var cardSub = document.getElementById("persona-card-sub");
+  if(p && p.name){
+    banner.classList.add("show");
+    document.getElementById("persona-banner-name").textContent = p.name + "'s Persona active";
+    document.getElementById("persona-banner-desc").textContent = p.tone + " · " + p.domain;
+    toolBtn.classList.add("persona-active");
+    if(cardSub) cardSub.textContent = "Hi " + p.name + "! Nova knows your style ✨";
+  } else {
+    banner.classList.remove("show");
+    toolBtn.classList.remove("persona-active");
+    if(cardSub) cardSub.textContent = "Nova doesn't know you yet — configure";
+  }
+}
+
+// ══════════════════════════════════════════════════════════
 // QUOTA
+// ══════════════════════════════════════════════════════════
 function todayStr(){return new Date().toISOString().slice(0,10)}
 function getQuotas(){
   var q=ls.get(S_QUOTAS),t=todayStr();
@@ -1002,7 +1272,7 @@ function refreshQuotaUI(){
     else{vc.textContent="AI video · "+getRem("video")+" remaining today";vl2.style.display="none"}
   }
   var cc=document.getElementById("code-card-sub");
-  if(cc){var crr=getRem("code");cc.textContent=(lim.code===Infinity?"\u221e":crr)+" requests remaining · hacker terminal"}
+  if(cc){cc.textContent=(lim.code===Infinity?"\u221e":getRem("code"))+" requests remaining · hacker terminal"}
   var pc=document.getElementById("photo-card-sub");
   if(pc){pc.textContent=getRem("photo")+" analyses remaining today"}
   var badge=document.getElementById("u-badge"),ddTier=document.getElementById("dd-tier");
@@ -1018,6 +1288,9 @@ function refreshQuotaUI(){
   }
 }
 
+// ══════════════════════════════════════════════════════════
+// SUBSCRIPTION
+// ══════════════════════════════════════════════════════════
 function openSubModal(){refreshQuotaUI();document.getElementById("sub-modal").classList.add("open");document.getElementById("profile-dd").classList.remove("open")}
 function closeSubModal(){document.getElementById("sub-modal").classList.remove("open")}
 document.getElementById("sub-modal").addEventListener("click",function(e){if(e.target===this)closeSubModal()});
@@ -1027,7 +1300,9 @@ function handlePremiumClick(){
   refreshQuotaUI();closeSubModal();showToast("\uD83D\uDC8E Premium activated! (Demo mode)",3500);
 }
 
+// ══════════════════════════════════════════════════════════
 // VIDEO
+// ══════════════════════════════════════════════════════════
 function handleVideoCardClick(){
   if(getCurrentTier()==="free"){openSubModal();showToast("\uD83D\uDD12 Video requires Premium \u2014 3.49\u20ac/mo");return}
   if(!canUse("video")){showRateLimitModal("video");return}
@@ -1056,7 +1331,6 @@ async function generateVideo(){
   document.getElementById("vid-status-badge").textContent="GENERATING";
   var empty=document.getElementById("vid-empty");if(empty)empty.remove();
   var content=document.getElementById("vid-content");
-
   var card=document.createElement("div");card.className="vid-card";
   card.innerHTML='<div class="vid-card-prompt">\uD83C\uDFAC '+esc(text)+'</div>'
     +'<div class="vid-card-body"><div class="vid-card-loading"><div class="vid-card-spinner"></div>'
@@ -1064,7 +1338,6 @@ async function generateVideo(){
     +'<div class="vid-card-note">Takes 30\u201390 seconds \u00b7 First run may be slower</div>'
     +'</div></div>';
   content.appendChild(card);content.scrollTop=content.scrollHeight;
-
   try{
     var r=await fetch(VIDEO_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:text})});
     var d=await r.json();
@@ -1083,15 +1356,16 @@ async function generateVideo(){
       body.innerHTML='<div style="color:var(--red);font-size:13px;padding:12px 0;line-height:1.7">\u26A0\uFE0F '+(d.error||"Generation failed.")+'<br><small style="color:var(--text3)">The AI model may be warming up. Please retry in ~30 seconds.</small></div>';
     }
   }catch(err){
-    var body2=card.querySelector(".vid-card-body");
-    body2.innerHTML='<div style="color:var(--red);font-size:13px;padding:12px 0">\u26A0\uFE0F '+err.message+'</div>';
+    var b2=card.querySelector(".vid-card-body");
+    b2.innerHTML='<div style="color:var(--red);font-size:13px;padding:12px 0">\u26A0\uFE0F '+err.message+'</div>';
   }
-  sb.disabled=false;
-  document.getElementById("vid-status-badge").textContent="READY";
+  sb.disabled=false;document.getElementById("vid-status-badge").textContent="READY";
   content.scrollTop=content.scrollHeight;
 }
 
+// ══════════════════════════════════════════════════════════
 // LS
+// ══════════════════════════════════════════════════════════
 var ls={
   get:function(k){try{return JSON.parse(localStorage.getItem(k))}catch{return null}},
   set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}},
@@ -1131,12 +1405,12 @@ function checkStrength(pw){
 }
 function downloadChat(){
   if(!messages.length){showToast("No messages to export.");return}
-  var txt=messages.map(function(m){return"["+(m.role==="user"?(currentUser&&currentUser.name||"You"):"Nova AI 618")+"]\n"+m.content}).join("\n\n\u2500\u2500\u2500\u2500\u2500\u2500\n\n");
+  var txt=messages.map(function(m){return"["+(m.role==="user"?(currentUser&&currentUser.name||"You"):"Nova AI 618")+"]\n"+m.content}).join("\n\n──────\n\n");
   var a=document.createElement("a");a.href="data:text/plain;charset=utf-8,"+encodeURIComponent(txt);a.download="nova-618-chat.txt";a.click();
 }
 function exportAll(){
   var convs=getUserConvs();if(!convs.length){showToast("No saved conversations.");return}
-  var all=convs.map(function(c){return"\u2550\u2550 "+c.title+" \u2550\u2550\n\n"+c.messages.map(function(m){return"["+(m.role==="user"?currentUser.name:"Nova")+"]\n"+m.content}).join("\n\n\u2500\u2500\n\n")}).join("\n\n\n");
+  var all=convs.map(function(c){return"══ "+c.title+" ══\n\n"+c.messages.map(function(m){return"["+(m.role==="user"?currentUser.name:"Nova")+"]\n"+m.content}).join("\n\n──\n\n")}).join("\n\n\n");
   var a=document.createElement("a");a.href="data:text/plain;charset=utf-8,"+encodeURIComponent(all);a.download="nova-618-all.txt";a.click();
 }
 function closeRateLimit(){document.getElementById("rate-limit-modal").classList.remove("open")}
@@ -1160,7 +1434,7 @@ function formatMsg(text){
   return out.join("\n");
 }
 
-// MODEL — Gemma seul
+// MODEL
 function selectModel(id,name,ctx,el){
   document.querySelectorAll("#model-modal .model-opt").forEach(function(o){o.classList.remove("selected")});
   el.classList.add("selected");currentModel=id;updateModelUI(name,ctx);
@@ -1287,7 +1561,9 @@ async function sendCodeMessage(){
   sb.disabled=false;document.getElementById("hk-prompt").focus();h.scrollTop=h.scrollHeight;
 }
 
+// ══════════════════════════════════════════════════════════
 // AUTH
+// ══════════════════════════════════════════════════════════
 function switchTab(t){
   document.getElementById("login-form").style.display=t==="login"?"block":"none";
   document.getElementById("register-form").style.display=t==="register"?"block":"none";
@@ -1364,13 +1640,18 @@ function startApp(user,guest){
   document.getElementById("dd-name").textContent=user.name;
   document.getElementById("dd-email").textContent=user.email||"Guest mode";
   document.getElementById("logout-lbl").textContent=guest?"Exit guest mode":"Sign out";
-  document.getElementById("empty-title").textContent=guest?"Hello! I'm Nova \uD83D\uDC4B":"Hello "+user.name+"! \uD83D\uDC4B";
+  // Empty state — inclure le prénom de persona si dispo
+  var persona=getPersona();
+  var greeting=guest?"Hello! I'm Nova \uD83D\uDC4B":(persona&&persona.name?"Hello "+persona.name+"! \uD83D\uDC4B":"Hello "+user.name+"! \uD83D\uDC4B");
+  document.getElementById("empty-title").textContent=greeting;
   document.getElementById("empty-sub").textContent=guest?"Guest mode — chats won't be saved.":"Ask me anything — images, code, search, voice or video!";
   if(synth){voiceVoices=synth.getVoices();synth.addEventListener("voiceschanged",function(){voiceVoices=synth.getVoices()},{once:true})}
-  refreshQuotaUI();refreshSidebar();newConversation();
+  refreshQuotaUI();refreshPersonaUI();refreshSidebar();newConversation();
 }
 
+// ══════════════════════════════════════════════════════════
 // CONVERSATIONS
+// ══════════════════════════════════════════════════════════
 function newConversation(){
   if(messages.length&&!isGuest&&currentConvId)persistConv();
   currentConvId="c_"+Date.now();messages=[];msgCount=0;
@@ -1429,7 +1710,9 @@ function delConv(id,e){
 function hideEmpty(){document.getElementById("empty-state").style.display="none"}
 function addDivider(txt){var d=document.createElement("div");d.className="day-div";d.textContent=txt||"Today";document.getElementById("chat").appendChild(d)}
 
+// ══════════════════════════════════════════════════════════
 // RENDER MSG
+// ══════════════════════════════════════════════════════════
 function renderMsg(role,content,typing){
   var chatEl=document.getElementById("chat"),cw=document.getElementById("chat-wrap");
   hideEmpty();if(msgCount===0)addDivider("Today");msgCount++;
@@ -1468,7 +1751,9 @@ function addActions(wrap,text){
   actions.appendChild(cpBtn);actions.appendChild(spkBtn);wrap.appendChild(actions);
 }
 
+// ══════════════════════════════════════════════════════════
 // IMAGE GEN
+// ══════════════════════════════════════════════════════════
 async function generateImage(prompt,editBubble,editWrap){
   var bubble,wrap;
   if(editBubble&&editWrap){bubble=editBubble;wrap=editWrap;bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>Modifying image...</div>'}
@@ -1511,7 +1796,9 @@ async function generateImage(prompt,editBubble,editWrap){
   document.getElementById("chat-wrap").scrollTop=999999;
 }
 
+// ══════════════════════════════════════════════════════════
 // PHOTO
+// ══════════════════════════════════════════════════════════
 function handlePhotoUpload(e){
   var file=e.target.files[0];if(!file)return;
   if(!file.type.startsWith("image/")){showToast("Please select an image file.");return}
@@ -1567,7 +1854,9 @@ async function analyzePhoto(photoDataUrl,question){
   cw.scrollTop=999999;
 }
 
-// SEND MESSAGE
+// ══════════════════════════════════════════════════════════
+// SEND MESSAGE — injecte persona dans le system prompt
+// ══════════════════════════════════════════════════════════
 async function sendMessage(){
   var promptEl=document.getElementById("prompt"),sendBtn=document.getElementById("send-btn");
   var text=promptEl.value.trim();
@@ -1578,6 +1867,9 @@ async function sendMessage(){
   if(pendingPhoto){var photo=pendingPhoto;clearPhoto();await analyzePhoto(photo.dataUrl,text||undefined);sendBtn.disabled=false;promptEl.focus();return}
   if(isImageReq(text)){await generateImage(text);sendBtn.disabled=false;return}
   if(messages.length===0)document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"\u2026":text;
+
+  // ← ICI: on utilise buildSystemPrompt() qui injecte le persona
+  var SYSTEM_PROMPT = buildSystemPrompt();
   var msgsWithSys=[{role:"system",content:SYSTEM_PROMPT}].concat(messages).concat([{role:"user",content:text}]);
 
   // WEB SEARCH
@@ -1647,7 +1939,9 @@ async function sendMessage(){
   sendBtn.disabled=false;promptEl.focus();
 }
 
-// VOICE ENGINE
+// ══════════════════════════════════════════════════════════
+// VOICE ENGINE (inchangé)
+// ══════════════════════════════════════════════════════════
 var synth=window.speechSynthesis;
 var _UA=navigator.userAgent;
 var isIOS=/iPad|iPhone|iPod/.test(_UA)&&!window.MSStream;
@@ -1847,6 +2141,7 @@ function toggleVoiceMic(){
 }
 async function sendVoiceMsg(text){
   if(messages.length===0)document.getElementById("conv-title").textContent=text.length>45?text.slice(0,45)+"\u2026":text;
+  var SYSTEM_PROMPT = buildSystemPrompt();
   var voiceSys=SYSTEM_PROMPT+"\n\nCRITICAL — VOICE MODE: Answer in 1 to 3 short sentences max. No lists, no markdown. Speak naturally.";
   var msgs=[{role:"system",content:voiceSys}].concat(messages).concat([{role:"user",content:text}]);
   try{
@@ -1882,17 +2177,21 @@ function toggleInlineMic(){
   try{inlineRec.start()}catch(e){}
 }
 
+// ══════════════════════════════════════════════════════════
 // EVENTS
+// ══════════════════════════════════════════════════════════
 document.getElementById("prompt").addEventListener("input",function(){autoResize();updateCount()});
 document.getElementById("prompt").addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage()}});
-document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeVoiceMode();closeCodeMode();closeVideoMode();closeSubModal()}});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeVoiceMode();closeCodeMode();closeVideoMode();closeSubModal();closePersonaModal()}});
 var _tsx=0;
 document.addEventListener("touchstart",function(e){_tsx=e.touches[0].clientX},{passive:true});
 document.addEventListener("touchend",function(e){var dx=e.changedTouches[0].clientX-_tsx;if(dx<-60&&document.getElementById("sidebar").classList.contains("open"))closeSidebar()},{passive:true});
 window.addEventListener("resize",function(){if(document.getElementById("code-overlay").classList.contains("open")){var c=document.getElementById("matrix-canvas");c.width=window.innerWidth;c.height=window.innerHeight}});
 if(synth){ensureVoices();synth.addEventListener("voiceschanged",function(){voiceVoices=synth.getVoices()||[]})}
 
+// ══════════════════════════════════════════════════════════
 // INIT
+// ══════════════════════════════════════════════════════════
 (function init(){
   var params=new URLSearchParams(window.location.search);
   var confirmToken=params.get("confirm");
