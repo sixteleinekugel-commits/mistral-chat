@@ -53,8 +53,9 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 @keyframes feature-slide{0%{opacity:0;transform:translateX(12px)}100%{opacity:1;transform:none}}
 @keyframes progress-sweep{from{width:0}to{width:100%}}
 @keyframes glow-ring{0%,100%{box-shadow:0 0 0 0 rgba(184,134,90,.3)}50%{box-shadow:0 0 0 8px rgba(184,134,90,.0)}}
+@keyframes img-reveal{from{opacity:1}to{opacity:0}}
 
-/* ══ LANDING ══ */
+/* ========== LANDING ========== */
 #landing{display:flex;flex-direction:column;height:100dvh;overflow:hidden;background:var(--surface);position:relative}
 #landing::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 15% 35%,rgba(184,134,90,.07) 0%,transparent 55%),radial-gradient(circle at 85% 65%,rgba(184,134,90,.05) 0%,transparent 50%);pointer-events:none;z-index:0}
 
@@ -94,7 +95,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .land-guest-link{text-align:center;margin-top:9px;font-size:12px;color:var(--text3)}
 .land-guest-link a{color:var(--ocre3);cursor:pointer;text-decoration:underline;font-weight:500}
 
-/* Colonne droite — démo premium */
+/* Colonne droite - demo premium */
 .land-right{display:flex;align-items:center;justify-content:center;padding:24px 48px 24px 24px;border-left:1px solid var(--border);position:relative;overflow:hidden;background:var(--bg)}
 .land-right::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,rgba(184,134,90,.06) 0%,transparent 65%);pointer-events:none}
 
@@ -115,7 +116,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .demo-slide.active{opacity:1;pointer-events:auto;transform:translateX(0)}
 .demo-slide.exit{opacity:0;transform:translateX(-20px)}
 
-/* Messages dans la démo */
+/* Messages dans la demo */
 .ds-msg{display:flex;gap:9px;align-items:flex-start;margin-bottom:12px}
 .ds-av{width:24px;height:24px;border-radius:50%;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:var(--bg3);border:1px solid var(--border2)}
 .ds-av img{width:100%;height:100%;object-fit:contain}
@@ -123,7 +124,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .ds-bub{padding:9px 13px;border-radius:4px 13px 13px 13px;font-size:13px;line-height:1.65;color:var(--text);background:var(--surface2);border:1px solid var(--border);max-width:90%}
 .ds-bub.user{background:var(--text);color:var(--surface);border-radius:13px 4px 13px 13px;border:none}
 
-/* Typing indicator dans la démo */
+/* Typing indicator dans la demo */
 .ds-typing{display:inline-flex;gap:4px;align-items:center;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:4px 13px 13px 13px}
 .ds-typing span{width:5px;height:5px;border-radius:50%;background:var(--text3);animation:bounce 1.4s infinite}
 .ds-typing span:nth-child(2){animation-delay:.2s}.ds-typing span:nth-child(3){animation-delay:.4s}
@@ -144,7 +145,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .ds-voice-bar{width:3px;background:var(--ocre);border-radius:3px;animation:voice-bar-anim 1.2s ease-in-out infinite}
 .ds-voice-bar:nth-child(1){animation-delay:.0s;height:8px}.ds-voice-bar:nth-child(2){animation-delay:.1s;height:16px}.ds-voice-bar:nth-child(3){animation-delay:.2s;height:20px}.ds-voice-bar:nth-child(4){animation-delay:.3s;height:14px}.ds-voice-bar:nth-child(5){animation-delay:.4s;height:8px}
 
-/* Features animées */
+/* Features animees */
 .ds-feature-list{display:flex;flex-direction:column;gap:10px;margin-top:4px}
 .ds-feature{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;opacity:0;animation:feature-slide .4s ease both}
 .ds-feature-icon{width:32px;height:32px;border-radius:8px;background:var(--ocre-dim2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -152,12 +153,12 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:14px
 .ds-feature-txt{font-size:12.5px;color:var(--text);font-weight:500}
 .ds-feature-sub{font-size:11px;color:var(--text3);margin-top:1px}
 
-/* Tabs démo */
+/* Tabs demo */
 .demo-tabs{display:flex;border-top:1px solid var(--border);background:var(--surface2)}
 .demo-tab{flex:1;padding:9px 4px;text-align:center;font-size:11px;color:var(--text3);cursor:pointer;border:none;background:transparent;transition:all .18s;font-family:var(--fb);font-weight:500;border-bottom:2px solid transparent}
 .demo-tab.active{color:var(--ocre);border-bottom-color:var(--ocre);background:var(--surface)}
 
-/* ══ AUTH MODAL ══ */
+/* ========== AUTH MODAL ========== */
 #auth-modal{display:none;position:fixed;inset:0;background:rgba(20,15,10,.55);backdrop-filter:blur(6px);z-index:900;align-items:center;justify-content:center;padding:16px}
 #auth-modal.open{display:flex}
 .auth-card{width:100%;max-width:400px;background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:26px 22px;box-shadow:0 16px 60px rgba(120,90,60,.14);animation:modal-in .25s ease;position:relative}
@@ -206,7 +207,7 @@ select.form-input{cursor:pointer}
 .pending-note{font-size:11px;color:var(--text3);line-height:1.6}
 .pending-resend{margin-top:12px;background:none;border:none;color:var(--ocre);font-size:13px;cursor:pointer;text-decoration:underline;font-family:var(--fb)}
 
-/* ══ APP SHELL ══ */
+/* ========== APP SHELL ========== */
 #app-screen{display:none;height:100dvh;overflow:hidden;position:relative;background:var(--bg)}
 #sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(20,15,10,.45);z-index:150;backdrop-filter:blur(3px)}
 #sidebar-overlay.open{display:block}
@@ -263,7 +264,7 @@ select.form-input{cursor:pointer}
 .dd-item:hover{background:var(--bg2);color:var(--text)}.dd-item svg{width:13px;height:13px;flex-shrink:0}
 .dd-item.danger{color:var(--red)}.dd-item.danger:hover{background:rgba(192,57,43,.07)}
 
-/* ══ MAIN ══ */
+/* ========== MAIN ========== */
 #main{display:flex;flex-direction:column;height:100dvh;overflow:hidden;margin-left:var(--sidebar-w);transition:margin-left .28s cubic-bezier(.4,0,.2,1)}
 #main.full{margin-left:0}
 #topbar{display:flex;align-items:center;justify-content:space-between;padding:0 18px;height:52px;flex-shrink:0;border-bottom:1px solid var(--border);background:rgba(242,237,228,.94);backdrop-filter:blur(16px)}
@@ -290,7 +291,7 @@ select.form-input{cursor:pointer}
 #persona-banner button{margin-left:auto;background:none;border:1px solid rgba(184,134,90,.25);color:var(--ocre3);cursor:pointer;font-size:11px;padding:2px 9px;border-radius:20px;transition:all .15s;white-space:nowrap}
 #persona-banner button:hover{background:var(--ocre-dim)}
 
-/* ══ CHAT + EMPTY STATE ══ */
+/* ========== CHAT + EMPTY STATE ========== */
 #chat-wrap{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;position:relative}
 #chat-wrap::-webkit-scrollbar{width:4px}
 #chat-wrap::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
@@ -316,7 +317,7 @@ select.form-input{cursor:pointer}
 .sug-chip:hover{background:var(--bg2);border-color:var(--ocre);color:var(--text)}
 .sug-chip svg{width:13px;height:13px;flex-shrink:0;color:var(--ocre);opacity:.75}
 
-/* ══ MESSAGES ══ */
+/* ========== MESSAGES ========== */
 .msg-group{display:flex;flex-direction:column;gap:2px;animation:msg-in .18s ease both}
 .msg-row{display:flex;gap:9px;align-items:flex-start}.msg-row.user{flex-direction:row-reverse}
 .msg-av{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;font-family:var(--fh);margin-top:2px;overflow:hidden;background:var(--bg2);border:1px solid var(--border2)}
@@ -380,7 +381,7 @@ select.form-input{cursor:pointer}
 .photo-remove-btn:hover{background:rgba(192,57,43,.1);color:var(--red)}.photo-remove-btn svg{width:10px;height:10px}
 .generated-media{max-width:100%;border-radius:12px;margin-top:7px;border:1px solid var(--border2);display:block}
 
-/* ══ INPUT ZONE ══ */
+/* ========== INPUT ZONE ========== */
 #input-zone{padding:12px 18px;padding-bottom:calc(12px + var(--sb));flex-shrink:0}
 #input-wrap-outer{max-width:720px;margin:0 auto}
 #input-box{background:var(--surface);border:1.5px solid var(--border2);border-radius:16px;transition:border-color .22s,box-shadow .22s;box-shadow:0 2px 16px rgba(120,90,60,.08),0 1px 0 rgba(255,255,255,.7) inset}
@@ -413,7 +414,7 @@ select.form-input{cursor:pointer}
 .foot-note{text-align:center;font-size:11px;color:var(--text3);margin-top:8px;opacity:.7}
 .foot-note a{color:var(--ocre);text-decoration:none;cursor:pointer}
 
-/* ══ CODE MODE — Nova Code IDE ══ */
+/* ========== CODE MODE - Nova Code IDE ========== */
 #code-overlay{display:none;position:fixed;inset:0;z-index:700;flex-direction:column;background:#0D0F14;overflow:hidden}
 #code-overlay.open{display:flex;animation:fade-in .2s ease}
 #matrix-canvas{position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.06}
@@ -444,7 +445,7 @@ select.form-input{cursor:pointer}
 .nc-tab:hover .nc-tab-close{opacity:.6}
 .nc-tab-close:hover{opacity:1!important;background:rgba(255,255,255,.1)}
 .nc-tab-close svg{width:9px;height:9px}
-.nc-tab-modified::after{content:'●';font-size:8px;color:rgba(255,255,255,.5);margin-left:4px}
+.nc-tab-modified::after{content:'\u25CF';font-size:8px;color:rgba(255,255,255,.5);margin-left:4px}
 .nc-topbar-right{display:flex;align-items:center;gap:4px;padding:0 8px;margin-left:auto;flex-shrink:0}
 .nc-run-btn{display:flex;align-items:center;gap:5px;padding:4px 10px;background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);border-radius:4px;color:rgba(16,185,129,.9);font-family:var(--fm);font-size:11px;cursor:pointer;transition:all .15s}
 .nc-run-btn:hover{background:rgba(16,185,129,.25);border-color:rgba(16,185,129,.5)}
@@ -498,11 +499,11 @@ select.form-input{cursor:pointer}
 .nc-chat-sidebar{width:220px;background:#0F1117;border-right:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;flex-shrink:0}
 .nc-chat-sidebar.hidden{display:none}
 
-/* Zone principale (éditeur + preview) */
+/* Zone principale (editeur + preview) */
 .nc-main{display:flex;flex-direction:column;flex:1;overflow:hidden}
 .nc-editor-area{display:flex;flex:1;overflow:hidden}
 
-/* Éditeur de code */
+/* Editeur de code */
 .nc-editor{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#0D0F14}
 .nc-editor-content{flex:1;overflow:auto;position:relative;font-family:var(--fm);font-size:13px;line-height:1.7}
 .nc-editor-content::-webkit-scrollbar{width:8px;height:8px}
@@ -623,7 +624,7 @@ select.form-input{cursor:pointer}
 <!-- Google One Tap invisible -->
 <div id="g_id_onload" data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com" data-callback="handleGoogleOneTap" data-auto_prompt="false"></div>
 
-<!-- ══ LANDING ══ -->
+<!-- ========== LANDING ========== -->
 <div id="landing">
   <nav class="land-nav">
     <div class="land-logo" onclick="document.getElementById('land-email').focus()">
@@ -637,13 +638,13 @@ select.form-input{cursor:pointer}
   </nav>
 
   <div class="land-body">
-    <!-- Col gauche — auth -->
+    <!-- Col gauche - auth -->
     <div class="land-left">
       <div class="land-hero-badge"><div class="land-hero-badge-dot"></div><span>Nova AI 618 — Intelligence redefined</span></div>
       <h1 class="land-hero-h1">Think fast,<br><span>build faster</span></h1>
       <p class="land-hero-sub">Your intelligent AI assistant — adapts to your tone, your domain, your style. Personal intelligence at its finest.</p>
       <div class="land-auth-box">
-<button class="btn-google-land" id="googleLandBtn" onclick="triggerGoogleSignIn()">
+        <button class="btn-google-land" id="googleLandBtn" onclick="triggerGoogleSignIn()">
           <svg viewBox="0 0 18 18" fill="none"><path d="M16.51 8h-7.4v2.7h4.3c-.4 2-2.2 3.3-4.3 3.3-2.6 0-4.7-2.1-4.7-4.7s2.1-4.7 4.7-4.7c1.1 0 2.2.4 3 1.1l2-2C12.5 2.3 10.8 1.5 9 1.5 5 1.5 1.5 5 1.5 9S5 16.5 9 16.5c4.7 0 7.7-3.3 7.7-8 0-.3 0-.7-.09-1z" fill="#FFC107"/><path d="M2.25 5.4l2.3 1.7c.6-1.8 2.3-3.1 4.3-3.1 1.1 0 2.2.4 3 1.1l2-2C12.5 2.3 10.8 1.5 9 1.5c-2.9 0-5.4 1.6-6.75 4z" fill="#FF3D00"/><path d="M9 16.5c1.8 0 3.4-.6 4.6-1.7l-2.2-1.8c-.6.4-1.5.7-2.4.7-2 0-3.8-1.3-4.4-3.2l-2.3 1.8C3.6 14.9 6.1 16.5 9 16.5z" fill="#4CAF50"/><path d="M16.51 8h-7.4v2.7h4.3c-.2.9-.8 1.7-1.5 2.2l2.2 1.8C15.5 13.5 16.6 11.5 16.6 9c0-.3 0-.7-.09-1z" fill="#1976D2"/></svg>
           Continue with Google
         </button>
@@ -657,7 +658,7 @@ select.form-input{cursor:pointer}
       </div>
     </div>
 
-    <!-- Col droite — démo animée premium -->
+    <!-- Col droite - demo anmee premium -->
     <div class="land-right">
       <div class="demo-window">
         <div class="demo-titlebar">
@@ -668,7 +669,7 @@ select.form-input{cursor:pointer}
         </div>
         <div class="demo-progress"><div class="demo-progress-bar" id="demo-progress-bar"></div></div>
         <div class="demo-slides">
-          <!-- Slide 0 — Chat -->
+          <!-- Slide 0 - Chat -->
           <div class="demo-slide active" id="demo-slide-0">
             <div class="ds-msg" style="animation:demo-fade-in .4s .1s ease both">
               <div class="ds-av user">A</div>
@@ -687,7 +688,7 @@ select.form-input{cursor:pointer}
               <div class="ds-typing"><span></span><span></span><span></span></div>
             </div>
           </div>
-          <!-- Slide 1 — Image generation animated -->
+          <!-- Slide 1 - Image generation animated -->
           <div class="demo-slide" id="demo-slide-1">
             <div class="ds-msg" style="animation:demo-fade-in .3s ease both">
               <div class="ds-av user">A</div>
@@ -727,7 +728,7 @@ select.form-input{cursor:pointer}
                   <div style="position:absolute;top:30%;left:15%;width:2px;height:40%;background:linear-gradient(180deg,rgba(255,80,0,.0),rgba(255,80,0,.8),rgba(255,80,0,.0));filter:blur(.5px)"></div>
                   <div style="position:absolute;top:20%;left:40%;width:2px;height:50%;background:linear-gradient(180deg,rgba(0,120,255,.0),rgba(0,120,255,.9),rgba(0,120,255,.0));filter:blur(.5px)"></div>
                   <div style="position:absolute;top:15%;right:20%;width:2px;height:55%;background:linear-gradient(180deg,rgba(180,0,255,.0),rgba(180,0,255,.8),rgba(180,0,255,.0));filter:blur(.5px)"></div>
-                  <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,var(--surface) 50%,var(--surface) 100%);animation:img-reveal 1s 1.5s ease forwards"></div>
+                  <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent,var(--surface) 50%,var(--surface) 100%);animation:img-reveal 1s 1.5s ease forwards"></div>
                   <div style="position:absolute;bottom:8px;right:8px;padding:3px 8px;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);border-radius:20px;font-size:10px;color:rgba(255,255,255,.7);font-family:var(--fm)">Nova AI · Flux</div>
                 </div>
                 <div style="margin-top:8px;display:flex;gap:6px;animation:demo-fade-in .4s 2.5s ease both;opacity:0">
@@ -738,7 +739,7 @@ select.form-input{cursor:pointer}
               </div>
             </div>
           </div>
-          <!-- Slide 2 — Code -->
+          <!-- Slide 2 - Code -->
           <div class="demo-slide" id="demo-slide-2">
             <div style="margin-bottom:10px;font-size:12px;color:var(--text2);font-weight:500">Write a debounce function in TypeScript</div>
             <div class="ds-code-block">
@@ -753,7 +754,7 @@ select.form-input{cursor:pointer}
               <span class="ds-code-line">} <span class="ds-cm">// Powered by Laguna M.1</span></span>
             </div>
           </div>
-          <!-- Slide 3 — Voice -->
+          <!-- Slide 3 - Voice -->
           <div class="demo-slide" id="demo-slide-3" style="display:flex;flex-direction:column;align-items:center;padding:14px 18px">
             <div style="font-size:13px;color:var(--text2);margin-bottom:12px;font-weight:500">Voice Mode — any language</div>
             <div class="ds-voice-orb"><img src="https://sixteleinekugel-commits.github.io/novaAI-chat/Logo%20Nova%20AI%20618%20-%20Fond%20blanc%20maximis%C3%A9.png" style="width:36px;height:36px;object-fit:contain;opacity:.7" alt="N"></div>
@@ -764,7 +765,7 @@ select.form-input{cursor:pointer}
               <div class="ds-bub">Auto-detects French, English, Spanish and 15+ languages in real time.</div>
             </div>
           </div>
-          <!-- Slide 4 — Persona -->
+          <!-- Slide 4 - Persona -->
           <div class="demo-slide" id="demo-slide-4" style="padding:14px 18px">
             <div style="font-size:13px;color:var(--text2);margin-bottom:14px;font-weight:500">Persona Mode — Nova knows you</div>
             <div class="ds-feature-list">
@@ -774,7 +775,7 @@ select.form-input{cursor:pointer}
               </div>
               <div class="ds-feature" style="animation-delay:.25s">
                 <div class="ds-feature-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                <div><div class="ds-feature-txt">Tone: Direct &amp; concise</div><div class="ds-feature-sub">Adapts to your style</div></div>
+                <div><div class="ds-feature-txt">Tone: Direct & concise</div><div class="ds-feature-sub">Adapts to your style</div></div>
               </div>
               <div class="ds-feature" style="animation-delay:.4s">
                 <div class="ds-feature-icon"><svg viewBox="0 0 16 16" fill="none"><polyline points="4,5 1,8 4,11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><polyline points="12,5 15,8 12,11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -795,7 +796,7 @@ select.form-input{cursor:pointer}
   </div>
 </div>
 
-<!-- ══ AUTH MODAL ══ -->
+<!-- ========== AUTH MODAL ========== -->
 <div id="auth-modal">
   <div class="auth-card">
     <button class="auth-close" onclick="closeAuthModal()"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
@@ -861,7 +862,7 @@ select.form-input{cursor:pointer}
   </div>
 </div>
 
-<!-- ══ APP SCREEN ══ -->
+<!-- ========== APP SCREEN ========== -->
 <div id="app-screen">
   <div id="sidebar-overlay" onclick="closeSidebar()"></div>
   <aside id="sidebar">
@@ -884,16 +885,16 @@ select.form-input{cursor:pointer}
       <div class="model-sel" onclick="document.getElementById('model-modal').classList.add('open');closeSidebar()">
         <div class="model-dot" id="model-dot"></div>
         <div class="model-info"><div class="model-nm" id="model-nm">GPT-OSS 120B</div><div class="model-ctx" id="model-ctx">via OpenRouter · Free</div></div>
-        <svg viewBox="0 0 16 16" fill="none"><path d="M5 7l3-3 3 3M5 10l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <svg viewBox="0 0 16 16" fill="none"><path d="M5 7l3-3 3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
       </div>
       <div class="user-row" onclick="toggleDd()">
         <div class="u-av" id="u-av">?</div>
         <div class="u-info"><div class="u-name" id="u-nm">...</div><span class="badge badge-guest" id="u-badge">Guest</span></div>
-        <svg width="11" height="11" viewBox="0 0 16 16" fill="none" style="color:var(--text3);flex-shrink:0"><path d="M5 7l3-3 3 3M5 10l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="none" style="color:var(--text3);flex-shrink:0"><path d="M5 7l3-3 3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         <div id="profile-dd">
           <div class="dd-header"><div class="dd-uname" id="dd-name">...</div><div class="dd-email" id="dd-email"></div><div class="dd-tier badge" id="dd-tier">Free Plan</div></div>
           <div class="dd-item" onclick="stop(event);openPersonaModal()"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>My Persona</div>
-          <div class="dd-item" onclick="stop(event);openSubModal()"><svg viewBox="0 0 16 16" fill="none"><path d="M8 1l2 4 4.5.7-3.25 3.2.77 4.5L8 11.3l-4 2.1.77-4.5L1.5 5.7 6 5z" stroke="currentColor" stroke-width="1.2"/></svg>Plans &amp; Subscription</div>
+          <div class="dd-item" onclick="stop(event);openSubModal()"><svg viewBox="0 0 16 16" fill="none"><path d="M8 1l2 4 4.5.7-3.25 3.2.77 4.5L8 11.3l-4 2.1.77-4.5L1.5 5.7 6 5z" stroke="currentColor" stroke-width="1.2"/></svg>Plans & Subscription</div>
           <div class="dd-item" onclick="stop(event);exportAll()"><svg viewBox="0 0 16 16" fill="none"><path d="M8 3v8M5 8l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Export conversations</div>
           <div class="dd-item danger" onclick="stop(event);doLogout()"><svg viewBox="0 0 16 16" fill="none"><path d="M10 3h3a1 1 0 011 1v8a1 1 0 01-1 1h-3M7 11l3-3-3-3M10 8H2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span id="logout-lbl">Sign out</span></div>
         </div>
@@ -940,7 +941,7 @@ select.form-input{cursor:pointer}
           <div class="empty-title" id="empty-title">How can I help?</div>
           <div class="empty-sub" id="empty-sub">Nova AI 618</div>
           <div class="empty-input-box" id="empty-input-box">
-<div class="empty-input-top">
+            <div class="empty-input-top">
               <textarea id="empty-prompt" rows="1" placeholder="Message Nova..."></textarea>
               <button class="empty-send-btn" onclick="sendFromEmpty()"><svg viewBox="0 0 16 16" fill="none"><path d="M14 8L2 2l3 6-3 6 12-6z" fill="currentColor"/></svg></button>
             </div>
@@ -962,12 +963,6 @@ select.form-input{cursor:pointer}
             <div class="sug-chip" onclick="document.getElementById('photo-input').click()"><svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="2.4" stroke="currentColor" stroke-width="1.2"/></svg>Analyze photo</div>
             <div class="sug-chip" onclick="openCodeMode()"><svg viewBox="0 0 16 16" fill="none"><polyline points="4,5 1,8 4,11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><polyline points="12,5 15,8 12,11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><line x1="9" y1="2" x2="7" y2="14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Write code</div>
           </div>
-          <span id="photo-card-sub" style="display:none"></span>
-          <span id="code-card-sub" style="display:none"></span>
-          <span id="video-card-sub" style="display:none"></span>
-          <span id="video-card-lock" style="display:none"></span>
-          <div id="video-card" style="display:none"></div>
-          <span id="persona-card-sub" style="display:none"></span>
         </div>
       </div>
     </div>
@@ -998,7 +993,7 @@ select.form-input{cursor:pointer}
   </main>
 </div>
 
-<!-- VOICE OVERLAY -->
+<!-- ========== VOICE OVERLAY ========== -->
 <div id="voice-overlay">
   <div class="vo-topbar">
     <div class="vo-brand"><div class="vo-dot"></div><span>NOVA AI 618</span><span class="vo-lang" id="vo-lang">Auto</span></div>
@@ -1021,7 +1016,7 @@ select.form-input{cursor:pointer}
   </div>
 </div>
 
-<!-- CODE MODE — Nova Code IDE -->
+<!-- ========== CODE MODE - Nova Code IDE ========== -->
 <div id="code-overlay">
   <canvas id="matrix-canvas"></canvas>
   <!-- Topbar VS Code -->
@@ -1153,10 +1148,10 @@ select.form-input{cursor:pointer}
       </div>
     </div>
 
-    <!-- Zone principale (éditeur + preview) -->
+    <!-- Zone principale (editeur + preview) -->
     <div class="nc-main">
       <div class="nc-editor-area">
-        <!-- Éditeur de code -->
+        <!-- Editeur de code -->
         <div class="nc-editor">
           <div class="nc-editor-content">
             <div class="nc-line-numbers" id="nc-line-numbers"></div>
@@ -1191,12 +1186,8 @@ console.log(greet("World"));</textarea>
             <div class="nc-term-tab-dot"></div>
             Terminal
           </button>
-          <button class="nc-term-tab" onclick="switchTermTab(this, 'output')">
-            Output
-          </button>
-          <button class="nc-term-tab" onclick="switchTermTab(this, 'problems')">
-            Problems
-          </button>
+          <button class="nc-term-tab" onclick="switchTermTab(this, 'output')">Output</button>
+          <button class="nc-term-tab" onclick="switchTermTab(this, 'problems')">Problems</button>
         </div>
         <div class="nc-terminal-body" id="nc-terminal">
           <div class="nc-term-line">
@@ -1293,7 +1284,7 @@ console.log(greet("World"));</textarea>
   </div>
 </div>
 
-<!-- VIDEO OVERLAY -->
+<!-- ========== VIDEO OVERLAY ========== -->
 <div id="video-overlay">
   <div class="vid-topbar">
     <div class="vid-brand"><div class="vid-brand-dot"></div>NOVA VIDEO<span class="vid-status-badge" id="vid-status-badge">READY</span></div>
@@ -1305,7 +1296,7 @@ console.log(greet("World"));</textarea>
       <div class="vid-empty-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="15" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M17 9l5-3v12l-5-3V9z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
       <div class="vid-empty-title">AI Video Generation</div>
       <div class="vid-empty-sub">Describe a scene — the AI creates a short clip.</div>
-      <div class="vid-hf-note">Powered by HuggingFace (free). Generation takes 30–90s.</div>
+      <div class="vid-hf-note">Powered by HuggingFace (free). Generation takes 30-90s.</div>
     </div>
   </div>
   <div class="vid-input-zone">
@@ -1317,7 +1308,7 @@ console.log(greet("World"));</textarea>
   </div>
 </div>
 
-<!-- PERSONA MODAL -->
+<!-- ========== PERSONA MODAL ========== -->
 <div id="persona-modal">
   <div class="persona-box">
     <button class="persona-close" onclick="closePersonaModal()"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
@@ -1329,9 +1320,9 @@ console.log(greet("World"));</textarea>
     <div class="persona-body">
       <div class="persona-grid">
         <div class="persona-field full"><label class="persona-label">Your name</label><input class="form-input" id="p-name" type="text" placeholder="Alex" maxlength="30"></div>
-        <div class="persona-field"><label class="persona-label">Tone</label><select class="form-input" id="p-tone"><option value="friendly and casual">Friendly &amp; casual</option><option value="direct and concise">Direct &amp; concise</option><option value="formal and professional">Formal</option><option value="enthusiastic and motivating">Enthusiastic</option><option value="calm and educational">Educational</option></select></div>
+        <div class="persona-field"><label class="persona-label">Tone</label><select class="form-input" id="p-tone"><option value="friendly and casual">Friendly & casual</option><option value="direct and concise">Direct & concise</option><option value="formal and professional">Formal</option><option value="enthusiastic and motivating">Enthusiastic</option><option value="calm and educational">Educational</option></select></div>
         <div class="persona-field"><label class="persona-label">Response length</label><select class="form-input" id="p-length"><option value="concise (2-3 sentences max)">Concise</option><option value="balanced" selected>Balanced</option><option value="detailed and thorough">Detailed</option></select></div>
-        <div class="persona-field"><label class="persona-label">Domain</label><select class="form-input" id="p-domain"><option value="software development">Software dev</option><option value="design and UX">Design &amp; UX</option><option value="marketing and content">Marketing</option><option value="business and entrepreneurship">Business</option><option value="science and research">Science</option><option value="education and learning">Education</option><option value="writing and creativity">Writing</option><option value="general topics">General</option></select></div>
+        <div class="persona-field"><label class="persona-label">Domain</label><select class="form-input" id="p-domain"><option value="software development">Software dev</option><option value="design and UX">Design & UX</option><option value="marketing and content">Marketing</option><option value="business and entrepreneurship">Business</option><option value="science and research">Science</option><option value="education and learning">Education</option><option value="writing and creativity">Writing</option><option value="general topics">General</option></select></div>
         <div class="persona-field"><label class="persona-label">Language</label><select class="form-input" id="p-lang"><option value="the same language as the user (auto-detect)">Auto-detect</option><option value="English">English</option><option value="French">Français</option><option value="Spanish">Español</option><option value="German">Deutsch</option><option value="Italian">Italiano</option><option value="Portuguese">Português</option></select></div>
       </div>
       <div class="persona-preview" id="persona-preview">Configure your profile — Nova will use these preferences in every conversation.</div>
@@ -1341,7 +1332,7 @@ console.log(greet("World"));</textarea>
   </div>
 </div>
 
-<!-- SUBSCRIPTION MODAL -->
+<!-- ========== SUBSCRIPTION MODAL ========== -->
 <div id="sub-modal">
   <div class="sub-box">
     <div class="sub-header">
@@ -1383,7 +1374,7 @@ console.log(greet("World"));</textarea>
   </div>
 </div>
 
-<!-- MODEL MODAL -->
+<!-- ========== MODEL MODAL ========== -->
 <div class="m-overlay" id="model-modal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="m-box">
     <p class="m-title">AI Model</p>
@@ -1397,7 +1388,7 @@ console.log(greet("World"));</textarea>
   </div>
 </div>
 
-<!-- RATE LIMIT MODAL -->
+<!-- ========== RATE LIMIT MODAL ========== -->
 <div class="m-overlay" id="rate-limit-modal">
   <div class="m-box">
     <div class="rate-limit-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M8 2L1 14h14L8 2z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M8 6v4M8 11v1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></div>
@@ -1406,7 +1397,7 @@ console.log(greet("World"));</textarea>
     <p class="m-sub">Unlock more with Premium:</p>
     <div class="model-opt" onclick="closeRateLimit();openSubModal()">
       <div class="model-opt-icon">💎</div>
-      <div class="model-opt-info"><div class="model-opt-name">Premium — 3.49€/mo</div><div class="model-opt-desc">Unlimited text &amp; code · 10 photo analyses · 2 videos/day</div></div>
+      <div class="model-opt-info"><div class="model-opt-name">Premium — 3.49€/mo</div><div class="model-opt-desc">Unlimited text & code · 10 photo analyses · 2 videos/day</div></div>
       <span class="mbadge mbadge-def">UPGRADE</span>
     </div>
     <button class="m-close" onclick="closeRateLimit()">Close — wait until tomorrow</button>
@@ -1433,7 +1424,7 @@ var S_USERS="nova_users_v2",S_SESSION="nova_sess_v2",S_QUOTAS="nova_quotas_v1",S
 var EMAILJS_SID="service_ls8c2ou",EMAILJS_TID="template_4kzpytr";
 var TIER_LIMITS={free:{text:15,photo:4,code:15,video:0},premium:{text:Infinity,photo:10,code:Infinity,video:2}};
 
-// ⚠️ GOOGLE CLIENT ID — remplace par le tien sur console.cloud.google.com
+// Google Client ID - REMPLACEZ PAR LE VOTRE sur console.cloud.google.com
 var GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
 
 var BASE_SYSTEM_PROMPT="You are Nova AI 618, an intelligent AI assistant.\n\nPersonality:\n- Warm, friendly, natural\n- Concise and direct\n- Voice mode: no markdown, speak naturally\n- Text mode: use formatting only when it genuinely helps\n- You automatically speak the language of the user";
@@ -1487,7 +1478,7 @@ function startMatrixRain(){
   canvas.height=window.innerHeight;
   var colSize=14,cols=Math.floor(canvas.width/colSize),drops=[];
   for(var i=0;i<cols;i++)drops[i]=Math.random()*-canvas.height;
-  var chars="01ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz{}[]<>/\\|=+-*#";
+  var chars="01ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz{}[]<>\/|+=+-*#";
   function draw(){
     if(!document.getElementById("code-overlay").classList.contains("open"))return;
     ctx.fillStyle="rgba(13,15,20,0.06)";
@@ -1548,7 +1539,6 @@ function addTermLine(type,text){
 function switchTermTab(btn, tabName){
   document.querySelectorAll('.nc-term-tab').forEach(function(t){t.classList.remove('active')});
   btn.classList.add('active');
-  // Logic to switch between terminal/output/problems
 }
 
 function togglePreview(){
@@ -1576,7 +1566,6 @@ function handleTermKey(e){
     if(cmd){
       addTermLine('prompt',cmd);
       input.value='';
-      // Simulate command execution
       setTimeout(function(){
         addTermLine('out','Command executed: '+cmd);
         addTermLine('prompt','');
@@ -1627,7 +1616,6 @@ function sendAIMessage(){
   container.appendChild(botMsg);
   container.scrollTop=container.scrollHeight;
 
-  // Simulate AI response
   setTimeout(function(){
     var fakeResponse="I understand your request about \""+text+"\". Here's how we can implement this:\n\n```typescript\n// Example code for: "+text.split(' ')[0]+"\nfunction example() {\n  console.log('Implementing: '+text);\n  // Code would go here\n}\n```\n\nWould you like me to explain this in more detail or generate a complete implementation?";
     botMsg.querySelector(".nc-ai-bubble.bot").innerHTML=formatMsg(fakeResponse);
@@ -1660,43 +1648,85 @@ function toggleFolder(el){
 }
 
 // =============================================
-// REST OF YOUR EXISTING JAVASCRIPT
-// (All the functions from your original file remain unchanged)
+// DEMO ANIMATION FUNCTIONS (FIXED)
 // =============================================
-
-// ══ DÉMO ANIMÉE ══
 var demoSlide=0,demoProgressTimer=null,demoProgress=0;
-function setDemoSlide(idx,tabEl){
-  var slides=document.querySelectorAll('.demo-slide');
-  slides.forEach(function(s,i){
-    s.classList.remove('active','exit');
-    if(i===idx){setTimeout(function(){s.classList.add('active')},10)}
-    else if(s.classList.contains('active')){s.classList.add('exit');setTimeout(function(){s.classList.remove('exit')},400)}
+
+function setDemoSlide(idx, tabEl) {
+  var slides = document.querySelectorAll('.demo-slide');
+  var currentActive = null;
+  
+  // Find currently active slide
+  slides.forEach(function(s) {
+    if (s.classList.contains('active')) {
+      currentActive = s;
+    }
   });
-  document.querySelectorAll('.demo-tab').forEach(function(t){t.classList.remove('active')});
-  if(tabEl)tabEl.classList.add('active');
-  else{var tabs=document.querySelectorAll('.demo-tab');if(tabs[idx])tabs[idx].classList.add('active')}
-  demoSlide=idx;
+  
+  // Remove active from all slides
+  slides.forEach(function(s) {
+    s.classList.remove('active', 'exit');
+  });
+  
+  // Add exit animation to previously active slide
+  if (currentActive) {
+    currentActive.classList.add('exit');
+    setTimeout(function() {
+      currentActive.classList.remove('exit');
+    }, 400);
+  }
+  
+  // Activate new slide after small delay
+  setTimeout(function() {
+    slides[idx].classList.add('active');
+  }, 10);
+  
+  // Update tabs
+  document.querySelectorAll('.demo-tab').forEach(function(t) {
+    t.classList.remove('active');
+  });
+  if (tabEl) {
+    tabEl.classList.add('active');
+  } else {
+    var tabs = document.querySelectorAll('.demo-tab');
+    if (tabs[idx]) tabs[idx].classList.add('active');
+  }
+  
+  demoSlide = idx;
   resetDemoProgress();
 }
-function resetDemoProgress(){
-  clearInterval(demoProgressTimer);demoProgress=0;
-  var bar=document.getElementById('demo-progress-bar');if(bar)bar.style.width='0%';
-  var total=4500;var step=100;
-  demoProgressTimer=setInterval(function(){
-    demoProgress+=step;
-    var pct=Math.min((demoProgress/total)*100,100);
-    if(bar)bar.style.width=pct+'%';
-    if(demoProgress>=total){demoSlide=(demoSlide+1)%5;setDemoSlide(demoSlide,null)}
-  },step);
+
+function resetDemoProgress() {
+  clearInterval(demoProgressTimer);
+  demoProgress = 0;
+  var bar = document.getElementById('demo-progress-bar');
+  if (bar) bar.style.width = '0%';
+  
+  var total = 4500;
+  var step = 100;
+  
+  demoProgressTimer = setInterval(function() {
+    demoProgress += step;
+    var pct = Math.min((demoProgress / total) * 100, 100);
+    if (bar) bar.style.width = pct + '%';
+    if (demoProgress >= total) {
+      demoSlide = (demoSlide + 1) % 5;
+      setDemoSlide(demoSlide, null);
+    }
+  }, step);
 }
-window.addEventListener('load',function(){
-  setTimeout(resetDemoProgress,1200);
-  var features=document.querySelectorAll('.ds-feature');
-  features.forEach(function(f,i){f.style.animationDelay=(i*0.12)+'s'});
+
+window.addEventListener('load', function() {
+  setTimeout(resetDemoProgress, 1200);
+  var features = document.querySelectorAll('.ds-feature');
+  features.forEach(function(f, i) {
+    f.style.animationDelay = (i * 0.12) + 's';
+  });
 });
 
-// ══ GOOGLE OAUTH ══
+// =============================================
+// GOOGLE OAUTH
+// =============================================
 var googleTokenClient=null;
 function initGoogleOAuth(){
   if(!window.google||!window.google.accounts)return;
@@ -1758,7 +1788,9 @@ window.addEventListener('load',function(){
   setTimeout(initGoogleOAuth,500);
 });
 
-// ══ LANDING ══
+// =============================================
+// LANDING
+// =============================================
 function openAuthModal(tab){document.getElementById("auth-modal").classList.add("open");switchAuthTab(tab||"login")}
 function closeAuthModal(){document.getElementById("auth-modal").classList.remove("open")}
 document.getElementById("auth-modal").addEventListener("click",function(e){if(e.target===this)closeAuthModal()});
@@ -1775,7 +1807,9 @@ function handleLandEmail(){
   setTimeout(function(){var el=document.getElementById("login-email");if(el)el.value=email},100);
 }
 
-// ══ SIDEBAR ══
+// =============================================
+// SIDEBAR
+// =============================================
 function toggleSidebarCollapse(){
   var sb=document.getElementById("sidebar"),main=document.getElementById("main");
   if(window.innerWidth<=768){if(sb.classList.contains("open")){closeSidebar()}else{openSidebar()}return}
@@ -1786,7 +1820,9 @@ function toggleSidebarCollapse(){
 function openSidebar(){document.getElementById("sidebar").classList.add("open");document.getElementById("sidebar-overlay").classList.add("open");document.body.style.overflow="hidden"}
 function closeSidebar(){document.getElementById("sidebar").classList.remove("open");document.getElementById("sidebar-overlay").classList.remove("open");document.body.style.overflow=""}
 
-// ══ EMPTY STATE ══
+// =============================================
+// EMPTY STATE
+// =============================================
 function showEmptyState(){document.getElementById("empty-state").classList.remove("hidden");document.getElementById("input-zone").style.display="none";chatHasMessages=false}
 function hideEmptyState(){document.getElementById("empty-state").classList.add("hidden");document.getElementById("input-zone").style.display="block";chatHasMessages=true}
 function sendFromEmpty(){
@@ -1813,7 +1849,9 @@ function toggleInlineMicEmpty(){
   try{inlineRecEmpty.start()}catch(e){}
 }
 
-// ══ PERSONA ══
+// =============================================
+// PERSONA
+// =============================================
 function getPersona(){return ls.get(S_PERSONA_KEY)||null}
 function savePersonaToStorage(p){ls.set(S_PERSONA_KEY,p)}
 function deletePersona(){ls.del(S_PERSONA_KEY)}
@@ -1849,7 +1887,9 @@ function refreshPersonaUI(){
   else{banner.classList.remove("show");if(toolBtn)toolBtn.classList.remove("persona-active");if(cardSub)cardSub.textContent="My Persona"}
 }
 
-// ══ QUOTA ══
+// =============================================
+// QUOTA
+// =============================================
 function todayStr(){return new Date().toISOString().slice(0,10)}
 function getQuotas(){var q=ls.get(S_QUOTAS),t=todayStr();if(!q||q.date!==t){q={date:t,tier:(q&&q.tier)||"free",text:0,photo:0,code:0,video:0};ls.set(S_QUOTAS,q)}return q}
 function saveQuotas(q){ls.set(S_QUOTAS,q)}
@@ -1869,7 +1909,9 @@ function refreshQuotaUI(){
   if(pcta&&pn){if(tier==="premium"){pcta.textContent="Current plan";pcta.disabled=true;pn.textContent=""}else{pcta.textContent="Get Premium — 3.49€/mo";pcta.disabled=false;pn.textContent="Payment integration coming soon"}}
 }
 
-// ══ SUBSCRIPTION ══
+// =============================================
+// SUBSCRIPTION
+// =============================================
 function openSubModal(){refreshQuotaUI();document.getElementById("sub-modal").classList.add("open");document.getElementById("profile-dd").classList.remove("open")}
 function closeSubModal(){document.getElementById("sub-modal").classList.remove("open")}
 document.getElementById("sub-modal").addEventListener("click",function(e){if(e.target===this)closeSubModal()});
@@ -1878,7 +1920,9 @@ function handlePremiumClick(){
   var q=getQuotas();q.tier="premium";saveQuotas(q);refreshQuotaUI();closeSubModal();showToast("Premium activated! (Demo)",3000);
 }
 
-// ══ VIDEO ══
+// =============================================
+// VIDEO
+// =============================================
 function handleVideoCardClick(){if(getCurrentTier()==="free"){openSubModal();showToast("Video requires Premium");return}if(!canUse("video")){showRateLimitModal("video");return}openVideoMode()}
 function openVideoMode(){
   document.getElementById("video-overlay").classList.add("open");refreshQuotaUI();
@@ -1893,7 +1937,7 @@ async function generateVideo(){
   var empty=document.getElementById("vid-empty");if(empty)empty.remove();
   var content=document.getElementById("vid-content");
   var card=document.createElement("div");card.className="vid-card";
-  card.innerHTML='<div class="vid-card-prompt">'+esc(text)+'</div><div class="vid-card-body"><div class="vid-card-loading"><div class="vid-card-spinner"></div><div>Generating with HuggingFace AI...</div><div class="vid-card-note">Takes 30–90s</div></div></div>';
+  card.innerHTML='<div class="vid-card-prompt">'+esc(text)+'</div><div class="vid-card-body"><div class="vid-card-loading"><div class="vid-card-spinner"></div><div>Generating with HuggingFace AI...</div><div class="vid-card-note">Takes 30-90s</div></div></div>';
   content.appendChild(card);content.scrollTop=content.scrollHeight;
   try{
     var r=await fetch(VIDEO_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:text})});var d=await r.json();var body=card.querySelector(".vid-card-body");
@@ -1909,7 +1953,9 @@ async function generateVideo(){
   sb.disabled=false;document.getElementById("vid-status-badge").textContent="READY";content.scrollTop=content.scrollHeight;
 }
 
-// ══ LS ══
+// =============================================
+// LS
+// =============================================
 var ls={get:function(k){try{return JSON.parse(localStorage.getItem(k))}catch{return null}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}},del:function(k){try{localStorage.removeItem(k)}catch{}}};
 function getUsers(){return ls.get(S_USERS)||{}}
 function convKey(){return"nova_convs_"+currentUser.id}
@@ -1918,7 +1964,9 @@ function saveConvs(c){if(!isGuest)ls.set(convKey(),c)}
 var IMAGE_KW=["image ","draw ","draw me","paint ","render ","visualize ","generate image","create image","make an image","make a picture","generate a picture","create a picture","generate art","create art","generate a photo","create a photo","picture of","photo of","illustration of"];
 function isImageReq(t){var s=t.toLowerCase().trim();if(s.startsWith("image ")||s.startsWith("image:"))return true;return IMAGE_KW.some(function(k){return s.includes(k)})}
 
-// ══ HELPERS ══
+// =============================================
+// HELPERS
+// =============================================
 function vi(id){return document.getElementById(id).value.trim()}
 function stop(e){e.stopPropagation()}
 function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
@@ -1944,7 +1992,9 @@ function downloadChat(){if(!messages.length){showToast("No messages to export.")
 function exportAll(){var convs=getUserConvs();if(!convs.length){showToast("No saved conversations.");return}var all=convs.map(function(c){return"== "+c.title+" ==\n\n"+c.messages.map(function(m){return"["+(m.role==="user"?currentUser.name:"Nova")+"]\n"+m.content}).join("\n\n--\n\n")}).join("\n\n\n");var a=document.createElement("a");a.href="data:text/plain;charset=utf-8,"+encodeURIComponent(all);a.download="nova-618-all.txt";a.click()}
 function closeRateLimit(){document.getElementById("rate-limit-modal").classList.remove("open")}
 
-// ══ MARKDOWN ══
+// =============================================
+// MARKDOWN
+// =============================================
 function formatMsg(text){
   if(!text)return"";var t=text;
   t=t.replace(/```([\w]*)\n?([\s\S]*?)```/g,function(_,l,code){return'<pre data-lang="'+(l||'code')+'"><code>'+escHtml(code.trim())+"</code></pre>"});
@@ -1960,12 +2010,16 @@ function formatMsg(text){
   return out.join("\n");
 }
 
-// ══ MODEL ══
+// =============================================
+// MODEL
+// =============================================
 function selectModel(id,name,ctx,el){document.querySelectorAll("#model-modal .model-opt").forEach(function(o){o.classList.remove("selected")});el.classList.add("selected");currentModel=id;updateModelUI(name,ctx);document.getElementById("model-modal").classList.remove("open");showToast("Model: "+name)}
 function updateModelUI(name,ctx){document.getElementById("model-nm").textContent=name;document.getElementById("model-ctx").textContent=ctx;document.getElementById("model-badge").textContent=name.toLowerCase().replace(/\s+/g,"-")}
 function showRateLimitModal(type){var lim=getTierLimits()[type||"text"];document.getElementById("rl-title").textContent="Daily limit reached";document.getElementById("rl-msg").textContent="You've used all your "+(type||"text")+" requests ("+(lim===Infinity?"∞":lim)+" / day on "+getCurrentTier()+" plan). Upgrade or wait until tomorrow.";document.getElementById("rate-limit-modal").classList.add("open")}
 
-// ══ SEARCH ══
+// =============================================
+// SEARCH
+// =============================================
 function toggleSearch(){
   searchModeActive=!searchModeActive;
   var btn=document.getElementById("search-tool-btn"),box=document.getElementById("input-box"),banner=document.getElementById("search-banner"),emptyBtn=document.getElementById("empty-search-btn");
@@ -1973,7 +2027,9 @@ function toggleSearch(){
   else{if(btn)btn.classList.remove("active-search");if(box)box.classList.remove("search-active");banner.classList.remove("show");showToast("Web search disabled");if(emptyBtn)emptyBtn.classList.remove("active-search")}
 }
 
-// ══ IMAGE GEN ══
+// =============================================
+// IMAGE GEN
+// =============================================
 async function generateImage(prompt,editBubble,editWrap){
   var bubble,wrap;
   if(editBubble&&editWrap){bubble=editBubble;wrap=editWrap;bubble.innerHTML='<div class="img-loading"><div class="img-spinner"></div>Modifying image...</div>'}
@@ -2000,7 +2056,7 @@ async function generateImage(prompt,editBubble,editWrap){
       var eb=document.createElement("div");eb.className="img-edit-bar";
       var ei=document.createElement("input");ei.type="text";ei.className="img-edit-input";ei.placeholder="Modify: add rain, make darker...";
       var eBtn=document.createElement("button");eBtn.className="img-edit-btn";eBtn.textContent="Modify";
-      eBtn.onclick=async function(){var np=ei.value.trim();if(!np)return;eBtn.disabled=true;eBtn.textContent="...";await generateImage(prompt+", "+np,bubble,wrap)};
+      eBtn.onclick=async function(){var np=ei.value.trim();if(!np)return;eBtn.disabled=true;eBtn.textContent="...";await generateImage(prompt+", "+np,bubble,wrap)}
       eb.appendChild(ei);eb.appendChild(eBtn);rb.appendChild(eb);
       var dlB=document.createElement("button");dlB.className="act-btn";dlB.style.marginTop="8px";
       dlB.innerHTML='<svg viewBox="0 0 16 16" fill="none"><path d="M8 3v8M5 8l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Download';
@@ -2012,7 +2068,9 @@ async function generateImage(prompt,editBubble,editWrap){
   document.getElementById("chat-wrap").scrollTop=999999;
 }
 
-// ══ PHOTO ══
+// =============================================
+// PHOTO
+// =============================================
 function handlePhotoUpload(e){
   var file=e.target.files[0];if(!file)return;
   if(!file.type.startsWith("image/")){showToast("Please select an image file.");return}
@@ -2059,7 +2117,9 @@ function addActions(wrap,text){
   actions.appendChild(cpBtn);actions.appendChild(spkBtn);wrap.appendChild(actions);
 }
 
-// ══ SEND MESSAGE ══
+// =============================================
+// SEND MESSAGE
+// =============================================
 async function sendMessage(){
   var promptEl=document.getElementById("prompt"),sendBtn=document.getElementById("send-btn");
   var text=promptEl.value.trim();
@@ -2111,7 +2171,9 @@ async function sendMessage(){
   sendBtn.disabled=false;promptEl.focus();
 }
 
-// ══ CONVERSATIONS ══
+// =============================================
+// CONVERSATIONS
+// =============================================
 function newConversation(){
   if(messages.length&&!isGuest&&currentConvId)persistConv();
   currentConvId="c_"+Date.now();messages=[];msgCount=0;codeMsgs=[];
@@ -2137,7 +2199,7 @@ function refreshSidebar(){
     var d=new Date(conv.ts);d.setHours(0,0,0,0);var grp=d>=now?"Today":d>=yest?"Yesterday":d>=week?"This week":"Older";
     if(grp!==lg){var lbl=document.createElement("div");lbl.className="sec-label";lbl.textContent=grp;list.appendChild(lbl);lg=grp}
     var item=document.createElement("div");item.className="conv-item"+(conv.id===currentConvId?" active":"");item.dataset.id=conv.id;
-    item.innerHTML='<svg class="conv-icon" viewBox="0 0 16 16" fill="none"><path d="M13 3H3a1 1 0 00-1 1v7a1 1 0 001 1h3l2 2 2-2h3a1 1 0 001-1V4a1 1 0 00-1-1z" stroke="currentColor" stroke-width="1.2"/></svg><span class="conv-txt">'+esc(conv.title)+'</span><button class="conv-del" onclick="delConv(\''+conv.id+'\',event)"><svg viewBox="0 0 16 16" fill="none"><path d="M3 4h10M6 4V3h4v1M5 4l1 9h4l1-9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></button>';
+    item.innerHTML='<svg class="conv-icon" viewBox="0 0 16 16" fill="none"><path d="M13 3H3a1 1 0 00-1 1v7a1 1 0 001 1h3l2 2h5a1 1 0 001-1V4a1 1 0 00-1-1z" stroke="currentColor" stroke-width="1.2"/></svg><span class="conv-txt">'+esc(conv.title)+'</span><button class="conv-del" onclick="delConv(\''+conv.id+'\',event)"><svg viewBox="0 0 16 16" fill="none"><path d="M3 4h10M6 4V3h4v1M5 4l1 9h4l1-9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></button>';
     item.addEventListener("click",function(){loadConv(conv.id);closeSidebar()});list.appendChild(item);
   });
 }
@@ -2153,7 +2215,9 @@ function loadConv(id){
 function delConv(id,e){e.stopPropagation();saveConvs(getUserConvs().filter(function(c){return c.id!==id}));if(currentConvId===id)newConversation();else refreshSidebar();showToast("Conversation deleted")}
 function addDivider(txt){var d=document.createElement("div");d.className="day-div";d.textContent=txt||"Today";document.getElementById("chat").appendChild(d)}
 
-// ══ RENDER MSG ══
+// =============================================
+// RENDER MSG
+// =============================================
 function renderMsg(role,content,typing){
   var chatEl=document.getElementById("chat"),cw=document.getElementById("chat-wrap");
   hideEmptyState();if(msgCount===0)addDivider("Today");msgCount++;
@@ -2175,7 +2239,9 @@ function renderMsg(role,content,typing){
   return{bubble:bubble,wrap:wrap,group:group};
 }
 
-// ══ AUTH ══
+// =============================================
+// AUTH
+// =============================================
 function doRegister(){
   var name=vi("reg-name"),email=vi("reg-email").toLowerCase(),pw=vi("reg-pw"),conf=vi("reg-confirm");
   var terms=document.getElementById("reg-terms").checked;
@@ -2194,7 +2260,7 @@ function doRegister(){
     }).catch(signInDirectly);
   }).catch(signInDirectly);
 }
-function resendConfirmation(){if(!lastRegEmail||!lastRegName)return;showToast("Sending...");fetch(BACKEND_GROQ+"/send-confirmation',{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:lastRegEmail,name:lastRegName})}).then(function(r){return r.json()}).then(function(d){showToast(d.success?"Email resent!":"Error")}).catch(function(){showToast("Network error.")})}
+function resendConfirmation(){if(!lastRegEmail||!lastRegName)return;showToast("Sending...");fetch(BACKEND_GROQ+'/send-confirmation',{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:lastRegEmail,name:lastRegName})}).then(function(r){return r.json()}).then(function(d){showToast(d.success?"Email resent!":"Error")}).catch(function(){showToast("Network error.")})}
 function doLogin(){
   var email=vi("login-email").toLowerCase(),pw=vi("login-pw");
   var eEl=document.getElementById("login-err");eEl.classList.remove("show");
@@ -2227,13 +2293,15 @@ function startApp(user,guest){
   refreshQuotaUI();refreshPersonaUI();refreshSidebar();newConversation();
 }
 
-// ══ VOICE ENGINE ══
+// =============================================
+// VOICE ENGINE
+// =============================================
 function ensureVoices(){return new Promise(function(res){var v=synth?synth.getVoices():[];if(v&&v.length>0){voiceVoices=v;res(v);return}var n=0,t=setInterval(function(){var vv=synth?synth.getVoices():[];if(vv&&vv.length>0){voiceVoices=vv;clearInterval(t);res(vv)}if(++n>40){clearInterval(t);res([])}},80);if(synth)synth.addEventListener("voiceschanged",function(){voiceVoices=synth.getVoices();clearInterval(t);res(voiceVoices)},{once:true})})}
 function getBestVoice(bcp47){if(!bcp47)bcp47="en-US";var voices=voiceVoices.length?voiceVoices:(synth?synth.getVoices():[]);if(!voices||!voices.length)return null;var lang=bcp47.slice(0,2).toLowerCase();var scored=voices.map(function(v){var n=v.name.toLowerCase(),l=v.lang.toLowerCase();if(!l.startsWith(lang))return{v:v,s:-999};var s=0;if(l===bcp47.toLowerCase())s+=50;if(n.includes("enhanced"))s+=120;if(n.includes("premium"))s+=115;if(n.includes("neural"))s+=95;if(n.includes("wavenet"))s+=88;if(n.includes("google"))s+=80;if(n.includes("compact"))s-=100;return{v:v,s:s}}).filter(function(x){return x.s>-900}).sort(function(a,b){return b.s-a.s});return scored.length?scored[0].v:null}
 function unlockTTS(){if(ttsUnlocked||!synth)return;try{var u=new SpeechSynthesisUtterance(" ");u.volume=0;u.rate=16;u.lang="en-US";synth.speak(u)}catch(e){}ttsUnlocked=true}
 function startKeepAlive(){if(!isMobile)return;_kATimer=setInterval(function(){if(synth&&synth.speaking&&!synth.paused){synth.pause();setTimeout(function(){try{if(synth.paused)synth.resume()}catch(e){}},25)}},7000)}
 function stopKeepAlive(){if(_kATimer){clearInterval(_kATimer);_kATimer=null}}
-function cleanForSpeech(text){return text.replace(/```[\s\S]*?```/g," ").replace(/`[^`\n]+`/g," ").replace(/\*\*([^*]+)\*\*/g,"$1").replace(/\*([^*]+)\*/g,"$1").replace(/#{1,6}\s+/g,"").replace(/\[([^\]]+)\]\([^)]+\)/g,"$1").replace(/https?:\/\/\S+/g,"").replace(/[-\u2022*]\s+/g,"").replace(/\n{2,}/g,". ").replace(/\n/g," ").replace(/[*_~`#>|]/g,"").replace(/\s{2,}/g," ").replace(/\.\s*\./g,".").trim()}
+function cleanForSpeech(text){return text.replace(/```[\s\S]*?```/g," ").replace(/`[^`\n]+`/g," ").replace(/\*\*([^*]+)\*\*/g,"$1").replace(/\*([^*]+)\*/g,"$1").replace(/#{1,6}\s+/g,"").replace(/\[([^\]]+)\]\([^)]+\)/g,"$1").replace(/https?:\/\/\S+/g,"").replace(/[-\u2022*\s]+/g," ").replace(/\n{2,}/g,". ").replace(/\n/g," ").replace(/[*_~`#>|]/g,"").replace(/\s{2,}/g," ").replace(/\.\s*\./g,".").trim()}
 function splitIntoChunks(text){var clean=cleanForSpeech(text);if(!clean)return[];var maxLen=isIOS?80:isMobile?100:170;var sents=clean.match(/[^.!?;]+[.!?;]+(?:\s|$)|[^.!?;]+$/g)||[clean];var chunks=[],buf="";for(var i=0;i<sents.length;i++){var tr=sents[i].trim();if(!tr)continue;var cand=buf?(buf+" "+tr):tr;if(cand.length<=maxLen){buf=cand}else{if(buf)chunks.push(buf);if(tr.length>maxLen){var parts=tr.split(/,\s*/),sub="";for(var j=0;j<parts.length;j++){var p=parts[j],c=sub?(sub+", "+p):p;if(c.length<=maxLen){sub=c}else{if(sub)chunks.push(sub);sub=p.length>maxLen?p.slice(0,maxLen):p}}buf=sub}else{buf=tr}}}if(buf.trim())chunks.push(buf.trim());return chunks.filter(function(c){return c.length>0})}
 async function speakText(text,bcp,onDone){voiceAborted=false;if(synth&&(synth.speaking||synth.pending)){synth.cancel();await new Promise(function(r){setTimeout(r,isIOS?200:60)})}if(voiceAborted){if(onDone)onDone();return}await ensureVoices();var chunks=splitIntoChunks(text);if(!chunks.length){setVoiceState("idle");if(onDone)onDone();return}setVoiceState("speaking");startKeepAlive();await _playQueue(chunks,bcp||"en-US",getBestVoice(bcp||"en-US"));stopKeepAlive();if(!voiceAborted){setVoiceState("idle");var lv=document.getElementById("vo-live");if(lv)lv.textContent=""}if(onDone)onDone()}
 function _playQueue(chunks,lang,voice){return new Promise(function(resolve){if(!synth||voiceAborted){resolve();return}var i=0;function next(){if(voiceAborted||i>=chunks.length){resolve();return}var chunk=chunks[i++];var u=new SpeechSynthesisUtterance(chunk);u.lang=lang;u.volume=1.0;if(isIOS){u.rate=0.87;u.pitch=1.07}else if(isAndroid){u.rate=0.90;u.pitch=1.02}else{u.rate=0.92;u.pitch=1.0}if(voice)u.voice=voice;var lv=document.getElementById("vo-live");if(lv)lv.textContent=chunk.length>80?chunk.slice(0,80)+"…":chunk;var settled=false,settle=function(ms){if(settled)return;settled=true;setTimeout(next,ms)};u.onend=function(){settle(isIOS?60:25)};u.onerror=function(e){if(e.error==="canceled"||e.error==="interrupted"){settle(50);return}settle(100)};try{synth.speak(u)}catch(e){settle(120)}}next()})}
@@ -2264,10 +2332,10 @@ async function sendVoiceMsg(text){
 }
 function toggleInlineMic(){var btn=document.getElementById("mic-btn");if(inlineMicActive){inlineMicActive=false;btn.classList.remove("listening");if(inlineRec){try{inlineRec.stop()}catch(e){}}inlineRec=null;return}var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){showToast("Speech recognition not supported.");return}inlineMicActive=true;btn.classList.add("listening");inlineRec=new SR();inlineRec.lang="";inlineRec.interimResults=true;inlineRec.onresult=function(e){var f="",iv="";for(var j=e.resultIndex;j<e.results.length;j++){var t=e.results[j][0].transcript;if(e.results[j].isFinal)f+=t;else iv+=t}document.getElementById("prompt").value=f||iv;autoResize();updateCount()};inlineRec.onend=function(){inlineMicActive=false;btn.classList.remove("listening");inlineRec=null};inlineRec.onerror=function(e){inlineMicActive=false;btn.classList.remove("listening");inlineRec=null;if(e.error!=="aborted"&&e.error!=="no-speech")showToast("Mic: "+e.error)};try{inlineRec.start()}catch(e){}}
 
-// ══ VOICE DETECTION ══
+// ========== VOICE DETECTION ==========
 function detectLang(text){var t=text.toLowerCase().trim();var checks=[{l:"fr",w:["je","tu","il","nous","les","de","du","et","est","pas","que","bonjour","merci","mais","avec","bien","pour","dans","une"]},{l:"es",w:["yo","hola","gracias","por","para","que","como","muy","también","una","del","con"]},{l:"de",w:["ich","du","er","wir","die","das","ist","danke","bitte","nicht","auch","eine","und"]},{l:"it",w:["io","ciao","grazie","per","che","come","sono","anche","non","una","questo"]},{l:"pt",w:["eu","obrigado","para","como","não","muito","também","uma","você"]},{l:"en",w:["the","is","are","have","what","how","hello","thank","please","this","that","with","for","and","but"]}];var best=null,bs=0;for(var ci=0;ci<checks.length;ci++){var ch=checks[ci],s=0;for(var wi=0;wi<ch.w.length;wi++){var ww=ch.w[wi];if(t.includes(" "+ww+" ")||t.startsWith(ww+" ")||t.endsWith(" "+ww)||t===ww)s++}if(s>bs){bs=s;best=ch.l}}return bs>=1?best:"en"}
 
-// ══ EVENTS ══
+// ========== EVENTS ==========
 document.getElementById("prompt").addEventListener("input",function(){autoResize();updateCount()});
 document.getElementById("prompt").addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage()}});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeVoiceMode();closeCodeMode();closeVideoMode();closeSubModal();closePersonaModal()}});
@@ -2277,7 +2345,7 @@ document.addEventListener("touchend",function(e){var dx=e.changedTouches[0].clie
 window.addEventListener("resize",function(){if(document.getElementById("code-overlay").classList.contains("open")){var c=document.getElementById("matrix-canvas");if(c){c.width=window.innerWidth;c.height=window.innerHeight}}});
 if(synth){ensureVoices();synth.addEventListener("voiceschanged",function(){voiceVoices=synth.getVoices()||[]})}
 
-// ══ INIT ══
+// ========== INIT ==========
 (function init(){
   var params=new URLSearchParams(window.location.search);
   var confirmToken=params.get("confirm");
@@ -2288,7 +2356,8 @@ if(synth){ensureVoices();synth.addEventListener("voiceschanged",function(){voice
         var users=getUsers(),user=Object.values(users).find(function(u){return u.email===d.email});
         if(user){user.verified=true;ls.set(S_USERS,users)}
         openAuthModal("login");
-        var banner=document.createElement("div");banner.style.cssText="padding:11px 13px;background:rgba(16,217,127,.08);border:1px solid rgba(16,217,127,.18);border-radius:9px;color:#2D9B6F;font-size:12.5px;margin-bottom:13px;text-align:center";banner.textContent="Email confirmed — you can now sign in.";
+        var banner=document.createElement("div");banner.style.cssText="padding:11px 13px;background:rgba(16,217,127,.08);border:1px solid rgba(16,217,127,.18);border-radius:9px;color:#2D9B6F;font-size:12.5px;margin-bottom:13px;text-align:center";
+        banner.textContent="Email confirmed — you can now sign in.";
         document.getElementById("login-form").prepend(banner);if(d.email)document.getElementById("login-email").value=d.email;
       }else{showToast("Invalid confirmation link")}
     }).catch(function(){window.history.replaceState({},"",window.location.pathname);showToast("Could not verify email.")});
@@ -2300,4 +2369,4 @@ if(synth){ensureVoices();synth.addEventListener("voiceschanged",function(){voice
 })();
 </script>
 </body>
-</html>  
+</html>
