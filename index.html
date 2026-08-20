@@ -1708,7 +1708,7 @@ wrap.appendChild(hdr);wrap.appendChild(bubble);row.appendChild(av);row.appendChi
 try{
 var sr=await fetch(SEARCH_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({query:text})});
 var sd=await sr.json();if(sd.error)throw new Error(sd.error);
-var webCtx="Real-time web search results for: ""+text+""\n\n"+sd.context+"\n\nAnswer naturally and cite sources: "+text;
+var webCtx="Real-time web search results for: "+text+"\n\n"+sd.context+"\n\nAnswer naturally and cite sources: "+text;
 var smsg=[{role:"system",content:SYSTEM_PROMPT}].concat(messages).concat([{role:"user",content:webCtx}]);
 var r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:smsg,model:currentModel,temperature:.3})});
 var d=await r.json();
